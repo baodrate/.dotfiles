@@ -1,0 +1,16 @@
+- clean: ['~']
+
+- shell:
+  - [git submodule update --init --recursive, Installing submodules]
+
+- link:
+    ~/.vim:
+      force: true
+      path: vim/vim
+    ~/.vimrc:
+      force: true
+      path: vim/vimrc
+    ~/.config/awesome:
+      create: true
+      force: true
+      path: awesome
