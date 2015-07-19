@@ -27,14 +27,15 @@ antigen bundle github               # cli access, url shortener
 # robbyrussell's oh-my-zsh :: Python
 antigen bundle pip
 
-# Syntax highlighting bundle.
+# Misc tools
 antigen bundle zsh-users/zsh-syntax-highlighting
-
-# Autosuggestions
 antigen bundle tarruda/zsh-autosuggestions
+antigen bundle chrissicool/zsh-256color
+antigen bundle djui/alias-tips
 
 # Load the theme.
-antigen theme mrtazz
+# oh-my-zsh :: mrtazz blinks norm
+antigen theme norm
 
 # Tell antigen that you're done.
 antigen apply

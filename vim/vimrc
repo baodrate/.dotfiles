@@ -120,9 +120,10 @@ if has("gui_running")
     colorscheme zenburn
 else
     set t_Co=256
-    colorscheme hybrid
-    let g:hybrid_use_Xresources = 1
+    colorscheme zenburn
 endif
+" colorscheme hybrid
+" let g:hybrid_use_Xresources = 1
 " let g:seoul256_background = 236
 " colorscheme seoul256
 " colorscheme solarized

@@ -107,40 +107,101 @@
 ! Zenburn color-scheme
 ! http://git.sysphere.org/dotfiles/tree/Xdefaults
 ! ========================================================================================
-urxvt*background:  #3f3f3f
-urxvt*foreground:  #dcdccc
-! black + red
-!urxvt*color0:     #3f3f3f
-urxvt*color0:      #1E2320
-urxvt*color1:      #705050
-! green + yellow
-urxvt*color2:      #60b48a
-urxvt*color3:      #dfaf8f
-! blue + purple
-urxvt*color4:      #506070
-urxvt*color5:      #dc8cc3
-! cyan + white
-urxvt*color6:      #8cd0d3
-urxvt*color7:      #dcdccc
-! bright-black + bright-red
-urxvt*color8:      #709080
-urxvt*color9:      #dca3a3
-! bright-green + bright-yellow
-urxvt*color10:     #c3bf9f
-urxvt*color11:     #f0dfaf
-! bright-blue + bright-purple
-urxvt*color12:     #94bff3
-urxvt*color13:     #ec93d3
-! bright-cyan + bright-white
-urxvt*color14:     #93e0e3
-*color15:     #ffffff
+!BLK Cursor
+#define _color0        #3f3f3f
+#define _color8        #000000
+
+!RED Tag
+#define _color1        #cc9393
+#define _color9        #dca3a3
+
+!GRN SpecialKey
+#define _color2        #7f9f7f
+#define _color10       #bfebbf
+
+!YEL Keyword
+#define _color3        #d0bf8f
+#define _color11       #f0dfaf
+
+!BLU Number
+#define _color4        #6ca0a3
+#define _color12       #8cd0d3
+
+!MAG Precondit
+#define _color5        #dc8cc3
+#define _color13       #dc8cc3
+
+!CYN Float
+#define _color6        #93e0e3
+#define _color14       #93e0e3
+
+!WHT Search
+#define _color7        #dcdccc
+#define _color15       #ffffff
+
+!FMT Include, StatusLine, ErrorMsg
+#define _colorBD       #ffcfaf
+#define _colorUL       #366060
+#define _colorIT       #80d4aa
+
+!TXT Normal, Normal, Cursor
+#define _foreground    #dcdccc
+#define _background    #3f3f3f
+#define _cursorColor   #aaaaaa
+
+URxvt*color0         : _color0
+URxvt*color1         : _color1
+URxvt*color2         : _color2
+URxvt*color3         : _color3
+URxvt*color4         : _color4
+URxvt*color5         : _color5
+URxvt*color6         : _color6
+URxvt*color7         : _color7
+URxvt*color8         : _color8
+URxvt*color9         : _color9
+URxvt*color10        : _color10
+URxvt*color11        : _color11
+URxvt*color12        : _color12
+URxvt*color13        : _color13
+URxvt*color14        : _color14
+URxvt*color15        : _color15
+URxvt*colorBD        : _colorBD
+URxvt*colorIT        : _colorIT
+URxvt*colorUL        : _colorUL
+URxvt*foreground     : _foreground
+URxvt*background     : _background
+URxvt*cursorColor    : _cursorColor
+
+XTerm*color0         : _color0
+XTerm*color1         : _color1
+XTerm*color2         : _color2
+XTerm*color3         : _color3
+XTerm*color4         : _color4
+XTerm*color5         : _color5
+XTerm*color6         : _color6
+XTerm*color7         : _color7
+XTerm*color8         : _color8
+XTerm*color9         : _color9
+XTerm*color10        : _color10
+XTerm*color11        : _color11
+XTerm*color12        : _color12
+XTerm*color13        : _color13
+XTerm*color14        : _color14
+XTerm*color15        : _color15
+XTerm*colorBD        : _colorBD
+XTerm*colorIT        : _colorIT
+XTerm*colorUL        : _colorUL
+XTerm*foreground     : _foreground
+XTerm*background     : _background
+XTerm*cursorColor    : _cursorColor
 
 URxvt.scrollstyle: plain
 URxvt.font: xft:DejaVu\ Sans\ Mono:size=8:antialias=true:hinting=true:sty;e=Regular
 !URxvt.font: xft:Source\ Code\ Pro:pixelsize=10:antialias=true:hinting=true:style=Regular, xft:Source\ Han\ Sans:pixelsize=10:antialias=true:hinting=true:style=Regular
 ! URxvt.font: xft:Inconsolata:pixelsize=10,style=Regular
-
 URxvt.letterspace: -8
+
+xterm*faceName: DejaVu Sans Mono:size=8:antialias=true
 
 Xft.dpi:        96
 Xft.antialias:  true
