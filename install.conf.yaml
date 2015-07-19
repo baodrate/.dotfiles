@@ -14,3 +14,25 @@
       create: true
       force: true
       path: awesome
+    ~/.Xresources:
+      force: true
+      path: Xresources
+    ~/.config/zsh/antigen:
+      create: true
+      force: true
+      path: zsh/antigen
+    ~/.zshenv:
+      force: true
+      path: zsh/zshenv
+    ~/.zprofile:
+      force: true
+      path: zsh/zprofile
+    ~/.zshrc:
+      force: true
+      path: zsh/zshrc
+    ~/.zlogin:
+      force: true
+      path: zsh/zlogin
+    ~/.zlogout:
+      force: true
+      path: zsh/zlogout

@@ -24,6 +24,7 @@ call plug#begin('~/.vim/plugged')
 " ------------
 " colorschemes
 " ------------
+" Plug 'godlygeek/csapprox' " Make gvim-only colorschemes work in terminal vim
 Plug 'altercation/vim-colors-solarized'
 Plug 'junegunn/seoul256.vim'
 Plug 'w0ng/vim-hybrid'
@@ -112,20 +113,24 @@ set ruler
 " ------
 " colors
 " ------
-set background=dark
 let g:load_doxygen_syntax = 1
-if !(has('gui_running'))
-  set t_Co=256        " Allows color schemes to work properly
+let g:CSApprox_attr_map = { 'bold' : 'bold', 'italic' : '', 'sp' : '' }
+set background=dark
+if has("gui_running")
+    colorscheme zenburn
+else
+    set t_Co=256
+    colorscheme hybrid
+    let g:hybrid_use_Xresources = 1
 endif
-colorscheme zenburn
-" let g:hybrid_use_Xresources = 1
-" colorscheme hybrid
-" colorscheme solarized
+" let g:seoul256_background = 236
 " colorscheme seoul256
+" colorscheme solarized
 " ----
 " gvim
 " ----
 set guifont=DejaVu\ Sans\ Mono\ 8
+" set guifont=DejaVu\ Sans\ Mono\ 8
 "set guioptions-=m  " remove menu bar
 "set guioptions-=T  " remove toolbar
 "set guioptions-=r  " remove right-hand scroll bar
