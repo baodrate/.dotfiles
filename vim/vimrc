@@ -37,7 +37,7 @@ Plug 'itchyny/lightline.vim'
 " tools
 " -----
 Plug 'terryma/vim-multiple-cursors'
-Plug 'kien/ctrlp.vim', { 'on': 'CtrlP' }
+Plug 'kien/ctrlp.vim'
 Plug 'Valloric/YouCompleteMe', { 'do': './install.sh --clang-completer' }
 Plug 'jewes/Conque-Shell', { 'on': 'ConqueTerm' }
 " ---------
