@@ -1,3 +1,4 @@
-*.swp
+[._]*.s[a-w][a-z]
+[._]s[a-w][a-z]
 vim/vim/plugged
 vim/vim/.netrwhist

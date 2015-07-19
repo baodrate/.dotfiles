@@ -12,10 +12,20 @@ source ~/.config/zsh/antigen/antigen.zsh
 # Load the oh-my-zsh's library.
 antigen use oh-my-zsh
 
-# Bundles from the default repo (robbyrussell's oh-my-zsh).
-antigen bundle git
+# robbyrussell's oh-my-zsh :: Productivity
+antigen bundle colored-man          # colored manpages
+antigen bundle colorize             # cat with syntax highlighting
+antigen bundle command-not-found    # suggests package name with relevant command
+antigen bundle cp                   # cp with progress bar (rsync)
+antigen bundle ssh-agent            # ssh-agent start script
+antigen bundle vi-mode
+
+# robbyrussell's oh-my-zsh :: Build tools
+antigen bundle git                  # git aliases
+antigen bundle github               # cli access, url shortener
+
+# robbyrussell's oh-my-zsh :: Python
 antigen bundle pip
-antigen bundle command-not-found
 
 # Syntax highlighting bundle.
 antigen bundle zsh-users/zsh-syntax-highlighting
