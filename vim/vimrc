@@ -27,6 +27,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'altercation/vim-colors-solarized'
 Plug 'junegunn/seoul256.vim'
 Plug 'w0ng/vim-hybrid'
+Plug 'jnurmine/Zenburn'
 " ---------
 " interface
 " ---------
@@ -116,8 +117,9 @@ let g:load_doxygen_syntax = 1
 if !(has('gui_running'))
   set t_Co=256        " Allows color schemes to work properly
 endif
-let g:hybrid_use_Xresources = 1
-colorscheme hybrid
+colorscheme zenburn
+" let g:hybrid_use_Xresources = 1
+" colorscheme hybrid
 " colorscheme solarized
 " colorscheme seoul256
 " ----
