@@ -10,6 +10,12 @@
     ~/.vimrc:
       force: true
       path: vim/vimrc
+    ~/.nvim:
+      force: true
+      path: vim/vim
+    ~/.nvimrc:
+      force: true
+      path: vim/vimrc
     ~/.config/awesome:
       create: true
       force: true
