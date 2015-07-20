@@ -45,3 +45,5 @@ zle-line-init() {
     zle autosuggest-start
 }
 zle -N zle-line-init
+
+export PATH=$HOME/.scripts:$PATH

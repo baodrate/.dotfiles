@@ -20,6 +20,10 @@
       create: true
       force: true
       path: awesome
+    ~/.scripts:
+      create: true
+      force: true
+      path: scripts
     ~/.Xresources:
       force: true
       path: Xresources
