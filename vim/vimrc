@@ -39,7 +39,8 @@ Plug 'itchyny/lightline.vim'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'kien/ctrlp.vim'
 Plug 'Valloric/YouCompleteMe', { 'do': './install.sh --clang-completer' }
-Plug 'jewes/Conque-Shell', { 'on': 'ConqueTerm' }
+" Plug 'jewes/Conque-Shell', { 'on': 'ConqueTerm' }
+Plug 'itchyny/calendar.vim'
 " ---------
 " utilities
 " ---------
@@ -50,8 +51,10 @@ Plug 'vimwiki/vimwiki'
 Plug 'vim-scripts/DoxygenToolkit.vim'
 " Plug 'rhysd/vim-clang-format'
 Plug 'majutsushi/tagbar'
-Plug 'xolox/vim-misc'       " required by vim-easytags
 Plug 'xolox/vim-easytags'
+Plug 'xolox/vim-misc'       " required by vim-easytags
+Plug 'tpope/vim-surround'
+Plug 'Raimondi/delimitMate'
 " ----------------
 " neovim exclusive
 " ----------------
@@ -74,9 +77,9 @@ endif
 " mappings
 " ========
 map Y y$
-let mapleader=","
-nnoremap <silent> \ <C-W>
-nnoremap <Space> za
+let mapleader="\<Space>"
+nnoremap <silent> , <C-W>
+nnoremap <leader><Space> za
 " ------
 " search
 " ------
@@ -209,6 +212,12 @@ let g:vimwiki_ext2syntax = {'.md': 'markdown',
 " tagbar
 " ------
 nmap <F8> :TagbarToggle<CR>
+" --------
+" calendar
+" --------
+let g:calendar_frame = 'default'
+let g:calendar_google_calendar = 1
+let g:calendar_google_task = 1
 " ======
 " neovim
 " ======
