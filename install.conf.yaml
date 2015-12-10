@@ -6,16 +6,14 @@
 - link:
     ~/.vim:
       force: true
-      path: vim/vim
+      path: nvim
     ~/.vimrc:
       force: true
-      path: vim/vimrc
-    ~/.nvim:
+      path: nvim/init.vim
+    ~/.config/nvim:
+      create: true
       force: true
-      path: vim/vim
-    ~/.nvimrc:
-      force: true
-      path: vim/vimrc
+      path: nvim
     ~/.config/awesome:
       create: true
       force: true
@@ -24,13 +22,16 @@
       create: true
       force: true
       path: scripts
+    ~/.xbindkeysrc:
+      force: true
+      path: xbindkeysrc
     ~/.Xresources:
       force: true
       path: Xresources
-    ~/.config/zsh/antigen:
+    ~/.config/zsh:
       create: true
       force: true
-      path: zsh/antigen
+      path: zsh
     ~/.zshenv:
       force: true
       path: zsh/zshenv

@@ -1,8 +1,10 @@
 " ==============================================================================
 " .vimrc
 " ==============================================================================
-set nocompatible
-set encoding=utf-8
+if !has('nvim')
+    set nocompatible
+    set encoding=utf-8
+endif
 filetype plugin indent on
 syntax on
 " ==============================================================================
@@ -13,9 +15,9 @@ syntax on
 " ================
 let firstrun=0
 if empty(glob('~/.vim/autoload/plug.vim'))
-  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  autocmd VimEnter * PlugInstall
+    silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs \
+      https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    autocmd VimEnter * PlugInstall
 endif
 " =======
 " plugins
@@ -33,18 +35,26 @@ Plug 'jnurmine/Zenburn'
 " interface
 " ---------
 Plug 'itchyny/lightline.vim'
+" --------
+" movement
+" --------
+Plug 'terryma/vim-multiple-cursors'
 " -----
 " tools
 " -----
-Plug 'terryma/vim-multiple-cursors'
 Plug 'kien/ctrlp.vim'
-Plug 'Valloric/YouCompleteMe', { 'do': './install.sh --clang-completer' }
-" Plug 'jewes/Conque-Shell', { 'on': 'ConqueTerm' }
-Plug 'itchyny/calendar.vim'
+if has('nvim')
+    Plug 'Shougo/deoplete.nvim'
+    Plug 'benekastah/neomake'
+else
+    Plug 'Valloric/YouCompleteMe', { 'do': './install.sh --clang-completer' }
+    Plug 'scrooloose/syntastic'
+endif
 " ---------
 " utilities
 " ---------
 Plug 'vimwiki/vimwiki'
+Plug 'itchyny/calendar.vim'
 " ----
 " code
 " ----
@@ -58,11 +68,6 @@ Plug 'Raimondi/delimitMate'
 " ----------------
 " neovim exclusive
 " ----------------
-if has('nvim')
-  Plug 'benekastah/neomake'
-else
-  Plug 'scrooloose/syntastic'
-endif
 call plug#end()
 " ====================
 " vim-plug initializer
@@ -78,7 +83,7 @@ endif
 " ========
 map Y y$
 let mapleader="\<Space>"
-nnoremap <silent> , <C-W>
+nnoremap <silent> \ <C-W>
 nnoremap <leader><Space> za
 " ------
 " search
@@ -91,8 +96,8 @@ set smartcase
 " ==========
 " formatting
 " ==========
-set tabstop=4
-set shiftwidth=4
+set tabstop=2
+set shiftwidth=2
 set expandtab
 set smarttab
 set backspace=indent,eol,start
@@ -109,7 +114,6 @@ set foldlevel=1
 " =========
 set showcmd         " Show (partial) command in status line
 set mouse=a
-set anti enc=utf-8
 set relativenumber
 set number
 set ruler
@@ -119,17 +123,15 @@ set ruler
 let g:load_doxygen_syntax = 1
 let g:CSApprox_attr_map = { 'bold' : 'bold', 'italic' : '', 'sp' : '' }
 set background=dark
-if has("gui_running")
-    colorscheme zenburn
-else
-    set t_Co=256
-    colorscheme zenburn
-endif
+colorscheme zenburn
+" colorscheme solarized
 " colorscheme hybrid
 " let g:hybrid_use_Xresources = 1
-" let g:seoul256_background = 236
 " colorscheme seoul256
-" colorscheme solarized
+" let g:seoul256_background = 236
+if !has("gui_running") && !has("nvim")
+    set t_Co=256
+endif
 " ----
 " gvim
 " ----
@@ -179,15 +181,16 @@ let g:ycm_global_ycm_extra_conf         = "~/.vim/.ycm_extra_conf.py"
 let g:EclimCompletionMethod             = 'omnifunc'
 let g:ycm_confirm_extra_conf            = "0"
 let g:ycm_always_populate_location_list = 1
-" -----------
-" ConqueShell
-" -----------
-let g:ConqueTerm_PromptRegex = '^\w\+@[0-9A-Za-z_.-]\+:[0-9A-Za-z_./\~,:-]\+\$'
-let g:ConqueTerm_FastMode = 1
-let g:ConqueTerm_Color = 0
-let g:ConqueTerm_InsertOnEnter = 0
-let g:ConqueTerm_CloseOnEnd = 1
-let g:ConqueTerm_CWInsert = 1
+" --------
+" deoplete
+" --------
+let g:deoplete#enable_at_startup = 1
+" -------
+" neomake
+" -------
+if has('nvim')
+  autocmd! BufWritePost * Neomake
+endif
 " ---------
 " lightline
 " ---------
@@ -218,9 +221,3 @@ nmap <F8> :TagbarToggle<CR>
 let g:calendar_frame = 'default'
 let g:calendar_google_calendar = 1
 let g:calendar_google_task = 1
-" ======
-" neovim
-" ======
-if has('nvim')
-  autocmd! BufWritePost *.c++,*.c,*.cpp,*.py,*.js Neomake
-endif

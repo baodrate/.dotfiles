@@ -4,6 +4,6 @@
 [submodule "awesome/awesome-copycats"]
 	path = awesome/awesome-copycats
 	url = https://github.com/copycat-killer/awesome-copycats.git
-[submodule "zsh/antigen"]
-	path = zsh/antigen
-	url = https://github.com/zsh-users/antigen.git
+[submodule "zsh/zgen"]
+	path = zsh/zgen
+	url = https://github.com/tarjoilija/zgen.git

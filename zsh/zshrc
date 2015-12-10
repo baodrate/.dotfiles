@@ -7,43 +7,58 @@ unsetopt beep
 bindkey -v
 # End of lines configured by zsh-newuser-install
 
-source ~/.config/zsh/antigen/antigen.zsh
+source ~/.config/zsh/zgen/zgen.zsh
 
-# Load the oh-my-zsh's library.
-antigen use oh-my-zsh
+# check if there's no init script
+if ! zgen saved; then
+    echo "Creating a zgen save"
 
-# robbyrussell's oh-my-zsh :: Productivity
-antigen bundle colored-man          # colored manpages
-antigen bundle colorize             # cat with syntax highlighting
-antigen bundle command-not-found    # suggests package name with relevant command
-antigen bundle cp                   # cp with progress bar (rsync)
-antigen bundle ssh-agent            # ssh-agent start script
-antigen bundle vi-mode
+    zgen oh-my-zsh
 
-# robbyrussell's oh-my-zsh :: Build tools
-antigen bundle git                  # git aliases
-antigen bundle github               # cli access, url shortener
+    # robbyrussell's oh-my-zsh :: Productivity
+    zgen oh-my-zsh plugins/colored-man-pages # colored manpages
+    zgen oh-my-zsh plugins/colorize          # cat with syntax highlighting
+    zgen oh-my-zsh plugins/command-not-found # suggests package name
+    zgen oh-my-zsh plugins/cp                # cp with progress bar (rsync)
+    zgen oh-my-zsh plugins/ssh-agent         # ssh-agent start script
+    zgen oh-my-zsh plugins/vi-mode
 
-# robbyrussell's oh-my-zsh :: Python
-antigen bundle pip
+    # robbyrussell's oh-my-zsh :: Build tools
+    zgen oh-my-zsh plugins/git                  # git aliases
+    zgen oh-my-zsh plugins/github               # cli access, url shortener
 
-# Misc tools
-antigen bundle zsh-users/zsh-syntax-highlighting
-antigen bundle tarruda/zsh-autosuggestions
-antigen bundle chrissicool/zsh-256color
-antigen bundle djui/alias-tips
+    # robbyrussell's oh-my-zsh :: Python
+    zgen oh-my-zsh plugins/pip
 
-# Load the theme.
-# oh-my-zsh :: mrtazz blinks norm
-antigen theme norm
+    # bulk load
+#     zgen loadall <<EOPLUGINS
+#         zsh-users/zsh-history-substring-search
+#         /path/to/local/plugin
+# EOPLUGINS
+    # ^ can't indent this EOPLUGINS
 
-# Tell antigen that you're done.
-antigen apply
+    # completions
+    zgen load zsh-users/zsh-completions src
 
-# Enable autosuggestions automatically.
-zle-line-init() {
-    zle autosuggest-start
-}
-zle -N zle-line-init
+    # Misc tools
+    zgen load zsh-users/zsh-syntax-highlighting
+    zgen load chrissicool/zsh-256color
+    zgen load djui/alias-tips
+    # autosuggestions must be loaded after zsh-syntax-highlighting
+    # zgen load tarruda/zsh-autosuggestions
+
+    # theme
+    # oh-my-zsh :: mrtazz blinks norm
+    zgen oh-my-zsh themes/norm
+
+    # save all to init script
+    zgen save
+fi
+
+# zgen handles compinit
+# autoload -U compinit
+# compinit
+
+alias ls='exa'
 
 export PATH=$HOME/.scripts:$PATH
