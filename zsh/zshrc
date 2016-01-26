@@ -21,7 +21,8 @@ if ! zgen saved; then
     zgen oh-my-zsh plugins/command-not-found # suggests package name
     zgen oh-my-zsh plugins/cp                # cp with progress bar (rsync)
     zgen oh-my-zsh plugins/ssh-agent         # ssh-agent start script
-    zgen oh-my-zsh plugins/vi-mode
+    zgen oh-my-zsh plugins/vi-mode           # for those sweet shortcuts
+    zgen oh-my-zsh plugins/sprunge           # pastebin alternative
 
     # robbyrussell's oh-my-zsh :: Build tools
     zgen oh-my-zsh plugins/git                  # git aliases
@@ -60,5 +61,16 @@ fi
 # compinit
 
 alias ls='exa'
+alias yolo='pacaur -Syuu --noconfirm'
+function a(){
+    AURA="$(aura "$@")"
 
-export PATH=$HOME/.scripts:$PATH
+    if echo "$AURA" | grep -q '^aura >>= .*You have to use `.*sudo.*` for that.*$'
+    then
+        sudo aura "$@"
+    else
+        echo "$AURA"
+    fi
+}
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

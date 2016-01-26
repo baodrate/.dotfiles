@@ -18,6 +18,14 @@
       create: true
       force: true
       path: awesome
+    ~/.config/termite:
+      create: true
+      force: true
+      path: termite
+    ~/.config/sway:
+      create: true
+      force: true
+      path: sway
     ~/.scripts:
       create: true
       force: true
