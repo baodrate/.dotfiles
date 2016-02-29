@@ -72,5 +72,6 @@ function a(){
         echo "$AURA"
     fi
 }
+export BROWSER="firefox"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

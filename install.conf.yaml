@@ -18,18 +18,26 @@
       create: true
       force: true
       path: awesome
+    ~/.fonts:
+      create: true
+      force: true
+      path: fonts
     ~/.config/termite:
       create: true
       force: true
       path: termite
+    ~/.vimperator:
+      create: true
+      force: true
+      path: vimperator
+    ~/.vimperatorrc:
+      create: true
+      force: true
+      path: vimperatorrc
     ~/.config/sway:
       create: true
       force: true
       path: sway
-    ~/.scripts:
-      create: true
-      force: true
-      path: scripts
     ~/.xbindkeysrc:
       force: true
       path: xbindkeysrc
@@ -40,6 +48,14 @@
       create: true
       force: true
       path: zsh
+    ~/.xinitrc:
+      create: true
+      force: true
+      path: xinitrc
+    ~/.xprofile:
+      create: true
+      force: true
+      path: xprofile
     ~/.zshenv:
       force: true
       path: zsh/zshenv

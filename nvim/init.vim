@@ -32,11 +32,17 @@ Plug 'junegunn/seoul256.vim'
 Plug 'w0ng/vim-hybrid'
 Plug 'jnurmine/Zenburn'
 Plug 'morhetz/gruvbox'
+Plug 'freeo/vim-kalisi'
+Plug 'tomasr/molokai'
+Plug 'baskerville/bubblegum'
 " ---------
 " interface
 " ---------
-Plug 'itchyny/lightline.vim'
+" Plug 'itchyny/lightline.vim'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'airblade/vim-gitgutter'
+Plug 'mhinz/vim-startify'
 " --------
 " movement
 " --------
@@ -81,6 +87,7 @@ Plug 'Raimondi/delimitMate'
 Plug 'rust-lang/rust.vim'
 Plug 'godlygeek/tabular'    " required to come before vim-markdown
 Plug 'plasticboy/vim-markdown'
+Plug 'lervag/vimtex'
 " ----------------
 " neovim exclusive
 " ----------------
@@ -134,22 +141,28 @@ set relativenumber
 set number
 set ruler
 set hidden          " use vim's buffers as they were meant to be used
+set list          " Display unprintable characters f12 - switches
+set listchars=tab:•\ ,trail:•,extends:»,precedes:« " Unprintable chars mapping
 " ------
 " colors
 " ------
 let g:load_doxygen_syntax = 1
 let g:CSApprox_attr_map = { 'bold' : 'bold', 'italic' : '', 'sp' : '' }
 set background=dark
-let g:gruvbox_italic=1
-colorscheme gruvbox
-nnoremap <silent> [oh :call gruvbox#hls_show()<CR>
-nnoremap <silent> ]oh :call gruvbox#hls_hide()<CR>
-nnoremap <silent> coh :call gruvbox#hls_toggle()<CR>
-nnoremap * :let @/ = ""<CR>:call gruvbox#hls_show()<CR>*
-nnoremap / :let @/ = ""<CR>:call gruvbox#hls_show()<CR>/
-nnoremap ? :let @/ = ""<CR>:call gruvbox#hls_show()<CR>?
+" colorscheme gruvbox
+" let g:gruvbox_italic=1
+" nnoremap <silent> [oh :call gruvbox#hls_show()<CR>
+" nnoremap <silent> ]oh :call gruvbox#hls_hide()<CR>
+" nnoremap <silent> coh :call gruvbox#hls_toggle()<CR>
+" nnoremap * :let @/ = ""<CR>:call gruvbox#hls_show()<CR>*
+" nnoremap / :let @/ = ""<CR>:call gruvbox#hls_show()<CR>/
+" nnoremap ? :let @/ = ""<CR>:call gruvbox#hls_show()<CR>?
+" colorscheme kalisi
 " colorscheme zenburn
 " colorscheme solarized
+" colorscheme molokai
+" let g:molokai_original = 0
+colorscheme bubblegum-256-dark
 " colorscheme hybrid
 " let g:hybrid_use_Xresources = 1
 " colorscheme seoul256
@@ -173,10 +186,21 @@ set splitright
 " tab and statusline
 " ------------------
 set laststatus=2
-set showtabline=2
+" set showtabline=2
 set guioptions-=e
+let g:airline_theme='bubblegum'
+let g:airline_powerline_fonts = 1
+if !exists('g:airline_symbols')
+  let g:airline_symbols = {}
+endif
+let g:airline_symbols.space = "\ua0"
+" Enable the list of buffers
+let g:airline#extensions#tabline#enabled = 1
+" Show just the filename
+let g:airline#extensions#tabline#fnamemod = ':t'
+set noshowmode
 " ---------
-" long-line 
+" long-line
 " ---------
 set autoindent
 set textwidth=79
@@ -271,67 +295,68 @@ endif
 " ---------
 " lightline
 " ---------
-let g:lightline = {
-      \ 'colorscheme': 'gruvbox',
-      \ 'mode_map': { 'c': 'NORMAL' },
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ] ]
-      \ },
-      \ 'component_function': {
-      \   'modified': 'LightLineModified',
-      \   'readonly': 'LightLineReadonly',
-      \   'fugitive': 'LightLineFugitive',
-      \   'filename': 'LightLineFilename',
-      \   'fileformat': 'LightLineFileformat',
-      \   'filetype': 'LightLineFiletype',
-      \   'fileencoding': 'LightLineFileencoding',
-      \   'mode': 'LightLineMode',
-      \ },
-      \ 'separator': { 'left': '⮀', 'right': '⮂' },
-      \ 'subseparator': { 'left': '⮁', 'right': '⮃' }
-      \ }
+" let g:lightline = {
+"       \ 'colorscheme': 'gruvbox',
+"       \ 'mode_map': { 'c': 'NORMAL' },
+"       \ 'active': {
+"       \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ] ]
+"       \ },
+"       \ 'component_function': {
+"       \   'modified': 'LightLineModified',
+"       \   'readonly': 'LightLineReadonly',
+"       \   'fugitive': 'LightLineFugitive',
+"       \   'filename': 'LightLineFilename',
+"       \   'fileformat': 'LightLineFileformat',
+"       \   'filetype': 'LightLineFiletype',
+"       \   'fileencoding': 'LightLineFileencoding',
+"       \   'mode': 'LightLineMode',
+"       \ },
+"       \ 'separator': { 'left': '⮀', 'right': '⮂' },
+"       \ 'subseparator': { 'left': '⮁', 'right': '⮃' }
+"       \ }
+"
+" function! LightLineModified()
+"   return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'
+" endfunction
+"
+" function! LightLineReadonly()
+"   return &ft !~? 'help\|vimfiler\|gundo' && &readonly ? '⭤' : ''
+" endfunction
+"
+" function! LightLineFilename()
+"   return ('' != LightLineReadonly() ? LightLineReadonly() . ' ' : '') .
+"         \ (&ft == 'vimfiler' ? vimfiler#get_status_string() :
+"         \  &ft == 'unite' ? unite#get_status_string() :
+"         \  &ft == 'vimshell' ? vimshell#get_status_string() :
+"         \ '' != expand('%:t') ? expand('%:t') : '[No Name]') .
+"         \ ('' != LightLineModified() ? ' ' . LightLineModified() : '')
+" endfunction
+"
+" function! LightLineFugitive()
+"   if &ft !~? 'vimfiler\|gundo' && exists("*fugitive#head")
+"     let _ = fugitive#head()
+"     return strlen(_) ? '⭠ '._ : ''
+"   endif
+"   return ''
+" endfunction
+"
+" function! LightLineFileformat()
+"   return winwidth(0) > 70 ? &fileformat : ''
+" endfunction
+"
+" function! LightLineFiletype()
+"   return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype : 'no ft') : ''
+" endfunction
+"
+" function! LightLineFileencoding()
+"   return winwidth(0) > 70 ? (strlen(&fenc) ? &fenc : &enc) : ''
+" endfunction
+"
+" function! LightLineMode()
+"   return winwidth(0) > 60 ? lightline#mode() : ''
+" endfunction
+" set noshowmode
 
-function! LightLineModified()
-  return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'
-endfunction
-
-function! LightLineReadonly()
-  return &ft !~? 'help\|vimfiler\|gundo' && &readonly ? '⭤' : ''
-endfunction
-
-function! LightLineFilename()
-  return ('' != LightLineReadonly() ? LightLineReadonly() . ' ' : '') .
-        \ (&ft == 'vimfiler' ? vimfiler#get_status_string() :
-        \  &ft == 'unite' ? unite#get_status_string() :
-        \  &ft == 'vimshell' ? vimshell#get_status_string() :
-        \ '' != expand('%:t') ? expand('%:t') : '[No Name]') .
-        \ ('' != LightLineModified() ? ' ' . LightLineModified() : '')
-endfunction
-
-function! LightLineFugitive()
-  if &ft !~? 'vimfiler\|gundo' && exists("*fugitive#head")
-    let _ = fugitive#head()
-    return strlen(_) ? '⭠ '._ : ''
-  endif
-  return ''
-endfunction
-
-function! LightLineFileformat()
-  return winwidth(0) > 70 ? &fileformat : ''
-endfunction
-
-function! LightLineFiletype()
-  return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype : 'no ft') : ''
-endfunction
-
-function! LightLineFileencoding()
-  return winwidth(0) > 70 ? (strlen(&fenc) ? &fenc : &enc) : ''
-endfunction
-
-function! LightLineMode()
-  return winwidth(0) > 60 ? lightline#mode() : ''
-endfunction
-set noshowmode
 " -------
 " vimwiki
 " -------
@@ -345,7 +370,7 @@ let wiki_2 = {}
 let wiki_2.path = '~/project_docs/'
 let wiki_2.index = 'main'
 let g:vimwiki_list = [wiki_1, wiki_2]
-let g:vimwiki_ext2syntax = {'.md': 'markdown', 
+let g:vimwiki_ext2syntax = {'.md': 'markdown',
                           \ '.mkd': 'markdown',
                           \ '.wiki': 'media'}
 " --------

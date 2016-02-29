@@ -1,0 +1,5 @@
+[[ -f ~/.Xresources ]] && xrdb -merge -I$HOME ~/.Xresources
+compton --vsync opengl -cb &
+exec cbatticon &
+synergyc Freyr &
+exec xbindkeys &

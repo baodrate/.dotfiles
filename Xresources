@@ -1,255 +1,71 @@
 URxvt.scrollstyle: plain
-! URxvt.allow_bold:           true
-URxvt.allow_bold:           false
-URxvt.font:                 xft:PragmataPro\ Mono:size=9:antialias=true:autohint=true
-! URxvt.font: xft:DejaVu\ Sans\ Mono:size=8:antialias=true:hinting=true:style=Regular
+URxvt.allow_bold:           true
+URxvt.font:                 xft:PragmataPro\ Mono:size=11:antialias=true:autohint=true,
 ! URxvt.font: xft:Source\ Code\ Pro:pixelsize=10:antialias=true:hinting=true:style=Regular, xft:Source\ Han\ Sans:pixelsize=10:antialias=true:hinting=true:style=Regular
 ! URxvt.font: xft:Inconsolata:pixelsize=10,style=Regular
-URxvt.boldFont:             xft:PragmataPro\ Mono:style=bold:size=9:antialias=true:autohint=true
-URxvt.letterSpace: -2
+URxvt.boldFont:             xft:PragmataPro\ Mono:style=bold:size=11:antialias=true:autohint=true
+URxvt.letterSpace: -1
+URxvt.depth: 32
 
-xterm*faceName: PragmataPro Mono:size=8:antialias=true
-
-Xft.dpi:        96
+Xft.dpi:        74
 Xft.antialias:  true
 Xft.hinting:    true
 Xft.rgba:       rgb
 Xft.hintstyle:  hintslight
 
 !! Set the font to pragmata.
-*font:                  PragmataPro:size=9
-dmenu.font:             xft:PragmataPro:size=9:antialias=true:autohint=false
+*font:                  PragmataPro:size=11
+dmenu.font:             xft:PragmataPro:size=11:antialias=true:autohint=false
 
-! -----------------------------------------------------------------------------
-! File: gruvbox-dark.xresources
-! Description: Retro groove colorscheme generalized
-! Author: morhetz <morhetz@gmail.com>
-! Source: https://github.com/morhetz/gruvbox-generalized
-! Last Modified: 6 Sep 2014
-! -----------------------------------------------------------------------------
+!Bubblegum
+!black.normal     : xoria256.LineNr.guibg
+!black.bright     : black.normal.rgb - 8
+URxvt.color0      : #121212
+URxvt.color8      : #0a0a0a
 
-! hard contrast: *background: #1d2021
-*background: #282828
-! soft contrast: *background: #32302f
-*foreground: #ebdbb2
-! Black + DarkGrey
-*color0:  #282828
-*color8:  #928374
-! DarkRed + Red
-*color1:  #cc241d
-*color9:  #fb4934
-! DarkGreen + Green
-*color2:  #98971a
-*color10: #b8bb26
-! DarkYellow + Yellow
-*color3:  #d79921
-*color11: #fabd2f
-! DarkBlue + Blue
-*color4:  #458588
-*color12: #83a598
-! DarkMagenta + Magenta
-*color5:  #b16286
-*color13: #d3869b
-! DarkCyan + Cyan
-*color6:  #689d6a
-*color14: #8ec07c
-! LightGrey + White
-*color7:  #a89984
-*color15: #ebdbb2
+!red.normal       : red.bright.r - 8
+!red.bright       : xoria256.Special.guifg
+URxvt.color1      : #d75f5f
+URxvt.color9      : #d787af
 
-! ========================================================================================
-! ! Solarized color scheme for the X Window System
-! !
-! ! http://ethanschoonover.com/solarized
-! ========================================================================================
+!green.normal     : green.bright.g - 8
+!green.bright     : xoria256.PreProc.guifg
+URxvt.color2      : #00af87
+URxvt.color10     : #5faf5f
 
-! ! Common
-! 
-! #define S_yellow        #b58900
-! #define S_orange        #cb4b16
-! #define S_red           #dc322f
-! #define S_magenta       #d33682
-! #define S_violet        #6c71c4
-! #define S_blue          #268bd2
-! #define S_cyan          #2aa198
-! #define S_green         #859900
-! 
-! 
-! ! Dark
-! 
-! #define S_base03        #002b36
-! #define S_base02        #073642
-! #define S_base01        #586e75
-! #define S_base00        #657b83
-! #define S_base0         #839496
-! #define S_base1         #93a1a1
-! #define S_base2         #eee8d5
-! #define S_base3         #fdf6e3
-! 
-! 
-! ! Light
-! 
-! ! #define S_base03        #fdf6e3
-! ! #define S_base02        #eee8d5
-! ! #define S_base01        #93a1a1
-! ! #define S_base00        #839496
-! ! #define S_base0         #657b83
-! ! #define S_base1         #586e75
-! ! #define S_base2         #073642
-! ! #define S_base3         #002b36
-! 
-! 
-! ! To only apply colors to your terminal, for example, prefix
-! ! the color assignment statement with its name. Example:
-! !
-! ! URxvt*background:            S_base03
-! 
-! *background:              S_base03
-! *foreground:              S_base0
-! *fading:                  40
-! *fadeColor:               S_base03
-! *cursorColor:             S_base1
-! *pointerColorBackground:  S_base01
-! *pointerColorForeground:  S_base1
-! 
-! *color0:                  S_base02
-! *color1:                  S_red
-! *color2:                  S_green
-! *color3:                  S_yellow
-! *color4:                  S_blue
-! *color5:                  S_magenta
-! *color6:                  S_cyan
-! *color7:                  S_base2
-! *color9:                  S_orange
-! *color8:                  S_base03
-! *color10:                 S_base01
-! *color11:                 S_base00
-! *color12:                 S_base0
-! *color13:                 S_violet
-! *color14:                 S_base1
-! *color15:                 S_base3
+!yellow.normal    : yellow.bright.rg - 8
+!yellow.bright    : xoria256.Special.guifg
+URxvt.color3      : #afd75f
+URxvt.color11     : #d7af5f
 
-! ========================================================================================
-! Hybrid Terminal Colours. Uses the palette from Tomorrow-Night:
-! https://github.com/chriskempson/tomorrow-theme/blob/master/vim/colors/Tomorrow-Night.vim
-! vim: ft=xdefaults
-! ========================================================================================
+!blue.normal      : blue.bright.b - 8
+!blue.bright      : xoria256.Statement.guifg
+URxvt.color4      : #5fafd7
+URxvt.color12     : #87afd7
 
-! *background: #1D1F21
-! *foreground: #C5C8C6
-! ! black
-! *color0: #282A2E
-! *color8: #373B41
-! ! red
-! *color1: #A54242
-! *color9: #CC6666
-! ! green
-! *color2: #8C9440
-! *color10: #B5BD68
-! ! yellow
-! *color3: #DE935F
-! *color11: #F0C674
-! ! blue
-! *color4: #5F819D
-! *color12: #81A2BE
-! ! magenta
-! *color5: #85678F
-! *color13: #B294BB
-! ! cyan
-! *color6: #5E8D87
-! *color14: #8ABEB7
-! ! white
-! *color7: #707880
-! *color15: #C5C8C6
+!magenta.normal   : magenta.bright.rb - 8
+!magenta.bright   : xoria256.Identifier.guifg
+URxvt.color5      : #8787af
+URxvt.color13     : #8787d7
 
-! ========================================================================================
-! Zenburn color-scheme
-! http://git.sysphere.org/dotfiles/tree/Xdefaults
-! ========================================================================================
-! !BLK Cursor
-! #define _color0        #3f3f3f
-! #define _color8        #000000
-! 
-! !RED Tag
-! #define _color1        #cc9393
-! #define _color9        #dca3a3
-! 
-! !GRN SpecialKey
-! #define _color2        #7f9f7f
-! #define _color10       #bfebbf
-! 
-! !YEL Keyword
-! #define _color3        #d0bf8f
-! #define _color11       #f0dfaf
-! 
-! !BLU Number
-! #define _color4        #6ca0a3
-! #define _color12       #8cd0d3
-! 
-! !MAG Precondit
-! #define _color5        #dc8cc3
-! #define _color13       #dc8cc3
-! 
-! !CYN Float
-! #define _color6        #93e0e3
-! #define _color14       #93e0e3
-! 
-! !WHT Search
-! #define _color7        #dcdccc
-! #define _color15       #ffffff
-! 
-! !FMT Include, StatusLine, ErrorMsg
-! #define _colorBD       #ffcfaf
-! #define _colorUL       #366060
-! #define _colorIT       #80d4aa
-! 
-! !TXT Normal, Normal, Cursor
-! #define _foreground    #dcdccc
-! #define _background    #3f3f3f
-! #define _cursorColor   #aaaaaa
-! 
-! URxvt*color0         : _color0
-! URxvt*color1         : _color1
-! URxvt*color2         : _color2
-! URxvt*color3         : _color3
-! URxvt*color4         : _color4
-! URxvt*color5         : _color5
-! URxvt*color6         : _color6
-! URxvt*color7         : _color7
-! URxvt*color8         : _color8
-! URxvt*color9         : _color9
-! URxvt*color10        : _color10
-! URxvt*color11        : _color11
-! URxvt*color12        : _color12
-! URxvt*color13        : _color13
-! URxvt*color14        : _color14
-! URxvt*color15        : _color15
-! URxvt*colorBD        : _colorBD
-! URxvt*colorIT        : _colorIT
-! URxvt*colorUL        : _colorUL
-! URxvt*foreground     : _foreground
-! URxvt*background     : _background
-! URxvt*cursorColor    : _cursorColor
-! 
-! XTerm*color0         : _color0
-! XTerm*color1         : _color1
-! XTerm*color2         : _color2
-! XTerm*color3         : _color3
-! XTerm*color4         : _color4
-! XTerm*color5         : _color5
-! XTerm*color6         : _color6
-! XTerm*color7         : _color7
-! XTerm*color8         : _color8
-! XTerm*color9         : _color9
-! XTerm*color10        : _color10
-! XTerm*color11        : _color11
-! XTerm*color12        : _color12
-! XTerm*color13        : _color13
-! XTerm*color14        : _color14
-! XTerm*color15        : _color15
-! XTerm*colorBD        : _colorBD
-! XTerm*colorIT        : _colorIT
-! XTerm*colorUL        : _colorUL
-! XTerm*foreground     : _foreground
-! XTerm*background     : _background
-! XTerm*cursorColor    : _cursorColor
+!cyan.normal      : cyan.bright.gb - 8
+!cyan.bright      : green.bright + blue.bright
+URxvt.color6      : #00afd7
+URxvt.color14     : #87afff
+
+!white.normal     : white.bright.rgb - 8
+!white.bright     : xoria256.Folded.guifg
+URxvt.color7      : #ffffff
+URxvt.color15     : #ffffff
+
+!foreground       : xoria256.Normal.guifg
+!background       : xoria256.Normal.guibg
+!cursor           : xoria256.Cursor.guibg
+URxvt.foreground  : #a8a8a8
+URxvt.background  : #262626
+URxvt.cursorColor : #d787af
+
+!bold             : xoria256.Type.guifg
+!underline        : xoria256.htmlValue.guifg
+URxvt.colorBD     : #5fafd7
+URxvt.colorUL     : #00afd7
