@@ -1,5 +1,9 @@
 [._]*.s[a-w][a-z]
 [._]s[a-w][a-z]
-nvim/plugged
-nvim/.netrwhist
+neovim/.netrwhist
+neovim/plugged
 *~
+vimperator/info/default/history-command
+vimperator/info/default/history-search
+vimperator/info/default/local-marks
+tags
