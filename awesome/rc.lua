@@ -584,7 +584,7 @@ awful.rules.rules = {
                      buttons = clientbuttons,
 	                   size_hints_honor = false } },
     { rule = { class = "URxvt" },
-          properties = { opacity = 0.99 } },
+          properties = { opacity = 0.95 } },
 
     { rule = { class = "MPlayer" },
           properties = { floating = true } },

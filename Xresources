@@ -1,3 +1,6 @@
+URxvt.inputMethod: ibus
+URxvt.preeditType: OverTheSpot
+
 URxvt.scrollstyle: plain
 URxvt.allow_bold:           true
 URxvt.font:                 xft:PragmataPro\ Mono:size=11:antialias=true:autohint=true,

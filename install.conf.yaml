@@ -6,14 +6,14 @@
 - link:
     ~/.vim:
       force: true
-      path: nvim
+      path: neovim
     ~/.vimrc:
       force: true
-      path: nvim/init.vim
+      path: neovim/init.vim
     ~/.config/nvim:
       create: true
       force: true
-      path: nvim
+      path: neovim
     ~/.config/awesome:
       create: true
       force: true
