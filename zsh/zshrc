@@ -60,7 +60,6 @@ fi
 # autoload -U compinit
 # compinit
 
-alias ls='exa'
 alias yolo='pacaur -Syuu --noconfirm'
 function a(){
     AURA="$(aura "$@")"
