@@ -4,6 +4,9 @@
   - [git submodule update --init --recursive, Installing submodules]
 
 - link:
+    ~/.emacs.d:
+      force: true
+      path: spacemacs
     ~/.vim:
       force: true
       path: neovim

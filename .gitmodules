@@ -10,3 +10,6 @@
 [submodule "gruvbox-contrib"]
 	path = gruvbox-contrib
 	url = https://github.com/morhetz/gruvbox-contrib.git
+[submodule "spacemacs"]
+	path = spacemacs
+	url = git@github.com:qubidt/spacemacs.git
