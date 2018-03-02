@@ -8,6 +8,17 @@ endif
 filetype plugin indent on
 syntax on
 
+if has("unix")
+  if (system('uname') =~ "darwin")  " for MacOS
+    let g:python2_host_prog = '/usr/local/bin/python'
+    let g:python3_host_prog = '/usr/local/bin/python3'
+  endif
+else
+  if has ("win32")
+    " let g:python2_host_prog = 'C:\Users\BaoT\AppData\Local\Programs\Python\Python36-32\python.exe'
+    let g:python3_host_prog = 'C:\Users\BaoT\AppData\Local\Programs\Python\Python36-32\python.exe'
+  endif
+endif
 " ==============================================================================
 "                                     options
 " ==============================================================================

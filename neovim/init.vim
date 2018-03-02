@@ -4,13 +4,33 @@
 
 " ----------- vim-plug grabber -------
 let firstrun=0
-if empty(glob('~/.vim/autoload/plug.vim'))
-    silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs \
-      https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+if has("win32")
+  if empty(glob('~\AppData\Local\nvim\autoload\plug.vim'))
+    (New-Object Net.WebClient).DownloadFile(
+      'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim',
+      $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath(
+        "~\AppData\Local\nvim\autoload\plug.vim"
+      )
+    )
     autocmd VimEnter * PlugInstall
+  endif
+else
+  if has("unix")
+    if empty(glob('~/.config/nvim/autoload/plug.vim'))
+      silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs \
+        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+      autocmd VimEnter * PlugInstall
+    endif
+  endif
 endif
 
-call plug#begin('~/.vim/plugged')
+if has("win32")
+  call plug#begin('~\AppData\Local\nvim\plugged')
+else
+  if has("unix")
+    call plug#begin('~/.config/nvim/plugged')
+  endif
+endif
 
 " ----------- Colorschemes -----------
 " Plug 'godlygeek/csapprox' " Make gvim-only colorschemes work in terminal vim
@@ -91,9 +111,17 @@ endif
 " ==============================================================================
 "                                Source Settings
 " ==============================================================================
-source ~/.dotfiles/neovim/general.vim
-source ~/.dotfiles/neovim/mappings.vim
-source ~/.dotfiles/neovim/plugins.vim
+if has("unix")
+  source ~/.config/nvim/general.vim
+  source ~/.config/nvim/mappings.vim
+  source ~/.config/nvim/plugins.vim
+else
+  if has("win32")
+    source ~\AppData\Local\nvim\general.vim
+    source ~\AppData\Local\nvim\mappings.vim
+    source ~\AppData\Local\nvim\plugins.vim
+  endif
+endif
 if filereadable(".vimrc_proj")
     so .vimrc_proj
 else

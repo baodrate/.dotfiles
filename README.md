@@ -16,6 +16,8 @@ Using
 [junegunn's vim-plug](https://github.com/junegunn/vim-plug)
 for plugin management.
 
+*Note*: Plugin list not up to date
+
 ### colorschemes
 Most of these require gvim/256-colors terminal support
 [vim-colors-solarized](https://github.com/altercation/vim-colors-solarized)
