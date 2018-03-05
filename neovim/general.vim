@@ -1,35 +1,32 @@
 " ==============================================================================
 "                                     essential
 " ==============================================================================
-if !has('nvim')
-    set nocompatible
-    set encoding=utf-8
-endif
+" Required for VimWiki compatibility
+set nocompatible
+set encoding=utf-8
 filetype plugin indent on
 syntax on
 
-if has("unix")
-  if (system('uname') =~ "darwin")  " for MacOS
-    let g:python2_host_prog = '/usr/local/bin/python'
-    let g:python3_host_prog = '/usr/local/bin/python3'
-  endif
-else
-  if has ("win32")
-    " let g:python2_host_prog = 'C:\Users\BaoT\AppData\Local\Programs\Python\Python36-32\python.exe'
-    let g:python3_host_prog = 'C:\Users\BaoT\AppData\Local\Programs\Python\Python36-32\python.exe'
-  endif
+if (g:os == 'Darwin') " for MacOS
+  let g:python2_host_prog = '/usr/local/bin/python'
+  let g:python3_host_prog = '/usr/local/bin/python3'
+elseif (g:os == 'Windows')
+  " let g:python2_host_prog = 'C:\Users\BaoT\AppData\Local\Programs\Python\Python36-32\python.exe'
+  let g:python3_host_prog = 'C:\Users\BaoT\AppData\Local\Programs\Python\Python36-32\python.exe'
 endif
 " ==============================================================================
 "                                     options
 " ==============================================================================
-" ------
+" ======
 " search
-" ------
+" ======
 set showmatch       " jump to matching brace
 set hlsearch        " highlight search matches
 set incsearch       " jump to search result while typing
+" case insensitive search (unless search terms contain uppercase characters)
 set ignorecase
 set smartcase
+
 " ==========
 " formatting
 " ==========
@@ -46,7 +43,7 @@ autocmd Filetype python setlocal noexpandtab
     \ softtabstop=0
     \ shiftwidth=4
     \ tabstop=4
-" -------
+
 " folding
 " -------
 set foldmethod=indent   "fold based on indent
@@ -54,6 +51,7 @@ set foldmethod=indent   "fold based on indent
 set foldnestmax=4       "deepest fold is 10 levels
 set nofoldenable        "dont fold by default
 set foldlevel=1
+
 " =========
 " interface
 " =========
@@ -63,28 +61,37 @@ set relativenumber
 set number
 set ruler
 set hidden          " use vim's buffers as they were meant to be used
-set list          " Display unprintable characters f12 - switches
-set listchars=tab:•\ ,trail:•,extends:»,precedes:« " Unprintable chars mapping
-" ------
+
+" Unprintable chars mapping
+" -------------------------
+if g:os == "Windows"
+  " Windows doesn't like unicode characters... use ascii instead
+  " These are the same listchars provided by TPope's Vim-Sensible
+  set listchars=tab:>\ ,trail:-,extends:>,precedes:<,nbsp:+
+  " Windows' gvim doesn't open as unicde, so this will fail:
+  " set showbreak=»
+  " Instead, use this:
+  let &showbreak="\u00bb\ "
+else
+  " alternative characters: ‣ · ↲ ⏎ ⟨⟩ «» ¬ ¶ ␣ …
+  set listchars=tab:→\ ,trail:•,precedes:⟨,extends:⟩
+  set showbreak=↪\
+endif
+set list
+
 " colors
 " ------
 let g:load_doxygen_syntax = 1
-let g:CSApprox_attr_map = { 'bold' : 'bold', 'italic' : '', 'sp' : '' }
+" for 'godlygeek/csapprox' plugin:
+" let g:CSApprox_attr_map = { 'bold' : 'bold', 'italic' : '', 'sp' : '' }
 set background=dark
-" colorscheme gruvbox
-" let g:gruvbox_italic=1
-" nnoremap <silent> [oh :call gruvbox#hls_show()<CR>
-" nnoremap <silent> ]oh :call gruvbox#hls_hide()<CR>
-" nnoremap <silent> coh :call gruvbox#hls_toggle()<CR>
-" nnoremap * :let @/ = ""<CR>:call gruvbox#hls_show()<CR>*
-" nnoremap / :let @/ = ""<CR>:call gruvbox#hls_show()<CR>/
-" nnoremap ? :let @/ = ""<CR>:call gruvbox#hls_show()<CR>?
+colorscheme gruvbox
 " colorscheme kalisi
 " colorscheme zenburn
 " colorscheme solarized
 " colorscheme molokai
 " let g:molokai_original = 0
-colorscheme bubblegum-256-dark
+" colorscheme bubblegum-256-dark
 " colorscheme hybrid
 " let g:hybrid_use_Xresources = 1
 " colorscheme seoul256
@@ -92,7 +99,7 @@ colorscheme bubblegum-256-dark
 if !has("gui_running") && !has("nvim")
     set t_Co=256
 endif
-" ----
+
 " gvim
 " ----
 set guifont=DejaVu\ Sans\ Mono\ 8
@@ -104,7 +111,7 @@ set guifont=DejaVu\ Sans\ Mono\ 8
 set guioptions=ac   " autoselection and console only (no GUI prompt)
 set splitbelow
 set splitright
-" ------------------
+
 " tab and statusline
 " ------------------
 set laststatus=2

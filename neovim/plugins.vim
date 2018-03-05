@@ -109,7 +109,7 @@ let $RUST_SRC_PATH = getcwd()
 "" let g:neocomplcache_force_omni_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
 "" let g:neocomplcache_force_omni_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
 " ==============================================================================
-"                                     lightline
+"                                     airline
 " ==============================================================================
 let g:airline_theme='bubblegum'
 let g:airline_powerline_fonts = 1
@@ -122,86 +122,53 @@ let g:airline#extensions#tabline#enabled = 1
 " Show just the filename
 let g:airline#extensions#tabline#fnamemod = ':t'
 " ==============================================================================
-"                                     lightline
-" ==============================================================================
-"" let g:lightline = {
-""       \ 'colorscheme': 'gruvbox',
-""       \ 'mode_map': { 'c': 'NORMAL' },
-""       \ 'active': {
-""       \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ] ]
-""       \ },
-""       \ 'component_function': {
-""       \   'modified': 'LightLineModified',
-""       \   'readonly': 'LightLineReadonly',
-""       \   'fugitive': 'LightLineFugitive',
-""       \   'filename': 'LightLineFilename',
-""       \   'fileformat': 'LightLineFileformat',
-""       \   'filetype': 'LightLineFiletype',
-""       \   'fileencoding': 'LightLineFileencoding',
-""       \   'mode': 'LightLineMode',
-""       \ },
-""       \ 'separator': { 'left': '⮀', 'right': '⮂' },
-""       \ 'subseparator': { 'left': '⮁', 'right': '⮃' }
-""       \ }
-""
-"" function! LightLineModified()
-""   return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'
-"" endfunction
-""
-"" function! LightLineReadonly()
-""   return &ft !~? 'help\|vimfiler\|gundo' && &readonly ? '⭤' : ''
-"" endfunction
-""
-"" function! LightLineFilename()
-""   return ('' != LightLineReadonly() ? LightLineReadonly() . ' ' : '') .
-""         \ (&ft == 'vimfiler' ? vimfiler#get_status_string() :
-""         \  &ft == 'unite' ? unite#get_status_string() :
-""         \  &ft == 'vimshell' ? vimshell#get_status_string() :
-""         \ '' != expand('%:t') ? expand('%:t') : '[No Name]') .
-""         \ ('' != LightLineModified() ? ' ' . LightLineModified() : '')
-"" endfunction
-""
-"" function! LightLineFugitive()
-""   if &ft !~? 'vimfiler\|gundo' && exists("*fugitive#head")
-""     let _ = fugitive#head()
-""     return strlen(_) ? '⭠ '._ : ''
-""   endif
-""   return ''
-"" endfunction
-""
-"" function! LightLineFileformat()
-""   return winwidth(0) > 70 ? &fileformat : ''
-"" endfunction
-""
-"" function! LightLineFiletype()
-""   return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype : 'no ft') : ''
-"" endfunction
-""
-"" function! LightLineFileencoding()
-""   return winwidth(0) > 70 ? (strlen(&fenc) ? &fenc : &enc) : ''
-"" endfunction
-""
-"" function! LightLineMode()
-""   return winwidth(0) > 60 ? lightline#mode() : ''
-"" endfunction
-"" set noshowmode
-
-" ==============================================================================
 "                                     vimwiki
 " ==============================================================================
-let wiki_1 = {}
-let wiki_1.path = '~/school.wiki/'
-let wiki_1.index = 'Home'
-let wiki_1.syntax = 'markdown'
-let wiki_1.ext = '.md'
-let wiki_1.nested_syntaxes = {'python': 'python', 'c++': 'cpp'}
-let wiki_2 = {}
-let wiki_2.path = '~/project_docs/'
-let wiki_2.index = 'main'
-let g:vimwiki_list = [wiki_1, wiki_2]
-let g:vimwiki_ext2syntax = {'.md': 'markdown',
-                          \ '.mkd': 'markdown',
-                          \ '.wiki': 'media'}
+let work_wiki = {}
+let personal_wiki = {}
+
+if g:os == 'Windows'
+  let work_network_share_path = 'H:\'
+elseif g:os == 'Linux'
+  let work_network_share_path = '/mnt/h/'
+elseif g:os == 'Darwin'
+  let work_network_share_path = '/Volumes/usershare/baot/'
+endif
+
+let work_wiki.path = work_network_share_path . 'wiki'
+let personal_wiki.path = '~/vimwiki'
+
+let g:vimwiki_list = [work_wiki, personal_wiki]
+
+let g:vimwiki_conceallevel = 2
+
+autocmd FileType vimwiki map <leader>d :VimwikiMakeDiaryNote<CR>
+autocmd FileType vimwiki map <leader>dg :VimwikiDiaryGenerateLinks<CR>
+autocmd FileType vimwiki map <leader>di :VimwikiDiaryIndex<CR>
+autocmd FileType vimwiki map <leader>c :call ToggleCalendar()<CR>
+autocmd Filetype vimwiki map >> <Plug>VimwikiIncreaseLvlSingleItem
+" autocmd Filetype vimwiki map >>> <Plug>VimwikiIncreaseLvlWholeItem
+autocmd Filetype vimwiki map << <Plug>VimwikiDecreaseLvlSingleItem
+" autocmd Filetype vimwiki map <<< <Plug>VimwikiDecreaseLvlWholeItem
+" indentLine overrides conceal settings and interferes with vimwiki
+autocmd FileType vimwiki let g:indentLine_concealcursor = ''
+autocmd FileType vimwiki let g:indentLine_conceallevel = 2
+" --------
+" Calendar
+" --------
+function! ToggleCalendar()
+  execute ":Calendar"
+  if exists("g:calendar_open")
+    if g:calendar_open == 1
+      execute "q"
+      unlet g:calendar_open
+    else
+      g:calendar_open = 1
+    end
+  else
+    let g:calendar_open = 1
+  end
+endfunction
 " ==============================================================================
 "                                   NERDTree
 " ==============================================================================
