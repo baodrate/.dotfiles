@@ -136,7 +136,7 @@ elseif g:os == 'Darwin'
 endif
 
 let work_wiki.path = work_network_share_path . 'wiki'
-let personal_wiki.path = '~/vimwiki'
+let personal_wiki.path = '~/.journal'
 
 let g:vimwiki_list = [work_wiki, personal_wiki]
 
