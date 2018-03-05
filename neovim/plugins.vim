@@ -227,37 +227,6 @@ let g:calendar_frame = 'default'
 let g:calendar_google_calendar = 1
 let g:calendar_google_task = 1
 " ==============================================================================
-"                                   terminal
-" ==============================================================================
-" switch in and out of terminal window
-tnoremap <F12> <C-\><C-n><C-w><C-p>
-set switchbuf+=useopen
-function! TermEnter()
-  let bufcount = bufnr("$")
-  let currbufnr = 1
-  let nummatches = 0
-  let firstmatchingbufnr = 0
-  while currbufnr <= bufcount
-    if(bufexists(currbufnr))
-      let currbufname = bufname(currbufnr)
-      if(match(currbufname, "term://") > -1)
-        echo currbufnr . ": ". bufname(currbufnr)
-        let nummatches += 1
-        let firstmatchingbufnr = currbufnr
-        break
-      endif
-    endif
-    let currbufnr = currbufnr + 1
-  endwhile
-  if(nummatches >= 1)
-    execute ":sbuffer ". firstmatchingbufnr
-    startinsert
-  else
-    execute ":terminal"
-  endif
-endfunction
-map <F12> :call TermEnter()<CR>
-" ==============================================================================
 "                                 vim-markdown
 " ==============================================================================
 let g:vim_markdown_math=1

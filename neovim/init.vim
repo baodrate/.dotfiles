@@ -14,22 +14,23 @@ if has("win32")
     )
     autocmd VimEnter * PlugInstall
   endif
-else
-  if has("unix")
-    if empty(glob('~/.config/nvim/autoload/plug.vim'))
-      silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs \
-        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-      autocmd VimEnter * PlugInstall
-    endif
+elseif has("unix")
+  if empty(glob('~/.config/nvim/autoload/plug.vim'))
+    silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs \
+      https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    autocmd VimEnter * PlugInstall
   endif
 endif
 
 if has("win32")
   call plug#begin('~\AppData\Local\nvim\plugged')
-else
-  if has("unix")
-    call plug#begin('~/.config/nvim/plugged')
-  endif
+elseif has("unix")
+  call plug#begin('~/.config/nvim/plugged')
+endif
+
+if has("unix")
+  let g:python2_host_prog = '/usr/local/bin/python'
+  let g:python3_host_prog = '/usr/local/bin/python3'
 endif
 
 " ----------- Colorschemes -----------
