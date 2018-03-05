@@ -1,27 +1,6 @@
 " ==============================================================================
 "                                   Vim-Plug
 " ==============================================================================
-
-" ----------- vim-plug grabber -------
-let firstrun=0
-if has("win32")
-  if empty(glob('~\AppData\Local\nvim\autoload\plug.vim'))
-    (New-Object Net.WebClient).DownloadFile(
-      'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim',
-      $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath(
-        "~\AppData\Local\nvim\autoload\plug.vim"
-      )
-    )
-    autocmd VimEnter * PlugInstall
-  endif
-elseif has("unix")
-  if empty(glob('~/.config/nvim/autoload/plug.vim'))
-    silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs \
-      https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-    autocmd VimEnter * PlugInstall
-  endif
-endif
-
 " ----------- Get OS -------
 if !exists("g:os")
   if has("win64") || has("win32") || has("win16")
@@ -39,6 +18,25 @@ if g:os == 'Windows'
   let g:conf_dir = $HOME . '\\.vim'
 else
   let g:conf_dir = fnamemodify(resolve(expand('$MYVIMRC')), ':p:h')
+endif
+
+" ----------- vim-plug grabber -------
+if g:os == 'Windows'
+  if empty(glob('~\AppData\Local\nvim\autoload\plug.vim'))
+    (New-Object Net.WebClient).DownloadFile(
+      'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim',
+      $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath(
+        "~\AppData\Local\nvim\autoload\plug.vim"
+      )
+    )
+    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+  endif
+elseif g:os == 'Linux' || g:os == 'Darwin'
+  if empty(glob('~/.config/nvim/autoload/plug.vim'))
+    silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs \
+      https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+  endif
 endif
 
 " ==============================================================================
@@ -117,17 +115,12 @@ call plug#begin(g:plug_dir)
   Plug 'godlygeek/tabular'              " required to come before vim-markdown
   Plug 'plasticboy/vim-markdown'
   Plug 'lervag/vimtex'
-  Plug 'ludovicchabant/vim-gutentags'
+  " Plug 'ludovicchabant/vim-gutentags'
   " Plug 'xolox/vim-easytags'
   " Plug 'xolox/vim-misc'               " required by vim-easytags
   Plug 'majutsushi/tagbar'
 
 call plug#end()
-
-if 1 == firstrun
-    :PlugInstall
-endif
-
 
 " ==============================================================================
 "                                Source Settings
