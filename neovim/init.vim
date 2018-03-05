@@ -28,11 +28,6 @@ elseif has("unix")
   call plug#begin('~/.config/nvim/plugged')
 endif
 
-if has("unix")
-  let g:python2_host_prog = '/usr/local/bin/python'
-  let g:python3_host_prog = '/usr/local/bin/python3'
-endif
-
 " ----------- Colorschemes -----------
 " Plug 'godlygeek/csapprox' " Make gvim-only colorschemes work in terminal vim
 Plug 'altercation/vim-colors-solarized'
@@ -57,10 +52,13 @@ Plug 'terryma/vim-multiple-cursors'
 " ----------- Tools ------------------
 " Plug 'ctrlpvim/ctrlp.vim'
 if has('nvim')
-    " function! DoRemote(arg)
-    "     UpdateRemotePlugins
-    " endfunction
+    Plug 'benekastah/neomake'
     Plug 'Shougo/deoplete.nvim'
+    " Plug 'Shougo/neocomplcache.vim'   "in case deoplete not ready for prime-time
+elseif has('patch-8.0.0027')
+    Plug 'Shougo/deoplete.nvim'
+    Plug 'roxma/nvim-yarp'
+    Plug 'roxma/vim-hug-neovim-rpc'
     " Plug 'Shougo/neocomplcache.vim'   "in case deoplete not ready for prime-time
     Plug 'benekastah/neomake'
 else
