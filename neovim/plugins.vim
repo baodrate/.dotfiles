@@ -42,8 +42,8 @@ let g:syntastic_check_on_wq = 0
 if has('nvim') || has('patch-8.0.0027')
   let g:neomake_echo_current_error = 1
   let g:neomake_verbose = 1
-  autocmd! BufReadPost,BufWritePost *.rs Neomake! cargo
-  autocmd! BufReadPost,BufWritePost * Neomake
+  " Run neomake when writing a buffer
+  call neomake#configure#automake('w')
 endif
 " ==============================================================================
 "                                     Deoplete
