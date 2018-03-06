@@ -19,6 +19,7 @@ let g:syntastic_check_on_wq = 0
 " ==============================================================================
 "                                     neomake
 " ==============================================================================
+" needs async
 if has('nvim') || v:version >= 800
   let g:neomake_echo_current_error = 1
   let g:neomake_verbose = 1
@@ -93,7 +94,7 @@ let g:vimwiki_list = [work_wiki, personal_wiki]
 
 let g:vimwiki_conceallevel = 2
 
-autocmd FileType vimwiki map <leader>d :VimwikiMakeDiaryNote<CR>
+autocmd FileType vimwiki map <leader>dd :VimwikiMakeDiaryNote<CR>
 autocmd FileType vimwiki map <leader>dg :VimwikiDiaryGenerateLinks<CR>
 autocmd FileType vimwiki map <leader>di :VimwikiDiaryIndex<CR>
 autocmd FileType vimwiki map <leader>c :call ToggleCalendar()<CR>
@@ -104,6 +105,7 @@ autocmd Filetype vimwiki map << <Plug>VimwikiDecreaseLvlSingleItem
 " indentLine overrides conceal settings and interferes with vimwiki
 autocmd FileType vimwiki let g:indentLine_concealcursor = ''
 autocmd FileType vimwiki let g:indentLine_conceallevel = 2
+
 " --------
 " Calendar
 " --------

@@ -71,17 +71,14 @@ call plug#begin(g:plug_dir)
   Plug 'tpope/vim-surround'
 
   " ----------- Tools ------------------
-  " Neomake
+  " Neomake (requires async)
   if has('nvim') || v:version >= 800
     Plug 'benekastah/neomake'
   endif
-  " Deoplete
+  " Deoplete (requires async)
   if has('nvim')
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
   elseif v:version >= 800
-    if !has('python3') || !has('timers')
-      throw 'Deoplete requires python3 and timers in Vim8'
-    endif
     Plug 'Shougo/deoplete.nvim'
     " These two required by Deoplete in Vim8
     Plug 'roxma/nvim-yarp'
@@ -100,15 +97,16 @@ call plug#begin(g:plug_dir)
   Plug 'vimwiki/vimwiki', { 'branch': 'dev' }
   Plug 'itchyny/calendar.vim'
 
-  " ----------- Code -------------------
-  Plug 'vim-scripts/DoxygenToolkit.vim'
-  Plug 'tpope/vim-surround'
+  " =========== Code ===================
   Plug 'Raimondi/delimitMate'
+
   " ----------- C/C++ ------------------
+  Plug 'vim-scripts/DoxygenToolkit.vim'
   Plug 'rhysd/vim-clang-format'
   if has('nvim')
       " Plug 'zchee/deoplete-clang'
   endif
+
   " ----------- Rust -------------------
   Plug 'rust-lang/rust.vim'
   Plug 'racer-rust/vim-racer'
