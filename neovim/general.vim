@@ -17,10 +17,10 @@ set lazyredraw      " Don't update display while executing macros
 set nofsync
 
 " Python
-if (g:os == 'Darwin') " for MacOS
+if (g:os ==? 'Darwin') " for MacOS
   let g:python2_host_prog = '/usr/local/bin/python'
   let g:python3_host_prog = '/usr/local/bin/python3'
-elseif (g:os == 'Windows')
+elseif (g:os ==? 'Windows')
   " let g:python2_host_prog = 'C:\Users\BaoT\AppData\Local\Programs\Python\Python36-32\python.exe'
   let g:python3_host_prog = 'C:\Users\BaoT\AppData\Local\Programs\Python\Python36-32\python.exe'
 endif
@@ -86,7 +86,7 @@ endif
 
 " Unprintable chars mapping
 " -------------------------
-if g:os == "Windows"
+if g:os ==? "Windows"
   " Windows doesn't like unicode characters... use ascii instead
   " These are the same listchars provided by TPope's Vim-Sensible
   set listchars=tab:>\ ,trail:-,extends:>,precedes:<,nbsp:+
@@ -124,12 +124,13 @@ endif
 
 " gvim
 " ----
-set guifont=DejaVu\ Sans\ Mono\ 8
-" set guifont=DejaVu\ Sans\ Mono\ 8
-"set guioptions-=m  " remove menu bar
-"set guioptions-=T  " remove toolbar
-"set guioptions-=r  " remove right-hand scroll bar
-"set guioptions-=L  " remove left-hand scroll bar
+if has("gui_running") || (has('nvim-0.2.3'))
+  set guifont=DejaVu\ Sans\ Mono\ 8
+endif
+" set guioptions-=m  " remove menu bar
+" set guioptions-=T  " remove toolbar
+" set guioptions-=r  " remove right-hand scroll bar
+" set guioptions-=L  " remove left-hand scroll bar
 set guioptions=ac   " autoselection and console only (no GUI prompt)
 set splitbelow
 set splitright

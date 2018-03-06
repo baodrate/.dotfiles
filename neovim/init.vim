@@ -11,7 +11,7 @@ if !exists("g:os")
 endif
 
 " get the directory for this config file, resolving symlinks
-if g:os == 'Windows'
+if g:os ==? 'Windows'
   " resolve() works correct in Windows Neovim but not Windows Vim:
   " https://github.com/vim/vim/issues/147
   " use ~\.vim\plugged instead
@@ -21,7 +21,7 @@ else
 endif
 
 " ----------- vim-plug grabber -------
-if g:os == 'Windows'
+if g:os ==? 'Windows'
   if empty(glob('~\AppData\Local\nvim\autoload\plug.vim'))
     (New-Object Net.WebClient).DownloadFile(
       'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim',
@@ -31,7 +31,7 @@ if g:os == 'Windows'
     )
     autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
   endif
-elseif g:os == 'Linux' || g:os == 'Darwin'
+elseif g:os ==? 'Linux' || g:os ==? 'Darwin'
   if empty(glob('~/.config/nvim/autoload/plug.vim'))
     silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs \
       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
@@ -42,7 +42,7 @@ endif
 " ==============================================================================
 "                                   Vim-Plug
 " ==============================================================================
-if g:os == 'Windows'
+if g:os ==? 'Windows'
   let g:plug_dir = g:conf_dir . '\\plugged'
 else
   let g:plug_dir = g:conf_dir . '/plugged'
@@ -68,6 +68,7 @@ call plug#begin(g:plug_dir)
 
   " ----------- Movement ---------------
   Plug 'terryma/vim-multiple-cursors'
+  Plug 'tpope/vim-surround'
 
   " ----------- Tools ------------------
   " Neomake
@@ -90,6 +91,7 @@ call plug#begin(g:plug_dir)
   Plug 'tpope/vim-speeddating'          " increment for dates
   Plug 'tpope/vim-fugitive'             " for git
 
+  " TODO: use justinmk/vim-dirvish instead of FileBeagle?
   Plug 'jeetsukumaran/vim-filebeagle'
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
   Plug 'junegunn/vim-easy-align'
@@ -126,7 +128,7 @@ call plug#end()
 " ==============================================================================
 "                                Source Settings
 " ==============================================================================
-if g:os == "Windows"
+if g:os ==? "Windows"
   source ~\AppData\Local\nvim\general.vim
   source ~\AppData\Local\nvim\mappings.vim
   source ~\AppData\Local\nvim\plugins.vim

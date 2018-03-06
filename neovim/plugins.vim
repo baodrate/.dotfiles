@@ -78,11 +78,11 @@ let g:airline#extensions#tabline#fnamemod = ':t'
 let work_wiki = {}
 let personal_wiki = {}
 
-if g:os == 'Windows'
+if g:os ==? 'Windows'
   let work_network_share_path = 'H:\'
-elseif g:os == 'Linux'
+elseif g:os ==? 'Linux'
   let work_network_share_path = '/mnt/h/'
-elseif g:os == 'Darwin'
+elseif g:os ==? 'Darwin'
   let work_network_share_path = '/Volumes/usershare/baot/'
 endif
 
@@ -110,7 +110,7 @@ autocmd FileType vimwiki let g:indentLine_conceallevel = 2
 function! ToggleCalendar()
   execute ":Calendar"
   if exists("g:calendar_open")
-    if g:calendar_open == 1
+    if g:calendar_open ==? 1
       execute "q"
       unlet g:calendar_open
     else
