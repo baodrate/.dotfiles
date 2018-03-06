@@ -90,9 +90,6 @@ call plug#begin(g:plug_dir)
   Plug 'tpope/vim-speeddating'          " increment for dates
   Plug 'tpope/vim-fugitive'             " for git
 
-  Plug 'scrooloose/nerdtree'
-  Plug 'Xuyuanp/nerdtree-git-plugin'
-
   Plug 'jeetsukumaran/vim-filebeagle'
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
   Plug 'junegunn/vim-easy-align'

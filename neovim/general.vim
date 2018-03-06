@@ -1,11 +1,16 @@
 " ==============================================================================
 "                                     essential
 " ==============================================================================
-" Required for VimWiki compatibility
+" Don't require vi compatibility (should be default in Vim8 and neovim)
 set nocompatible
+
+" Filetype stuff
 set encoding=utf-8
 filetype plugin indent on
-syntax on
+
+syntax on           " Syntax highlighting
+set hidden          " Don't require unwritten buffers to be visible
+set lazyredraw      " Don't update display while executing macros
 
 " Writing to samba shares fail on neovim on mac
 " (https://github.com/neovim/neovim/issues/6725)
@@ -23,6 +28,14 @@ endif
 " ==============================================================================
 "                                     options
 " ==============================================================================
+" ==========
+" completion
+" ==========
+" Enable enhanced command-line completion. Presumes you have compiled with
+" +wildmenu. See :help 'wildmenu'
+set wildmenu
+set wildmode=longest:list,full
+
 " ======
 " search
 " ======
@@ -42,20 +55,20 @@ set expandtab
 set smarttab
 set backspace=indent,eol,start
 
-" autocmd Filetype python setlocal ts=4 sw=4 sts=4 tw=80 smarttab expandtab
-autocmd Filetype python setlocal noexpandtab
-    \ copyindent
-    \ preserveindent
-    \ softtabstop=0
-    \ shiftwidth=4
-    \ tabstop=4
+autocmd Filetype python setlocal
+      \ noexpandtab
+      \ copyindent
+      \ preserveindent
+      \ softtabstop=0
+      \ shiftwidth=4
+      \ tabstop=4
 
 " folding
 " -------
-set foldmethod=indent   "fold based on indent
+set foldmethod=indent   " fold based on indent
 " set foldmethod=syntax
-set foldnestmax=4       "deepest fold is 10 levels
-set nofoldenable        "dont fold by default
+set foldnestmax=4       " deepest fold is 10 levels
+set nofoldenable        " dont fold by default
 set foldlevel=1
 
 " =========
@@ -66,10 +79,9 @@ set mouse=a
 set relativenumber
 set number
 set ruler
-set hidden          " use vim's buffers as they were meant to be used
 
 if has("nvim")
-  set termguicolors
+  set termguicolors " use truecolor
 endif
 
 " Unprintable chars mapping
@@ -128,7 +140,7 @@ set laststatus=2
 " set showtabline=2
 set guioptions-=e
 set noshowmode
-" ---------
+
 " long-line
 " ---------
 set autoindent

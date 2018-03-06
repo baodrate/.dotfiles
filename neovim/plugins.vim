@@ -122,27 +122,6 @@ function! ToggleCalendar()
 endfunction
 
 " ==============================================================================
-"                                   NERDTree
-" ==============================================================================
-map <F2> :NERDTreeToggle<CR>
-
-" close vim if the only window left open is a NERDTree
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-
-" nerdtree-git-plugin
-let g:NERDTreeIndicatorMapCustom = {
-    \ "Modified"  : "✹",
-    \ "Staged"    : "✚",
-    \ "Untracked" : "✭",
-    \ "Renamed"   : "➜",
-    \ "Unmerged"  : "═",
-    \ "Deleted"   : "✖",
-    \ "Dirty"     : "✗",
-    \ "Clean"     : "✔︎",
-    \ "Unknown"   : "?"
-    \ }
-
-" ==============================================================================
 "                                   tagbar
 " ==============================================================================
 nmap <F8> :TagbarToggle<CR>
