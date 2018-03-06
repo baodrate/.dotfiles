@@ -8,14 +8,9 @@
       force: true
       path: spacemacs
     ~/.vim:
+      create: true
       force: true
       path: neovim
-    ~/.vimrc:
-      force: true
-      path: neovim/init.vim
-    ~/.tmux.conf:
-      force: true
-      path: tmux.conf
     ~/.config/nvim:
       create: true
       force: true
@@ -24,36 +19,46 @@
       create: true
       force: true
       path: awesome
-    ~/.fonts:
-      create: true
-      force: true
-      path: fonts
     ~/.config/termite:
       create: true
       force: true
       path: termite
-    ~/.vimperator:
-      create: true
-      force: true
-      path: vimperator
-    ~/.vimperatorrc:
-      create: true
-      force: true
-      path: vimperatorrc
     ~/.config/sway:
       create: true
       force: true
       path: sway
+    ~/.config/zsh:
+      create: true
+      force: true
+      path: zsh
+    ~/.fonts:
+      create: true
+      force: true
+      path: fonts
+    ~/.vimperator:
+      create: true
+      force: true
+      path: vimperator
+    ~/.scripts:
+      create: true
+      force: true
+      path: scripts
+    ~/.vimperatorrc:
+      create: true
+      force: true
+      path: vimperatorrc
+    ~/.vimrc:
+      force: true
+      path: neovim/init.vim
+    ~/.tmux.conf:
+      force: true
+      path: tmux.conf
     ~/.xbindkeysrc:
       force: true
       path: xbindkeysrc
     ~/.Xresources:
       force: true
       path: Xresources
-    ~/.config/zsh:
-      create: true
-      force: true
-      path: zsh
     ~/.xinitrc:
       create: true
       force: true

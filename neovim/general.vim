@@ -7,6 +7,10 @@ set encoding=utf-8
 filetype plugin indent on
 syntax on
 
+" Writing to samba shares fail on neovim on mac
+" (https://github.com/neovim/neovim/issues/6725)
+set nofsync
+
 " Python
 if (g:os == 'Darwin') " for MacOS
   let g:python2_host_prog = '/usr/local/bin/python'
@@ -16,9 +20,6 @@ elseif (g:os == 'Windows')
   let g:python3_host_prog = 'C:\Users\BaoT\AppData\Local\Programs\Python\Python36-32\python.exe'
 endif
 
-" Writing to samba shares fail on neovim on mac
-" (https://github.com/neovim/neovim/issues/6725)
-set nofsync
 " ==============================================================================
 "                                     options
 " ==============================================================================

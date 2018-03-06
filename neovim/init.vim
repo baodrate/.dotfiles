@@ -70,25 +70,29 @@ call plug#begin(g:plug_dir)
   Plug 'terryma/vim-multiple-cursors'
 
   " ----------- Tools ------------------
-  " Plug 'ctrlpvim/ctrlp.vim'
-  if has('nvim')
-      Plug 'benekastah/neomake'
-      Plug 'Shougo/deoplete.nvim'
-      " Plug 'Shougo/neocomplcache.vim'   "in case deoplete not ready for prime-time
-  elseif has('patch-8.0.0027')
-      Plug 'Shougo/deoplete.nvim'
-      Plug 'roxma/nvim-yarp'
-      Plug 'roxma/vim-hug-neovim-rpc'
-      " Plug 'Shougo/neocomplcache.vim'   "in case deoplete not ready for prime-time
-      Plug 'benekastah/neomake'
-  else
-      " Plug 'Valloric/YouCompleteMe', { 'do': './install.sh --clang-completer' }
+  " Neomake
+  if has('nvim') || v:version >= 800
+    Plug 'benekastah/neomake'
   endif
-  " Plug 'scrooloose/syntastic'
+  " Deoplete
+  if has('nvim')
+    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+  elseif v:version >= 800
+    if !has('python3') || !has('timers')
+      throw 'Deoplete requires python3 and timers in Vim8'
+    endif
+    Plug 'Shougo/deoplete.nvim'
+    " These two required by Deoplete in Vim8
+    Plug 'roxma/nvim-yarp'
+    Plug 'roxma/vim-hug-neovim-rpc'
+  endif
+  " Plug 'w0rp/ale'                     " Asynchronous Lint Engine
   Plug 'tpope/vim-speeddating'          " increment for dates
   Plug 'tpope/vim-fugitive'             " for git
+
   Plug 'scrooloose/nerdtree'
   Plug 'Xuyuanp/nerdtree-git-plugin'
+
   Plug 'jeetsukumaran/vim-filebeagle'
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
   Plug 'junegunn/vim-easy-align'
@@ -96,7 +100,6 @@ call plug#begin(g:plug_dir)
   " ----------- Utilities --------------
   Plug 'vimwiki/vimwiki', { 'branch': 'dev' }
   Plug 'itchyny/calendar.vim'
-  Plug 'uguu-org/vim-matrix-screensaver'
 
   " ----------- Code -------------------
   Plug 'vim-scripts/DoxygenToolkit.vim'
@@ -110,6 +113,7 @@ call plug#begin(g:plug_dir)
   " ----------- Rust -------------------
   Plug 'rust-lang/rust.vim'
   Plug 'racer-rust/vim-racer'
+
   " ----------- Other Filetypes --------
   Plug 'jceb/vim-orgmode'
   Plug 'godlygeek/tabular'              " required to come before vim-markdown
@@ -118,7 +122,7 @@ call plug#begin(g:plug_dir)
   " Plug 'ludovicchabant/vim-gutentags'
   " Plug 'xolox/vim-easytags'
   " Plug 'xolox/vim-misc'               " required by vim-easytags
-  Plug 'majutsushi/tagbar'
+  " Plug 'majutsushi/tagbar'
 
 call plug#end()
 
