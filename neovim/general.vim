@@ -107,7 +107,8 @@ let g:load_doxygen_syntax = 1
 " for 'godlygeek/csapprox' plugin:
 " let g:CSApprox_attr_map = { 'bold' : 'bold', 'italic' : '', 'sp' : '' }
 set background=dark
-colorscheme gruvbox
+colorscheme onedark
+" colorscheme gruvbox
 " colorscheme kalisi
 " colorscheme zenburn
 " colorscheme solarized

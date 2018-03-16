@@ -35,6 +35,10 @@
       create: true
       force: true
       path: fonts
+    ~/.gitignore_global:
+      create: true
+      force: true
+      path: gitignore_global
     ~/.vimperator:
       create: true
       force: true

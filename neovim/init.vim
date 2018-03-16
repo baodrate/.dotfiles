@@ -59,6 +59,7 @@ call plug#begin(g:plug_dir)
   Plug 'freeo/vim-kalisi'
   Plug 'tomasr/molokai'
   Plug 'baskerville/bubblegum'
+  Plug 'joshdick/onedark.vim'
 
   " ----------- Interface --------------
   Plug 'vim-airline/vim-airline'
