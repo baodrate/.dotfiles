@@ -1,76 +1,91 @@
-# Lines configured by zsh-newuser-install
-HISTFILE=~/.histfile
-HISTSIZE=1000
-SAVEHIST=1000
 setopt autocd extendedglob
 unsetopt beep
 bindkey -v
 # End of lines configured by zsh-newuser-install
 
-source ~/.config/zsh/zgen/zgen.zsh
+# Check platform
+uname=$(uname)
 
-# check if there's no init script
-if ! zgen saved; then
-    echo "Creating a zgen save"
+# ======================
+# zplug (plugin manager)
+# ======================
+# Check if zplug is installed
+if [[ ! -d ~/.zplug ]]; then
+  git clone https://github.com/zplug/zplug "$HOME/.zplug/"
+fi
+# zplug dependency script
+source ~/.zplug/init.zsh
+# manage zplug as a zplug plugin
+zplug 'zplug/zplug', hook-build:'zplug --self-manage'
 
-    zgen oh-my-zsh
+# =======
+# plugins
+# =======
+# TODO: organize this list
+zplug "modules/environment", from:prezto               # Sets general shell options and defines environment variables.
+zplug "modules/terminal", from:prezto                  # Sets terminal window and tab titles.
+zplug "modules/git", from:prezto
+zplug "modules/command-not-found", from:prezto         # suggests package name
+zplug "modules/tmux", from:prezto
+zplug "modules/fasd", from:prezto                      # autojump
+zplug "modules/utility", from:prezto                   # Defines general aliases and functions.
+zplug "modules/history", from:prezto
+zplug "modules/syntax-highlighting", from:prezto
+zplug "modules/history-substring-search", from:prezto
 
-    # robbyrussell's oh-my-zsh :: Productivity
-    zgen oh-my-zsh plugins/colored-man-pages # colored manpages
-    zgen oh-my-zsh plugins/colorize          # cat with syntax highlighting
-    zgen oh-my-zsh plugins/command-not-found # suggests package name
-    zgen oh-my-zsh plugins/cp                # cp with progress bar (rsync)
-    zgen oh-my-zsh plugins/ssh-agent         # ssh-agent start script
-    zgen oh-my-zsh plugins/vi-mode           # for those sweet shortcuts
-    zgen oh-my-zsh plugins/sprunge           # pastebin alternative
+zplug "modules/osx", from:prezto, if:"[[ $uname == *Darwin* ]]"
+zplug "modules/homebrew", from:prezto, if:"[[ $uname == *Darwin* ]]"
 
-    # robbyrussell's oh-my-zsh :: Build tools
-    zgen oh-my-zsh plugins/git                  # git aliases
-    zgen oh-my-zsh plugins/github               # cli access, url shortener
+zplug "modules/pacman", from:prezto, if:"[[ $uname == *Linux* ]]"
 
-    # robbyrussell's oh-my-zsh :: Python
-    zgen oh-my-zsh plugins/pip
+zplug "TBSliver/zsh-plugin-colored-man" # colored manpages
+zplug "caarlos0/zsh-git-sync"           # Sync git repositories and clean them up.
+# autosuggestions must be loaded after zsh-syntax-highlighting
+zplug "tarruda/zsh-autosuggestions"
+zplug "djui/alias-tips"                 # suggests aliases
 
-    # bulk load
-#     zgen loadall <<EOPLUGINS
-#         zsh-users/zsh-history-substring-search
-#         /path/to/local/plugin
-# EOPLUGINS
-    # ^ can't indent this EOPLUGINS
+zplug "plugins/colored-man-pages", from:oh-my-zsh
+zplug "plugins/colorize", from:oh-my-zsh          # cat with syntax highlighting
+zplug "plugins/cp", from:oh-my-zsh                # cp with progress bar (rsync)
+zplug "plugins/common-aliases", from:oh-my-zsh
 
-    # completions
-    zgen load zsh-users/zsh-completions src
+# --------------
+# plugin options
+# --------------
+zstyle ':prezto:editor' key-bindings 'vi'
+zstyle ':prezto:terminal' auto-title 'yes'
+zstyle ':prezto:tmux:auto-start' local 'yes'
+zstyle ':prezto:tmux:iterm' integrate 'yes'
+zstyle ':prezto:*:*' case-sensitive 'yes'
+zstyle ':prezto:*:*' color 'yes'
 
-    # Misc tools
-    zgen load zsh-users/zsh-syntax-highlighting
-    zgen load chrissicool/zsh-256color
-    zgen load djui/alias-tips
-    # autosuggestions must be loaded after zsh-syntax-highlighting
-    # zgen load tarruda/zsh-autosuggestions
+# -----
+# Theme
+# -----
+# zstyle ':prezto:prompt' theme 'sorin'
+# see https://github.com/sorin-ionescu/prezto/issues/1245
+# function revert-expand-or-complete { zle expand-or-complete }
+# zle -N expand-or-complete-with-indicator revert-expand-or-complete
+zplug "mafredri/zsh-async" # required for pure
+zplug sindresorhus/pure, use:pure.zsh, from:github, as:theme
 
-    # theme
-    # oh-my-zsh :: mrtazz blinks norm
-    zgen oh-my-zsh themes/norm
-
-    # save all to init script
-    zgen save
+# ===============
+# Install plugins
+# ===============
+if ! zplug check; then
+    printf "Install? [y/N]: "
+    if read -q; then
+        echo; zplug install
+    fi
 fi
 
-# zgen handles compinit
-# autoload -U compinit
-# compinit
+# ==============
+# Source plugins
+# ==============
+zplug load
+
+export TERM='screen-256color'
 
 alias yolo='pacaur -Syuu --noconfirm'
-function a(){
-    AURA="$(aura "$@")"
-
-    if echo "$AURA" | grep -q '^aura >>= .*You have to use `.*sudo.*` for that.*$'
-    then
-        sudo aura "$@"
-    else
-        echo "$AURA"
-    fi
-}
-export BROWSER="firefox"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
