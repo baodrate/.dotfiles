@@ -1,88 +1,34 @@
-- clean: ['~']
+- defaults:
+    link:
+      relink: true
+      create: true
+
+- clean: ['~', '~/$XDG_CONFIG_HOME']
 
 - shell:
-  - [git submodule update --init --recursive, Installing submodules]
+    - [git submodule update --init --recursive, Installing submodules]
 
 - link:
-    ~/.emacs.d:
-      force: true
-      path: spacemacs
-    ~/.vim:
-      create: true
-      force: true
-      path: neovim
-    ~/.config/nvim:
-      create: true
-      force: true
-      path: neovim
-    ~/.config/awesome:
-      create: true
-      force: true
-      path: awesome
-    ~/.config/termite:
-      create: true
-      force: true
-      path: termite
-    ~/.config/sway:
-      create: true
-      force: true
-      path: sway
-    ~/.config/zsh:
-      create: true
-      force: true
-      path: zsh
-    ~/.fonts:
-      create: true
-      force: true
-      path: fonts
-    ~/.gitignore_global:
-      create: true
-      force: true
-      path: gitignore_global
-    ~/.vimperator:
-      create: true
-      force: true
-      path: vimperator
-    ~/.scripts:
-      create: true
-      force: true
-      path: scripts
-    ~/.vimperatorrc:
-      create: true
-      force: true
-      path: vimperatorrc
-    ~/.vimrc:
-      force: true
-      path: neovim/init.vim
-    ~/.tmux.conf:
-      force: true
-      path: tmux.conf
-    ~/.xbindkeysrc:
-      force: true
-      path: xbindkeysrc
-    ~/.Xresources:
-      force: true
-      path: Xresources
-    ~/.xinitrc:
-      create: true
-      force: true
-      path: xinitrc
-    ~/.xprofile:
-      create: true
-      force: true
-      path: xprofile
-    ~/.zshenv:
-      force: true
-      path: zsh/zshenv
-    ~/.zprofile:
-      force: true
-      path: zsh/zprofile
-    ~/.zshrc:
-      force: true
-      path: zsh/zshrc
-    ~/.zlogin:
-      force: true
-      path: zsh/zlogin
-    ~/.zlogout:
-      force: true
-      path: zsh/zlogout
+    ~/.emacs.d: spacemacs
+    ~/.vim: neovim
+    ~/$XDG_CONFIG_HOME/nvim: neovim
+    ~/$XDG_CONFIG_HOME/awesome: awesome
+    ~/$XDG_CONFIG_HOME/termite: termite
+    ~/$XDG_CONFIG_HOME/sway: sway
+    ~/$XDG_CONFIG_HOME/zsh: zsh
+    ~/.fonts: fonts
+    ~/.gitignore_global: gitignore_global
+    ~/.vimperator: vimperator
+    ~/.scripts: scripts
+    ~/.vimperatorrc: vimperatorrc
+    ~/.vimrc: neovim/init.vim
+    ~/.tmux.conf: tmux.conf
+    ~/.xbindkeysrc: xbindkeysrc
+    ~/.Xresources: Xresources
+    ~/.xinitrc: xinitrc
+    ~/.xprofile: xprofile
+    ~/.zlogin: zsh/zlogin.zsh
+    ~/.zlogout: zsh/zlogout.zsh
+    ~/.zprofile: zsh/zprofile.zsh
+    ~/.zshenv: zsh/zshenv.zsh
+    ~/.zshrc: zsh/zshrc.zsh

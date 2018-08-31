@@ -1,6 +1,6 @@
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
-export PATH="$HOME/.scripts:/usr/local/share/dotnet:/usr/local/bin/:/Library/Frameworks/Mono.framework/Versions/Current/bin/:$PATH"
+export PATH="$HOME/.scripts:/usr/local/bin/:/usr/local/sbin:$(getconf PATH)"
 export SHELL="zsh"
 
 if (( $+commands[nvim] )) ; then
