@@ -100,18 +100,17 @@ call plug#begin(g:plug_dir)
 
   " =========== Code ===================
   Plug 'Raimondi/delimitMate'
-
   " ----------- C/C++ ------------------
   Plug 'vim-scripts/DoxygenToolkit.vim'
   Plug 'rhysd/vim-clang-format'
   if has('nvim')
       " Plug 'zchee/deoplete-clang'
   endif
-
+  " ----------- nand2tetris ------------
+  Plug 'sevko/vim-nand2tetris-syntax'
   " ----------- Rust -------------------
   Plug 'rust-lang/rust.vim'
   Plug 'racer-rust/vim-racer'
-
   " ----------- Other Filetypes --------
   Plug 'jceb/vim-orgmode'
   Plug 'godlygeek/tabular'              " required to come before vim-markdown

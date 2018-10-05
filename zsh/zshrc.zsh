@@ -36,12 +36,119 @@ if [[ ! -d "$ZPLG_HOME/bin" ]]; then
     exit 1
   fi
 fi
-source "$ZPLG_HOME/bin/zplugin.zsh"
 
 # ==> source-study module
-module_path+=( "$ZPLG_HOME/bin/zmodules/Src" )
-zmodload zdharma/zplugin
-zpmod source-study
+#     NOTWORKING for now (on this computer)
+# module_path+=( "$ZPLG_HOME/bin/zmodules/Src" )
+# zmodload zdharma/zplugin
+# zpmod source-study
+
+# =============================================================================
+# Configuration
+# =============================================================================
+
+# ------------
+# zsh settings
+# ------------
+# ==> correct commands
+setopt CORRECT
+# ==> Make Vi mode transitions faster (KEYTIMEOUT is in hundredths of a second)
+export KEYTIMEOUT=1
+
+# ==> General settings
+#     from zim:modules/environment
+# Use smart URL pasting and escaping.
+autoload -Uz bracketed-paste-url-magic && zle -N bracketed-paste bracketed-paste-url-magic
+autoload -Uz url-quote-magic && zle -N self-insert url-quote-magic
+# Allow comments starting with `#` even in interactive shells.
+setopt INTERACTIVE_COMMENTS
+# Remove path separtor from WORDCHARS.
+WORDCHARS=${WORDCHARS//[\/]}
+# Set less or more as the default pager.
+if (( ! ${+PAGER} )); then
+  if (( ${+commands[less]} )); then
+    export PAGER=less
+  else
+    export PAGER=more
+  fi
+fi
+
+# ==> Jobs
+#     from prezto:modules/environment
+setopt LONG_LIST_JOBS     # List jobs in the long format by default.
+setopt AUTO_RESUME        # Treat single word simple commands without redirection as candidates for resumption of an existing job.
+setopt NOTIFY             # Report the status of background jobs immediately, rather than waiting until just before printing a prompt.
+setopt NO_BG_NICE         # Prevent runing all background jobs at a lower priority.
+setopt NO_HUP             # Prevent sending the HUP signal to running jobs when the shell exits.
+# Don't report on jobs when shell exit.
+# Prevent reporting the status of background and suspended jobs before exiting a shell with job control.
+# NO_CHECK_JOBS is best used only in combination with NO_HUP, else such jobs will be killed automatically.
+setopt NO_CHECK_JOBS
+
+# -------
+# aliases
+# -------
+# ==> cp/mv
+#     prompt for overwrite; displays changes
+alias cp='cp -iv'
+alias mv='mv -iv'
+# ==> mkdir
+#     create intermediate directories; display created directories
+alias mkdir='mkdir -pv'
+# ==> ls
+#     F : indicator suffixes for directories, executables, symlinks, sockets, whiteouts, and named pipes
+#     p : (alternatively to F) indicator suffix ('/') for directories
+#     G : colorized output
+#     l : long format
+#     A : don't list '.' and '..'
+#     h : use suffixes for file sizes
+alias ll='ls -FGlAh'
+alias l='ll'
+alias less='less -FSRXc'                                                    # Preferred 'less' implementation
+
+# rm aliased to safe-rm (see Plugins/Basic-Plugins section)
+
+# ----------------
+# install programs
+# ----------------
+
+# ==> homebrew
+brew_packages=(
+    'bat'           # prettier cat tool
+    'prettyping'    # prettier ping tool
+    'diff-so-fancy' # prettier diff tool
+  # 'htop'          # top alternative
+)
+for package in $brew_packages; do
+    if [[ $OS = 'osx' ]]; then
+        [[ -d "$FORMULA_HOME/$package" ]] \
+        || brew install $package >/dev/null
+    else
+        echo ''installing packages not implemented for this system''
+        exit 1
+    fi
+done
+alias cat='bat'
+#alias top='htop'
+alias ping='prettyping --nolegend'
+alias diff='diff-so-fancy'
+git config --global core.pager "diff-so-fancy | less --tabs=1,5 -RFX"
+
+# ==> python
+python_packages=(
+    'glances'
+)
+if [[ $OS = 'osx' ]]; then
+    pip_exec='pip3'
+    bin_dir='/usr/local/bin'
+else
+    echo 'installing python packages not implemented for this system'
+    exit 1
+fi
+for package in $python_packages; do
+    [[ -f "$bin_dir/$package" ]] || $pip_exec install $package
+done
+
 
 # =============================================================================
 # Configuration
@@ -51,6 +158,7 @@ export TERM='screen-256color'
 # =============================================================================
 # Plugins
 # =============================================================================
+source "$ZPLG_HOME/bin/zplugin.zsh"
 
 # -----
 # Theme
@@ -72,35 +180,47 @@ zstyle ':prezto:*:*' color 'yes'
 # -------------
 # basic plugins
 # -------------
+# ==> safe-rm
+zplugin ice as"program" cp"rm.sh -> rm" pick"rm"
+zplugin snippet http://github.com/kaelzhang/shell-safe-rm/raw/master/bin/rm.sh
+
 # ==> Sane options for zsh, in the spirit of vim-sensible
 zplugin load willghatch/zsh-saneopt
 
-# ==> Sets general shell options and defines environment variables.
-zplugin snippet PZT::modules/environment/init.zsh
+# ==> set window titles
+zplugin load jreese/zsh-titles
 
 # ==> suggests package name
-if [[ $OS = 'osx' ]]; then
     # tap the command-not-found homebrew cask silently and in the background
     # (will need to start a new terminal session to see results)
-    zplugin ice wait'0' lucid atinit' \
-        [ -d "$CASK_HOME/homebrew/homebrew-command-not-found" ] \
-        || brew tap homebrew/command-not-found >/dev/null 2>&1 &!'
-else
-    echo 'installing command-not-found not implemented for this system'
-    exit 1
-fi
+zplugin ice wait'0' lucid atload'
+    if [[ $OS = 'osx' ]]; then
+        [[ -d "$CASK_HOME/homebrew/homebrew-command-not-found" ]] \
+        || brew tap homebrew/command-not-found >/dev/null 2>&1 &!
+    else
+        echo ''installing command-not-found not implemented for this system''
+        exit 1
+    fi'
 zplugin snippet PZT::modules/command-not-found/init.zsh
 
 # ----------------------
 # macOS specific plugins
 # ----------------------
-if [[ $OS = 'osx' ]]; then
-    zplugin ice wait"0" lucid
-    zplugin snippet PZT::modules/osx/init.zsh
-    zplugin snippet PZT::modules/homebrew/init.zsh
-elif [[ $OS = 'linux' ]]; then
-    zplugin snippet PZT::modules/pacman/init.zsh
-fi
+# ==> homebrew aliases
+zplugin ice if"[[ $OS = 'osx' ]]"
+zplugin snippet PZT::modules/homebrew/init.zsh
+
+# ----------------------
+# linux specific plugins
+# ----------------------
+# ==> pacman aliases
+zplugin ice if"[[ $OS = 'linux' ]]"
+zplugin snippet PZT::modules/pacman/init.zsh
+
+# ==> ls colors
+#     extension:color mappings (requires terminal with 256 colors)
+zplugin ice if"[[ $OS = 'linux' ]]" atclone"dircolors -b LS_COLORS > c.zsh" atpull'%atclone' pick"c.zsh"
+zplugin light trapd00r/LS_COLORS
 
 # -------------
 # misc. plugins
@@ -116,12 +236,9 @@ zplugin load caarlos0/zsh-git-sync                              # Sync git repos
 zplugin snippet OMZ::plugins/colored-man-pages/colored-man-pages.plugin.zsh
 # ==> cat with syntax highlighting
 zplugin snippet OMZ::plugins/colorize/colorize.plugin.zsh
-# ==> cp with progress bar (rsync)
+# ==> cp: `cpv` function that uses rsync so that you get the features and security of this command
+#     rsync -pogbr -hhh --backup-dir=/tmp/rsync -e /dev/null --progress "$@"
 zplugin snippet OMZ::plugins/cp/cp.plugin.zsh
-
-# ==> Utility aliases and functions.
-zplugin ice svn silent
-zplugin snippet https://github.com/zimfw/zimfw/trunk/modules/utility
 
 # ==> httpstat
 zplugin ice as"program" cp"httpstat.sh -> httpstat" pick"httpstat"
@@ -131,21 +248,24 @@ zplugin load "b4b4r07/httpstat"
 zplugin load djui/alias-tips
 
 # ==> crasis
+#     (depends on zdharma/fast-syntax-highlighting)
 zplugin load zdharma/zui
-zplugin ice wait'[[ -n ${ZLAST_COMMANDS[(r)cras*]} ]]' lucid    # depends on zdharma/fast-syntax-highlighting
+zplugin ice wait'[[ -n ${ZLAST_COMMANDS[(r)cras*]} ]]' lucid
 zplugin load zdharma/zplugin-crasis
 
 # ==> jq
-if [[ $OS = 'osx' ]]; then
-    # install jq in the background 
-    # (will need to start a new terminal session to see results)
-    zplugin ice wait'0' lucid atload' \
-        [ -d "$FORMULA_HOME/jq" ] \
-        || brew install jq >/dev/null &!'
-else
-    echo 'installing jq not implemented for this system'
-    exit 1
-fi
+#### zplugin ice wait'0' lucid atload'
+####     # install jq in the background 
+####     # (will need to start a new terminal session to see results)
+####     if [[ $OS = 'osx' ]]; then
+####         [ -d "$FORMULA_HOME/jq" ] \
+####         || brew install jq >/dev/null &!
+####     else
+####         echo ''installing jq not implemented for this system''
+####         exit 1
+####     fi'
+zplugin ice if"[[ $OS = 'osx' ]]" from"gh-r" as"program" bpick"*osx*" mv"jq* -> jq"
+zplugin load stedolan/jq
 
 # ------------
 # vi emulation
@@ -171,20 +291,21 @@ zplugin snippet PZT::modules/history/init.zsh
 #     HSMW should be loaded in bulk (no gap) with all those plugins, right
 #     before them.
 zplugin load zdharma/history-search-multi-word
-zstyle :plugin:history-search-multi-word reset-prompt-protect 1
+zstyle ":plugin:history-search-multi-word" reset-prompt-protect 1
 zstyle ":plugin:history-search-multi-word" clear-on-cancel "yes"
 
 # ==> fzf
-if [[ $OS = 'osx' ]]; then
-    # install fzf in the background 
-    # (will need to start a new terminal session to see results)
-    zplugin ice atload' \
-        [ -d "$FORMULA_HOME/fzf" ] \
-        || brew install fzf >/dev/null &!'
-else
-    echo 'installing fzf not implemented for this system'
-    exit 1
-fi
+zplugin ice atload'
+    if [[ $OS = 'osx' ]]; then
+        # install fzf in the background 
+        # (will need to start a new terminal session to see results)
+        [[ -d "$FORMULA_HOME/fzf" ]] \
+        || brew install fzf >/dev/null &!
+    else
+        echo ''installing fzf not implemented for this system''
+        exit 1
+    fi'
+zplugin snippet PZT::modules/command-not-found/init.zsh
 # peco/percol/fzf wrapper plugin for zsh
 zplugin ice
 zplugin load mollifier/anyframe
@@ -193,7 +314,7 @@ zplugin load mollifier/anyframe
 #     depends on: fzf, jp
 #     uses my copy of abbec/emoji-cli (a fork of b4b4r07/emoji-cli)
 #       to print the emoji directly
-zplugin ice
+zplugin ice blockf
 zplugin load qubidt/emoji-cli
 
 # ==> Additional completion definitions for Zsh
@@ -201,7 +322,12 @@ zplugin load qubidt/emoji-cli
 #     Zplugin uses own method (based on symlinks instead of adding to $fpath).
 #     Zplugin will automatically install completions of newly downloaded plugin
 zplugin ice blockf
-zplugin light "zsh-users/zsh-completions"
+zplugin load "zsh-users/zsh-completions"
+
+# ==> prezto completion settings
+# Loads and configures tab completion and provides additional completions from the zsh-completions project
+zplugin ice svn blockf
+zplugin snippet "PZT::modules/completion"
 
 # ==> Syntax Highlighting
 #     If you load completions using wait'' mode then you can add
@@ -216,7 +342,7 @@ zplugin light "zsh-users/zsh-completions"
 #     contains all the directories needed by the completion system, and that
 #     those directories are at least unlikely to contain dangerous files)
 zplugin ice wait"0" lucid atinit"zpcompinit; zpcdreplay"
-zplugin load zdharma/fast-syntax-highlighting
+zplugin load "zdharma/fast-syntax-highlighting"
 
 # ==> zsh-autosuggestions
 #     Autosuggestions uses precmd hook that is called right after processing
@@ -228,3 +354,4 @@ zplugin ice wait'0' lucid atload'_zsh_autosuggest_start'  # load after fast-synt
 zplugin load zsh-users/zsh-autosuggestions
 # not working yet, see https://github.com/zdharma/zplugin/issues/69
 # bindkey '^\n' autosuggest-execute
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

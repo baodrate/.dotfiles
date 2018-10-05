@@ -11,11 +11,12 @@
 - link:
     ~/.emacs.d: spacemacs
     ~/.vim: neovim
-    ~/$XDG_CONFIG_HOME/nvim: neovim
-    ~/$XDG_CONFIG_HOME/awesome: awesome
-    ~/$XDG_CONFIG_HOME/termite: termite
-    ~/$XDG_CONFIG_HOME/sway: sway
-    ~/$XDG_CONFIG_HOME/zsh: zsh
+    ~/.config/nvim: neovim
+    ~/.config/awesome: awesome
+    ~/.config/iterm2: iterm2
+    ~/.config/termite: termite
+    ~/.config/sway: sway
+    ~/.config/zsh: zsh
     ~/.fonts: fonts
     ~/.gitignore_global: gitignore_global
     ~/.vimperator: vimperator

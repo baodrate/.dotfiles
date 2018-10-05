@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <!-- Sets a name for a task -->
+  <key>Label</key>
+  <string>homebrew.gpg.gpg-agent</string>
+  <!-- Sets a command to run and its options -->
+  <key>ProgramArguments</key>
+  <array>
+    <string>/usr/local/bin/zsh</string>
+    <string>-c</string>
+    <string>eval `gpg-agent --homedir ~/.gnupg --daemon`</string>
+  </array>
+  <key>StandardErrorPath</key>
+  <string>/tmp/homebrew.gpg.gpg-agent.err.log</string>
+  <key>StandardOutPath</key>
+  <string>/tmp/homebrew.gpg.gpg-agent.out.log</string>
+  <!-- Tells it to run the task once the XML is loaded -->
+  <key>RunAtLoad</key>
+  <true/>
+</dict>
+</plist>

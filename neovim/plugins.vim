@@ -81,13 +81,17 @@ let personal_wiki = {}
 
 if g:os ==? 'Windows'
   let work_network_share_path = 'H:\'
+  " TODO: this probably needs to be fixed
+  let documents_folder = '~\My Documents\'
 elseif g:os ==? 'Linux'
   let work_network_share_path = '/mnt/h/'
+  let documents_folder = '~/Documents/'
 elseif g:os ==? 'Darwin'
   let work_network_share_path = '/Volumes/usershare/baot/'
+  let documents_folder = '~/Documents/'
 endif
 
-let work_wiki.path = work_network_share_path . 'wiki'
+let work_wiki.path = documents_folder . 'wiki'
 let personal_wiki.path = '~/.journal'
 
 let g:vimwiki_list = [work_wiki, personal_wiki]
