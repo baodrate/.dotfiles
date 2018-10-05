@@ -23,6 +23,16 @@ ZPLG_HOME="${ZDOTDIR:-$HOME}/.zplugin"
 # => ZPFX (polaris) directory to store compiled programs
 [ -d $ZPFX/bin ] || mkdir $ZPFX/bin
 
+# -------------
+# gpg ssh agent
+# -------------
+if [[ $OS = 'linux' ]]; then
+  unset SSH_AGENT_PID
+  if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ]; then
+    export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
+  fi
+fi
+
 # ------------------------
 # zplugin (plugin manager)
 # ------------------------
@@ -102,7 +112,7 @@ alias mkdir='mkdir -pv'
 #     l : long format
 #     A : don't list '.' and '..'
 #     h : use suffixes for file sizes
-alias ll='ls -FGlAh'
+alias ll='ls -FGlAh --color=auto'
 alias l='ll'
 alias less='less -FSRXc'                                                    # Preferred 'less' implementation
 
@@ -120,18 +130,21 @@ brew_packages=(
   # 'htop'          # top alternative
 )
 for package in $brew_packages; do
-    if [[ $OS = 'osx' ]]; then
-        [[ -d "$FORMULA_HOME/$package" ]] \
-        || brew install $package >/dev/null
-    else
-        echo ''installing packages not implemented for this system''
-        exit 1
+    if (( ! $+commands[$package] )); then
+        if [[ $OS = 'osx' ]]; then
+            brew install $package >/dev/null
+        # TODO: check for non-arch based distros
+        elif [[ $OS = 'linux' ]]; then
+            sudo pacman -S $package
+        else
+            echo 'installing packages not implemented for this system'
+        fi
     fi
 done
 alias cat='bat'
 #alias top='htop'
 alias ping='prettyping --nolegend'
-alias diff='diff-so-fancy'
+#alias diff='diff-so-fancy'
 git config --global core.pager "diff-so-fancy | less --tabs=1,5 -RFX"
 
 # ==> python
@@ -140,13 +153,14 @@ python_packages=(
 )
 if [[ $OS = 'osx' ]]; then
     pip_exec='pip3'
-    bin_dir='/usr/local/bin'
+# TODO: check for non-arch based distros
+elif [[ $OS = 'linux' ]]; then
+    pip_exec='pip'
 else
     echo 'installing python packages not implemented for this system'
-    exit 1
 fi
 for package in $python_packages; do
-    [[ -f "$bin_dir/$package" ]] || $pip_exec install $package
+    (( $+commands[$package] )) || $pip_exec install --user $package
 done
 
 
@@ -187,9 +201,6 @@ zplugin snippet http://github.com/kaelzhang/shell-safe-rm/raw/master/bin/rm.sh
 # ==> Sane options for zsh, in the spirit of vim-sensible
 zplugin load willghatch/zsh-saneopt
 
-# ==> set window titles
-zplugin load jreese/zsh-titles
-
 # ==> suggests package name
     # tap the command-not-found homebrew cask silently and in the background
     # (will need to start a new terminal session to see results)
@@ -197,9 +208,6 @@ zplugin ice wait'0' lucid atload'
     if [[ $OS = 'osx' ]]; then
         [[ -d "$CASK_HOME/homebrew/homebrew-command-not-found" ]] \
         || brew tap homebrew/command-not-found >/dev/null 2>&1 &!
-    else
-        echo ''installing command-not-found not implemented for this system''
-        exit 1
     fi'
 zplugin snippet PZT::modules/command-not-found/init.zsh
 
@@ -227,8 +235,7 @@ zplugin light trapd00r/LS_COLORS
 # -------------
 
 # ==> git aliases
-zplugin ice svn silent
-zplugin snippet PZT::modules/git
+zplugin snippet OMZ::plugins/git/git.plugin.zsh
 # ==> git-sync
 zplugin load caarlos0/zsh-git-sync                              # Sync git repositories and clean them up.
 
@@ -257,12 +264,12 @@ zplugin load zdharma/zplugin-crasis
 #### zplugin ice wait'0' lucid atload'
 ####     # install jq in the background 
 ####     # (will need to start a new terminal session to see results)
+#### todo: implement this:
 ####     if [[ $OS = 'osx' ]]; then
 ####         [ -d "$FORMULA_HOME/jq" ] \
 ####         || brew install jq >/dev/null &!
 ####     else
 ####         echo ''installing jq not implemented for this system''
-####         exit 1
 ####     fi'
 zplugin ice if"[[ $OS = 'osx' ]]" from"gh-r" as"program" bpick"*osx*" mv"jq* -> jq"
 zplugin load stedolan/jq
@@ -296,14 +303,17 @@ zstyle ":plugin:history-search-multi-word" clear-on-cancel "yes"
 
 # ==> fzf
 zplugin ice atload'
-    if [[ $OS = 'osx' ]]; then
-        # install fzf in the background 
-        # (will need to start a new terminal session to see results)
-        [[ -d "$FORMULA_HOME/fzf" ]] \
-        || brew install fzf >/dev/null &!
-    else
-        echo ''installing fzf not implemented for this system''
-        exit 1
+    if (( ! $+commands[fzf] )); then 
+        if [[ $OS = 'osx' ]]; then
+            # install fzf in the background 
+            # (will need to start a new terminal session to see results)
+            brew install fzf >/dev/null &!
+        # TODO: check for non-arch based distros
+        elif [[ $OS = 'linux' ]]; then
+            sudo pacman -S fzf
+        else
+            echo ''installing fzf not implemented for this system''
+        fi
     fi'
 zplugin snippet PZT::modules/command-not-found/init.zsh
 # peco/percol/fzf wrapper plugin for zsh
@@ -323,11 +333,6 @@ zplugin load qubidt/emoji-cli
 #     Zplugin will automatically install completions of newly downloaded plugin
 zplugin ice blockf
 zplugin load "zsh-users/zsh-completions"
-
-# ==> prezto completion settings
-# Loads and configures tab completion and provides additional completions from the zsh-completions project
-zplugin ice svn blockf
-zplugin snippet "PZT::modules/completion"
 
 # ==> Syntax Highlighting
 #     If you load completions using wait'' mode then you can add

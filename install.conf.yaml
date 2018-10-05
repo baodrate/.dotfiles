@@ -9,6 +9,15 @@
     - [git submodule update --init --recursive, Installing submodules]
 
 - link:
+    ~/.gitconfig-work: git/config-work
+    ~/.gitconfig-personal: git/config-personal
+    ~/.gitconfig: git/config
+    ~/.gitignore_global: git/gitignore_global
+    ~/.ssh/config: ssh/config
+    ~/.ssh/gpg-qubidt.pub: ssh/gpg-qubidt.pub
+    ~/.ssh/gpg-baot.pub: ssh/gpg-baot.pub
+    ~/.gnupg/gpg-agent.conf: gnupg/gpg-agent.conf
+    ~/.gnupg/sshcontrol: gnupg/sshcontrol
     ~/.emacs.d: spacemacs
     ~/.vim: neovim
     ~/.config/nvim: neovim
@@ -18,7 +27,6 @@
     ~/.config/sway: sway
     ~/.config/zsh: zsh
     ~/.fonts: fonts
-    ~/.gitignore_global: gitignore_global
     ~/.vimperator: vimperator
     ~/.scripts: scripts
     ~/.vimperatorrc: vimperatorrc

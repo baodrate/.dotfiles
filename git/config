@@ -1,0 +1,16 @@
+[core]
+	pager = diff-so-fancy | less --tabs=1,5 -RFX
+
+[user]
+  name = Bao Trinh
+  email = git@baodtrinh.com
+  signingKey = A9B3110B4EA55E36
+
+[commit]
+  gpgsign = true
+
+[includeIf "gitdir:~/dev/"]
+  path = .gitconfig-personal
+
+[includeIf "gitdir:~/wdev/"]
+  path = .gitconfig-work

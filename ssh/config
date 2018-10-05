@@ -1,0 +1,17 @@
+# default
+Host github.com
+  HostName github.com
+  User git
+  IdentityFile ~/.ssh/gpg-qubidt.pub
+
+# qubidt
+Host github-personal
+  HostName github.com
+  User git
+  IdentityFile ~/.ssh/gpg-qubidt.pub
+
+# bao-gxg
+Host github-work
+  HostName github.com
+  User git
+  IdentityFile ~/.ssh/gpg-baot.pub
