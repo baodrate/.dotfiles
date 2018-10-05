@@ -1,15 +1,14 @@
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
-export PATH="$HOME/.scripts:/usr/local/bin/:/usr/local/sbin:$(getconf PATH)"
+export npm_config_prefix=~/.node_modules
+export PATH="$HOME/.node_modules/bin:$HOME/.cargo/bin:$(python -m site --user-site):$HOME/.scripts:$(getconf PATH)"
 export SHELL="zsh"
 
 if (( $+commands[nvim] )) ; then
-  export EDITOR=nvim
+  export VISUAL=nvim
   export NVIM_TUI_ENABLE_TRUE_COLOR=1
-else
-  if (( $+commands[vim] )) ; then
-    export EDITOR=vim
-  else
-    export EDITOR=nano
-  fi
+elif (( $+commands[vim] )) ; then
+  export VISUAL=vim
+else 
+  echo 'could not find neovim or vim; not setting $VISUAL'
 fi
