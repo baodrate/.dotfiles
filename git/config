@@ -1,16 +1,32 @@
 [core]
 	pager = diff-so-fancy | less --tabs=1,5 -RFX
+	excludesfile = /Users/baot/.gitignore_global
 
 [user]
   name = Bao Trinh
-  email = git@baodtrinh.com
-  signingKey = A9B3110B4EA55E36
+	email = baot@genebygene.com
+	signingkey = 6DD044E46EB7DB25
 
 [commit]
   gpgsign = true
 
-[includeIf "gitdir:~/dev/"]
-  path = .gitconfig-personal
+[alias]
+	ignore = "!gi() { curl -L -s https://www.gitignore.io/api/$@ ;}; gi"
 
-[includeIf "gitdir:~/wdev/"]
-  path = .gitconfig-work
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /Users/baot/Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+
+[gpg]
+	program = /usr/local/bin/gpg
+[includeIf "gitdir:~/pdev/"]
+	path = ~/.gitconfig-personal
+[includeIf "gitdir:~/.scripts/"]
+	path = ~/.gitconfig-personal
+[includeIf "gitdir:~/.dotfiles/"]
+	path = ~/.gitconfig-personal
+[includeIf "gitdir:~/.journal/"]
+	path = ~/.gitconfig-personal

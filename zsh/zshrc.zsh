@@ -112,7 +112,15 @@ alias mkdir='mkdir -pv'
 #     l : long format
 #     A : don't list '.' and '..'
 #     h : use suffixes for file sizes
-alias ll='ls -FGlAh --color=auto'
+if [[ $OS = 'osx' ]]; then
+    alias ll='ls -FGlAhG'
+# TODO: check for non-arch based distros
+elif [[ $OS = 'linux' ]]; then
+    alias ll='ls -FGlAh --color=auto'
+else
+    echo 'could not identify OS to set ls colors alias'
+    alias ll='ls -FGlAh'
+fi
 alias l='ll'
 alias less='less -FSRXc'                                                    # Preferred 'less' implementation
 
