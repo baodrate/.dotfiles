@@ -60,18 +60,20 @@ endif
 let g:rustfmt_autosave = 1
 
 " ==============================================================================
-"                                     airline
+"                                    lightline
 " ==============================================================================
-let g:airline_theme='bubblegum'
-let g:airline_powerline_fonts = 1
-if !exists('g:airline_symbols')
-  let g:airline_symbols = {}
-endif
-let g:airline_symbols.space = "\ua0"
-" Enable the list of buffers
-let g:airline#extensions#tabline#enabled = 1
-" Show just the filename
-let g:airline#extensions#tabline#fnamemod = ':t'
+
+let g:lightline = {
+      \ 'colorscheme': 'base16_seti',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+      \ },
+      \ 'component_function': {
+      \   'gitbranch': 'gitbranch#name'
+      \ },
+      \ }
+
 
 " ==============================================================================
 "                                     vimwiki
@@ -152,3 +154,30 @@ let g:vim_markdown_frontmatter=1
 xmap ga <Plug>(EasyAlign)
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
+
+" ==============================================================================
+"                             LanguageClient-neovim
+" ==============================================================================
+let g:LanguageClient_serverCommands = {
+    \ 'cpp': ['ccls', '--log-file=/tmp/cc.log'],
+    \ 'c': ['ccls', '--log-file=/tmp/cc.log'],
+    \ 'python': ['pyls'],
+    \ }
+
+let g:LanguageClient_loadSettings = 1
+nnoremap <F5> :call LanguageClient_contextMenu()<CR>
+nn <silent> <M-j> :call LanguageClient#textDocument_definition()<cr>
+nn <silent> <C-,> :call LanguageClient#textDocument_references({'includeDeclaration': v:false})<cr>
+nn <silent> K :call LanguageClient#textDocument_hover()<cr>
+
+" textDocument/documentHighlight
+augroup LanguageClient_config
+  au!
+  au BufEnter * let b:Plugin_LanguageClient_started = 0
+  au User LanguageClientStarted setl signcolumn=yes
+  au User LanguageClientStarted let b:Plugin_LanguageClient_started = 1
+  au User LanguageClientStopped setl signcolumn=auto
+  au User LanguageClientStopped let b:Plugin_LanguageClient_stopped = 0
+  au CursorMoved * if b:Plugin_LanguageClient_started | sil call LanguageClient#textDocument_documentHighlight() | endif
+augroup END
+

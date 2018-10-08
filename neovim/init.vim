@@ -60,10 +60,13 @@ call plug#begin(g:plug_dir)
   Plug 'tomasr/molokai'
   Plug 'baskerville/bubblegum'
   Plug 'joshdick/onedark.vim'
+  Plug 'chriskempson/base16-vim'
 
   " ----------- Interface --------------
-  Plug 'vim-airline/vim-airline'
-  Plug 'vim-airline/vim-airline-themes'
+  Plug 'itchyny/lightline.vim'
+""  Plug 'itchyny/lightline-powerful'
+  Plug 'itchyny/vim-gitbranch'
+  Plug 'mike-hearn/base16-vim-lightline'
   Plug 'airblade/vim-gitgutter'
   Plug 'mhinz/vim-startify'
 
@@ -74,7 +77,7 @@ call plug#begin(g:plug_dir)
   " ----------- Tools ------------------
   " Neomake (requires async)
   if has('nvim') || v:version >= 800
-    Plug 'benekastah/neomake'
+    Plug 'neomake/neomake'
   endif
   " Deoplete (requires async)
   if has('nvim')
@@ -103,9 +106,10 @@ call plug#begin(g:plug_dir)
   " ----------- C/C++ ------------------
   Plug 'vim-scripts/DoxygenToolkit.vim'
   Plug 'rhysd/vim-clang-format'
-  if has('nvim')
-      " Plug 'zchee/deoplete-clang'
-  endif
+  Plug 'autozimu/LanguageClient-neovim', {
+      \ 'branch': 'next',
+      \ 'do': 'bash install.sh',
+      \ }
   " ----------- nand2tetris ------------
   Plug 'sevko/vim-nand2tetris-syntax'
   " ----------- Rust -------------------

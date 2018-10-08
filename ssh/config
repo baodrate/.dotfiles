@@ -1,17 +1,28 @@
+IdentitiesOnly yes
+
 # default
 Host github.com
   HostName github.com
   User git
-  IdentityFile ~/.ssh/gpg-qubidt.pub
+  IdentityFile ~/.ssh/gpg-baot.pub
+  IdentitiesOnly yes
 
 # qubidt
-Host github-personal
+Host gh-qubidt
   HostName github.com
   User git
   IdentityFile ~/.ssh/gpg-qubidt.pub
+  IdentitiesOnly yes
 
 # bao-gxg
-Host github-work
+Host gh-bao-gxg
   HostName github.com
   User git
   IdentityFile ~/.ssh/gpg-baot.pub
+  IdentitiesOnly yes
+
+Host devolnx02
+  HostName devolnx02
+  User baot
+  IdentityFile ~/.ssh/gpg-baot.pub
+  IdentitiesOnly yes

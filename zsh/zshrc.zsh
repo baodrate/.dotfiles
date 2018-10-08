@@ -135,6 +135,8 @@ brew_packages=(
     'bat'           # prettier cat tool
     'prettyping'    # prettier ping tool
     'diff-so-fancy' # prettier diff tool
+    'glances'       # top alternative
+    'jq'
   # 'htop'          # top alternative
 )
 for package in $brew_packages; do
@@ -156,20 +158,20 @@ alias ping='prettyping --nolegend'
 git config --global core.pager "diff-so-fancy | less --tabs=1,5 -RFX"
 
 # ==> python
-python_packages=(
-    'glances'
-)
-if [[ $OS = 'osx' ]]; then
-    pip_exec='pip3'
-# TODO: check for non-arch based distros
-elif [[ $OS = 'linux' ]]; then
-    pip_exec='pip'
-else
-    echo 'installing python packages not implemented for this system'
-fi
-for package in $python_packages; do
-    (( $+commands[$package] )) || $pip_exec install --user $package
-done
+#### python_packages=(
+####     'glances'
+#### )
+#### if [[ $OS = 'osx' ]]; then
+####     pip_exec='pip3'
+#### # TODO: check for non-arch based distros
+#### elif [[ $OS = 'linux' ]]; then
+####     pip_exec='pip'
+#### else
+####     echo 'installing python packages not implemented for this system'
+#### fi
+#### for package in $python_packages; do
+####     (( $+commands[$package] )) || $pip_exec install --user $package
+#### done
 
 
 # =============================================================================
@@ -268,19 +270,6 @@ zplugin load zdharma/zui
 zplugin ice wait'[[ -n ${ZLAST_COMMANDS[(r)cras*]} ]]' lucid
 zplugin load zdharma/zplugin-crasis
 
-# ==> jq
-#### zplugin ice wait'0' lucid atload'
-####     # install jq in the background 
-####     # (will need to start a new terminal session to see results)
-#### todo: implement this:
-####     if [[ $OS = 'osx' ]]; then
-####         [ -d "$FORMULA_HOME/jq" ] \
-####         || brew install jq >/dev/null &!
-####     else
-####         echo ''installing jq not implemented for this system''
-####     fi'
-zplugin ice if"[[ $OS = 'osx' ]]" from"gh-r" as"program" bpick"*osx*" mv"jq* -> jq"
-zplugin load stedolan/jq
 
 # ------------
 # vi emulation
@@ -311,9 +300,9 @@ zstyle ":plugin:history-search-multi-word" clear-on-cancel "yes"
 
 # ==> fzf
 zplugin ice atload'
-    if (( ! $+commands[fzf] )); then 
+    if (( ! $+commands[fzf] )); then
         if [[ $OS = 'osx' ]]; then
-            # install fzf in the background 
+            # install fzf in the background
             # (will need to start a new terminal session to see results)
             brew install fzf >/dev/null &!
         # TODO: check for non-arch based distros
