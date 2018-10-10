@@ -80,10 +80,6 @@ set relativenumber
 set number
 set ruler
 
-if has("nvim")
-  set termguicolors " use truecolor
-endif
-
 " Unprintable chars mapping
 " -------------------------
 if g:os ==? "Windows"
@@ -103,9 +99,7 @@ set list
 
 " colors
 " ------
-let g:load_doxygen_syntax = 1
-" for 'godlygeek/csapprox' plugin:
-" let g:CSApprox_attr_map = { 'bold' : 'bold', 'italic' : '', 'sp' : '' }
+set termguicolors " use truecolor
 set background=dark
 colorscheme base16-seti
 " colorscheme onedark
@@ -120,9 +114,9 @@ colorscheme base16-seti
 " let g:hybrid_use_Xresources = 1
 " colorscheme seoul256
 " let g:seoul256_background = 236
-if !has("gui_running") && !has("nvim")
-    set t_Co=256
-endif
+" if !has("gui_running") && !has("nvim")
+"     set t_Co=256
+" endif
 
 " gvim
 " ----

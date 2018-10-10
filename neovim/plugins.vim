@@ -1,4 +1,18 @@
 " ==============================================================================
+"                                   Startify
+" ==============================================================================
+if has('nvim')
+  autocmd TabNewEntered * Startify
+else
+  autocmd VimEnter * let t:startify_new_tab = 1
+  autocmd BufEnter *
+        \ if !exists('t:startify_new_tab') && expand(expand('%')) |
+        \   let t:startify_new_tab = 1 |
+        \   Startify |
+        \ endif
+endif
+
+" ==============================================================================
 "                                 Multiple-Cursors
 " ==============================================================================
 let g:multi_cursor_use_default_mapping=0
@@ -63,17 +77,92 @@ let g:rustfmt_autosave = 1
 "                                    lightline
 " ==============================================================================
 
+set showtabline=2
 let g:lightline = {
-      \ 'colorscheme': 'base16_seti',
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
-      \ },
-      \ 'component_function': {
-      \   'gitbranch': 'gitbranch#name'
-      \ },
-      \ }
+    \ 'colorscheme': 'base16_seti',
+    \ 'active': {
+    \   'left': [ [ 'mode', 'paste' ],
+    \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+    \ },
+    \ 'enable': {
+    \   'statusline': 1,
+    \   'tabline': 1,
+    \ },
+    \ 'tabline': {
+    \   'left': [ ['tabicon'], ['bufferinfo'], ['tabs'] ],
+    \   'right': [ ['buffericon'], ['bufferafter', 'buffercurrent', 'bufferbefore'] ],
+    \ },
+    \ 'tab': {
+    \   'active': ['tabnum', 'filename', 'modified'],
+    \   'inactive': ['tabnum', 'modified'],
+    \ },
+    \ 'component': {
+    \   'readonly': '%{&readonly?"":""}',
+    \   'modified': '%{&filetype=="help"?"":&modified?"+":&modifiable?"":"-"}',
+    \   'buffericon': '',
+    \   'tabicon': '',
+    \ },
+    \ 'component_expand': {
+    \   'filetype': 'DeviconsType',
+    \   'fileformat': 'DeviconsFileFormat',
+    \   'buffercurrent': 'lightline#buffer#buffercurrent',
+    \   'bufferbefore': 'lightline#buffer#bufferbefore',
+    \   'bufferafter': 'lightline#buffer#bufferafter',
+    \ },
+    \ 'component_type': {
+    \   'buffercurrent': 'tabsel',
+    \   'bufferbefore': 'raw',
+    \   'bufferafter': 'raw',
+    \ },
+    \ 'separator': { 'left': '', 'right': '' },
+    \ 'subseparator': { 'left': '', 'right': '' },
+  \ }
+   " \ 'component': {
+   " \   'separator': '',
+   " \ },
 
+function! DeviconsFileType()
+  return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype . ' ' . WebDevIconsGetFileTypeSymbol() : 'no ft') : ''
+endfunction
+
+function! DeviconsFileFormat()
+  return winwidth(0) > 70 ? (&fileformat . ' ' . WebDevIconsGetFileFormatSymbol()) : ''
+endfunction
+
+let g:lightline_buffer_logo = ' '
+let g:lightline_buffer_readonly_icon = ''
+let g:lightline_buffer_modified_icon = '✭'
+let g:lightline_buffer_git_icon = ' '
+let g:lightline_buffer_ellipsis_icon = '…'
+let g:lightline_buffer_expand_left_icon = '◀ '
+let g:lightline_buffer_expand_right_icon = ' ▶'
+let g:lightline_buffer_active_buffer_left_icon = ''
+let g:lightline_buffer_active_buffer_right_icon = ''
+"let g:lightline_buffer_separator_icon = '  '
+let g:lightline_buffer_separator_icon = '|'
+
+" enable devicons, only support utf-8
+" require <https://github.com/ryanoasis/vim-devicons>
+let g:lightline_buffer_enable_devicons = 1
+" lightline-buffer function settings
+let g:lightline_buffer_show_bufnr = 1
+" :help filename-modifiers
+let g:lightline_buffer_fname_mod = ':t'
+" hide buffer list
+let g:lightline_buffer_excludes = ['vimfiler']
+" max file name length
+let g:lightline_buffer_maxflen = 30
+" max file extension length
+let g:lightline_buffer_maxfextlen = 3
+" min file name length
+let g:lightline_buffer_minflen = 16
+" min file extension length
+let g:lightline_buffer_minfextlen = 3
+" reserve length for other component (e.g. info, close)
+let g:lightline_buffer_reservelen = 20
+
+let g:taboo_tabline = 0
+let g:taboo_tab_format = '%n'
 
 " ==============================================================================
 "                                     vimwiki
@@ -166,18 +255,6 @@ let g:LanguageClient_serverCommands = {
 
 let g:LanguageClient_loadSettings = 1
 nnoremap <F5> :call LanguageClient_contextMenu()<CR>
-nn <silent> <M-j> :call LanguageClient#textDocument_definition()<cr>
-nn <silent> <C-,> :call LanguageClient#textDocument_references({'includeDeclaration': v:false})<cr>
+nn <silent> <C-b> :call LanguageClient#textDocument_definition()<cr>
+"nn <silent> <C-B> :call LanguageClient#textDocument_references({'includeDeclaration': v:false})<cr>
 nn <silent> K :call LanguageClient#textDocument_hover()<cr>
-
-" textDocument/documentHighlight
-augroup LanguageClient_config
-  au!
-  au BufEnter * let b:Plugin_LanguageClient_started = 0
-  au User LanguageClientStarted setl signcolumn=yes
-  au User LanguageClientStarted let b:Plugin_LanguageClient_started = 1
-  au User LanguageClientStopped setl signcolumn=auto
-  au User LanguageClientStopped let b:Plugin_LanguageClient_stopped = 0
-  au CursorMoved * if b:Plugin_LanguageClient_started | sil call LanguageClient#textDocument_documentHighlight() | endif
-augroup END
-

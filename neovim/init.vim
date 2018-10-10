@@ -50,7 +50,6 @@ endif
 call plug#begin(g:plug_dir)
 
   " ----------- Colorschemes -----------
-  " Plug 'godlygeek/csapprox' " Make gvim-only colorschemes work in terminal vim
   Plug 'altercation/vim-colors-solarized'
   Plug 'junegunn/seoul256.vim'
   Plug 'w0ng/vim-hybrid'
@@ -64,11 +63,14 @@ call plug#begin(g:plug_dir)
 
   " ----------- Interface --------------
   Plug 'itchyny/lightline.vim'
-""  Plug 'itchyny/lightline-powerful'
-  Plug 'itchyny/vim-gitbranch'
   Plug 'mike-hearn/base16-vim-lightline'
+  Plug 'taohexxx/lightline-buffer'
+  Plug 'gcmt/taboo.vim'
+
   Plug 'airblade/vim-gitgutter'
   Plug 'mhinz/vim-startify'
+
+  Plug 'ryanoasis/vim-devicons'
 
   " ----------- Movement ---------------
   Plug 'terryma/vim-multiple-cursors'
@@ -92,10 +94,17 @@ call plug#begin(g:plug_dir)
   Plug 'tpope/vim-speeddating'          " increment for dates
   Plug 'tpope/vim-fugitive'             " for git
 
+  Plug 'kassio/neoterm'                 " wrapper for Vim8/Neovim terminal
+
   " TODO: use justinmk/vim-dirvish instead of FileBeagle?
-  Plug 'jeetsukumaran/vim-filebeagle'
+  " Plug 'jeetsukumaran/vim-filebeagle'
+  Plug 'justinmk/vim-dirvish'
+  Plug 'kristijanhusak/vim-dirvish-git'
+
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
   Plug 'junegunn/vim-easy-align'
+
+  Plug 'tpope/vim-eunuch'               " UNIX helpers (e.g. SudoWrite;Chmod)
 
   " ----------- Utilities --------------
   Plug 'vimwiki/vimwiki', { 'branch': 'dev' }
