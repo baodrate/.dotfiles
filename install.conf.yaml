@@ -9,6 +9,7 @@
     - [git submodule update --init --recursive, Installing submodules]
 
 - link:
+    ~/.Brewfile: brewfile/Brewfile
     ~/.gitconfig-work: git/config-work
     ~/.gitconfig-personal: git/config-personal
     ~/.gitconfig: git/config

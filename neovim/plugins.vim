@@ -23,23 +23,31 @@ let g:multi_cursor_quit_key='<Esc>'
 let g:multi_cursor_exit_from_insert_mode=0
 
 " ==============================================================================
-"                                     Syntastic
+"                             LanguageClient-neovim
 " ==============================================================================
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
+let g:LanguageClient_serverCommands = {
+    \ 'cpp': ['ccls', '--log-file=/tmp/cc.log'],
+    \ 'c': ['ccls', '--log-file=/tmp/cc.log'],
+    \ 'python': ['pyls'],
+    \ }
+
+let g:LanguageClient_loadSettings = 1
 
 " ==============================================================================
-"                                     neomake
+"                                       ale
 " ==============================================================================
-" needs async
-if has('nvim') || v:version >= 800
-  let g:neomake_echo_current_error = 1
-  let g:neomake_verbose = 1
-  " Run neomake when writing a buffer
-  call neomake#configure#automake('w')
-endif
+let g:ale_fixers = {
+\   '*': ['remove_trailing_lines', 'trim_whitespace'],
+\   'javascript': ['eslint'],
+\   'python': ['black'],
+\}
+let g:ale_linters = {
+\   'python': ['pylint']
+\}
+let g:ale_set_highlights = 1
+let g:ale_fix_on_save = 1
+let g:ale_sign_error = '>>'
+let g:ale_sign_warning = '--'
 
 " ==============================================================================
 "                                     Deoplete
@@ -243,18 +251,3 @@ let g:vim_markdown_frontmatter=1
 xmap ga <Plug>(EasyAlign)
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
-
-" ==============================================================================
-"                             LanguageClient-neovim
-" ==============================================================================
-let g:LanguageClient_serverCommands = {
-    \ 'cpp': ['ccls', '--log-file=/tmp/cc.log'],
-    \ 'c': ['ccls', '--log-file=/tmp/cc.log'],
-    \ 'python': ['pyls'],
-    \ }
-
-let g:LanguageClient_loadSettings = 1
-nnoremap <F5> :call LanguageClient_contextMenu()<CR>
-nn <silent> <C-b> :call LanguageClient#textDocument_definition()<cr>
-"nn <silent> <C-B> :call LanguageClient#textDocument_references({'includeDeclaration': v:false})<cr>
-nn <silent> K :call LanguageClient#textDocument_hover()<cr>

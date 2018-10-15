@@ -77,10 +77,6 @@ call plug#begin(g:plug_dir)
   Plug 'tpope/vim-surround'
 
   " ----------- Tools ------------------
-  " Neomake (requires async)
-  if has('nvim') || v:version >= 800
-    Plug 'neomake/neomake'
-  endif
   " Deoplete (requires async)
   if has('nvim')
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -90,14 +86,11 @@ call plug#begin(g:plug_dir)
     Plug 'roxma/nvim-yarp'
     Plug 'roxma/vim-hug-neovim-rpc'
   endif
-  " Plug 'w0rp/ale'                     " Asynchronous Lint Engine
   Plug 'tpope/vim-speeddating'          " increment for dates
   Plug 'tpope/vim-fugitive'             " for git
 
   Plug 'kassio/neoterm'                 " wrapper for Vim8/Neovim terminal
 
-  " TODO: use justinmk/vim-dirvish instead of FileBeagle?
-  " Plug 'jeetsukumaran/vim-filebeagle'
   Plug 'justinmk/vim-dirvish'
   Plug 'kristijanhusak/vim-dirvish-git'
 
@@ -119,6 +112,8 @@ call plug#begin(g:plug_dir)
       \ 'branch': 'next',
       \ 'do': 'bash install.sh',
       \ }
+  " ----------- python -----------------
+
   " ----------- nand2tetris ------------
   Plug 'sevko/vim-nand2tetris-syntax'
   " ----------- Rust -------------------

@@ -49,6 +49,22 @@ tnoremap <C-k> <C-\><C-N>:bprev<CR>
 inoremap <C-k> <C-\><C-N>:bprev<CR>
 nnoremap <C-k> :bprev<CR>
 
+
+" ==============================================================================
+"                             LanguageClient-neovim
+" ==============================================================================
+nn <silent> <C-b> :call LanguageClient#textDocument_definition()<cr>
+"nn <silent> <C-B> :call LanguageClient#textDocument_references({'includeDeclaration': v:false})<cr>
+nn <silent> K :call LanguageClient#textDocument_hover()<cr>
+
+nnoremap <F5> :call LanguageClient_contextMenu()<CR>
+nnoremap <silent> gh :call LanguageClient_textDocument_hover()<CR>
+nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
+nnoremap <silent> gr :call LanguageClient_textDocument_references()<CR>
+nnoremap <silent> gs :call LanguageClient_textDocument_documentSymbol()<CR>
+nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
+nnoremap <silent> gf :call LanguageClient_textDocument_formatting()<CR>
+
 " Folding
 nnoremap <leader><Space> za
 

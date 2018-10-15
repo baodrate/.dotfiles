@@ -23,6 +23,16 @@ ZPLG_HOME="${ZDOTDIR:-$HOME}/.zplugin"
 # => ZPFX (polaris) directory to store compiled programs
 [ -d $ZPFX/bin ] || mkdir $ZPFX/bin
 
+# --------------
+# macOS bindings
+# --------------
+if [[ $OS = 'osx' ]]; then
+  bindkey "[D" backward-word
+  bindkey "[C" forward-word
+  bindkey "^[a" beginning-of-line
+  bindkey "^[e" end-of-line
+fi
+
 # -------------
 # gpg ssh agent
 # -------------
@@ -126,36 +136,30 @@ alias less='less -FSRXc'                                                    # Pr
 
 # rm aliased to safe-rm (see Plugins/Basic-Plugins section)
 
+alias v='nvim'
+alias n='nvim'
+
 # ----------------
 # install programs
 # ----------------
 
-# ==> homebrew
-brew_packages=(
-    'bat'           # prettier cat tool
-    'prettyping'    # prettier ping tool
-    'diff-so-fancy' # prettier diff tool
-    'glances'       # top alternative
-    'jq'
-  # 'htop'          # top alternative
-)
-for package in $brew_packages; do
-    if (( ! $+commands[$package] )); then
-        if [[ $OS = 'osx' ]]; then
-            brew install $package >/dev/null
-        # TODO: check for non-arch based distros
-        elif [[ $OS = 'linux' ]]; then
-            sudo pacman -S $package
-        else
-            echo 'installing packages not implemented for this system'
-        fi
-    fi
-done
-alias cat='bat'
-#alias top='htop'
-alias ping='prettyping --nolegend'
-#alias diff='diff-so-fancy'
-git config --global core.pager "diff-so-fancy | less --tabs=1,5 -RFX"
+if (( ! $+commands[glances] )); then
+  alias top='glances'
+elif (( ! $+commands[htop] )); then
+  alias top='htop'
+fi
+
+if (( ! $+commands[bat] )); then
+  alias cat='bat'
+fi
+
+if (( ! $+commands[prettyping] )); then
+  alias ping='prettyping --nolegend'
+fi
+
+if (( ! $+commands[diff-so-fancy] )); then
+  git config --global core.pager "diff-so-fancy | less --tabs=1,5 -RFX"
+fi
 
 # ==> python
 #### python_packages=(
@@ -173,11 +177,6 @@ git config --global core.pager "diff-so-fancy | less --tabs=1,5 -RFX"
 ####     (( $+commands[$package] )) || $pip_exec install --user $package
 #### done
 
-
-# =============================================================================
-# Configuration
-# =============================================================================
-export TERM='screen-256color'
 
 # =============================================================================
 # Plugins
