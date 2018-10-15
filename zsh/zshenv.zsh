@@ -6,16 +6,16 @@ export LC_ALL=en_US.UTF-8
 export PATH="$HOME/.scripts:$(getconf PATH)"
 export PATH="/usr/local/bin:$PATH"
 
-if (( $+commands[nvim] )) ; then
+if command -v nvim 1>/dev/null 2>&1; then
   export VISUAL=nvim
   export NVIM_TUI_ENABLE_TRUE_COLOR=1
-elif (( $+commands[vim] )) ; then
+elif command -v vim 1>/dev/null 2>&1; then
   export VISUAL=vim
 else
   echo 'could not find neovim or vim; not setting $VISUAL'
 fi
 
-if (( ! $+commands[brew] )) ; then
+if command -v brew 1>/dev/null 2>&1; then
   export CFLAGS="-I$(brew --prefix openssl)/include"
   export LDFLAGS="-L$(brew --prefix openssl)/lib"
 fi
@@ -31,4 +31,9 @@ if command -v python2 1>/dev/null 2>&1; then
 fi
 if command -v python3 1>/dev/null 2>&1; then
   export PATH="$(python3 -m site --user-base)/bin:$(python3 -m site --user-site):$PATH"
+fi
+
+unset SSH_AGENT_PID
+if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ]; then
+  export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
 fi

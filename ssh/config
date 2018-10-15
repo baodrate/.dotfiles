@@ -2,7 +2,7 @@
 Host github.com
   HostName github.com
   User git
-  IdentityFile ~/.ssh/gpg-baot.pub
+  IdentityFile ~/.ssh/gpg-qubidt.pub
   IdentitiesOnly yes
 
 # qubidt
@@ -18,6 +18,11 @@ Host gh-bao-gxg
   User git
   IdentityFile ~/.ssh/gpg-baot.pub
   IdentitiesOnly yes
+
+Host bao-imac
+  HostName 10.11.110.33
+  User baot
+  IdentityFile ~/.ssh/gpg-baot.pub
 
 Host devolnx02
   HostName devolnx02
