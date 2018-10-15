@@ -2,6 +2,16 @@
 "                                   Startify
 " ==============================================================================
 if has('nvim')
+  " see https://www.reddit.com/r/neovim/comments/5far5t/open_most_recently_used_file_on_startup/damr2gu/
+  autocmd VimEnter * nested
+        \  if argc() == 0
+        \|   let last = filter(filter(copy(v:oldfiles), 'match(v:val, getcwd()) == 0'), 'filereadable(v:val)')
+        \|   if !empty(last)
+        \|     execute 'edit' fnameescape(last[0])
+        \|   endif
+        \| endif
+endif
+if has('nvim')
   autocmd TabNewEntered * Startify
 else
   autocmd VimEnter * let t:startify_new_tab = 1
