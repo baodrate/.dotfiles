@@ -33,6 +33,7 @@
     ~/.vimperatorrc: vimperatorrc
     ~/.vimrc: neovim/init.vim
     ~/.tmux.conf: tmux.conf
+    ~/.tmuxline.conf: tmuxline.conf
     ~/.xbindkeysrc: xbindkeysrc
     ~/.Xresources: Xresources
     ~/.xinitrc: xinitrc

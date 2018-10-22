@@ -132,9 +132,14 @@ else
     alias ll='ls -FGlAh'
 fi
 alias l='ll'
-alias less='less -FSRXc'                                                    # Preferred 'less' implementation
 
-# rm aliased to safe-rm (see Plugins/Basic-Plugins section)
+# ==> less
+#     F: quit-if-one-screen
+#     S: aka chop-long-lines (truncate; don't wrap long lines)
+#     R: output ANSI color escape sequences in raw form (useful for piping)
+#     X: don't send init/de-init strings to terminal (i.e. don't clear screen)
+#     c: repaint screen from top-down (rather than bottom-up)
+alias less='less -SRF'
 
 alias v='nvim'
 alias n='nvim'
@@ -143,40 +148,17 @@ alias n='nvim'
 # install programs
 # ----------------
 
-if (( ! $+commands[glances] )); then
-  alias top='glances'
-elif (( ! $+commands[htop] )); then
-  alias top='htop'
-fi
-
-if (( ! $+commands[bat] )); then
+if (( $+commands[bat] )); then
   alias cat='bat'
 fi
 
-if (( ! $+commands[prettyping] )); then
+if (( $+commands[prettyping] )); then
   alias ping='prettyping --nolegend'
 fi
 
-if (( ! $+commands[diff-so-fancy] )); then
+if (( $+commands[diff-so-fancy] )); then
   git config --global core.pager "diff-so-fancy | less --tabs=1,5 -RFX"
 fi
-
-# ==> python
-#### python_packages=(
-####     'glances'
-#### )
-#### if [[ $OS = 'osx' ]]; then
-####     pip_exec='pip3'
-#### # TODO: check for non-arch based distros
-#### elif [[ $OS = 'linux' ]]; then
-####     pip_exec='pip'
-#### else
-####     echo 'installing python packages not implemented for this system'
-#### fi
-#### for package in $python_packages; do
-####     (( $+commands[$package] )) || $pip_exec install --user $package
-#### done
-
 
 # =============================================================================
 # Plugins
@@ -188,6 +170,8 @@ source "$ZPLG_HOME/bin/zplugin.zsh"
 # -----
 zplugin ice pick"async.zsh" src"pure.zsh"
 zplugin load sindresorhus/pure
+
+zplugin load chriskempson/base16-shell
 
 # --------------
 # custom plugins
@@ -203,10 +187,6 @@ zstyle ':prezto:*:*' color 'yes'
 # -------------
 # basic plugins
 # -------------
-# ==> safe-rm
-zplugin ice as"program" cp"rm.sh -> rm" pick"rm"
-zplugin snippet http://github.com/kaelzhang/shell-safe-rm/raw/master/bin/rm.sh
-
 # ==> Sane options for zsh, in the spirit of vim-sensible
 zplugin load willghatch/zsh-saneopt
 
@@ -276,9 +256,12 @@ zplugin load zdharma/zplugin-crasis
 # ==> built-in vi-mode
 bindkey -v
 # ==> Sane bindings for zsh's vi mode so it behaves more vim like
-#     NOTE:   doesn't work because ^R conflicting with softmoth/zsh-vim-mode
-#             see: https://github.com/zdharma/zplugin/issues/69
+#     NOTE:   doesn't work atm, kills highlighting in history-search-multi-word
+#             see: https://github.com/softmoth/zsh-vim-mode/issues/8
 # zplugin load softmoth/zsh-vim-mode
+
+# ==> command-not-found
+zplugin snippet PZT::modules/command-not-found/init.zsh
 
 # -------------------------------
 # autocomplete / search / history
@@ -286,42 +269,29 @@ bindkey -v
 # ==> Sets history options and defines history aliases
 zplugin snippet PZT::modules/history/init.zsh
 
+# ==> fzf
+export FZF_DEFAULT_COMMAND='rg --files 2>/dev/null'
+export FZF_DEFAULT_OPTS='--preview "[[ $(file --mime {}) =~ binary ]] &&
+           echo {} is a binary file ||
+           (bat --color=\"always\" {} || cat {}) 2> /dev/null | head -500"'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
 # ==> History Search Multi-Word
 #     set reset-prompt-protect to be able to use zle reset-prompt in your e.g.
-#     sched calls, in presence of zdharma/fast-syntax-highlighting,
+#     `sched` calls, in presence of zdharma/fast-syntax-highlighting,
 #     zsh-users/zsh-syntax-highlighting, zsh-users/zsh-autosuggestions and other
 #     plugins that hook up into Zshell by overloading Zle widgets. In general,
 #     HSMW should be loaded in bulk (no gap) with all those plugins, right
 #     before them.
 zplugin load zdharma/history-search-multi-word
 zstyle ":plugin:history-search-multi-word" reset-prompt-protect 1
-zstyle ":plugin:history-search-multi-word" clear-on-cancel "yes"
-
-# ==> fzf
-zplugin ice atload'
-    if (( ! $+commands[fzf] )); then
-        if [[ $OS = 'osx' ]]; then
-            # install fzf in the background
-            # (will need to start a new terminal session to see results)
-            brew install fzf >/dev/null &!
-        # TODO: check for non-arch based distros
-        elif [[ $OS = 'linux' ]]; then
-            sudo pacman -S fzf
-        else
-            echo ''installing fzf not implemented for this system''
-        fi
-    fi'
-zplugin snippet PZT::modules/command-not-found/init.zsh
-# peco/percol/fzf wrapper plugin for zsh
-zplugin ice
-zplugin load mollifier/anyframe
-
-# ==> emoji-cli
-#     depends on: fzf, jp
-#     uses my copy of abbec/emoji-cli (a fork of b4b4r07/emoji-cli)
-#       to print the emoji directly
-zplugin ice blockf
-zplugin load qubidt/emoji-cli
+zstyle ":history-search-multi-word" page-size "$LINES/3"               # Number of entries to show (default is $LINES/3)
+zstyle ":history-search-multi-word" highlight-color "bold,underline"   # Color in which to highlight matched, searched text (default bg=17 on 256-color terminals)
+zstyle ":plugin:history-search-multi-word" synhl "yes"                 # Whether to perform syntax highlighting (default true)
+zstyle ":plugin:history-search-multi-word" active "bg=base03"           # Effect on active history entry. Try: standout, bold, bg=blue (default underline)
+zstyle ":plugin:history-search-multi-word" check-paths "yes"           # Whether to check paths for existence and mark with magenta (default true)
+zstyle ":plugin:history-search-multi-word" clear-on-cancel "yes"       # Whether pressing Ctrl-C or ESC should clear entered query
 
 # ==> Additional completion definitions for Zsh
 #     blockf will block the traditional method of adding completions.
@@ -329,6 +299,13 @@ zplugin load qubidt/emoji-cli
 #     Zplugin will automatically install completions of newly downloaded plugin
 zplugin ice blockf
 zplugin load "zsh-users/zsh-completions"
+
+# ==> emoji-cli
+#     depends on: fzf, jp
+#     uses my copy of abbec/emoji-cli (a fork of b4b4r07/emoji-cli)
+#       to print the emoji directly
+zplugin ice blockf
+zplugin load qubidt/emoji-cli
 
 # ==> Syntax Highlighting
 #     If you load completions using wait'' mode then you can add
@@ -342,7 +319,7 @@ zplugin load "zsh-users/zsh-completions"
 #     ZPLGM[COMPINIT_OPTS]=-C skips compaudit (audit the fpath to assure that it
 #     contains all the directories needed by the completion system, and that
 #     those directories are at least unlikely to contain dangerous files)
-zplugin ice wait"0" lucid atinit"zpcompinit; zpcdreplay"
+zplugin ice wait"1" lucid atload"zpcompinit; zpcdreplay"
 zplugin load "zdharma/fast-syntax-highlighting"
 
 # ==> zsh-autosuggestions
@@ -351,8 +328,9 @@ zplugin load "zdharma/fast-syntax-highlighting"
 #     called earlier than load of the plugin. This makes autosuggestions
 #     inactive at first prompt. But the given atload Ice-mod fixes this, it
 #     calls the same function precmd would, right after loading autosuggestions
+# not working yet, conflicts with history serach
+# see https://github.com/zdharma/zplugin/issues/69
+#   bindkey '^\n' autosuggest-execute
+bindkey '^ ' autosuggest-execute
 zplugin ice wait'0' lucid atload'_zsh_autosuggest_start'  # load after fast-syntax-highlighting
 zplugin load zsh-users/zsh-autosuggestions
-# not working yet, see https://github.com/zdharma/zplugin/issues/69
-# bindkey '^\n' autosuggest-execute
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

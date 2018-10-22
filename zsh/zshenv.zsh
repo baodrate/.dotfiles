@@ -3,6 +3,9 @@ export SHELL="zsh"
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 
+# fix for https://github.com/swaywm/sway/issues/595
+export _JAVA_AWT_WM_NONREPARENTING=1
+
 export PATH="$HOME/.scripts:$(getconf PATH)"
 export PATH="/usr/local/bin:$PATH"
 

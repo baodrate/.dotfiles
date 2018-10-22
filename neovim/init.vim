@@ -67,6 +67,8 @@ call plug#begin(g:plug_dir)
   Plug 'taohexxx/lightline-buffer'
   Plug 'gcmt/taboo.vim'
 
+  Plug 'edkolev/tmuxline.vim'
+
   Plug 'airblade/vim-gitgutter'
   Plug 'mhinz/vim-startify'
 
