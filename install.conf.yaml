@@ -19,10 +19,8 @@
     ~/.ssh/gpg-baot.pub: ssh/gpg-baot.pub
     ~/.gnupg/gpg-agent.conf: gnupg/gpg-agent.conf
     ~/.gnupg/sshcontrol: gnupg/sshcontrol
-    ~/.emacs.d: spacemacs
     ~/.vim: neovim
     ~/.config/nvim: neovim
-    ~/.config/awesome: awesome
     ~/.config/iterm2: iterm2
     ~/.config/termite: termite
     ~/.config/sway: sway
