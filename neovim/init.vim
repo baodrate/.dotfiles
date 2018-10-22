@@ -2,16 +2,8 @@
 "                                   Vim-Plug
 " ==============================================================================
 " ----------- Get OS -------
-if !exists("g:os")
-  if has("win64") || has("win32") || has("win16")
-    let g:os = "Windows"
-  else
-    let g:os = substitute(system('uname'), '\n', '', '')
-  endif
-endif
-
 " get the directory for this config file, resolving symlinks
-if g:os ==? 'Windows'
+if has("win32")
   " resolve() works correct in Windows Neovim but not Windows Vim:
   " https://github.com/vim/vim/issues/147
   " use ~\.vim\plugged instead
@@ -21,7 +13,7 @@ else
 endif
 
 " ----------- vim-plug grabber -------
-if g:os ==? 'Windows'
+if has("win32")
   if empty(glob('~\AppData\Local\nvim\autoload\plug.vim'))
     (New-Object Net.WebClient).DownloadFile(
       'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim',
@@ -31,7 +23,7 @@ if g:os ==? 'Windows'
     )
     autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
   endif
-elseif g:os ==? 'Linux' || g:os ==? 'Darwin'
+else
   if empty(glob('~/.config/nvim/autoload/plug.vim'))
     silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs \
       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
@@ -42,7 +34,7 @@ endif
 " ==============================================================================
 "                                   Vim-Plug
 " ==============================================================================
-if g:os ==? 'Windows'
+if has("win32")
   let g:plug_dir = g:conf_dir . '\\plugged'
 else
   let g:plug_dir = g:conf_dir . '/plugged'
@@ -75,7 +67,7 @@ call plug#begin(g:plug_dir)
   Plug 'ryanoasis/vim-devicons'
 
   " ----------- Movement ---------------
-  Plug 'terryma/vim-multiple-cursors'
+""  Plug 'terryma/vim-multiple-cursors'
   Plug 'tpope/vim-surround'
 
   " ----------- Tools ------------------
@@ -94,7 +86,7 @@ call plug#begin(g:plug_dir)
   Plug 'kassio/neoterm'                 " wrapper for Vim8/Neovim terminal
 
   Plug 'justinmk/vim-dirvish'
-  Plug 'kristijanhusak/vim-dirvish-git'
+""  Plug 'kristijanhusak/vim-dirvish-git' " major slow down
 
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
   Plug 'junegunn/vim-easy-align'
@@ -107,13 +99,14 @@ call plug#begin(g:plug_dir)
 
   " =========== Code ===================
   Plug 'Raimondi/delimitMate'
+  Plug 'w0rp/ale'
+  " Plug 'autozimu/LanguageClient-neovim', {
+  "     \ 'branch': 'next',
+  "     \ 'do': 'bash install.sh',
+  "     \ }
   " ----------- C/C++ ------------------
   Plug 'vim-scripts/DoxygenToolkit.vim'
   Plug 'rhysd/vim-clang-format'
-  Plug 'autozimu/LanguageClient-neovim', {
-      \ 'branch': 'next',
-      \ 'do': 'bash install.sh',
-      \ }
   " ----------- python -----------------
 
   " ----------- nand2tetris ------------
@@ -136,7 +129,7 @@ call plug#end()
 " ==============================================================================
 "                                Source Settings
 " ==============================================================================
-if g:os ==? "Windows"
+if has("win32")
   source ~\AppData\Local\nvim\general.vim
   source ~\AppData\Local\nvim\mappings.vim
   source ~\AppData\Local\nvim\plugins.vim

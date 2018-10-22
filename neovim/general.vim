@@ -16,15 +16,6 @@ set lazyredraw      " Don't update display while executing macros
 " (https://github.com/neovim/neovim/issues/6725)
 set nofsync
 
-" Python
-if (g:os ==? 'Darwin') " for MacOS
-  let g:python2_host_prog = '/usr/local/bin/python'
-  let g:python3_host_prog = '/usr/local/bin/python3'
-elseif (g:os ==? 'Windows')
-  " let g:python2_host_prog = 'C:\Users\BaoT\AppData\Local\Programs\Python\Python36-32\python.exe'
-  let g:python3_host_prog = 'C:\Users\BaoT\AppData\Local\Programs\Python\Python36-32\python.exe'
-endif
-
 " ==============================================================================
 "                                     options
 " ==============================================================================
@@ -82,7 +73,7 @@ set ruler
 
 " Unprintable chars mapping
 " -------------------------
-if g:os ==? "Windows"
+if has('win32')
   " Windows doesn't like unicode characters... use ascii instead
   " These are the same listchars provided by TPope's Vim-Sensible
   set listchars=tab:>\ ,trail:-,extends:>,precedes:<,nbsp:+

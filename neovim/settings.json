@@ -1,5 +1,5 @@
 {
     "initializationOptions": {
-        "cacheDirectory": "/tmp/ccls"
+        "cacheDirectory": "/tmp/cppls"
     }
 }
