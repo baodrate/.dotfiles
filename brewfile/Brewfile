@@ -1,0 +1,99 @@
+# meta
+brew 'mas'
+
+# system
+cask 'parallels'
+
+# hardware
+tap 'homebrew/cask-drivers'
+cask 'steelseries-exactmouse-tool'
+cask 'logitech-gaming-software'
+
+# security
+brew 'gnupg'
+brew 'telnet'
+brew 'openssh'
+brew 'ssh-copy-id'
+cask 'keybase'
+cask 'tunnelblick'
+
+# usability
+tap 'crisidev/homebrew-chunkwm'
+brew 'chunkwm', args: ["HEAD"]
+
+# browsers
+tap 'homebrew/cask-versions'
+cask 'firefox-developer-edition'
+cask 'google-chrome-dev'
+
+# shells
+brew 'bash'
+brew 'bash-completion@2'
+brew 'zsh'
+brew 'zsh-completions'
+
+# editors
+brew 'neovim'
+cask 'oni'
+cask 'iterm2'
+cask 'visual-studio-code'
+
+# fonts
+tap 'homebrew/cask-fonts'
+cask 'font-hack-nerd-font'
+cask 'font-hack-nerd-font-mono'
+
+# dev
+cask 'dotnet'
+brew 'git'
+brew 'subversion'
+cask 'jetbrains-toolbox'
+
+# dev:docker
+brew 'docker'
+cask 'virtualbox'
+brew 'docker-machine'
+brew 'docker-compose'
+
+# dev:sql
+cask 'dbschema'
+
+# dev:python
+brew 'python'
+brew 'python@2'
+
+# dev:C++
+tap 'twlz0ne/homebrew-ccls'
+brew 'ccls'
+
+# dev:swift
+brew 'swift'
+
+# system
+cask 'osxfuse'
+brew 'sshfs'
+
+# utility:common
+brew 'wget'
+brew 'curl'
+brew 'coreutils'
+brew 'findutils'
+brew 'gnu-sed'
+brew 'tmux'
+brew 'iproute2mac'    # wraps ip commands
+brew 'watch'
+
+# utility:alternatives
+brew 'bat'            # prettier cat tool
+brew 'glances'        # top alternative
+brew 'ripgrep'        # grep alternative
+
+# utility:misc
+brew 'jq'
+brew 'fzf'
+brew 'abduco'         # session management
+
+# other
+cask 'spotify'
+cask 'skype'
+cask 'jadengeller-helium'

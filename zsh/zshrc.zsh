@@ -21,7 +21,7 @@ FORMULA_HOME="/usr/local/Cellar"
 
 ZPLG_HOME="${ZDOTDIR:-$HOME}/.zplugin"
 # => ZPFX (polaris) directory to store compiled programs
-[ -d $ZPFX/bin ] || mkdir $ZPFX/bin
+[ -d $ZPFX/bin ] || mkdir -p $ZPFX/bin
 
 # --------------
 # macOS bindings
@@ -58,10 +58,9 @@ if [[ ! -d "$ZPLG_HOME/bin" ]]; then
 fi
 
 # ==> source-study module
-#     NOTWORKING for now (on this computer)
-# module_path+=( "$ZPLG_HOME/bin/zmodules/Src" )
-# zmodload zdharma/zplugin
-# zpmod source-study
+#### module_path+=( "$ZPLG_HOME/bin/zmodules/Src" )
+#### zmodload zdharma/zplugin
+#### zpmod source-study
 
 # =============================================================================
 # Configuration
@@ -123,15 +122,17 @@ alias mkdir='mkdir -pv'
 #     A : don't list '.' and '..'
 #     h : use suffixes for file sizes
 if [[ $OS = 'osx' ]]; then
-    alias ll='ls -FGlAhG'
+  alias l='ls -FGlhG'
+  alias ll='ls -FGlAhG'
 # TODO: check for non-arch based distros
 elif [[ $OS = 'linux' ]]; then
-    alias ll='ls -FGlAh --color=auto'
+  alias l='ls -FGlh --color=auto'
+  alias ll='ls -FGlAh --color=auto'
 else
-    echo 'could not identify OS to set ls colors alias'
-    alias ll='ls -FGlAh'
+  echo 'could not identify OS to set ls colors alias'
+  alias l='ls -FGlh'
+  alias ll='ls -FGlAh'
 fi
-alias l='ll'
 alias less='less -FSRXc'                                                    # Preferred 'less' implementation
 
 # rm aliased to safe-rm (see Plugins/Basic-Plugins section)
@@ -197,16 +198,36 @@ zplugin load sindresorhus/pure
 # ---------------------
 # prezto plugin options
 # ---------------------
-zstyle ':prezto:*:*' case-sensitive 'yes'
+zstyle ':prezto:*:*' case-sensitive 'no'
 zstyle ':prezto:*:*' color 'yes'
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+
+# -------
+# scripts
+# -------
+# ==> prettyping
+zplugin ice as"program" cp"prettyping -> ping" pick"prettyping"
+zplugin snippet https://github.com/denilsonsa/prettyping/raw/master/prettyping
+
+# ==> httpstat
+zplugin ice as"program" cp"httpstat.sh -> httpstat" pick"httpstat"
+zplugin load "b4b4r07/httpstat"
+
+# Zplugin
+zplugin ice as"program" pick"bin/git-dsf"
+zplugin light "zdharma/zsh-diff-so-fancy"
+
+# docker-machine-port-forwarder
+zplugin ice as"program" pick"pf"
+zplugin light "johanhaleby/docker-machine-port-forwarder"
+
+# ==> safe-rm
+#### zplugin ice as"program" cp"rm.sh -> rm" pick"rm"
+#### zplugin snippet http://github.com/kaelzhang/shell-safe-rm/raw/master/bin/rm.sh
 
 # -------------
 # basic plugins
 # -------------
-# ==> safe-rm
-zplugin ice as"program" cp"rm.sh -> rm" pick"rm"
-zplugin snippet http://github.com/kaelzhang/shell-safe-rm/raw/master/bin/rm.sh
-
 # ==> Sane options for zsh, in the spirit of vim-sensible
 zplugin load willghatch/zsh-saneopt
 
@@ -256,18 +277,13 @@ zplugin snippet OMZ::plugins/colorize/colorize.plugin.zsh
 #     rsync -pogbr -hhh --backup-dir=/tmp/rsync -e /dev/null --progress "$@"
 zplugin snippet OMZ::plugins/cp/cp.plugin.zsh
 
-# ==> httpstat
-zplugin ice as"program" cp"httpstat.sh -> httpstat" pick"httpstat"
-zplugin load "b4b4r07/httpstat"
-
 # ==> suggests aliases
 zplugin load djui/alias-tips
 
 # ==> crasis
 #     (depends on zdharma/fast-syntax-highlighting)
 zplugin load zdharma/zui
-zplugin ice wait'[[ -n ${ZLAST_COMMANDS[(r)cras*]} ]]' lucid
-zplugin load zdharma/zplugin-crasis
+zplugin light zdharma/zplugin-crasis
 
 
 # ------------

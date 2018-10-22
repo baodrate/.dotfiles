@@ -49,22 +49,6 @@ tnoremap <C-k> <C-\><C-N>:bprev<CR>
 inoremap <C-k> <C-\><C-N>:bprev<CR>
 nnoremap <C-k> :bprev<CR>
 
-
-" ==============================================================================
-"                             LanguageClient-neovim
-" ==============================================================================
-nn <silent> <C-b> :call LanguageClient#textDocument_definition()<cr>
-"nn <silent> <C-B> :call LanguageClient#textDocument_references({'includeDeclaration': v:false})<cr>
-nn <silent> K :call LanguageClient#textDocument_hover()<cr>
-
-nnoremap <F5> :call LanguageClient_contextMenu()<CR>
-nnoremap <silent> gh :call LanguageClient_textDocument_hover()<CR>
-nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
-nnoremap <silent> gr :call LanguageClient_textDocument_references()<CR>
-nnoremap <silent> gs :call LanguageClient_textDocument_documentSymbol()<CR>
-nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
-nnoremap <silent> gf :call LanguageClient_textDocument_formatting()<CR>
-
 " Folding
 nnoremap <leader><Space> za
 
@@ -80,3 +64,62 @@ if has('nvim')
 else
   autocmd BufEnter,WinEnter term://* startinsert
 endif
+
+" ==============================================================================
+"                             LanguageClient-neovim
+" ==============================================================================
+" nnoremap <F5> :call LanguageClient_contextMenu()<CR>
+"
+" nnoremap <silent> K :call LanguageClient#textDocument_hover()<cr>
+" nnoremap <silent> <C-b> :call LanguageClient#textDocument_definition()<cr>
+" nnoremap <silent> <F12> :call LanguageClient#textDocument_references({'includeDeclaration': v:false})<cr>
+" nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
+"
+"
+" nnoremap <silent> gh :call LanguageClient_textDocument_hover()<CR>
+" nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
+" nnoremap <silent> gr :call LanguageClient_textDocument_references()<CR>
+" nnoremap <silent> gs :call LanguageClient_textDocument_documentSymbol()<CR>
+" nnoremap <silent> gf :call LanguageClient_textDocument_formatting()<CR>
+
+" ==============================================================================
+"                                   ALE
+" ==============================================================================
+" Bind F8 to fixing problems with ALE
+nmap <F8> <Plug>(ale_fix)
+
+nmap <silent> <C-n> <Plug>(ale_previous_wrap)
+nmap <silent> <C-j> <Plug>(ale_next_wrap)
+
+"" <Plug>(ale_find_references)
+"" <Plug>(ale_go_to_definition)
+"" <Plug>(ale_go_to_definition_in_tab)
+"" <Plug>(ale_hover)
+"" <Plug>(ale_lint)
+"" <Plug>(ale_previous)
+"" <Plug>(ale_previous_wrap)
+"" <Plug>(ale_next)
+"" <Plug>(ale_next_wrap)
+"" <Plug>(ale_first)
+"" <Plug>(ale_last)
+""
+"" <Plug>(ale_toggle)
+"" <Plug>(ale_enable)
+"" <Plug>(ale_disable)
+"" <Plug>(ale_toggle_buffer)
+"" <Plug>(ale_enable_buffer)
+"" <Plug>(ale_disable_buffer)
+""
+"" <Plug>(ale_detail)
+"" <Plug>(ale_reset)
+"" <Plug>(ale_reset_buffer)
+
+" ==============================================================================
+"                                 Multiple-Cursors
+" ==============================================================================
+" let g:multi_cursor_use_default_mapping=0
+" let g:multi_cursor_next_key='<C-n>'
+" let g:multi_cursor_prev_key='<C-p>'
+" let g:multi_cursor_skip_key='<C-x>'
+" let g:multi_cursor_quit_key='<Esc>'
+" let g:multi_cursor_exit_from_insert_mode=0

@@ -73,7 +73,7 @@ call plug#begin(g:plug_dir)
   Plug 'ryanoasis/vim-devicons'
 
   " ----------- Movement ---------------
-  Plug 'terryma/vim-multiple-cursors'
+""  Plug 'terryma/vim-multiple-cursors'
   Plug 'tpope/vim-surround'
 
   " ----------- Tools ------------------
@@ -92,7 +92,7 @@ call plug#begin(g:plug_dir)
   Plug 'kassio/neoterm'                 " wrapper for Vim8/Neovim terminal
 
   Plug 'justinmk/vim-dirvish'
-  Plug 'kristijanhusak/vim-dirvish-git'
+""  Plug 'kristijanhusak/vim-dirvish-git' " major slow down
 
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
   Plug 'junegunn/vim-easy-align'
@@ -105,13 +105,14 @@ call plug#begin(g:plug_dir)
 
   " =========== Code ===================
   Plug 'Raimondi/delimitMate'
+  Plug 'w0rp/ale'
+  " Plug 'autozimu/LanguageClient-neovim', {
+  "     \ 'branch': 'next',
+  "     \ 'do': 'bash install.sh',
+  "     \ }
   " ----------- C/C++ ------------------
   Plug 'vim-scripts/DoxygenToolkit.vim'
   Plug 'rhysd/vim-clang-format'
-  Plug 'autozimu/LanguageClient-neovim', {
-      \ 'branch': 'next',
-      \ 'do': 'bash install.sh',
-      \ }
   " ----------- python -----------------
 
   " ----------- nand2tetris ------------

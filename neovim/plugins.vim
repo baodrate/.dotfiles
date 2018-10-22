@@ -1,37 +1,44 @@
 " ==============================================================================
 "                                   Startify
 " ==============================================================================
-if has('nvim')
-  autocmd TabNewEntered * Startify
-else
-  autocmd VimEnter * let t:startify_new_tab = 1
-  autocmd BufEnter *
-        \ if !exists('t:startify_new_tab') && expand(expand('%')) |
-        \   let t:startify_new_tab = 1 |
-        \   Startify |
-        \ endif
-endif
+" if has('nvim')
+"   autocmd TabNewEntered * Startify
+" else
+"   autocmd VimEnter * let t:startify_new_tab = 1
+"   autocmd BufEnter *
+"         \ if !exists('t:startify_new_tab') && expand(expand('%')) |
+"         \   let t:startify_new_tab = 1 |
+"         \   Startify |
+"         \ endif
+" endif
 
-" ==============================================================================
-"                                 Multiple-Cursors
-" ==============================================================================
-let g:multi_cursor_use_default_mapping=0
-let g:multi_cursor_next_key='<C-n>'
-let g:multi_cursor_prev_key='<C-p>'
-let g:multi_cursor_skip_key='<C-x>'
-let g:multi_cursor_quit_key='<Esc>'
-let g:multi_cursor_exit_from_insert_mode=0
 
 " ==============================================================================
 "                             LanguageClient-neovim
 " ==============================================================================
-let g:LanguageClient_serverCommands = {
-    \ 'cpp': ['ccls', '--log-file=/tmp/cc.log'],
-    \ 'c': ['ccls', '--log-file=/tmp/cc.log'],
-    \ 'python': ['pyls'],
-    \ }
-
-let g:LanguageClient_loadSettings = 1
+" let g:LanguageClient_serverCommands = {
+"     \ 'c': ['ccls', '--log-file=/tmp/cc.log'],
+"     \ 'cpp': ['ccls', '--log-file=/tmp/cc.log'],
+"     \ 'cuda': ['ccls', '--log-file=/tmp/cc.log'],
+"     \ 'objc': ['ccls', '--log-file=/tmp/cc.log'],
+"     \ 'python': ['pyls'],
+"     \ }
+"
+" let g:LanguageClient_loadSettings = 1 " Use an absolute configuration path if you want system-wide settings
+" let g:LanguageClient_settingsPath = '~/.config/nvim/settings.json'
+"
+" " https://github.com/autozimu/LanguageClient-neovim/issues/379 LSP snippet is not supported
+" let g:LanguageClient_hasSnippetSupport = 0
+"
+" augroup LanguageClient_config
+"   au!
+"   au BufEnter * let b:Plugin_LanguageClient_started = 0
+"   au User LanguageClientStarted setl signcolumn=yes
+"   au User LanguageClientStarted let b:Plugin_LanguageClient_started = 1
+"   au User LanguageClientStopped setl signcolumn=auto
+"   au User LanguageClientStopped let b:Plugin_LanguageClient_stopped = 0
+"   au CursorMoved * if b:Plugin_LanguageClient_started | sil call LanguageClient#textDocument_documentHighlight() | endif
+" augroup END
 
 " ==============================================================================
 "                                       ale
@@ -42,12 +49,31 @@ let g:ale_fixers = {
 \   'python': ['black'],
 \}
 let g:ale_linters = {
-\   'python': ['pylint']
+\   'python': ['pylint'],
+\   'c': ['ccls'],
+\   'cpp': ['ccls'],
 \}
+let g:ale_linters_explicit = 1
+
 let g:ale_set_highlights = 1
-let g:ale_fix_on_save = 1
+let g:ale_fix_on_save = 0
 let g:ale_sign_error = '>>'
 let g:ale_sign_warning = '--'
+
+let g:ale_completion_enabled = 1
+
+function! LinterStatus() abort
+    let l:counts = ale#statusline#Count(bufnr(''))
+
+    let l:all_errors = l:counts.error + l:counts.style_error
+    let l:all_non_errors = l:counts.total - l:all_errors
+
+    return l:counts.total == 0 ? 'OK' : printf(
+    \   '%dW %dE',
+    \   all_non_errors,
+    \   all_errors
+    \)
+endfunction
 
 " ==============================================================================
 "                                     Deoplete
