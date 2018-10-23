@@ -9,30 +9,26 @@ export _JAVA_AWT_WM_NONREPARENTING=1
 export PATH="$HOME/.scripts:$(getconf PATH)"
 export PATH="/usr/local/bin:$PATH"
 
-if command -v nvim 1>/dev/null 2>&1; then
+if (( $+commands[nvim] )) ; then
   export VISUAL=nvim
   export NVIM_TUI_ENABLE_TRUE_COLOR=1
-elif command -v vim 1>/dev/null 2>&1; then
+elif (( $+commands[vim] )) ; then
   export VISUAL=vim
 else
   echo 'could not find neovim or vim; not setting $VISUAL'
 fi
 
-if command -v brew 1>/dev/null 2>&1; then
-  export CFLAGS="-I$(brew --prefix openssl)/include"
-  export LDFLAGS="-L$(brew --prefix openssl)/lib"
-fi
-if command -v cargo 1>/dev/null 2>&1; then
+if (( $+commands[cargo] )) ; then
   export PATH="$HOME/.cargo/bin:$PATH"
 fi
-if command -v npm 1>/dev/null 2>&1; then
+if (( $+commands[npm] )) ; then
   export npm_config_prefix=~/.node_modules
   export PATH="$npm_config_prefix/bin:$PATH"
 fi
-if command -v python2 1>/dev/null 2>&1; then
+if (( $+commands[python2] )) ; then
   export PATH="$(python2 -m site --user-base)/bin:$(python2 -m site --user-site):$PATH"
 fi
-if command -v python3 1>/dev/null 2>&1; then
+if (( $+commands[python3] )) ; then
   export PATH="$(python3 -m site --user-base)/bin:$(python3 -m site --user-site):$PATH"
 fi
 
@@ -45,8 +41,7 @@ fi
 # ====
 # WORK
 # ====
-export AWS_SDK_CPP_DIR="~/lib/aws-sdk-cpp/bin"
-export PATH="~/dev/sample/build/bin/:$PATH"
+export AWS_SDK_CPP_DIR="/usr/local/lib/aws-sdk-cpp"
 
 # ===
 # MAC
@@ -54,4 +49,7 @@ export PATH="~/dev/sample/build/bin/:$PATH"
 ulimit -n 32768
 # export AWS_SDK_CPP_DIR="/usr/local/lib"
 
-eval $(docker-machine env default)
+export DOCKER_TLS_VERIFY="1"
+export DOCKER_HOST="tcp://192.168.99.102:2376"
+export DOCKER_CERT_PATH="/Users/baot/.docker/machine/machines/doctholomew"
+export DOCKER_MACHINE_NAME="doctholomew"

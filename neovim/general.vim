@@ -90,9 +90,10 @@ set list
 
 " colors
 " ------
-set termguicolors " use truecolor
+set termguicolors         " use truecolor
 set background=dark
-colorscheme base16-seti
+" let base16colorspace=256  " For base16-shell: Access colors present in 256 colorspace
+colorscheme base16-circus
 " colorscheme onedark
 " colorscheme gruvbox
 " colorscheme kalisi

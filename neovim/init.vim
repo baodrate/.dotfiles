@@ -42,15 +42,15 @@ endif
 call plug#begin(g:plug_dir)
 
   " ----------- Colorschemes -----------
-  Plug 'altercation/vim-colors-solarized'
-  Plug 'junegunn/seoul256.vim'
-  Plug 'w0ng/vim-hybrid'
-  Plug 'jnurmine/Zenburn'
-  Plug 'morhetz/gruvbox'
-  Plug 'freeo/vim-kalisi'
-  Plug 'tomasr/molokai'
-  Plug 'baskerville/bubblegum'
-  Plug 'joshdick/onedark.vim'
+  " Plug 'altercation/vim-colors-solarized'
+  " Plug 'junegunn/seoul256.vim'
+  " Plug 'w0ng/vim-hybrid'
+  " Plug 'jnurmine/Zenburn'
+  " Plug 'morhetz/gruvbox'
+  " Plug 'freeo/vim-kalisi'
+  " Plug 'tomasr/molokai'
+  " Plug 'baskerville/bubblegum'
+  " Plug 'joshdick/onedark.vim'
   Plug 'chriskempson/base16-vim'
 
   " ----------- Interface --------------

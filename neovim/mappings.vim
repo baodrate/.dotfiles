@@ -86,10 +86,10 @@ endif
 "                                   ALE
 " ==============================================================================
 " Bind F8 to fixing problems with ALE
-nmap <F8> <Plug>(ale_fix)
+" nmap <F8> <Plug>(ale_fix)
 
-nmap <silent> <C-n> <Plug>(ale_previous_wrap)
-nmap <silent> <C-j> <Plug>(ale_next_wrap)
+" nmap <silent> <C-n> <Plug>(ale_previous_wrap)
+" nmap <silent> <C-p> <Plug>(ale_next_wrap)
 
 "" <Plug>(ale_find_references)
 "" <Plug>(ale_go_to_definition)

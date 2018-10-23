@@ -2,7 +2,7 @@
 Host github.com
   HostName github.com
   User git
-  IdentityFile ~/.ssh/gpg-qubidt.pub
+  IdentityFile ~/.ssh/gpg-baot.pub
   IdentitiesOnly yes
 
 # qubidt

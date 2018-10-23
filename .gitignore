@@ -2,6 +2,7 @@
 [._]s[a-w][a-z]
 neovim/.netrwhist
 neovim/plugged
+neovim/session
 *~
 vimperator/info/default/history-command
 vimperator/info/default/history-search

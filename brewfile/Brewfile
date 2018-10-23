@@ -72,6 +72,7 @@ brew 'swift'
 # system
 cask 'osxfuse'
 brew 'sshfs'
+brew 'bindfs'
 
 # utility:common
 brew 'wget'
@@ -92,6 +93,7 @@ brew 'ripgrep'        # grep alternative
 brew 'jq'
 brew 'fzf'
 brew 'abduco'         # session management
+brew 'nnn'
 
 # other
 cask 'spotify'

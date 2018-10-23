@@ -28,17 +28,6 @@ ZPLG_HOME="${ZDOTDIR:-$HOME}/.zplugin"
 # zmodload zdharma/zplugin
 # zpmod source-study
 
-# --------------
-# macOS bindings
-# --------------
-if [[ $OS = 'osx' ]]; then
-  # not working:
-  #### bindkey "[D" backward-word
-  #### bindkey "[C" forward-word
-  #### bindkey "^[a" beginning-of-line
-  #### bindkey "^[e" end-of-line
-fi
-
 # -------------
 # gpg ssh agent
 # -------------
@@ -177,10 +166,10 @@ source "$ZPLG_HOME/bin/zplugin.zsh"
 # -----
 # Theme
 # -----
+zplugin load chriskempson/base16-shell # call before prompt because this checks [ -n "$PS1" ]
+
 zplugin ice pick"async.zsh" src"pure.zsh"
 zplugin load sindresorhus/pure
-
-zplugin load chriskempson/base16-shell
 
 # --------------
 # custom plugins
@@ -228,8 +217,8 @@ zplugin load willghatch/zsh-saneopt
     # (will need to start a new terminal session to see results)
 zplugin ice wait'0' lucid atload'
     if [[ $OS = 'osx' ]]; then
-        [[ -d "$CASK_HOME/homebrew/homebrew-command-not-found" ]] \
-        || brew tap homebrew/command-not-found >/dev/null 2>&1 &!
+        [[ -d "$CASK_HOME/homebrew/homebrew-command-not-found" ]] || \
+        "command-not-found not found! (`brew install command-not-found`)"
     fi'
 zplugin snippet PZT::modules/command-not-found/init.zsh
 
