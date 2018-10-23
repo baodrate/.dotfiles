@@ -121,9 +121,9 @@ alias mkdir='mkdir -pv'
 #     A : list all except '.' and '..'
 #     h : use suffixes for file sizes
 if [[ $OS = 'linux' ]] ; then
-  alias ls='ls --color=auto --group-directories-first'
-  alias l='ls -Flh --color=auto --group-directories-first'
-  alias ll='ls -FlAh --color=auto --group-directories-first'
+  alias ls='ls --color=always --group-directories-first'
+  alias l='ls -Flh --color=always --group-directories-first'
+  alias ll='ls -FlAh --color=always --group-directories-first'
 elif [[ $OS = 'osx' ]]; then
   if [[ $+commands[gls] ]] ; then
     alias ls='gls --color=auto --group-directories-first'
@@ -134,7 +134,6 @@ elif [[ $OS = 'osx' ]]; then
     alias l='ls -FGlhG'
     alias ll='ls -FGlAhG'
   fi
-# TODO: check for non-arch based distros
 else
   echo 'could not identify OS to set ls colors alias'
   alias ls='ls -G'
@@ -360,6 +359,6 @@ zplugin load "zdharma/fast-syntax-highlighting"
 # not working yet, conflicts with history serach
 # see https://github.com/zdharma/zplugin/issues/69
 #   bindkey '^\n' autosuggest-execute
-bindkey '^ ' autosuggest-execute
 zplugin ice wait'0' lucid atload'_zsh_autosuggest_start'  # load after fast-syntax-highlighting
 zplugin load zsh-users/zsh-autosuggestions
+bindkey '^ ' autosuggest-execute
