@@ -126,8 +126,8 @@ if [[ $OS = 'osx' ]]; then
   alias ll='ls -FGlAhG'
 # TODO: check for non-arch based distros
 elif [[ $OS = 'linux' ]]; then
-  alias l='ls -FGlh --color=auto'
-  alias ll='ls -FGlAh --color=auto'
+  alias l='ls -FGlh --color=always'
+  alias ll='ls -FGlAh --color=always'
 else
   echo 'could not identify OS to set ls colors alias'
   alias l='ls -FGlh'
@@ -351,6 +351,6 @@ zplugin load "zdharma/fast-syntax-highlighting"
 # not working yet, conflicts with history serach
 # see https://github.com/zdharma/zplugin/issues/69
 #   bindkey '^\n' autosuggest-execute
-bindkey '^ ' autosuggest-execute
 zplugin ice wait'0' lucid atload'_zsh_autosuggest_start'  # load after fast-syntax-highlighting
 zplugin load zsh-users/zsh-autosuggestions
+bindkey '^ ' autosuggest-execute

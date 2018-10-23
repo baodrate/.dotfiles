@@ -71,27 +71,31 @@ call plug#begin(g:plug_dir)
   Plug 'tpope/vim-surround'
 
   " ----------- Tools ------------------
-  " Deoplete (requires async)
-  if has('nvim')
-    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-  elseif v:version >= 800
-    Plug 'Shougo/deoplete.nvim'
-    " These two required by Deoplete in Vim8
-    Plug 'roxma/nvim-yarp'
-    Plug 'roxma/vim-hug-neovim-rpc'
-  endif
+  Plug 'roxma/nvim-yarp'
+  Plug 'ncm2/ncm2'
+
+  " NOTE: you need to install completion sources to get completions. Check
+  " our wiki page for a list of sources: https://github.com/ncm2/ncm2/wiki
+  Plug 'ncm2/ncm2-bufword'
+  Plug 'ncm2/ncm2-tmux'
+  Plug 'ncm2/ncm2-path'
+
   Plug 'tpope/vim-speeddating'          " increment for dates
   Plug 'tpope/vim-fugitive'             " for git
 
   Plug 'kassio/neoterm'                 " wrapper for Vim8/Neovim terminal
 
   Plug 'justinmk/vim-dirvish'
-""  Plug 'kristijanhusak/vim-dirvish-git' " major slow down
 
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+  Plug 'junegunn/fzf.vim'
   Plug 'junegunn/vim-easy-align'
 
-  Plug 'tpope/vim-eunuch'               " UNIX helpers (e.g. SudoWrite;Chmod)
+  if has('nvim')
+    Plug 'lambdalisue/suda.vim'           " UNIX helpers (e.g. SudoWrite;Chmod)
+  else
+    Plug 'tpope/vim-eunuch'               " UNIX helpers (e.g. SudoWrite;Chmod)
+  endif
 
   " ----------- Utilities --------------
   Plug 'vimwiki/vimwiki', { 'branch': 'dev' }
@@ -99,11 +103,11 @@ call plug#begin(g:plug_dir)
 
   " =========== Code ===================
   Plug 'Raimondi/delimitMate'
-  Plug 'w0rp/ale'
-  " Plug 'autozimu/LanguageClient-neovim', {
-  "     \ 'branch': 'next',
-  "     \ 'do': 'bash install.sh',
-  "     \ }
+  " Plug 'w0rp/ale'
+  Plug 'autozimu/LanguageClient-neovim', {
+      \ 'branch': 'next',
+      \ 'do': 'bash install.sh',
+      \ }
   " ----------- C/C++ ------------------
   Plug 'vim-scripts/DoxygenToolkit.vim'
   Plug 'rhysd/vim-clang-format'
