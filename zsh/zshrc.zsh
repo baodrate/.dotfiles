@@ -23,14 +23,20 @@ ZPLG_HOME="${ZDOTDIR:-$HOME}/.zplugin"
 # => ZPFX (polaris) directory to store compiled programs
 [ -d $ZPFX/bin ] || mkdir -p $ZPFX/bin
 
+# ==> source-study module
+# module_path+=( "$ZPLG_HOME/bin/zmodules/Src" )
+# zmodload zdharma/zplugin
+# zpmod source-study
+
 # --------------
 # macOS bindings
 # --------------
 if [[ $OS = 'osx' ]]; then
-  bindkey "[D" backward-word
-  bindkey "[C" forward-word
-  bindkey "^[a" beginning-of-line
-  bindkey "^[e" end-of-line
+  # not working:
+  #### bindkey "[D" backward-word
+  #### bindkey "[C" forward-word
+  #### bindkey "^[a" beginning-of-line
+  #### bindkey "^[e" end-of-line
 fi
 
 # -------------
@@ -57,15 +63,9 @@ if [[ ! -d "$ZPLG_HOME/bin" ]]; then
   fi
 fi
 
-# ==> source-study module
-#### module_path+=( "$ZPLG_HOME/bin/zmodules/Src" )
-#### zmodload zdharma/zplugin
-#### zpmod source-study
-
 # =============================================================================
 # Configuration
 # =============================================================================
-
 # ------------
 # zsh settings
 # ------------
@@ -116,20 +116,28 @@ alias mv='mv -iv'
 alias mkdir='mkdir -pv'
 # ==> ls
 #     F : indicator suffixes for directories, executables, symlinks, sockets, whiteouts, and named pipes
-#     p : (alternatively to F) indicator suffix ('/') for directories
-#     G : colorized output
-#     l : long format
-#     A : don't list '.' and '..'
+#     p : (alternatively to F) only indicate directories with suffix ('/')
+#     l : long (list) format
+#     A : list all except '.' and '..'
 #     h : use suffixes for file sizes
-if [[ $OS = 'osx' ]]; then
-  alias l='ls -FGlhG'
-  alias ll='ls -FGlAhG'
+if [[ $OS = 'linux' ]] ; then
+  alias ls='ls --color=auto --group-directories-first'
+  alias l='ls -Flh --color=auto --group-directories-first'
+  alias ll='ls -FlAh --color=auto --group-directories-first'
+elif [[ $OS = 'osx' ]]; then
+  if [[ $+commands[gls] ]] ; then
+    alias ls='gls --color=auto --group-directories-first'
+    alias l='gls -Flh --color=auto --group-directories-first'
+    alias ll='gls -FlAh --color=auto --group-directories-first'
+  else
+    alias ls='ls -G'
+    alias l='ls -FGlhG'
+    alias ll='ls -FGlAhG'
+  fi
 # TODO: check for non-arch based distros
-elif [[ $OS = 'linux' ]]; then
-  alias l='ls -FGlh --color=auto'
-  alias ll='ls -FGlAh --color=auto'
 else
   echo 'could not identify OS to set ls colors alias'
+  alias ls='ls -G'
   alias l='ls -FGlh'
   alias ll='ls -FGlAh'
 fi
@@ -164,6 +172,7 @@ fi
 # =============================================================================
 # Plugins
 # =============================================================================
+
 source "$ZPLG_HOME/bin/zplugin.zsh"
 
 # -----

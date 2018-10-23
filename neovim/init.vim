@@ -61,7 +61,6 @@ call plug#begin(g:plug_dir)
 
   Plug 'edkolev/tmuxline.vim'
 
-  Plug 'airblade/vim-gitgutter'
   Plug 'mhinz/vim-startify'
 
   Plug 'ryanoasis/vim-devicons'
