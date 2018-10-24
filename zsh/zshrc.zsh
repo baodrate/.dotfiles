@@ -109,25 +109,41 @@ alias mkdir='mkdir -pv'
 #     l : long (list) format
 #     A : list all except '.' and '..'
 #     h : use suffixes for file sizes
-if [[ $OS = 'linux' ]] ; then
-  alias ls='ls --color=always --group-directories-first'
-  alias l='ls -Flh --color=always --group-directories-first'
-  alias ll='ls -FlAh --color=always --group-directories-first'
-elif [[ $OS = 'osx' ]]; then
-  if [[ $+commands[gls] ]] ; then
-    alias ls='gls --color=auto --group-directories-first'
-    alias l='gls -Flh --color=auto --group-directories-first'
-    alias ll='gls -FlAh --color=auto --group-directories-first'
-  else
-    alias ls='ls -G'
-    alias l='ls -FGlhG'
-    alias ll='ls -FGlAhG'
-  fi
+if [[ $+commands[gls] ]] ; then
+  alias ls='exa'
+  alias ll='exa -lG'
+  alias lt='exa -lG --sort newest'
+  alias la='exa -laG'
+  alias lat='exa -laG --sort newest'
 else
-  echo 'could not identify OS to set ls colors alias'
-  alias ls='ls -G'
-  alias l='ls -FGlh'
-  alias ll='ls -FGlAh'
+  if [[ $OS = 'linux' ]] ; then
+    alias ls='ls --color=always --group-directories-first'
+    alias ll='ls -Flh --color=always --group-directories-first'
+    alias lt='ls -Flht --color=always --group-directories-first'
+    alias la='ls -FlAh --color=always --group-directories-first'
+    alias lat='ls -FlAht --color=always --group-directories-first'
+  elif [[ $OS = 'osx' ]]; then
+    if [[ $+commands[gls] ]] ; then
+      alias ls='gls --color=auto --group-directories-first'
+      alias ll='gls -Flh --color=auto --group-directories-first'
+      alias lt='gls -Flht --color=auto --group-directories-first'
+      alias la='gls -FlAh --color=auto --group-directories-first'
+      alias lat='gls -FlAht --color=auto --group-directories-first'
+    else
+      alias ls='ls -G'
+      alias ll='ls -FGlhG'
+      alias lt='ls -FGlhGt'
+      alias la='ls -FGlAhG'
+      alias lat='ls -FGlAhGt'
+    fi
+  else
+    echo 'could not identify OS to set ls colors alias'
+    unalias ls
+    alias ll='ls -l'
+    alias lt='ls -lt'
+    alias la='ls -la'
+    alias lat='ls -lat'
+  fi
 fi
 
 # ==> less
