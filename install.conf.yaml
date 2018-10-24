@@ -24,7 +24,6 @@
     ~/.config/iterm2: iterm2
     ~/.config/termite: termite
     ~/.config/sway: sway
-    ~/.config/zsh: zsh
     ~/.config/fontconfig: fontconfig
     ~/.vimperator: vimperator
     ~/.scripts: scripts

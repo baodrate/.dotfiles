@@ -111,10 +111,10 @@ alias mkdir='mkdir -pv'
 #     h : use suffixes for file sizes
 if [[ $+commands[gls] ]] ; then
   alias ls='exa'
-  alias ll='exa -lG'
+  alias l='exa -lG'
   alias lt='exa -lG --sort newest'
-  alias la='exa -laG'
-  alias lat='exa -laG --sort newest'
+  alias ll='exa -laG'
+  alias llt='exa -laG --sort newest'
 else
   if [[ $OS = 'linux' ]] ; then
     alias ls='ls --color=always --group-directories-first'

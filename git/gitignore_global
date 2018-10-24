@@ -488,3 +488,5 @@ ASALocalRun/
 
 
 # End of https://www.gitignore.io/api/vim,macos,windows,jetbrains,visualstudio,visualstudiocode
+
+compile_commands.json

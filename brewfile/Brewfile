@@ -63,8 +63,13 @@ brew 'python'
 brew 'python@2'
 
 # dev:C++
+brew 'clang-format'
 tap 'twlz0ne/homebrew-ccls'
 brew 'ccls'
+brew 'cquery'
+
+# dev:rust
+brew 'rustup'
 
 # dev:swift
 brew 'swift'
@@ -88,6 +93,7 @@ brew 'watch'
 brew 'bat'            # prettier cat tool
 brew 'glances'        # top alternative
 brew 'ripgrep'        # grep alternative
+brew 'exa'            # ls alternative
 
 # utility:misc
 brew 'jq'
