@@ -9,7 +9,7 @@ elif [[ `uname` = 'Darwin' ]]; then
   export OS=osx
 else
   >&2 echo "Can't detect OS"
-  return
+  return 1
 fi
 
 if [[ $OS = 'linux' ]]; then
@@ -48,7 +48,7 @@ if [[ ! -d "$ZPLG_HOME/bin" ]]; then
     git clone https://github.com/zdharma/zplugin.git $ZPLG_HOME/bin
   else
     echo 'git not found' >&2
-    exit 1
+    return 1
   fi
 fi
 
@@ -104,47 +104,68 @@ alias mv='mv -iv'
 #     create intermediate directories; display created directories
 alias mkdir='mkdir -pv'
 # ==> ls
-#     F : indicator suffixes for directories, executables, symlinks, sockets, whiteouts, and named pipes
-#     p : (alternatively to F) only indicate directories with suffix ('/')
-#     l : long (list) format
-#     A : list all except '.' and '..'
-#     h : use suffixes for file sizes
-if [[ $+commands[gls] ]] ; then
-  alias ls='exa'
-  alias ll='exa -lG'
-  alias lt='exa -lG --sort newest'
-  alias la='exa -laG'
-  alias lat='exa -laG --sort newest'
-else
-  if [[ $OS = 'linux' ]] ; then
-    alias ls='ls --color=always --group-directories-first'
-    alias ll='ls -Flh --color=always --group-directories-first'
-    alias lt='ls -Flht --color=always --group-directories-first'
-    alias la='ls -FlAh --color=always --group-directories-first'
-    alias lat='ls -FlAht --color=always --group-directories-first'
-  elif [[ $OS = 'osx' ]]; then
-    if [[ $+commands[gls] ]] ; then
-      alias ls='gls --color=auto --group-directories-first'
-      alias ll='gls -Flh --color=auto --group-directories-first'
-      alias lt='gls -Flht --color=auto --group-directories-first'
-      alias la='gls -FlAh --color=auto --group-directories-first'
-      alias lat='gls -FlAht --color=auto --group-directories-first'
-    else
-      alias ls='ls -G'
-      alias ll='ls -FGlhG'
-      alias lt='ls -FGlhGt'
-      alias la='ls -FGlAhG'
-      alias lat='ls -FGlAhGt'
-    fi
-  else
-    echo 'could not identify OS to set ls colors alias'
-    unalias ls
-    alias ll='ls -l'
-    alias lt='ls -lt'
-    alias la='ls -la'
-    alias lat='ls -lat'
-  fi
+local ls_command="ls"
+# Default i.e. posix flags
+local ls_long="-l"
+local ls_sort_newest="-t"
+local ls_show_hidden="-a"
+local ls_one_line="-1"
+# platform-specific flags
+local ls_colors=""
+local ls_indicators=""
+local ls_human_filesizes=""
+local ls_group_folders
+# automatic platform-specific-flags
+local ls_default_flags=($ls_colors $ls_indicators $ls_human_filesizes $ls_group_folders)
+
+if (( $+commands[exa] )) ; then
+  local ls_command="exa"
+
+  local ls_long="--long"                  # -l
+  local ls_sort_newest="--sort=modified"  # -s
+  local ls_show_hidden="--all"            # -a call twice to show . and ..
+  local ls_one_line="--oneline"           # -1
+  local ls_colors="--color=always"        #    always to forward to e.g. less
+  local ls_indicators="--classify"        # -F
+  local ls_human_filesizes="--binary"     # -b use binary prefixes (e.g. KiB vs KB)
+
+  local exa_grid="--grid"                 # -G show long format in grid (multi-column)
+  local exa_git="--git"                   #    show git status in table
+
+  ls_default_flags+=(${exa_grid} ${exa_git})
+
+elif [[ $OS = 'linux' || $OS = 'osx' && (( $+commands[gls] )) ]] ; then
+
+  # macOS but we have `brew coreutils`
+  if [[ $OS = 'osx' ]] ; then local ls_command="gls" ; fi
+
+  local ls_long="-l"
+  local ls_sort_newest="-t"
+  local ls_show_hidden="-A"
+  local ls_one_line="-1"
+  local ls_colors="--color=always"
+  local ls_indicators="-F"
+  local ls_human_filesizes="-h"
+
+  local gnuls_group_dirs="--group-directories-first"
+  ls_default_flags+=(${gnuls_group_dirs})
+
+elif [[ $OS = 'osx' ]]; then
+  local ls_long="-l"
+  local ls_sort_newest="-t"
+  local ls_show_hidden="-A"
+  local ls_one_line="-1"
+  local ls_colors="-G"
+  local ls_indicators="-F"
+  local ls_human_filesizes="-h"
 fi
+
+local ls_base_command="$ls_command ${ls_default_flags[@]}"
+alias ls="$ls_base_command"
+alias l="$ls_base_command $ls_long"
+alias lt="$ls_base_command $ls_long $ls_sort_newest"
+alias ll="$ls_base_command $ls_long $ls_show_hidden"
+alias llt="$ls_base_command $ls_long $ls_show_hidden $ls_sort_newest"
 
 # ==> less
 #     F: quit-if-one-screen
@@ -184,6 +205,12 @@ source "$ZPLG_HOME/bin/zplugin.zsh"
 # -----
 zplugin load chriskempson/base16-shell # call before prompt because this checks [ -n "$PS1" ]
 
+# ==> spaceship (not using because slow for now)
+#     wait for https://github.com/denysdovhan/spaceship-prompt/pull/499
+# zplugin ice src"spaceship.zsh"
+# zplugin load denysdovhan/spaceship-prompt
+
+# ==> pure prompt
 zplugin ice pick"async.zsh" src"pure.zsh"
 zplugin load sindresorhus/pure
 
@@ -210,17 +237,21 @@ zplugin snippet https://github.com/denilsonsa/prettyping/raw/master/prettyping
 zplugin ice as"program" cp"httpstat.sh -> httpstat" pick"httpstat"
 zplugin load "b4b4r07/httpstat"
 
-# Zplugin
+# ==> diff-so-fancy
 zplugin ice as"program" pick"bin/git-dsf"
 zplugin light "zdharma/zsh-diff-so-fancy"
+
+# ==> git-now
+zplugin ice wait"2" lucid as"program" pick"$ZPFX/bin/git-now" make"prefix=$ZPFX install"
+zplugin light iwata/git-now
+
+# ==> git extras
+zplugin ice wait"2" lucid as"program" pick"$ZPFX/bin/git-alias" make"PREFIX=$ZPFX" nocompile
+zplugin light tj/git-extras
 
 # docker-machine-port-forwarder
 zplugin ice as"program" pick"pf"
 zplugin light "johanhaleby/docker-machine-port-forwarder"
-
-# ==> safe-rm
-#### zplugin ice as"program" cp"rm.sh -> rm" pick"rm"
-#### zplugin snippet http://github.com/kaelzhang/shell-safe-rm/raw/master/bin/rm.sh
 
 # -------------
 # basic plugins
@@ -228,15 +259,19 @@ zplugin light "johanhaleby/docker-machine-port-forwarder"
 # ==> Sane options for zsh, in the spirit of vim-sensible
 zplugin load willghatch/zsh-saneopt
 
-# ==> suggests package name
-    # tap the command-not-found homebrew cask silently and in the background
-    # (will need to start a new terminal session to see results)
-zplugin ice wait'0' lucid atload'
-    if [[ $OS = 'osx' ]]; then
-        [[ -d "$CASK_HOME/homebrew/homebrew-command-not-found" ]] || \
-        "command-not-found not found! (`brew install command-not-found`)"
-    fi'
-zplugin snippet PZT::modules/command-not-found/init.zsh
+# ==> command-not-found
+#     suggests package name
+# zplugin snippet PZT::modules/command-not-found/init.zsh
+# https://github.com/sorin-ionescu/prezto/blob/master/modules/command-not-found/init.zsh
+# Load command-not-found on Debian-based distributions.
+zplugin ice if"[[ -s '/etc/zsh_command_not_found' ]]"
+zplugin load  '/etc/zsh_command_not_found'
+# Load command-not-found on Arch Linux-based distributions.
+zplugin ice if"[[ -s '/usr/share/doc/pkgfile/command-not-found.zsh' ]]"
+zplugin load '/usr/share/doc/pkgfile/command-not-found.zsh'
+# Load command-not-found on macOS when homebrew tap is configured.
+zplugin ice if"[[ -s '/usr/local/Homebrew/Library/Taps/homebrew/homebrew-command-not-found/handler.sh' ]]"
+zplugin load '/usr/local/Homebrew/Library/Taps/homebrew/homebrew-command-not-found/handler.sh'
 
 # ----------------------
 # macOS specific plugins
@@ -249,13 +284,8 @@ zplugin snippet PZT::modules/homebrew/init.zsh
 # linux specific plugins
 # ----------------------
 # ==> pacman aliases
-zplugin ice if"[[ $OS = 'linux' ]]"
+zplugin ice if"(( $+commands[pacman] ))"
 zplugin snippet PZT::modules/pacman/init.zsh
-
-# ==> ls colors
-#     extension:color mappings (requires terminal with 256 colors)
-zplugin ice if"[[ $OS = 'linux' ]]" atclone"dircolors -b LS_COLORS > c.zsh" atpull'%atclone' pick"c.zsh"
-zplugin light trapd00r/LS_COLORS
 
 # -------------
 # misc. plugins
@@ -292,9 +322,6 @@ bindkey -v
 #     NOTE:   doesn't work atm, kills highlighting in history-search-multi-word
 #             see: https://github.com/softmoth/zsh-vim-mode/issues/8
 # zplugin load softmoth/zsh-vim-mode
-
-# ==> command-not-found
-zplugin snippet PZT::modules/command-not-found/init.zsh
 
 # -------------------------------
 # autocomplete / search / history
