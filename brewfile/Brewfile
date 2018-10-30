@@ -56,11 +56,13 @@ brew 'docker-machine'
 brew 'docker-compose'
 
 # dev:sql
+cask 'adoptopenjdk9'
 cask 'dbschema'
 
 # dev:python
 brew 'python'
 brew 'python@2'
+brew 'pipenv'
 
 # dev:C++
 brew 'clang-format'
@@ -88,6 +90,7 @@ brew 'gnu-sed'
 brew 'tmux'
 brew 'iproute2mac'    # wraps ip commands
 brew 'watch'
+brew 'pidof'
 
 # utility:alternatives
 brew 'bat'            # prettier cat tool

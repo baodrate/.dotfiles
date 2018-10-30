@@ -70,6 +70,9 @@ call plug#begin(g:plug_dir)
   Plug 'tpope/vim-surround'
 
   " ----------- Tools ------------------
+  if ! has('nvim')
+    Plug 'roxma/vim-hug-neovim-rpc'
+  endif
   Plug 'roxma/nvim-yarp'
   Plug 'ncm2/ncm2'
 

@@ -47,10 +47,4 @@ export AWS_SDK_CPP_DIR="/usr/local/lib/aws-sdk-cpp"
 # ===
 # MAC
 # ===
-ulimit -n 32768
-# export AWS_SDK_CPP_DIR="/usr/local/lib"
-
-export DOCKER_TLS_VERIFY="1"
-export DOCKER_HOST="tcp://192.168.99.102:2376"
-export DOCKER_CERT_PATH="/Users/baot/.docker/machine/machines/doctholomew"
-export DOCKER_MACHINE_NAME="doctholomew"
+# ulimit -n 32768

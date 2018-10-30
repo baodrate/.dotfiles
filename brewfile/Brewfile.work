@@ -1,27 +1,32 @@
-# before export ACCEPT_EULA=y
-
-tap 'Microsoft/homebrew-mssql-release'
+# before 'export ACCEPT_EULA=y'
 
 # Microsoft ODBC Driver for SQL Server on Linux and macOS
 # https://docs.microsoft.com/en-us/sql/connect/odbc/linux-mac/installing-the-microsoft-odbc-driver-for-sql-server?view=sql-server-2017#os-x-1011-el-capitan-macos-1012-sierra-and-macos-1013-high-sierra
-brew 'msodbcsql17', args: ['--no-sandbox']
-brew 'mssql-tools', args: ['--env=']
+tap 'Microsoft/homebrew-mssql-release'
+brew 'msodbcsql17'
+brew 'mssql-tools'
 
-# formerly homebrew/science
+# genetic tools; formerly from homebrew/science
 brew 'samtools'
 brew 'bedtools'
 brew 'htslib'
 
+# tools
+brew 'postgresql'
+brew 'rabbitmq'
+
 # java tools
-cask 'java'
+cask 'oracle-jdk'
 brew 'ant'
 
-# other tools
+# C++ tools
+brew 'cmake'
+brew 'boost'
+brew 'rabbitmq-c'
+
+# CLI tools
 brew 'ack'
 brew 'awscli'
-brew 'aws-sdk-cpp', args: ["with-static"]
-brew 'boost'
-brew 'cmake'
 brew 'csshx'
 brew 'htop'
 brew 'iftop'
@@ -29,13 +34,13 @@ brew 'jq'
 brew 'mtr'
 brew 'nethogs'
 brew 'nmap'
-brew 'postgresql'
-brew 'python3'
-brew 'rabbitmq'
-brew 'rabbitmq-c'
 brew 'rename'
 brew 's3cmd'
 brew 'ssh-copy-id'
 brew 'tree'
 brew 'wget'
 brew 'zlib'
+
+# python
+brew 'python'
+brew 'pipenv'

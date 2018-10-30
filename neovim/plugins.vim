@@ -79,8 +79,8 @@ inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 " ==============================================================================
 let g:ale_fixers = {
 \   '*': ['remove_trailing_lines', 'trim_whitespace'],
-\   'javascript': ['eslint'],
 \   'python': ['black'],
+\   'javascript': ['eslint'],
 \}
 let g:ale_linters = {
 \   'python': ['pylint'],
