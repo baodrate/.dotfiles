@@ -23,10 +23,14 @@ ZPLG_HOME="${ZDOTDIR:-$HOME}/.zplugin"
 # => ZPFX (polaris) directory to store compiled programs
 [ -d $ZPFX/bin ] || mkdir -p $ZPFX/bin
 
-# ==> source-study module
-# module_path+=( "$ZPLG_HOME/bin/zmodules/Src" )
-# zmodload zdharma/zplugin
-# zpmod source-study
+# ==> zplugin automatic compilation module
+#     lets you use source-study module to check load times
+#     (call with `zpmod source-study`)
+# module_path = 
+if [[ -d "$ZPLG_HOME/bin/zmodules/Src"  ]] ; then
+  module_path+=( "$ZPLG_HOME/bin/zmodules/Src" )
+  zmodload zdharma/zplugin
+fi
 
 # -------------
 # gpg ssh agent
@@ -135,7 +139,6 @@ if (( $+commands[exa] )) ; then
   ls_default_flags+=(${exa_grid} ${exa_git})
 
 elif [[ $OS = 'linux' || $OS = 'osx' && (( $+commands[gls] )) ]] ; then
-
   # macOS but we have `brew coreutils`
   if [[ $OS = 'osx' ]] ; then local ls_command="gls" ; fi
 
@@ -149,7 +152,6 @@ elif [[ $OS = 'linux' || $OS = 'osx' && (( $+commands[gls] )) ]] ; then
 
   local gnuls_group_dirs="--group-directories-first"
   ls_default_flags+=(${gnuls_group_dirs})
-
 elif [[ $OS = 'osx' ]]; then
   local ls_long="-l"
   local ls_sort_newest="-t"
@@ -188,10 +190,6 @@ fi
 
 if (( $+commands[prettyping] )); then
   alias ping='prettyping --nolegend'
-fi
-
-if (( $+commands[diff-so-fancy] )); then
-  git config --global core.pager "diff-so-fancy | less --tabs=1,5 -RFX"
 fi
 
 # =============================================================================
@@ -261,17 +259,18 @@ zplugin load willghatch/zsh-saneopt
 
 # ==> command-not-found
 #     suggests package name
-# zplugin snippet PZT::modules/command-not-found/init.zsh
-# https://github.com/sorin-ionescu/prezto/blob/master/modules/command-not-found/init.zsh
-# Load command-not-found on Debian-based distributions.
-zplugin ice if"[[ -s '/etc/zsh_command_not_found' ]]"
-zplugin load  '/etc/zsh_command_not_found'
-# Load command-not-found on Arch Linux-based distributions.
-zplugin ice if"[[ -s '/usr/share/doc/pkgfile/command-not-found.zsh' ]]"
-zplugin load '/usr/share/doc/pkgfile/command-not-found.zsh'
-# Load command-not-found on macOS when homebrew tap is configured.
-zplugin ice if"[[ -s '/usr/local/Homebrew/Library/Taps/homebrew/homebrew-command-not-found/handler.sh' ]]"
-zplugin load '/usr/local/Homebrew/Library/Taps/homebrew/homebrew-command-not-found/handler.sh'
+zplugin snippet PZT::modules/command-not-found/init.zsh
+
+# # https://github.com/sorin-ionescu/prezto/blob/master/modules/command-not-found/init.zsh
+# # Load command-not-found on Debian-based distributions.
+# zplugin ice if"[[ -s '/etc/zsh_command_not_found' ]]"
+# zplugin load  '/etc/zsh_command_not_found'
+# # Load command-not-found on Arch Linux-based distributions.
+# zplugin ice if"[[ -s '/usr/share/doc/pkgfile/command-not-found.zsh' ]]"
+# zplugin load '/usr/share/doc/pkgfile/command-not-found.zsh'
+# # Load command-not-found on macOS when homebrew tap is configured.
+# zplugin ice if"[[ -s '/usr/local/Homebrew/Library/Taps/homebrew/homebrew-command-not-found/handler.sh' ]]"
+# zplugin load '/usr/local/Homebrew/Library/Taps/homebrew/homebrew-command-not-found/handler.sh'
 
 # ----------------------
 # macOS specific plugins
