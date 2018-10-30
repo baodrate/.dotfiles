@@ -276,3 +276,11 @@ let g:vim_markdown_frontmatter=1
 xmap ga <Plug>(EasyAlign)
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
+
+
+" ==============================================================================
+"                                  vim-gitgutter
+" ==============================================================================
+
+let g:gitgutter_highlight_lines = 1
+let g:gitgutter_grep = 'rg'
