@@ -8,7 +8,7 @@ if [[ `uname` = 'Linux' ]]; then
 elif [[ `uname` = 'Darwin' ]]; then
   export OS=osx
 else
-  >&2 echo "Can't detect OS"
+  echo "Can't detect OS" >&2
   return 1
 fi
 
@@ -29,7 +29,7 @@ ZPLG_HOME="${ZDOTDIR:-$HOME}/.zplugin"
 # module_path = 
 if [[ -d "$ZPLG_HOME/bin/zmodules/Src"  ]] ; then
   module_path+=( "$ZPLG_HOME/bin/zmodules/Src" )
-  zmodload zdharma/zplugin
+  (zmodload zdharma/zplugin)
 fi
 
 # -------------
