@@ -12,6 +12,8 @@ brew 'bedtools'
 brew 'htslib'
 
 # tools
+brew 'docker'
+brew 'docker-compose'
 brew 'postgresql'
 brew 'rabbitmq'
 

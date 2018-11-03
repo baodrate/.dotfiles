@@ -20,6 +20,8 @@ cask 'tunnelblick'
 # usability
 tap 'crisidev/homebrew-chunkwm'
 brew 'chunkwm', args: ["HEAD"]
+tap 'koekeishiya/homebrew-formulae'
+brew 'skhd', restart_service: :changed
 
 # browsers
 tap 'homebrew/cask-versions'
@@ -51,12 +53,11 @@ cask 'jetbrains-toolbox'
 
 # dev:docker
 brew 'docker'
-cask 'virtualbox'
-brew 'docker-machine'
 brew 'docker-compose'
 
 # dev:sql
-cask 'adoptopenjdk9'
+tap 'AdoptOpenJDK/openjdk'
+cask 'adoptopenjdk'
 cask 'dbschema'
 
 # dev:python
@@ -71,7 +72,7 @@ brew 'ccls'
 brew 'cquery'
 
 # dev:rust
-brew 'rustup'
+brew 'rustup-init'
 
 # dev:swift
 brew 'swift'
@@ -106,5 +107,6 @@ brew 'nnn'
 
 # other
 cask 'spotify'
+cask 'pocket-casts'
 cask 'skype'
 cask 'jadengeller-helium'
