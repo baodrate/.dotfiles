@@ -29,7 +29,7 @@ ZPLG_HOME="${ZDOTDIR:-$HOME}/.zplugin"
 # module_path = 
 if [[ -d "$ZPLG_HOME/bin/zmodules/Src"  ]] ; then
   module_path+=( "$ZPLG_HOME/bin/zmodules/Src" )
-  (zmodload zdharma/zplugin)
+  (zmodload zdharma/zplugin) >/dev/null 2>&1
 fi
 
 # -------------
