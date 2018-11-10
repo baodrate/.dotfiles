@@ -1,7 +1,7 @@
 " ==============================================================================
-"                                   Vim-Plug
+"                                  Init Settings
 " ==============================================================================
-" ----------- Get OS -------
+" -------------- Get OS --------------
 " get the directory for this config file, resolving symlinks
 if has("win32")
   " resolve() works correct in Windows Neovim but not Windows Vim:
@@ -12,138 +12,158 @@ else
   let g:conf_dir = fnamemodify(resolve(expand('$MYVIMRC')), ':p:h')
 endif
 
-" ----------- vim-plug grabber -------
-if has("win32")
-  if empty(glob('~\AppData\Local\nvim\autoload\plug.vim'))
-    (New-Object Net.WebClient).DownloadFile(
-      'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim',
-      $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath(
-        "~\AppData\Local\nvim\autoload\plug.vim"
-      )
-    )
-    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-  endif
+let s:settings = {}
+let s:settings.is_win = has('win32') || has('win64')
+if s:settings.is_win
+  set shellslash
+endif
+
+" ------------ Set Paths -------------
+if s:settings.is_win
+  let s:settings.cache_dir = expand('~/AppData/Local')
+  let s:settings.config_dir = expand('~/AppData/Local')
 else
-  if empty(glob('~/.config/nvim/autoload/plug.vim'))
-    silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs \
-      https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+  let s:settings.cache_dir = expand('~/.cache')
+  let s:settings.config_dir = expand('~/.config')
+endif
+let s:settings.nvim_dir = s:settings.cache_dir . '/nvim'
+let s:settings.dein_dir = s:settings.cache_dir . '/dein'
+let s:settings.dein_repo_dir = s:settings.dein_dir . '/repos/github.com/Shougo/dein.vim'
+
+" ------------ Bootstrap -------------
+if &runtimepath !~# '/dein.vim'
+  if !isdirectory(s:settings.dein_repo_dir)
+    execute '!git clone --depth 1 https://github.com/Shougo/dein.vim ' . s:settings.dein_repo_dir 
   endif
+  execute 'set rtp^=' . fnamemodify(s:settings.dein_repo_dir, ':p')
 endif
 
 " ==============================================================================
-"                                   Vim-Plug
-" ==============================================================================
-if has("win32")
-  let g:plug_dir = g:conf_dir . '\\plugged'
-else
-  let g:plug_dir = g:conf_dir . '/plugged'
-endif
-call plug#begin(g:plug_dir)
+"                                  Load Plugins
+"  ==============================================================================
+
+
+if dein#load_state(s:settings.dein_dir)
+  call dein#begin(s:settings.dein_dir)
+
+  call dein#add('haya14busa/dein-command.vim', { 'on_cmd': 'Dein' })
+
+  " colorschemes {{{
+  call dein#add('iCyMind/NeoSolarized')
+  call dein#add('mhartington/oceanic-next')
+  " }}}
+
+  call dein#add('Shougo/denite.nvim', { 'on_cmd': 'Denite' })
+
+  " deoplete {{{
+  call dein#add('Shougo/deoplete.nvim', { 'on_if': 'has("nvim") && has("python3")' })
+  call dein#add('Shougo/neco-vim', { 'depends': ['deoplete.nvim'] })
+  " }}}
 
   " ----------- Colorschemes -----------
-  " Plug 'altercation/vim-colors-solarized'
-  " Plug 'junegunn/seoul256.vim'
-  " Plug 'w0ng/vim-hybrid'
-  " Plug 'jnurmine/Zenburn'
-  " Plug 'morhetz/gruvbox'
-  " Plug 'freeo/vim-kalisi'
-  " Plug 'tomasr/molokai'
-  " Plug 'baskerville/bubblegum'
-  " Plug 'joshdick/onedark.vim'
-  Plug 'chriskempson/base16-vim'
+  " call dein#add('altercation/vim-colors-solarized')
+  " call dein#add('junegunn/seoul256.vim')
+  " call dein#add('w0ng/vim-hybrid')
+  " call dein#add('jnurmine/Zenburn')
+  " call dein#add('morhetz/gruvbox')
+  " call dein#add('freeo/vim-kalisi')
+  " call dein#add('tomasr/molokai')
+  " call dein#add('baskerville/bubblegum')
+  " call dein#add('joshdick/onedark.vim')
+  call dein#add('chriskempson/base16-vim')
 
   " ----------- Interface --------------
-  Plug 'itchyny/lightline.vim'
-  Plug 'mike-hearn/base16-vim-lightline'
-  Plug 'taohexxx/lightline-buffer'
-  Plug 'gcmt/taboo.vim'
+  call dein#add('itchyny/lightline.vim')
+  call dein#add('mike-hearn/base16-vim-lightline')
+  call dein#add('taohexxx/lightline-buffer')
+  call dein#add('gcmt/taboo.vim')
 
-  Plug 'edkolev/tmuxline.vim'
+  call dein#add('edkolev/tmuxline.vim')
 
-  Plug 'mhinz/vim-startify'
+  call dein#add('mhinz/vim-startify')
 
-  Plug 'ryanoasis/vim-devicons'
+  call dein#add('ryanoasis/vim-devicons')
 
   " ----------- Movement ---------------
-""  Plug 'terryma/vim-multiple-cursors'
-  Plug 'tpope/vim-surround'
+  " call dein#add('terryma/vim-multiple-cursors')
+  call dein#add('tpope/vim-surround')
 
-  " ----------- Tools ------------------
-  if ! has('nvim')
-    Plug 'roxma/vim-hug-neovim-rpc'
-  endif
-  Plug 'roxma/nvim-yarp'
-  Plug 'ncm2/ncm2'
+  " ----------- Autocomplete -----------
+  call dein#add('roxma/vim-hug-neovim-rpc', { 'depends': 'ncm2' })
+  call dein#add('ncm2/ncm2', { 'depends': 'nvim-yarp' })
+  call dein#add('roxma/nvim-yarp', { 'on_if': 'has("nvim")' })
+  call dein#add('autozimu/LanguageClient-neovim', {
+      \ 'branch': 'next',
+      \ 'do': 'bash install.sh',
+      \ })
 
   " NOTE: you need to install completion sources to get completions. Check
   " our wiki page for a list of sources: https://github.com/ncm2/ncm2/wiki
-  Plug 'ncm2/ncm2-bufword'
-  Plug 'ncm2/ncm2-tmux'
-  Plug 'ncm2/ncm2-path'
+  call dein#add('ncm2/ncm2-bufword')
+  call dein#add('ncm2/ncm2-tmux')
+  call dein#add('ncm2/ncm2-path')
 
-  Plug 'tpope/vim-speeddating'          " increment for dates
-  Plug 'tpope/vim-fugitive'             " for git
+  " ----------- Tools ------------------
+  call dein#add('tpope/vim-speeddating')          " increment for dates
+  call dein#add('tpope/vim-fugitive')             " for git
 
-  Plug 'kassio/neoterm'                 " wrapper for Vim8/Neovim terminal
+  call dein#add('kassio/neoterm')                 " wrapper for Vim8/Neovim terminal
 
-  Plug 'justinmk/vim-dirvish'
+  call dein#add('justinmk/vim-dirvish')
 
-  Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-  Plug 'junegunn/fzf.vim'
-  Plug 'junegunn/vim-easy-align'
+  call dein#add('junegunn/fzf', { 'build': './install --all', 'merged': 0 }) 
+  call dein#add('junegunn/fzf.vim', { 'depends': 'fzf' })
+  call dein#add('junegunn/vim-easy-align')
 
-  if has('nvim')
-    Plug 'lambdalisue/suda.vim'           " UNIX helpers (e.g. SudoWrite;Chmod)
-  else
-    Plug 'tpope/vim-eunuch'               " UNIX helpers (e.g. SudoWrite;Chmod)
-  endif
+  " UNIX helpers (e.g. SudoWrite;Chmod)
+  call dein#add('lambdalisue/suda.vim', { 'on_if': 'has("nvim")' })
+  call dein#add('tpope/vim-eunuch', { 'on_if': 'has("nvim")' })
 
   " ----------- Utilities --------------
-  Plug 'vimwiki/vimwiki', { 'branch': 'dev' }
-  Plug 'itchyny/calendar.vim'
+  call dein#add('vimwiki/vimwiki', { 'branch': 'dev'} )
+  call dein#add('itchyny/calendar.vim')
 
   " =========== Code ===================
-  Plug 'Raimondi/delimitMate'
-  " Plug 'w0rp/ale'
-  Plug 'autozimu/LanguageClient-neovim', {
-      \ 'branch': 'next',
-      \ 'do': 'bash install.sh',
-      \ }
+  call dein#add('Raimondi/delimitMate')
   " ----------- C/C++ ------------------
-  Plug 'vim-scripts/DoxygenToolkit.vim'
-  Plug 'rhysd/vim-clang-format'
+  call dein#add('vim-scripts/DoxygenToolkit.vim')
+  call dein#add('rhysd/vim-clang-format')
   " ----------- python -----------------
 
   " ----------- nand2tetris ------------
-  Plug 'sevko/vim-nand2tetris-syntax'
+  call dein#add('sevko/vim-nand2tetris-syntax')
   " ----------- Rust -------------------
-  Plug 'rust-lang/rust.vim'
-  Plug 'racer-rust/vim-racer'
+  call dein#add('rust-lang/rust.vim')
+  call dein#add('racer-rust/vim-racer')
   " ----------- Other Filetypes --------
-  Plug 'jceb/vim-orgmode'
-  Plug 'godlygeek/tabular'              " required to come before vim-markdown
-  Plug 'plasticboy/vim-markdown'
-  Plug 'lervag/vimtex'
-  " Plug 'ludovicchabant/vim-gutentags'
-  " Plug 'xolox/vim-easytags'
-  " Plug 'xolox/vim-misc'               " required by vim-easytags
-  " Plug 'majutsushi/tagbar'
+  call dein#add('jceb/vim-orgmode')
+  call dein#add('godlygeek/tabular')              " required to come before vim-markdown
+  call dein#add('plasticboy/vim-markdown')
+  call dein#add('lervag/vimtex')
+  " call dein#add('ludovicchabant/vim-gutentags')
+  " call dein#add('xolox/vim-easytags')
+  " call dein#add('xolox/vim-misc')               " required by vim-easytags
+  " call dein#add('majutsushi/tagbar')
 
-call plug#end()
-
-" ==============================================================================
-"                                Source Settings
-" ==============================================================================
-if has("win32")
-  source ~\AppData\Local\nvim\general.vim
-  source ~\AppData\Local\nvim\mappings.vim
-  source ~\AppData\Local\nvim\plugins.vim
-else
-  source ~/.config/nvim/general.vim
-  source ~/.config/nvim/mappings.vim
-  source ~/.config/nvim/plugins.vim
+  call dein#end()
+  call dein#save_state()
 endif
+
+if dein#check_install()
+  call dein#install()
+endif
+
+if has('termguicolors')
+  set termguicolors
+endif
+
+" ==============================================================================
+"                                 Source Settings
+" ==============================================================================
+execute 'source ' . s:settings.config_dir . '/nvim/general.vim'
+execute 'source ' . s:settings.config_dir . '/nvim/mappings.vim'
+execute 'source ' . s:settings.config_dir . '/nvim/plugins.vim'
+
 if filereadable(".vimrc_proj")
   so .vimrc_proj
 else
