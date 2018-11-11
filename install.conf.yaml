@@ -3,7 +3,7 @@
       relink: true
       create: true
 
-- clean: ['~', '~/$XDG_CONFIG_HOME']
+- clean: ['~', '$XDG_CONFIG_HOME']
 
 - shell:
     - [git submodule update --init --recursive, Installing submodules]

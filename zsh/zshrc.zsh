@@ -104,70 +104,96 @@ setopt NO_CHECK_JOBS
 #     prompt for overwrite; displays changes
 alias cp='cp -iv'
 alias mv='mv -iv'
+
 # ==> mkdir
 #     create intermediate directories; display created directories
 alias mkdir='mkdir -pv'
+
 # ==> ls
-local ls_command="ls"
+local ls_cmd="ls"
+local ls_default_flags=()
+
 # Default i.e. posix flags
 local ls_long="-l"
+local ls_short=""
 local ls_sort_newest="-t"
+local ls_hidden=""
 local ls_show_hidden="-a"
 local ls_one_line="-1"
+
 # platform-specific flags
 local ls_colors=""
 local ls_indicators=""
 local ls_human_filesizes=""
-local ls_group_folders
-# automatic platform-specific-flags
-local ls_default_flags=($ls_colors $ls_indicators $ls_human_filesizes $ls_group_folders)
+local ls_group_dirs
 
 if (( $+commands[exa] )) ; then
-  local ls_command="exa"
+  local exa_grid="--grid"                           # -G show long format in grid (multi-column)
+  local exa_git="--git"                             #    show git status in table
+  local exa_gitignore="--git"                       #    hide files defined in gitignore
 
-  local ls_long="--long"                  # -l
-  local ls_sort_newest="--sort=modified"  # -s
-  local ls_show_hidden="--all"            # -a call twice to show . and ..
-  local ls_one_line="--oneline"           # -1
-  local ls_colors="--color=always"        #    always to forward to e.g. less
-  local ls_indicators="--classify"        # -F
-  local ls_human_filesizes="--binary"     # -b use binary prefixes (e.g. KiB vs KB)
+  ls_long="--long"                           # -l
+  ls_short="$exa_grid $ls_long"
+  ls_sort_newest="--sort=oldest"             # -sort=modified -reverse
+  ls_hidden="--git-ignore"
+  ls_show_hidden="--all"                     # -a (call twice to show . and ..)
+  ls_one_line="--oneline"                    # -1
+  ls_colors="--color=always"                 #    'always' to forward to e.g. less
+  ls_indicators="--classify"                 # -F
+  ls_human_filesizes="--binary"              # -b use binary prefixes (e.g. KiB vs KB)
+  ls_group_dirs="--group-directories-first"  #    self-explanatory
 
-  local exa_grid="--grid"                 # -G show long format in grid (multi-column)
-  local exa_git="--git"                   #    show git status in table
+  ls_default_flags+=($exa_colors $exa_indicators $exa_human_filesizes $exa_group_dirs)
+  ls_cmd="exa"
 
-  ls_default_flags+=(${exa_grid} ${exa_git})
+else
+  if [[ $OS = 'linux' || $OS = 'osx' && (( $+commands[gls] )) ]] ; then
+    # macOS but we have `brew coreutils`
+    if [[ $OS = 'osx' ]] ; then
+      ls_cmd="gls"
+    fi
 
-elif [[ $OS = 'linux' || $OS = 'osx' && (( $+commands[gls] )) ]] ; then
-  # macOS but we have `brew coreutils`
-  if [[ $OS = 'osx' ]] ; then local ls_command="gls" ; fi
+    ls_long="-l"
+    ls_short=""
+    ls_sort_newest="-t"
+    ls_hidden=""
+    ls_show_hidden="-A"
+    ls_one_line="-1"
+    ls_colors="--color=always"
+    ls_indicators="-F"
+    ls_human_filesizes="-h"
 
-  local ls_long="-l"
-  local ls_sort_newest="-t"
-  local ls_show_hidden="-A"
-  local ls_one_line="-1"
-  local ls_colors="--color=always"
-  local ls_indicators="-F"
-  local ls_human_filesizes="-h"
+    ls_group_dirs="--group-directories-first"
 
-  local gnuls_group_dirs="--group-directories-first"
-  ls_default_flags+=(${gnuls_group_dirs})
-elif [[ $OS = 'osx' ]]; then
-  local ls_long="-l"
-  local ls_sort_newest="-t"
-  local ls_show_hidden="-A"
-  local ls_one_line="-1"
-  local ls_colors="-G"
-  local ls_indicators="-F"
-  local ls_human_filesizes="-h"
+  elif [[ $OS = 'osx' ]]; then
+    ls_long="-l"
+    ls_short=""
+    ls_sort_newest="-t"
+    ls_hidden=""
+    ls_show_hidden="-A"
+    ls_one_line="-1"
+    ls_colors="-G"
+    ls_indicators="-F"
+    ls_human_filesizes="-h"
+  fi
+
 fi
 
-local ls_base_command="$ls_command ${ls_default_flags[@]}"
-alias ls="$ls_base_command"
-alias l="$ls_base_command $ls_long"
-alias lt="$ls_base_command $ls_long $ls_sort_newest"
-alias ll="$ls_base_command $ls_long $ls_show_hidden"
-alias llt="$ls_base_command $ls_long $ls_show_hidden $ls_sort_newest"
+ls_default_flags+=($ls_colors $ls_indicators $ls_human_filesizes $ls_group_dirs)
+ls_cmd_short="$ls_cmd ${^ls_default_flags} $ls_short"
+ls_cmd_long="$ls_cmd ${^ls_default_flags} $ls_long"
+
+alias ls="$ls_cmd ${^ls_default_flags} $ls_hidden"
+alias lsa="$ls_cmd ${^ls_default_flags} $ls_show_hidden"
+
+alias l="$ls_cmd_short $ls_hidden"
+alias la="$ls_cmd_short $ls_show_hidden"
+alias lt="$ls_cmd_short $ls_hidden $ls_sort_newest"
+alias lat="$ls_cmd_short $ls_show_hidden $ls_sort_newest"
+alias ll="$ls_cmd_long $ls_hidden"
+alias lla="$ls_cmd_long $ls_show_hidden"
+alias llt="$ls_cmd_long $ls_hidden $ls_sort_newest"
+alias llat="$ls_cmd_long $ls_show_hidden $ls_sort_newest"
 
 # ==> less
 #     F: quit-if-one-screen
@@ -215,7 +241,7 @@ zplugin load sindresorhus/pure
 # --------------
 # custom plugins
 # --------------
-# zplugin "~/$XDG_CONFIG_HOME/zsh/*.zsh", from:local
+# zplugin "$XDG_CONFIG_HOME/zsh/*.zsh", from:local
 
 # ---------------------
 # prezto plugin options

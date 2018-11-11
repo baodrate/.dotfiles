@@ -6,6 +6,10 @@ export LC_ALL=en_US.UTF-8
 # fix for https://github.com/swaywm/sway/issues/595
 export _JAVA_AWT_WM_NONREPARENTING=1
 
+if (( ! ${+XDG_CONFIG_HOME} )); then
+  XDG_CONFIG_HOME="~/.config"
+fi
+
 # ==> setup default editor
 if (( $+commands[nvim] )) ; then
   export VISUAL=nvim
