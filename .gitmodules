@@ -4,3 +4,6 @@
 [submodule "neovim/dein.vim"]
 	path = neovim/dein.vim
 	url = https://github.com/Shougo/dein.vim.git
+[submodule "colors/base16-i3"]
+	path = colors/base16-i3
+	url = https://github.com/khamer/base16-i3.git
