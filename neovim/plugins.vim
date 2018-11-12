@@ -5,10 +5,10 @@
 set signcolumn=yes
 
 let g:LanguageClient_serverCommands = {
-    \ 'c': ['cquery', '--log-file=/tmp/cc.log', '--init={"cacheDirectory":"~/.cache/cquery/"}'],
-    \ 'cpp': ['cquery', '--log-file=/tmp/cc.log', '--init={"cacheDirectory":"~/.cache/cquery/"}'],
-    \ 'cuda': ['cquery', '--log-file=/tmp/cc.log', '--init={"cacheDirectory":"~/.cache/cquery/"}'],
-    \ 'objc': ['cquery', '--log-file=/tmp/cc.log', '--init={"cacheDirectory":"~/.cache/cquery/"}'],
+    \ 'c': ['cquery', '--log-file=~/tmp/cc.log', '--init={"cacheDirectory":"~/.cache/cquery/"}'],
+    \ 'cpp': ['cquery', '--log-file=~/tmp/cc.log', '--init={"cacheDirectory":"~/.cache/cquery/"}'],
+    \ 'cuda': ['cquery', '--log-file=~/tmp/cc.log', '--init={"cacheDirectory":"~/.cache/cquery/"}'],
+    \ 'objc': ['cquery', '--log-file=~/tmp/cc.log', '--init={"cacheDirectory":"~/.cache/cquery/"}'],
     \ 'python': ['pyls'],
     \ }
 
@@ -124,95 +124,20 @@ endif
 let g:rustfmt_autosave = 1
 
 " ==============================================================================
-"                                    lightline
+"                                    signify
 " ==============================================================================
+let g:signify_vcs_list = [ 'git' ]
 
-set showtabline=2
-let g:lightline = {
-    \ 'colorscheme': 'base16_seti',
-    \ 'active': {
-    \   'left': [ [ 'mode', 'paste' ],
-    \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
-    \ },
-    \ 'enable': {
-    \   'statusline': 1,
-    \   'tabline': 1,
-    \ },
-    \ 'tabline': {
-    \   'left': [ ['tabicon'], ['bufferinfo'], ['tabs'] ],
-    \   'right': [ ['buffericon'], ['bufferafter', 'buffercurrent', 'bufferbefore'] ],
-    \ },
-    \ 'tab': {
-    \   'active': ['tabnum', 'filename', 'modified'],
-    \   'inactive': ['tabnum', 'modified'],
-    \ },
-    \ 'component': {
-    \   'readonly': '%{&readonly?"":""}',
-    \   'modified': '%{&filetype=="help"?"":&modified?"+":&modifiable?"":"-"}',
-    \   'buffericon': '',
-    \   'tabicon': '',
-    \ },
-    \ 'component_expand': {
-    \   'filetype': 'DeviconsType',
-    \   'fileformat': 'DeviconsFileFormat',
-    \   'buffercurrent': 'lightline#buffer#buffercurrent',
-    \   'bufferbefore': 'lightline#buffer#bufferbefore',
-    \   'bufferafter': 'lightline#buffer#bufferafter',
-    \ },
-    \ 'component_type': {
-    \   'buffercurrent': 'tabsel',
-    \   'bufferbefore': 'raw',
-    \   'bufferafter': 'raw',
-    \ },
-    \ 'separator': { 'left': '', 'right': '' },
-    \ 'subseparator': { 'left': '', 'right': '' },
-  \ }
-   " \ 'component': {
-   " \   'separator': '',
-   " \ },
+let g:signify_sign_add = '+'
+let g:signify_sign_delete = '-'
+let g:signify_sign_change = '~'
 
-function! DeviconsFileType()
-  return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype . ' ' . WebDevIconsGetFileTypeSymbol() : 'no ft') : ''
+" ==============================================================================
+"                                    startify
+" ==============================================================================
+function! StartifyEntryFormat()
+  return 'WebDevIconsGetFileTypeSymbol(absolute_path) ." ". entry_path'
 endfunction
-
-function! DeviconsFileFormat()
-  return winwidth(0) > 70 ? (&fileformat . ' ' . WebDevIconsGetFileFormatSymbol()) : ''
-endfunction
-
-let g:lightline_buffer_logo = ' '
-let g:lightline_buffer_readonly_icon = ''
-let g:lightline_buffer_modified_icon = '✭'
-let g:lightline_buffer_git_icon = ' '
-let g:lightline_buffer_ellipsis_icon = '…'
-let g:lightline_buffer_expand_left_icon = '◀ '
-let g:lightline_buffer_expand_right_icon = ' ▶'
-let g:lightline_buffer_active_buffer_left_icon = ''
-let g:lightline_buffer_active_buffer_right_icon = ''
-"let g:lightline_buffer_separator_icon = '  '
-let g:lightline_buffer_separator_icon = '|'
-
-" enable devicons, only support utf-8
-" require <https://github.com/ryanoasis/vim-devicons>
-let g:lightline_buffer_enable_devicons = 1
-" lightline-buffer function settings
-let g:lightline_buffer_show_bufnr = 1
-" :help filename-modifiers
-let g:lightline_buffer_fname_mod = ':t'
-" hide buffer list
-let g:lightline_buffer_excludes = ['vimfiler']
-" max file name length
-let g:lightline_buffer_maxflen = 30
-" max file extension length
-let g:lightline_buffer_maxfextlen = 3
-" min file name length
-let g:lightline_buffer_minflen = 16
-" min file extension length
-let g:lightline_buffer_minfextlen = 3
-" reserve length for other component (e.g. info, close)
-let g:lightline_buffer_reservelen = 20
-
-let g:taboo_tabline = 0
-let g:taboo_tab_format = '%n'
 
 " ==============================================================================
 "                                     vimwiki
@@ -277,10 +202,11 @@ xmap ga <Plug>(EasyAlign)
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
 
-
 " ==============================================================================
 "                                  vim-gitgutter
 " ==============================================================================
 
 let g:gitgutter_highlight_lines = 1
-let g:gitgutter_grep = 'rg'
+if executable('rg')
+  let g:gitgutter_grep = 'rg'
+endif
