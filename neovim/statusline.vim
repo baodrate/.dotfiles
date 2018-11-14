@@ -1,5 +1,3 @@
-set showtabline=2
-
 " labels for modes
 " Dictionary: take mode() input -> longer notation of current mode
 " mode() is defined by Vim
@@ -39,12 +37,12 @@ function! g:DeviconsFileFormat()
   return winwidth(0) > 70 ? (&fileformat . ' ' . WebDevIconsGetFileFormatSymbol()) : ''
 endfunction
 
-
 let g:vem_tabline_multiwindow_mode = 0
-let g:vem_tabline_show = 1
+let g:vem_tabline_show = 2 " always show even if only one tab/buffer open
 
 " unused because of 'pacha/vem-tabline'
-" https://www.reddit.com/r/vim/comments/22ala7/vim_custom_tabline/cglbh6b/
+" set showtabline=2
+" from: https://www.reddit.com/r/vim/comments/22ala7/vim_custom_tabline/cglbh6b/
 if exists("+showtabline")
   " Rename tabs to show tab number.
   " (Based on http://stackoverflow.com/questions/5927952/whats-implementation-of-vims-default-tabline-function)

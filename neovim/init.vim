@@ -35,25 +35,15 @@ endif
 
 " ==============================================================================
 "                                  Load Plugins
-"  ==============================================================================
+" ==============================================================================
 
 
 if dein#load_state(s:settings.dein_cache)
   call dein#begin(s:settings.dein_cache)
 
+  " Dein utility Commands
   call dein#add('haya14busa/dein-command.vim', { 'on_cmd': 'Dein' })
-
-  " colorschemes {{{
-  call dein#add('iCyMind/NeoSolarized')
-  call dein#add('mhartington/oceanic-next')
-  " }}}
-
   call dein#add('Shougo/denite.nvim', { 'on_cmd': 'Denite' })
-
-  " deoplete {{{
-  call dein#add('Shougo/deoplete.nvim', { 'on_if': 'has("nvim") && has("python3")' })
-  call dein#add('Shougo/neco-vim', { 'depends': ['deoplete.nvim'] })
-  " }}}
 
   " ----------- Colorschemes -----------
   call dein#add('chriskempson/base16-vim')
@@ -63,9 +53,7 @@ if dein#load_state(s:settings.dein_cache)
 
   " ----------- Interface --------------
   call dein#add('edkolev/tmuxline.vim')
-
   call dein#add('mhinz/vim-startify')
-
   call dein#add('ryanoasis/vim-devicons')
 
   " ----------- Movement ---------------
@@ -86,6 +74,10 @@ if dein#load_state(s:settings.dein_cache)
   call dein#add('ncm2/ncm2-bufword')
   call dein#add('ncm2/ncm2-tmux')
   call dein#add('ncm2/ncm2-path')
+
+  " ----------- Auto-close -------------
+  " call dein#add('Raimondi/delimitMate')
+  call dein#add('jiangmiao/auto-pairs') " alternative to delimitMate
 
   " ----------- Tools ------------------
   call dein#add('tpope/vim-speeddating')          " increment for dates
@@ -108,12 +100,9 @@ if dein#load_state(s:settings.dein_cache)
   call dein#add('itchyny/vim-gitbranch')
 
   " =========== Code ===================
-  call dein#add('Raimondi/delimitMate')
   " ----------- C/C++ ------------------
   call dein#add('vim-scripts/DoxygenToolkit.vim')
   call dein#add('rhysd/vim-clang-format')
-  " ----------- python -----------------
-
   " ----------- nand2tetris ------------
   call dein#add('sevko/vim-nand2tetris-syntax')
   " ----------- Rust -------------------
@@ -126,7 +115,11 @@ if dein#load_state(s:settings.dein_cache)
   call dein#add('godlygeek/tabular')              " required to come before vim-markdown
   call dein#add('plasticboy/vim-markdown')
   call dein#add('lervag/vimtex')
+
+  " =========== Misc ===================
+  " Tags
   call dein#add('ludovicchabant/vim-gutentags')
+  call dein#add('skywind3000/gutentags_plus')
   call dein#add('majutsushi/tagbar')
 
   call dein#end()
