@@ -60,40 +60,46 @@ if dein#load_state(s:settings.dein_cache)
   " call dein#add('terryma/vim-multiple-cursors')
   call dein#add('tpope/vim-surround')
 
-  " ----------- Autocomplete -----------
-  call dein#add('roxma/vim-hug-neovim-rpc', { 'depends': 'ncm2' })
-  call dein#add('autozimu/LanguageClient-neovim', {
-      \ 'rev': 'next',
-      \ 'build': 'bash install.sh',
-      \ })
-
+  " =========== Intellisense ===========
+  " ----------- language-server --------
   call dein#add('w0rp/ale')
 
+  " call dein#add('autozimu/LanguageClient-neovim', {
+  "     \ 'rev': 'next',
+  "     \ 'build': 'bash install.sh',
+  "     \ })
+
+  " ----------- autocompletion ---------
   call dein#add('ncm2/ncm2', { 'depends': 'nvim-yarp' })
-  call dein#add('roxma/nvim-yarp', { 'on_if': 'has("nvim")' })
+  call dein#add('roxma/nvim-yarp')
+  call dein#add('roxma/vim-hug-neovim-rpc', { 'depends': 'ncm2' })
   call dein#add('ncm2/ncm2-bufword')
   call dein#add('ncm2/ncm2-tmux')
   call dein#add('ncm2/ncm2-path')
 
+  " ----------- Tags -------------------
+  " call dein#add('ludovicchabant/vim-gutentags')
+  " call dein#add('skywind3000/gutentags_plus')
+  " call dein#add('majutsushi/tagbar')
+
+  " =========== Tools ==================
   " ----------- Auto-close -------------
   " call dein#add('Raimondi/delimitMate')
   " call dein#add('cohama/lexima.vim')
-  " call dein#add('jiangmiao/auto-pairs')
-  call dein#add('tpope/vim-endwise')
+  call dein#add('jiangmiao/auto-pairs')
+  " call dein#add('tpope/vim-endwise')
 
-  " ----------- Tools ------------------
+  " ----------- Utility ----------------
   call dein#add('tpope/vim-speeddating')          " increment for dates
 
-  call dein#add('justinmk/vim-dirvish')
+  call dein#add('justinmk/vim-dirvish')           " netrw replacement
 
   call dein#add('junegunn/fzf', { 'build': './install --all', 'merged': 0 }) 
   call dein#add('junegunn/fzf.vim', { 'depends': 'fzf' })
   call dein#add('junegunn/vim-easy-align')
 
-  " UNIX helpers (e.g. SudoWrite;Chmod)
-  call dein#add('lambdalisue/suda.vim')
+  call dein#add('lambdalisue/suda.vim')           " UNIX helpers (e.g. SudoWrite;Chmod)
 
-  " ----------- Utilities --------------
   call dein#add('vimwiki/vimwiki', { 'branch': 'dev'} )
   call dein#add('itchyny/calendar.vim')
 
@@ -117,12 +123,6 @@ if dein#load_state(s:settings.dein_cache)
   call dein#add('godlygeek/tabular')              " required to come before vim-markdown
   call dein#add('plasticboy/vim-markdown')
   call dein#add('lervag/vimtex')
-
-  " =========== Misc ===================
-  " Tags
-  call dein#add('ludovicchabant/vim-gutentags')
-  call dein#add('skywind3000/gutentags_plus')
-  call dein#add('majutsushi/tagbar')
 
   call dein#end()
   call dein#save_state()

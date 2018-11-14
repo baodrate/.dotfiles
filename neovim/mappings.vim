@@ -49,6 +49,10 @@ tnoremap <C-k> <C-\><C-N>:bprev<CR>
 inoremap <C-k> <C-\><C-N>:bprev<CR>
 nnoremap <C-k> :bprev<CR>
 
+tnoremap <C-q> <C-\><C-N>:bdelete<CR>
+inoremap <C-q> <C-\><C-N>:bdelete<CR>
+nnoremap <C-q> :bdelete<CR>
+
 " Folding
 nnoremap <leader><Space> za
 
