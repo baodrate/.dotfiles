@@ -10,6 +10,7 @@
 
 - link:
     ~/.config/i3status-rust: i3status-rust
+    ~/.config/alacritty: alacritty
     ~/.Brewfile: brewfile/Brewfile
     ~/.gitconfig-work: git/config-work
     ~/.gitconfig-personal: git/config-personal
