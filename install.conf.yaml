@@ -21,7 +21,6 @@
     ~/.ssh/gpg-baot.pub: ssh/gpg-baot.pub
     ~/.gnupg/gpg-agent.conf: gnupg/gpg-agent.conf
     ~/.gnupg/sshcontrol: gnupg/sshcontrol
-    ~/.vim: neovim
     ~/.config/nvim: neovim
     ~/.config/iterm2: iterm2
     ~/.config/termite: termite
@@ -30,7 +29,6 @@
     ~/.vimperator: vimperator
     ~/.scripts: scripts
     ~/.vimperatorrc: vimperatorrc
-    ~/.vimrc: neovim/init.vim
     ~/.tmux.conf: tmux.conf
     ~/.tmuxline.conf: tmuxline.conf
     ~/.xbindkeysrc: xbindkeysrc
