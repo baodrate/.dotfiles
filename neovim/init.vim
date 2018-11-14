@@ -77,7 +77,9 @@ if dein#load_state(s:settings.dein_cache)
 
   " ----------- Auto-close -------------
   " call dein#add('Raimondi/delimitMate')
-  call dein#add('jiangmiao/auto-pairs') " alternative to delimitMate
+  " call dein#add('cohama/lexima.vim')
+  " call dein#add('jiangmiao/auto-pairs')
+  call dein#add('tpope/vim-endwise')
 
   " ----------- Tools ------------------
   call dein#add('tpope/vim-speeddating')          " increment for dates

@@ -29,7 +29,7 @@ nnoremap <F5> :call LanguageClient_contextMenu()<CR>
 "   au CursorMoved * if b:Plugin_LanguageClient_started | sil call LanguageClient#textDocument_documentHighlight() | endif
 " augroup END
 
-function SetLSPShortcuts()
+function! SetLSPShortcuts()
   nnoremap <leader>ld :call LanguageClient#textDocument_definition()<CR>
   nnoremap <leader>lr :call LanguageClient#textDocument_rename()<CR>
   nnoremap <leader>lf :call LanguageClient#textDocument_formatting()<CR>
