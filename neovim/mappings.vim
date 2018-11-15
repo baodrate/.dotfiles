@@ -42,22 +42,27 @@ tnoremap <C-h> <C-\><C-N>:tabprev<CR>
 inoremap <C-h> <C-\><C-N>:tabprev<CR>
 nnoremap <C-h> :tabprev<CR>
 
-tnoremap <C-j> <C-\><C-N>:bnext<CR>
-inoremap <C-j> <C-\><C-N>:bnext<CR>
-nnoremap <C-j> :bnext<CR>
-tnoremap <C-k> <C-\><C-N>:bprev<CR>
-inoremap <C-k> <C-\><C-N>:bprev<CR>
-nnoremap <C-k> :bprev<CR>
-
-tnoremap <C-q> <C-\><C-N>:bdelete<CR>
-inoremap <C-q> <C-\><C-N>:bdelete<CR>
-nnoremap <C-q> :bdelete<CR>
+" use 'qpkorr/vim-bufkill' to move through/delete buffers withouut closing splits
+" move forwards
+tnoremap <C-j> <C-\><C-N>:BF<CR>
+inoremap <C-j> <C-\><C-N>:BF<CR>
+nnoremap <C-j> :BF<CR>
+" move backwards
+tnoremap <C-k> <C-\><C-N>:BB<CR>
+inoremap <C-k> <C-\><C-N>:BB<CR>
+nnoremap <C-k> :BB<CR>
+" delete
+tnoremap <C-q> <C-\><C-N>:BD<CR>
+inoremap <C-q> <C-\><C-N>:BD<CR>
+nnoremap <C-q> :BD<CR>
 
 " Folding
 nnoremap <leader><Space> za
 
 " Make Y behave like D and C
-:map Y y$
+nmap Y y$
+" https://ddrscott.github.io/blog/2016/yank-without-jank/
+vnoremap <expr>y "my\"" . v:register . "y`y"
 
 " Insert timestamp
 nmap <F3> O<C-R>=strftime("%Y-%m-%d %a %I:%M %p")<CR><Esc>yyp0v$r=j

@@ -17,6 +17,9 @@
   cmd = /Users/baot/Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
   trustExitCode = true
 
+[includeIf "gitdir:/usr/local/Homebrew/"]
+  path = ~/.gitconfig-personal
+
 [includeIf "gitdir:~/wdev/"]
   path = ~/.gitconfig-work
 [includeIf "gitdir:~/pdev/"]
@@ -27,6 +30,7 @@
   path = ~/.gitconfig-personal
 [includeIf "gitdir:~/.journal/"]
   path = ~/.gitconfig-personal
+
 [color]
   ui = true
 [color "diff-highlight"]

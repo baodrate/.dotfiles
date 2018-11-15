@@ -6,7 +6,6 @@ set nocompatible
 
 " Filetype stuff
 set encoding=utf-8
-filetype plugin indent on
 
 syntax on           " Syntax highlighting
 set hidden          " Don't require unwritten buffers to be visible
@@ -73,7 +72,8 @@ set showcmd         " Show (partial) command in status line
 set mouse=a
 set relativenumber
 set number
-set ruler
+
+set nowrap
 
 " Unprintable chars mapping
 " -------------------------
@@ -88,7 +88,8 @@ if has('win32')
 else
   " alternative characters: → ‣ • · ↳ ↲ ⏎ ⟨⟩ «» ¬ ¶ ␣ …
   set listchars=tab:‣\ ,trail:•,precedes:«,extends:»
-  set showbreak=\ ↳
+  " I use a unicode curly array with a <backslash><space>
+  set showbreak=↪\
 endif
 set list
 

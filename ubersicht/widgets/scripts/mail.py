@@ -1,0 +1,1 @@
+../chunkbar.widget/scripts/mail.py

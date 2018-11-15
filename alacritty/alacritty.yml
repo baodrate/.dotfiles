@@ -11,6 +11,7 @@
   # check the local terminfo database and use 'alacritty' if it is
   # available, otherwise 'xterm-256color' is used.
   #TERM: xterm-256color
+TERM: alacritty
 
 window:
   # Window dimensions (changes require restart)
@@ -569,6 +570,9 @@ key_bindings:
   # launch new window (see https://github.com/jwilm/alacritty/issues/607)
   # https://github.com/jwilm/alacritty/issues/607#issuecomment-329083060
   - { key: N,        mods: Command,       command: { program: "open", args: ["-n", "/Applications/Alacritty.app"] } }
+
+  # workaround for https://github.com/jwilm/alacritty/issues/1359
+  - { key: Q, mods: Control,          chars: "\x11"                      }
 
   # https://github.com/jwilm/alacritty/issues/808#issuecomment-334200570
   # doesn't work on mac

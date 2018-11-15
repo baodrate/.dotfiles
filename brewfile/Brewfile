@@ -22,6 +22,8 @@ tap 'crisidev/homebrew-chunkwm'
 brew 'chunkwm', args: ["HEAD"]
 tap 'koekeishiya/homebrew-formulae'
 brew 'skhd', restart_service: :changed
+cask 'ubersicht'
+cask 'bitbar'
 
 # browsers
 tap 'homebrew/cask-versions'
@@ -32,8 +34,8 @@ cask 'google-chrome-dev'
 cask 'iterm2'
 tap 'mscharley/homebrew'
 brew 'alacritty'
-exec 'sudo tic -e alacritty,alacritty-direct /usr/local/share/alacritty/alacritty.info'
-exec 'ln -s /usr/local/opt/alacritty/Applications/Alacritty.app /Applications/'
+# exec 'sudo tic -e alacritty,alacritty-direct /usr/local/share/alacritty/alacritty.info'
+# exec 'ln -s /usr/local/opt/alacritty/Applications/Alacritty.app /Applications/'
 
 # shells
 brew 'bash'
@@ -57,6 +59,10 @@ brew 'git'
 brew 'subversion'
 cask 'jetbrains-toolbox'
 
+# ctags
+tap 'universal-ctags/universal-ctags'
+brew 'universal-ctags', args: ["HEAD"]
+
 # dev:docker
 brew 'docker'
 brew 'docker-compose'
@@ -76,9 +82,6 @@ brew 'clang-format'
 tap 'twlz0ne/homebrew-ccls'
 brew 'ccls'
 brew 'cquery'
-
-# dev:rust
-brew 'rustup-init'
 
 # dev:swift
 brew 'swift'

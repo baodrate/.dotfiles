@@ -46,7 +46,7 @@ fi
 # ====
 # WORK
 # ====
-export AWS_SDK_CPP_DIR="/usr/local/lib/aws-sdk-cpp"
+export AWS_SDK_CPP_DIR="~/aws-sdk-cpp/"
 
 # ===
 # MAC

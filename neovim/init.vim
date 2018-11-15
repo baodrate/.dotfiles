@@ -45,6 +45,9 @@ if dein#load_state(s:settings.dein_cache)
   call dein#add('haya14busa/dein-command.vim', { 'on_cmd': 'Dein' })
   call dein#add('Shougo/denite.nvim', { 'on_cmd': 'Denite' })
 
+  " ----------- Buffers ----------------
+  call dein#add('qpkorr/vim-bufkill')
+
   " ----------- Colorschemes -----------
   call dein#add('chriskempson/base16-vim')
 
@@ -55,6 +58,7 @@ if dein#load_state(s:settings.dein_cache)
   call dein#add('edkolev/tmuxline.vim')
   call dein#add('mhinz/vim-startify')
   call dein#add('ryanoasis/vim-devicons')
+  call dein#add('jeffkreeftmeijer/vim-numbertoggle')  " Toggle relative numbers in normal mode
 
   " ----------- Movement ---------------
   " call dein#add('terryma/vim-multiple-cursors')

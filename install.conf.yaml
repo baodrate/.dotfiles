@@ -9,8 +9,11 @@
     - [git submodule update --init --recursive, Installing submodules]
 
 - link:
-    ~/.config/i3status-rust: i3status-rust
-    ~/.config/alacritty: alacritty
+    ~/Library/Application Support/Übersicht/widgets: ubersicht/widgets
+    ~/.chunkwmrc: chunkwm/chunkwmrc.sh
+    ~/.skhdrc: chunkwm/skhdrc
+    ~/.config/i3status-rust: i3status-rust/
+    ~/.config/alacritty: alacritty/
     ~/.Brewfile: brewfile/Brewfile
     ~/.gitconfig-work: git/config-work
     ~/.gitconfig-personal: git/config-personal
@@ -21,13 +24,13 @@
     ~/.ssh/gpg-baot.pub: ssh/gpg-baot.pub
     ~/.gnupg/gpg-agent.conf: gnupg/gpg-agent.conf
     ~/.gnupg/sshcontrol: gnupg/sshcontrol
-    ~/.config/nvim: neovim
-    ~/.config/iterm2: iterm2
-    ~/.config/termite: termite
-    ~/.config/sway: sway
-    ~/.config/fontconfig: fontconfig
+    ~/.config/nvim: neovim/
+    ~/.config/iterm2: iterm2/
+    ~/.config/termite: termite/
+    ~/.config/sway: sway/
+    ~/.config/fontconfig: fontconfig/
     ~/.vimperator: vimperator
-    ~/.scripts: scripts
+    ~/.scripts: scripts/
     ~/.vimperatorrc: vimperatorrc
     ~/.tmux.conf: tmux.conf
     ~/.tmuxline.conf: tmuxline.conf

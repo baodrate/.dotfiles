@@ -7,3 +7,6 @@
 [submodule "colors/base16-i3"]
 	path = colors/base16-i3
 	url = https://github.com/khamer/base16-i3.git
+[submodule "ubersicht/chunkbar.widget"]
+	path = ubersicht/chunkbar.widget
+	url = https://github.com/qubidt/chunkbar.widget.git
