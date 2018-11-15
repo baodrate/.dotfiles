@@ -41,6 +41,9 @@ set incsearch       " jump to search result while typing
 set ignorecase
 set smartcase
 
+" live search/replace
+set inccommand=nosplit
+
 " ==========
 " formatting
 " ==========
