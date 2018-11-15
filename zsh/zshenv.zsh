@@ -3,6 +3,8 @@ export SHELL="zsh"
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 
+export NVIM_LISTEN_ADDRESS=$HOME/tmp/nvimsocket
+
 # fix for https://github.com/swaywm/sway/issues/595
 export _JAVA_AWT_WM_NONREPARENTING=1
 
@@ -27,6 +29,7 @@ PATH="$(getconf PATH)"
 [[ -d "$HOME/.cargo/bin" ]] && PATH="$HOME/.cargo/bin:$PATH"
 [[ -d "/usr/local/bin" ]] && PATH="/usr/local/bin:$PATH"
 [[ -d "/usr/local/sbin" ]] && PATH="/usr/local/sbin:$PATH"
+[[ -d "/usr/local/opt/ccache/libexec" ]] && PATH="/usr/local/opt/ccache/libexec:$PATH"
 (( $+commands[python2] )) && PATH="$(python2 -m site --user-base)/bin:$(python2 -m site --user-site):$PATH"
 (( $+commands[python3] )) && PATH="$(python3 -m site --user-base)/bin:$(python3 -m site --user-site):$PATH"
 (( $+commands[npm] )) && export npm_config_prefix=~/.node_modules && PATH="$npm_config_prefix/bin:$PATH"

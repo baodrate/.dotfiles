@@ -28,6 +28,13 @@ tap 'homebrew/cask-versions'
 cask 'firefox-developer-edition'
 cask 'google-chrome-dev'
 
+# terminals
+cask 'iterm2'
+tap 'mscharley/homebrew'
+brew 'alacritty'
+exec 'sudo tic -e alacritty,alacritty-direct /usr/local/share/alacritty/alacritty.info'
+exec 'ln -s /usr/local/opt/alacritty/Applications/Alacritty.app /Applications/'
+
 # shells
 brew 'bash'
 brew 'bash-completion@2'
@@ -37,7 +44,6 @@ brew 'zsh-completions'
 # editors
 brew 'neovim'
 cask 'oni'
-cask 'iterm2'
 cask 'visual-studio-code'
 
 # fonts

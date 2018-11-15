@@ -23,6 +23,7 @@ brew 'ant'
 
 # C++ tools
 brew 'cmake'
+brew 'ccache'
 brew 'boost'
 brew 'rabbitmq-c'
 

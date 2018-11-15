@@ -84,44 +84,27 @@ if has('win32')
   " Windows doesn't like unicode characters... use ascii instead
   " These are the same listchars provided by TPope's Vim-Sensible
   set listchars=tab:>\ ,trail:-,extends:>,precedes:<,nbsp:+
-  " Windows' gvim doesn't open as unicde, so this will fail:
+  " Windows' gvim doesn't open as unicode, so this will fail:
   " set showbreak=»
   " Instead, use this:
   let &showbreak="\u00bb\ "
 else
-  " alternative characters: ‣ · ↲ ⏎ ⟨⟩ «» ¬ ¶ ␣ …
-  set listchars=tab:→\ ,trail:•,precedes:⟨,extends:⟩
-  set showbreak=↪\
+  " alternative characters: → ‣ • · ↳ ↲ ⏎ ⟨⟩ «» ¬ ¶ ␣ …
+  set listchars=tab:‣\ ,trail:•,precedes:«,extends:»
+  set showbreak=\ ↳
 endif
 set list
 
 " colors
 " ------
-set termguicolors         " use truecolor
 set background=dark
-" let base16colorspace=256  " For base16-shell: Access colors present in 256 colorspace
-colorscheme base16-circus
-" colorscheme onedark
-" colorscheme gruvbox
-" colorscheme kalisi
-" colorscheme zenburn
-" colorscheme solarized
-" colorscheme molokai
-" let g:molokai_original = 0
-" colorscheme bubblegum-256-dark
-" colorscheme hybrid
-" let g:hybrid_use_Xresources = 1
-" colorscheme seoul256
-" let g:seoul256_background = 236
-" if !has("gui_running") && !has("nvim")
-"     set t_Co=256
-" endif
+" set termguicolors               " send truecolor to term; mutually exclusive with base16colorspace
+let base16colorspace=256        " For base16-shell: Use colors from base16-shell-modified 256 colorspace
+colorscheme base16-classic-dark " specific base16 theme irrelevant when using base16colorspace
 
 " gvim
 " ----
-if has("gui_running") || (has('nvim-0.2.3'))
-  set guifont=DejaVu\ Sans\ Mono\ 8
-endif
+set guifont=DejaVu\ Sans\ Mono\ 8
 " set guioptions-=m  " remove menu bar
 " set guioptions-=T  " remove toolbar
 " set guioptions-=r  " remove right-hand scroll bar
