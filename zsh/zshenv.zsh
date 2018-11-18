@@ -8,8 +8,14 @@ export NVIM_LISTEN_ADDRESS=$HOME/tmp/nvimsocket
 # fix for https://github.com/swaywm/sway/issues/595
 export _JAVA_AWT_WM_NONREPARENTING=1
 
+export CONFIG_DIR="$HOME/.config"
+export COLORS_DIR="$HOME/.colors"
+export SCRIPTS_DIR="$HOME/.scripts"
+BASE16_SHELL_HOOKS=$HOME/.colors/base16-shell-hooks
+BASE16_SHELL=$HOME/.colors/base16-shell
+
 if (( ! ${+XDG_CONFIG_HOME} )); then
-  XDG_CONFIG_HOME="~/.config"
+  XDG_CONFIG_HOME=$CONFIG_DIR
 fi
 
 # ==> setup default editor
@@ -25,7 +31,7 @@ fi
 # ==> Setup PATH env variable
 PATH="$(getconf PATH)"
 
-[[ -d "$HOME/.scripts" ]] && PATH="$HOME/.scripts:$PATH"
+[[ -d "$SCRIPTS_DIR" ]] && PATH="$SCRIPTS_DIR:$PATH"
 [[ -d "$HOME/.cargo/bin" ]] && PATH="$HOME/.cargo/bin:$PATH"
 [[ -d "/usr/local/bin" ]] && PATH="/usr/local/bin:$PATH"
 [[ -d "/usr/local/sbin" ]] && PATH="/usr/local/sbin:$PATH"

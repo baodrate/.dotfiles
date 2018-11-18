@@ -1,21 +1,16 @@
 #!/usr/bin/env bash
 
-SCRIPTS_DIR=${SCRIPTS_DIR:-"${HOME}/.scripts"}
-if [ ! -d $SCRIPTS_DIR ]; then
-  echo "SCRIPTS_DIR ($SCRIPTS_DIR) directory not found"; exit -1
-fi
+required_vars=(SCRIPTS_DIR COLORS_DIR)
+for i in ${required_vars[@]}; do eval "val=\$$i"; if [ -z "$val" ]; then echo "$i is unset or empty"; exit -1; fi; done
 
-. "$SCRIPTS_DIR/sh-update-link.sh"
+. "${SCRIPTS_DIR}/sh-update-link.sh" || exit -1
 
-CONFIG_DIR=${CONFIG_DIR:-"$HOME/.config"}
-COLORS_DIR=${COLORS_DIR:-"$HOME/.colors"}
+current_theme_link="$COLORS_DIR/current_base16_theme"
 
-BASE16_SHELL=$(dirname ${(%):-%x})/base16-shell
-
-if [ -f ~/.base16_theme ]; then
-  script_name=$(basename "$(perl -MCwd -le 'print Cwd::abs_path(shift)' ~/.base16_theme)" .sh)
+if [ -f $current_theme_link ]; then
+  script_name=$(basename "$(perl -MCwd -le 'print Cwd::abs_path(shift)' $current_theme_link)" .sh)
   export BASE16_THEME=${script_name}
-  source ~/.base16_theme
+  source $current_theme_link
 fi
 
 _base16()
@@ -24,16 +19,22 @@ _base16()
   local theme=$2
   [ -f $script ] && . $script
 
-  update_link "$HOME/.base16_theme" "$script"
+  update_link "$current_theme_link" "$script"
   [ $? ] || return 01
   export BASE16_THEME=${theme}
   if [ -n ${BASE16_SHELL_HOOKS:+s} ] && [ -d "${BASE16_SHELL_HOOKS}" ]; then
     for hook in $BASE16_SHELL_HOOKS/*; do
       [ -f "$hook" ] && [ -x "$hook" ] && "$hook"
+      if [ $? ]; then
+        echo "Hook ran successfully: $hook"
+      else
+        echo "Hook failed: $hook"
+      fi
     done
   fi
 }
-for script in $BASE16_SHELL/scripts/base16*.sh; do
+
+for script in $COLORS_DIR/base16-shell/scripts/base16*.sh; do
   script_name=${script##*/}
   script_name=${script_name%.sh}
   theme=${script_name#*-}

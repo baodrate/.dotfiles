@@ -1,11 +1,9 @@
 #!/bin/sh
-SCRIPTS_DIR=${SCRIPTS_DIR:-"${HOME}/.scripts"}
 
-if [ ! -d $SCRIPTS_DIR ]; then
-  echo "SCRIPTS_DIR ($SCRIPTS_DIR) directory not found"; return -1
-fi
+required_vars=(SCRIPTS_DIR)
+for i in ${required_vars[@]}; do eval "val=\$$i"; if [ -z "$val" ]; then echo "$i is unset or empty"; exit -1; fi; done
 
-. "$SCRIPTS_DIR/sh-find-relative-path.sh"
+. "${SCRIPTS_DIR}/sh-find-relative-path.sh" || exit -1
 
 get_abs_path() { perl -MCwd -le 'print Cwd::abs_path(shift)' "$1" ; }
 
@@ -15,6 +13,7 @@ update_link() {
 
   link_to_update=$1
   target_file_dir=$(dirname "${link_to_update}")
+  target_file_name=$(basename "${link_to_update}")
 
   source_file_path=$2
   source_file_name=$(basename $source_file_path)
@@ -24,11 +23,20 @@ update_link() {
       echo "linked config ($link_to_update) is a broken link; not updating"; return -1
     fi
 
-    cd "$(dirname $link_to_update)"
+    if [ -L $target_file_dir ]; then
+      target_file_dir=$(get_abs_path $target_file_dir)
+      cd "$target_file_dir"
+    fi
+
+    link_to_update=$target_file_dir/$target_file_name
+
+    # resolve until we get last link before actual file
     link_to_update_ORIG=$(readlink $link_to_update)
     while [ -L $link_to_update_ORIG ]; do
-      cd "$(dirname $link_to_update_ORIG)"
-      link_to_update=$(pwd)/$(basename $link_to_update_ORIG)
+      target_file_dir=$(dirname "${link_to_update_ORIG}")
+      target_file_name=$(basename "${link_to_update_ORIG}")
+      cd "$target_file_dir"
+      link_to_update=$(pwd)/$target_file_name
       link_to_update_ORIG=$(readlink $link_to_update)
     done
   elif [ -e $link_to_update ]; then
@@ -43,7 +51,7 @@ update_link() {
   real_source_file_path=$(get_abs_path $source_file_path)
 
   if [ ! -e "$real_source_file_path" ]; then
-    echo "Could not find source file at $(dirname $link_to_update_ORIG)/$source_file_name"
+    echo "Could not find source file at $real_source_file_path"
     return -1
   fi
 
