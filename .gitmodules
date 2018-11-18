@@ -1,6 +1,6 @@
 [submodule ".dotbot"]
 	path = .dotbot
-	url = https://github.com/anishathalye/dotbot
+	url = https://github.com/qubidt/dotbot.git
 [submodule "neovim/dein.vim"]
 	path = neovim/dein.vim
 	url = https://github.com/Shougo/dein.vim.git
@@ -10,3 +10,12 @@
 [submodule "ubersicht/chunkbar.widget"]
 	path = ubersicht/chunkbar.widget
 	url = https://github.com/qubidt/chunkbar.widget.git
+[submodule "colors/base16-rofi"]
+	path = colors/base16-rofi
+	url = https://github.com/0xdec/base16-rofi.git
+[submodule "colors/base16-shell"]
+	path = colors/base16-shell
+	url = https://github.com/chriskempson/base16-shell.git
+[submodule "scripts/sh-realpath"]
+	path = scripts/sh-realpath
+	url = https://github.com/mkropat/sh-realpath.git

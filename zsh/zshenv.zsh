@@ -43,10 +43,15 @@ if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ]; then
   export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
 fi
 
+# workaround for issue with qtwebengine + opengl + nouveau
+# see https://bugs.archlinux.org/task/59057
+QT_XCB_FORCE_SOFTWARE_OPENGL=1
+
 # ====
 # WORK
 # ====
 export AWS_SDK_CPP_DIR="~/aws-sdk-cpp/"
+
 
 # ===
 # MAC

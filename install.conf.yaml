@@ -1,45 +1,102 @@
-- defaults:
-    link:
-      relink: true
-      create: true
-
 - clean: ['~', '$XDG_CONFIG_HOME']
 
 - shell:
     - [git submodule update --init --recursive, Installing submodules]
 
+# ==========
+# Core links
+# ==========
 - link:
-    ~/Library/Application Support/Übersicht/widgets: ubersicht/widgets
-    ~/.chunkwmrc: chunkwm/chunkwmrc.sh
-    ~/.skhdrc: chunkwm/skhdrc
-    ~/.config/i3status-rust: i3status-rust/
-    ~/.config/alacritty: alacritty/
-    ~/.Brewfile: brewfile/Brewfile
+    ~/.dotfiles:
+      path: ''
+      if: '[ ! -d ~/.dotfiles ]'
+    ~/.scripts:
+      path: scripts
+      relink: true
+    ~/.colors:
+      path: colors
+      relink: true
+
+# ============
+# Common links
+# ============
+- link:
+    # directories
+    # -----------
+    ~/.config/i3status-rust: i3status-rust
+    ~/.config/nvim: neovim
+    ~/.config/termite: termite
+    ~/.config/fontconfig: fontconfig
+
+    # files
+    # -----
+    # -- gpg
+    ~/.gitconfig: git/config
     ~/.gitconfig-work: git/config-work
     ~/.gitconfig-personal: git/config-personal
-    ~/.gitconfig: git/config
     ~/.gitignore_global: git/gitignore_global
     ~/.ssh/config: ssh/config
     ~/.ssh/gpg-qubidt.pub: ssh/gpg-qubidt.pub
     ~/.ssh/gpg-baot.pub: ssh/gpg-baot.pub
     ~/.gnupg/gpg-agent.conf: gnupg/gpg-agent.conf
     ~/.gnupg/sshcontrol: gnupg/sshcontrol
-    ~/.config/nvim: neovim/
-    ~/.config/iterm2: iterm2/
-    ~/.config/termite: termite/
-    ~/.config/sway: sway/
-    ~/.config/fontconfig: fontconfig/
-    ~/.vimperator: vimperator
-    ~/.scripts: scripts/
-    ~/.vimperatorrc: vimperatorrc
+    # -- tmux
     ~/.tmux.conf: tmux.conf
     ~/.tmuxline.conf: tmuxline.conf
-    ~/.xbindkeysrc: xbindkeysrc
-    ~/.Xresources: Xresources
-    ~/.xinitrc: xinitrc
-    ~/.xprofile: xprofile
+    # -- zsh
     ~/.zlogin: zsh/zlogin.zsh
     ~/.zlogout: zsh/zlogout.zsh
     ~/.zprofile: zsh/zprofile.zsh
     ~/.zshenv: zsh/zshenv.zsh
     ~/.zshrc: zsh/zshrc.zsh
+    # -- misc
+    ~/.base16_theme: base16_theme
+    ~/.vimperator: vimperator
+    ~/.vimperatorrc: vimperatorrc
+
+# ================
+# MacOS only links
+# ================
+- defaults:
+    link:
+      relink: true
+      create: true
+      relative: true
+      if: '[ "$(uname)" "==" "Darwin" ]'
+
+- link:
+    # directories
+    # -----------
+    ~/.config/iterm2: iterm2
+
+    # files
+    # -----
+    ~/.Brewfile: brew/Brewfile
+    ~/.config/alacritty/alacritty.yml: alacritty/alacritty.macos.yml
+    ~/.chunkwmrc: chunkwm/chunkwmrc.sh
+    ~/.skhdrc: chunkwm/skhdrc
+    ~/Library/Application Support/Übersicht/widgets: ubersicht/widgets
+
+# ================
+# Linux only links
+# ================
+- defaults:
+    link:
+      relink: true
+      create: true
+      relative: true
+      if: '[ "$(expr substr $(uname -s) 1 5)" "==" "Linux" ]'
+
+- link:
+    # directories
+    # -----------
+    ~/.config/sway: sway
+    ~/.config/rofi/config: rofi/config
+
+    # files
+    # -----
+    ~/.config/alacritty/alacritty.yml: alacritty/alacritty.linux.yml
+    ~/.xbindkeysrc: xbindkeysrc
+    ~/.Xresources: Xresources
+    ~/.xinitrc: xinitrc
+    ~/.xprofile: xprofile

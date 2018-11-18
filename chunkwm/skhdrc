@@ -164,7 +164,7 @@ alt - d : chunkc tiling::window --toggle parent
 alt - e : chunkc tiling::window --toggle split
 
 # change focus between tiling / floating windows
-ctrl - space : chunkc tiling::window --toggle float
+ctrl + shift - space : chunkc tiling::window --toggle float
 
 # float / unfloat window
 alt - t : chunkc tiling::window --toggle float

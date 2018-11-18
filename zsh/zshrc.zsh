@@ -218,6 +218,12 @@ if (( $+commands[prettyping] )); then
   alias ping='prettyping --nolegend'
 fi
 
+# ------
+# Colors
+# ------
+BASE16_SHELL_HOOKS=$HOME/.colors/base16-shell-hooks
+source ~/.colors/base16_profile_helper.sh # call before prompt because this checks [ -n "$PS1" ]
+
 # =============================================================================
 # Plugins
 # =============================================================================
@@ -227,7 +233,6 @@ source "$ZPLG_HOME/bin/zplugin.zsh"
 # -----
 # Theme
 # -----
-zplugin load chriskempson/base16-shell # call before prompt because this checks [ -n "$PS1" ]
 
 # ==> spaceship (not using because slow for now)
 #     wait for https://github.com/denysdovhan/spaceship-prompt/pull/499
