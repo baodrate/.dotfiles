@@ -48,9 +48,6 @@ if dein#load_state(s:settings.dein_cache)
   " ----------- Buffers ----------------
   call dein#add('qpkorr/vim-bufkill')
 
-  " ----------- Colorschemes -----------
-  call dein#add('chriskempson/base16-vim')
-
   " ----------- Statusline -------------
   call dein#add('pacha/vem-tabline')
 

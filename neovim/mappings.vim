@@ -42,16 +42,16 @@ tnoremap <C-h> <C-\><C-N>:tabprev<CR>
 inoremap <C-h> <C-\><C-N>:tabprev<CR>
 nnoremap <C-h> :tabprev<CR>
 
+" next buffer
+tnoremap <C-j> <C-\><C-N>:bn<CR>
+inoremap <C-j> <C-\><C-N>:bn<CR>
+nnoremap <C-j> :bn<CR>
+" previous buffer
+tnoremap <C-k> <C-\><C-N>:bp<CR>
+inoremap <C-k> <C-\><C-N>:bp<CR>
+nnoremap <C-k> :bp<CR>
+" delete buffer
 " use 'qpkorr/vim-bufkill' to move through/delete buffers withouut closing splits
-" move forwards
-tnoremap <C-j> <C-\><C-N>:BF<CR>
-inoremap <C-j> <C-\><C-N>:BF<CR>
-nnoremap <C-j> :BF<CR>
-" move backwards
-tnoremap <C-k> <C-\><C-N>:BB<CR>
-inoremap <C-k> <C-\><C-N>:BB<CR>
-nnoremap <C-k> :BB<CR>
-" delete
 tnoremap <C-q> <C-\><C-N>:BD<CR>
 inoremap <C-q> <C-\><C-N>:BD<CR>
 nnoremap <C-q> :BD<CR>

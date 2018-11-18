@@ -101,7 +101,7 @@ set list
 set background=dark
 " set termguicolors               " send truecolor to term; mutually exclusive with base16colorspace
 let base16colorspace=256        " For base16-shell: Use colors from base16-shell-modified 256 colorspace
-colorscheme base16-classic-dark " specific base16 theme irrelevant when using base16colorspace
+colorscheme base16-current      " specific base16 theme is symlinked
 
 " gvim
 " ----
