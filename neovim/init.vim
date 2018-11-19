@@ -56,6 +56,7 @@ if dein#load_state(s:settings.dein_cache)
   call dein#add('mhinz/vim-startify')
   call dein#add('ryanoasis/vim-devicons')
   call dein#add('jeffkreeftmeijer/vim-numbertoggle')  " Toggle relative numbers in normal mode
+  call dein#add('wincent/pinnacle') " functions to modify highlight groups
 
   " ----------- Movement ---------------
   " call dein#add('terryma/vim-multiple-cursors')
@@ -137,6 +138,6 @@ endif
 "                                 Source Settings
 " ==============================================================================
 execute 'source ' . g:settings.config_dir . '/general.vim'
+execute 'source ' . g:settings.config_dir . '/statusline.vim'
 execute 'source ' . g:settings.config_dir . '/mappings.vim'
 execute 'source ' . g:settings.config_dir . '/plugins.vim'
-execute 'source ' . g:settings.config_dir . '/statusline.vim'

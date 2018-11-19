@@ -127,12 +127,66 @@ if 0
 
 endif " exists("+showtabline")
 
-" Syntax highlighting
-highlight default link StatusLineText DiffChange
-highlight default link StatusLineTextBold CursorLineNr
-highlight default link StatusLineRed DiffDelete
-highlight default link StatusLineBlue DiffText
-highlight default link StatusLineGreen DiffAdd
+
+" Base16 Styling Guidelines
+" https://github.com/chriskempson/base16/blob/master/styling.md
+" ----
+" base16-vim statusline highlights:
+"   group,        guifg     guibg     ctermfg   ctermbg
+"   StatusLine    base16_04 base16_02 base16_04 base16_02
+"   StatusLineNC  base16_03 base16_01 base16_03 base16_01
+" ----
+" base00 - Default Background
+" base01 - Lighter Background (Used for status bars)
+" base02 - Selection Background
+" base03 - Comments, Invisibles, Line Highlighting
+" base04 - Dark Foreground (Used for status bars)
+" base05 - Default Foreground, Caret, Delimiters, Operators
+" base06 - Light Foreground (Not often used)
+" base07 - Light Background (Not often used)
+" base08 - Variables, XML Tags, Markup Link Text, Markup Lists, Diff Deleted
+" base09 - Integers, Boolean, Constants, XML Attributes, Markup Link Url
+" base0A - Classes, Markup Bold, Search Text Background
+" base0B - Strings, Inherited Class, Markup Code, Diff Inserted
+" base0C - Support, Regular Expressions, Escape Characters, Markup Quotes
+" base0D - Functions, Methods, Attribute IDs, Headings
+" base0E - Keywords, Storage, Selector, Markup Italic, Diff Changed
+" base0F - Deprecated, Opening/Closing Embedded Language Tags, e.g. <?php ?>
+
+exec "hi TabLine                     ctermfg=".g:base16_cterm04." ctermbg=".g:base16_cterm02." cterm=none"
+exec "hi TabLineSel                  ctermfg=".g:base16_cterm04." ctermbg=".g:base16_cterm02." cterm=bold"
+exec "hi TabLineFill                 ctermfg=".g:base16_cterm04." ctermbg=".g:base16_cterm02." cterm=none"
+exec "hi VemTablineNormal            ctermfg=".g:base16_cterm04." ctermbg=".g:base16_cterm02." cterm=none"
+exec "hi VemTablineShown             ctermfg=".g:base16_cterm02." ctermbg=".g:base16_cterm04." cterm=none"
+exec "hi VemTablineSelected          ctermfg=".g:base16_cterm02." ctermbg=".g:base16_cterm06." cterm=bold"
+exec "hi VemTablineSeparator         ctermfg=".g:base16_cterm04." ctermbg=".g:base16_cterm02." cterm=none"
+exec "hi VemTablineLocation          ctermfg=".g:base16_cterm03." ctermbg=".g:base16_cterm01." cterm=none"
+exec "hi VemTablineLocationSelected  ctermfg=".g:base16_cterm04." ctermbg=".g:base16_cterm02." cterm=bold"
+exec "hi VemTablineTabNormal         ctermfg=".g:base16_cterm01." ctermbg=".g:base16_cterm03." cterm=none"
+exec "hi VemTablineTabSelected       ctermfg=".g:base16_cterm02." ctermbg=".g:base16_cterm04." cterm=bold"
+
+
+" Default StatusLine colors from base16-vim
+exec "hi StatusLine    cterm=none ctermfg=".g:base16_cterm04." ctermbg=".g:base16_cterm02
+exec "hi StatusLineNC  cterm=none ctermfg=".g:base16_cterm03." ctermbg=".g:base16_cterm01
+" Panels
+exec "hi GitPanel      cterm=bold ctermfg=".g:base16_cterm01." ctermbg=".g:base16_cterm04
+exec "hi ModeVisual    cterm=bold ctermfg=".g:base16_cterm01." ctermbg=".g:base16_cterm08
+exec "hi ModeInsert    cterm=bold ctermfg=".g:base16_cterm01." ctermbg=".g:base16_cterm0B
+exec "hi ModeOther     cterm=bold ctermfg=".g:base16_cterm01." ctermbg=".g:base16_cterm0D
+" StatusLineBrightText
+exec "hi User1         cterm=bold ctermfg=".g:base16_cterm07." ctermbg=".g:base16_cterm02
+" StatusLineWarning
+exec "hi User9         cterm=none ctermfg=".g:base16_cterm08." ctermbg=".g:base16_cterm02
+" Other
+exec "hi User2         cterm=none ctermfg=".g:base16_cterm04." ctermbg=".g:base16_cterm02
+exec "hi User3         cterm=none ctermfg=".g:base16_cterm04." ctermbg=".g:base16_cterm02
+exec "hi User4         cterm=none ctermfg=".g:base16_cterm04." ctermbg=".g:base16_cterm02
+exec "hi User5         cterm=none ctermfg=".g:base16_cterm04." ctermbg=".g:base16_cterm02
+exec "hi User6         cterm=none ctermfg=".g:base16_cterm04." ctermbg=".g:base16_cterm02
+exec "hi User7         cterm=none ctermfg=".g:base16_cterm04." ctermbg=".g:base16_cterm02
+exec "hi User8         cterm=none ctermfg=".g:base16_cterm04." ctermbg=".g:base16_cterm02
+
 
 " Function: return current mode
 " abort -> function will abort soon as error detected
@@ -155,7 +209,7 @@ function! ShowMode(include, exclude)
   if !empty(a:exclude) && stridx(a:exclude, active_mode) != -1
     return ''
   endif
-  return get(s:mode_labels, active_mode, active_mode)
+  return '  ' . get(s:mode_labels, active_mode, active_mode) . ' '
 endfunction
 
 function! LinterStatus() abort
@@ -172,7 +226,8 @@ endfunction
 function! GitStatus() abort
   let l:git_branch=gitbranch#name()
   if strlen(l:git_branch)
-    return l:git_branch . '' . SignifyStatus() . ' '
+    " git symbol alternatives: [⎇ , ]
+    return strlen(l:git_branch)>0 ? '  ' . l:git_branch . SignifyStatus() . '⎇  ' : ''
   endif
   return ''
 endfunction
@@ -185,22 +240,24 @@ function! ReadOnly() abort
 endfunction
 
 set statusline=                                       " clear statusline
-set statusline+=%#StatusLineText#«\ %*
-set statusline+=%#StatusLineText#%{GitStatus()}
-set statusline+=%#StatusLineBlue#%{ShowMode('','i')}
-set statusline+=%#StatusLineRed#%{ShowMode('i','')}
-set statusline+=%#StatusLineText#\ »\ %*
-set statusline+=%#StatusLineRed#%{ReadOnly()}         " readonly flag
-set statusline+=%#StatusLineBlue#%h                   " help buffer flag
-set statusline+=%#StatusLineBlue#%w                   " preview window flag
-set statusline+=%#StatusLineGreen#%t                  " short filename
-set statusline+=%#StatusLineTextBold#%m               " modified flag
+
+set statusline+=%#GitPanel#%{GitStatus()}%*
+set statusline+=%#ModeVisual#%{ShowMode('^Vv','')}%*
+set statusline+=%#ModeInsert#%{ShowMode('i','')}%*
+set statusline+=%#ModeOther#%{ShowMode('','i^Vv')}%*
+set statusline+=\ %*
+set statusline+=%9*%{ReadOnly()}                      " readonly flag
+set statusline+=%h%*                                  " help buffer flag
+set statusline+=%w%*                                  " preview window flag
+set statusline+=%1*%t%*%*                             " short filename
+set statusline+=%m%*                                  " modified flag
 set statusline+=\ %<                                  " truncate starting here
                                                       " filename
-set statusline+=%#StatusLineText#%{&buftype!='terminal'?(strlen(expand('%:h'))?'›\ '.expand('%:h').'/':''):''}
+set statusline+=%{&buftype!='terminal'?(strlen(expand('%:h'))?'›\ '.expand('%:h').'/':''):''}
 set statusline+=%=
-set statusline+=%#StatusLineText#\ %{LinterStatus()}      " ALE status
-set statusline+=%#StatusLineText#\ %2p%%                  " current line percentage
-set statusline+=%#StatusLineText#｢%l:%c｣                  " current line/column number
-set statusline+=\ «\ %#StatusLineGreen#%{(strlen(&filetype)?WebDevIconsGetFileTypeSymbol().'\ '.&filetype:'[-]')}
-set statusline+=%#LineNr#\ »
+set statusline+=\ %{LinterStatus()}      " ALE status
+set statusline+=\ %2p%%                  " current line percentage
+set statusline+=｢%l:%c｣                  " current line/column number
+set statusline+=\ «\ %*
+set statusline+=%1*%{(strlen(&filetype)?WebDevIconsGetFileTypeSymbol().'\ '.&filetype:'[-]')}%*
+set statusline+=\ »
