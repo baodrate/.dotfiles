@@ -22,3 +22,6 @@
 [submodule "colors/base16-vim"]
 	path = colors/base16-vim
 	url = https://github.com/chriskempson/base16-vim.git
+[submodule "colors/base16-tmux"]
+	path = colors/base16-tmux
+	url = https://github.com/Kraust/base16-tmux.git

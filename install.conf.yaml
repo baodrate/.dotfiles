@@ -41,8 +41,8 @@
     ~/.gnupg/gpg-agent.conf: gnupg/gpg-agent.conf
     ~/.gnupg/sshcontrol: gnupg/sshcontrol
     # -- tmux
-    ~/.tmux.conf: tmux.conf
-    ~/.tmuxline.conf: tmuxline.conf
+    ~/.tmux.conf: tmux/tmux.conf
+    ~/.tmuxline.conf: tmux/tmuxline.conf
     # -- zsh
     ~/.zlogin: zsh/zlogin.zsh
     ~/.zlogout: zsh/zlogout.zsh

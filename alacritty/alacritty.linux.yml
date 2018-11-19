@@ -24,11 +24,14 @@ window:
 
   # Window padding (changes require restart)
   #
-  # Blank space added around the window in pixels. This padding is not scaled
+  # Blank space added around the window in pixels. This padding is scaled
   # by DPI and the specified value is always added at both opposing sides.
   padding:
     x: 2
     y: 2
+
+  # Spread additional padding evenly around the terminal content.
+  dynamic_padding: false
 
   # Window decorations
   #
@@ -119,22 +122,80 @@ font:
     x: 0
     y: 0
 
-  # Scale the font size based on the monitor's DPI. This will lead to bigger text on HiDPI
-  # screens and make reading text a little easier.
-  # On X11 it is possible to change the DPI for each instance of alacritty by using
-  # `WINIT_HIDPI_FACTOR=1.0 alacritty` to scale the font.
-  scale_with_dpi: true
-
 # Display the time it takes to redraw each frame.
 render_timer: false
 
-# Use custom cursor colors. If `true`, the `colors.cursor.foreground` and
-# `colors.cursor.background` colors will be used to display the cursor.
-# Otherwise the cell colors are inverted for the cursor.
-custom_cursor_colors: false
+# Keep the log file after quitting Alacritty.
+persistent_logging: false
 
 # If `true`, bold text is drawn using the bright color variants.
 draw_bold_text_with_bright_colors: true
+
+# Colors (Base16 Seti UI 256)
+colors:
+  # Default colors
+  primary:
+    background: '0x151718'
+    foreground: '0xd6d6d6'
+
+    # Bright and dim foreground colors
+    #
+    # The dimmed foreground color is calculated automatically if it is not present.
+    # If the bright foreground color is not set, or `draw_bold_text_with_bright_colors`
+    # is `false`, the normal foreground color will be used.
+    #dim_foreground: '0x9a9a9a'
+    #bright_foreground: '0xffffff'
+
+  # Cursor colors
+  #
+  # Colors which should be used to draw the terminal cursor. If these are unset,
+  # the cursor color will be the inverse of the cell color.
+  #cursor:
+  #  text: '0x000000'
+  #  cursor: '0xffffff'
+
+  # Normal colors
+  normal:
+    black:   '0x151718'
+    red:     '0xcd3f45'
+    green:   '0x9fca56'
+    yellow:  '0xe6cd69'
+    blue:    '0x55b5db'
+    magenta: '0xa074c4'
+    cyan:    '0x55dbbe'
+    white:   '0xd6d6d6'
+
+  # Bright colors
+  bright:
+    black:   '0x41535b'
+    red:     '0xcd3f45'
+    green:   '0x9fca56'
+    yellow:  '0xe6cd69'
+    blue:    '0x55b5db'
+    magenta: '0xa074c4'
+    cyan:    '0x55dbbe'
+    white:   '0xd6d6d6'
+
+  # Dim colors
+  #
+  # If the dim colors are not set, they will be calculated automatically based
+  # on the `normal` colors.
+  dim:
+    black:   '0x333333'
+    red:     '0xf2777a'
+    green:   '0x99cc99'
+    yellow:  '0xffcc66'
+    blue:    '0x6699cc'
+    magenta: '0xcc99cc'
+    cyan:    '0x66cccc'
+    white:   '0xdddddd'
+
+  # Indexed Colors
+  #
+  # The indexed colors include all colors from 16 to 256.
+  # When these are not set, they're filled with sensible defaults.
+  #indexed_colors:
+  #  - { index: 16, color: '0x000000' }
 
 # Visual Bell
 #
@@ -194,6 +255,9 @@ mouse:
   double_click: { threshold: 300 }
   triple_click: { threshold: 300 }
 
+  # If this is `true`, the cursor is temporarily hidden when typing.
+  hide_when_typing: false
+
   url:
     # URL launcher
     #
@@ -217,19 +281,18 @@ selection:
 
 dynamic_title: true
 
-hide_cursor_when_typing: false
+cursor:
+  # Cursor style
+  #
+  # Values for 'style':
+  #   - ▇ Block
+  #   - _ Underline
+  #   - | Beam
+  style: Block
 
-# Cursor style
-#
-# Values for 'cursor_style':
-#   - Block
-#   - Underline
-#   - Beam
-cursor_style: Block
-
-# If this is `true`, the cursor will be rendered as a hollow box when the
-# window is not focused.
-unfocused_hollow_cursor: true
+  # If this is `true`, the cursor will be rendered as a hollow box when the
+  # window is not focused.
+  unfocused_hollow: true
 
 # Live config reload (changes require restart)
 live_config_reload: true
@@ -238,7 +301,6 @@ live_config_reload: true
 #
 # You can set `shell.program` to the path of your favorite shell, e.g. `/bin/fish`.
 # Entries in `shell.args` are passed unmodified as arguments to the shell.
-#
 #shell:
 #  program: /bin/bash
 #  args:
@@ -427,38 +489,3 @@ key_bindings:
   - { key: F10,      mods: Super,   chars: "\x1b[21;3~"                  }
   - { key: F11,      mods: Super,   chars: "\x1b[23;3~"                  }
   - { key: F12,      mods: Super,   chars: "\x1b[24;3~"                  }
-
-# Base16 Seti UI 256 - alacritty color config
-
-colors:
-  # Default colors
-  primary:
-    background: '0x151718'
-    foreground: '0xd6d6d6'
-
-  # Colors the cursor will use if `custom_cursor_colors` is true
-  cursor:
-    text: '0x151718'
-    cursor: '0xd6d6d6'
-
-  # Normal colors
-  normal:
-    black:   '0x151718'
-    red:     '0xcd3f45'
-    green:   '0x9fca56'
-    yellow:  '0xe6cd69'
-    blue:    '0x55b5db'
-    magenta: '0xa074c4'
-    cyan:    '0x55dbbe'
-    white:   '0xd6d6d6'
-
-  # Bright colors
-  bright:
-    black:   '0x41535b'
-    red:     '0xcd3f45'
-    green:   '0x9fca56'
-    yellow:  '0xe6cd69'
-    blue:    '0x55b5db'
-    magenta: '0xa074c4'
-    cyan:    '0x55dbbe'
-    white:   '0xd6d6d6'
