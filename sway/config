@@ -1,22 +1,20 @@
-# default colors (Base16-Seti)
-set $base00 #151718
-set $base01 #282a2b
-set $base02 #3B758C
-set $base03 #41535B
-set $base04 #43a5d5
-set $base05 #d6d6d6
-set $base06 #eeeeee
-set $base07 #ffffff
-set $base08 #Cd3f45
-set $base09 #db7b55
-set $base0A #e6cd69
-set $base0B #9fca56
-set $base0C #55dbbe
-set $base0D #55b5db
-set $base0E #a074c4
-set $base0F #8a553f
-
+# load other configs (including Base16-Seti colors)
 include $XDG_CONFIG_HOME/sway/config.d/*
+
+### Colors
+#
+# Values defined in $XDG_CONFIG_HOME/sway/config.d/base16-colors.config
+
+# Basic color configuration using the Base16 variables for windows and borders.
+# Property Name         Border  BG      Text    Indicator Child Border
+client.focused          $base05 $base0D $base00 $base0D   $base0D
+client.focused_inactive $base01 $base01 $base05 $base03   $base01
+client.unfocused        $base01 $base00 $base05 $base01   $base01
+client.urgent           $base08 $base08 $base00 $base08   $base08
+# ignored (present for i3 compatibility)
+client.placeholder      $base00 $base00 $base05 $base00   $base00
+client.background       $base07
+
 
 ### Variables
 #
@@ -253,8 +251,8 @@ bindsym $super+r mode "resize"
 
 #
 # Status Bar:
-#
 # Read `man 5 sway-bar` for more information about this section.
+#
 bar {
     position top
 
@@ -274,21 +272,11 @@ bar {
         active_workspace    $base05 $base03 $base00
         inactive_workspace  $base03 $base01 $base05
         urgent_workspace    $base08 $base08 $base00
-        binding_mode        $base00 $base0A $base00
+        binding_mode $base00 $base0A $base00
     }
 }
 
-# Basic color configuration using the Base16 variables for windows and borders.
-# Property Name         Border  BG      Text    Indicator Child Border
-client.focused          $base05 $base0D $base00 $base0D $base0D
-client.focused_inactive $base01 $base01 $base05 $base03 $base01
-client.unfocused        $base01 $base00 $base05 $base01 $base01
-client.urgent           $base08 $base08 $base00 $base08 $base08
-client.placeholder      $base00 $base00 $base05 $base00 $base00
-client.background       $base07
-
 #
-# CUSTOM
 # Volume Buttons:
 #
 bindsym XF86AudioMute exec "pactl set-sink-mute $(pacmd list-sinks |awk '/* index:/{print $3}') toggle"
@@ -297,14 +285,12 @@ bindsym XF86AudioLowerVolume exec "pactl set-sink-volume $(pacmd list-sinks |awk
 bindsym XF86AudioMicMute exec "pactl set-source-mute $(pacmd list-sources |awk '/* index:/{print $3}') toggle"
 
 #
-# CUSTOM
 # Backlight Buttons:
 #
 bindsym XF86MonBrightnessUp   exec "brightnessctl s 5%+"
 bindsym XF86MonBrightnessDown exec "brightnessctl s 5%-"
 
 #
-# CUSTOM
 # Window Decorations:
 #
 new_window pixel
@@ -313,13 +299,9 @@ hide_edge_borders both
 # gaps outer 4
 
 #
-# CUSTOM
 # Font:
 #
-# font pango:sans-serif 8
-# font pango:Hack Nerd Font 8
-font pango:Overpass Nerd Font 8
-# font pango:Iosevka Nerd Font 8
+font pango:Overpass Nerd Font 10
 
 focus_follows_mouse no
 

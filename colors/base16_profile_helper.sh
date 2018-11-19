@@ -13,18 +13,20 @@ if [ -f $current_theme_link ]; then
   source $current_theme_link
 fi
 
+debug() { echo "$1"; }
+
 _base16()
 {
   local script=$1
   local theme=$2
-  [ -f $script ] && . $script
+  [ -f $script ] && . $script;
 
   update_link "$current_theme_link" "$script"
-  [ $? ] || return 01
+  [ $? ] || return -1;
   export BASE16_THEME=${theme}
   if [ -n ${BASE16_SHELL_HOOKS:+s} ] && [ -d "${BASE16_SHELL_HOOKS}" ]; then
     for hook in $BASE16_SHELL_HOOKS/*; do
-      [ -f "$hook" ] && [ -x "$hook" ] && "$hook"
+      [ -f "$hook" ] && [ -x "$hook" ] && "$hook";
       if [ $? ]; then
         echo "Hook ran successfully: $hook"
       else

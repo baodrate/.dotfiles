@@ -221,7 +221,6 @@ fi
 # ------
 # Colors
 # ------
-BASE16_SHELL_HOOKS=$HOME/.colors/base16-shell-hooks
 source ~/.colors/base16_profile_helper.sh # call before prompt because this checks [ -n "$PS1" ]
 
 # =============================================================================

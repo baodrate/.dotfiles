@@ -3,20 +3,20 @@ export SHELL="zsh"
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 
-export NVIM_LISTEN_ADDRESS=$HOME/tmp/nvimsocket
+export NVIM_LISTEN_ADDRESS=/tmp/nvimsocket
 
 # fix for https://github.com/swaywm/sway/issues/595
 export _JAVA_AWT_WM_NONREPARENTING=1
 
-export CONFIG_DIR="$HOME/.config"
+if (( ! ${+XDG_CONFIG_HOME} )); then
+  XDG_CONFIG_HOME="$HOME/.config"
+fi
+export CONFIG_DIR="$XDG_CONFIG_HOME"
 export COLORS_DIR="$HOME/.colors"
 export SCRIPTS_DIR="$HOME/.scripts"
 BASE16_SHELL_HOOKS=$HOME/.colors/base16-shell-hooks
 BASE16_SHELL=$HOME/.colors/base16-shell
 
-if (( ! ${+XDG_CONFIG_HOME} )); then
-  XDG_CONFIG_HOME=$CONFIG_DIR
-fi
 
 # ==> setup default editor
 if (( $+commands[nvim] )) ; then
