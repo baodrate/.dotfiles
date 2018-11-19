@@ -69,9 +69,13 @@
     # directories
     # -----------
     ~/.config/iterm2: iterm2
+    ~/.mpd: mpd
+    ~/Library/Application Support/Übersicht/widgets: ubersicht/widgets
 
     # files
     # -----
+    ~/.chunkwmrc: chunkwm/chunkwmrc.sh
+    ~/.skhdrc: chunkwm/skhdrc
     ~/.Brewfile: brew/Brewfile
     ~/.config/alacritty/alacritty.base.yml: alacritty/alacritty.base.macos.yml
     ~/.chunkwmrc: chunkwm/chunkwmrc.sh

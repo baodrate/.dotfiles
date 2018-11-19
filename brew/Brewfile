@@ -52,6 +52,7 @@ cask 'visual-studio-code'
 tap 'homebrew/cask-fonts'
 cask 'font-hack-nerd-font'
 cask 'font-hack-nerd-font-mono'
+cask 'font-fontawesome'
 
 # dev
 cask 'dotnet'
@@ -114,8 +115,11 @@ brew 'fzf'
 brew 'abduco'         # session management
 brew 'nnn'
 
-# other
+# media
 cask 'spotify'
+brew 'mpd'
+brew 'ncmpcpp'        # mpd client
 cask 'pocket-casts'
-cask 'skype'
+
+# other
 cask 'jadengeller-helium'

@@ -102,18 +102,18 @@ cmd - 9 : chunkc tiling::desktop --focus 9
 cmd - 0 : chunkc tiling::desktop --focus 10
 
 # focus monitor
-ctrl + alt - z  : chunkc tiling::monitor -f prev
-ctrl + alt - c  : chunkc tiling::monitor -f next
-ctrl + alt - 1  : chunkc tiling::monitor -f 1
-ctrl + alt - 2  : chunkc tiling::monitor -f 2
-ctrl + alt - 3  : chunkc tiling::monitor -f 3
+cmd - p  : chunkc tiling::monitor -f prev
+cmd - n  : chunkc tiling::monitor -f next
+# ctrl + alt - 1  : chunkc tiling::monitor -f 1
+# ctrl + alt - 2  : chunkc tiling::monitor -f 2
+# ctrl + alt - 3  : chunkc tiling::monitor -f 3
 
 # send window to monitor and follow focus
-cmd + ctrl - h  : chunkc tiling::window --send-to-monitor prev; chunkc tiling::monitor -f prev
-cmd + ctrl - l  : chunkc tiling::window --send-to-monitor next; chunkc tiling::monitor -f next
-cmd + ctrl - 1  : chunkc tiling::window --send-to-monitor 1; chunkc tiling::monitor -f 1
-cmd + ctrl - 2  : chunkc tiling::window --send-to-monitor 2; chunkc tiling::monitor -f 2
-cmd + ctrl - 3  : chunkc tiling::window --send-to-monitor 3; chunkc tiling::monitor -f 3
+cmd + shift - p  : chunkc tiling::window --send-to-monitor prev; chunkc tiling::monitor -f prev
+cmd + shift - n  : chunkc tiling::window --send-to-monitor next; chunkc tiling::monitor -f next
+# cmd + ctrl - 1  : chunkc tiling::window --send-to-monitor 1; chunkc tiling::monitor -f 1
+# cmd + ctrl - 2  : chunkc tiling::window --send-to-monitor 2; chunkc tiling::monitor -f 2
+# cmd + ctrl - 3  : chunkc tiling::window --send-to-monitor 3; chunkc tiling::monitor -f 3
 
 # # increase region size
 # shift + alt - a : chunkc tiling::window --use-temporary-ratio 0.1 --adjust-window-edge west
@@ -155,7 +155,7 @@ alt - a : chunkc tiling::desktop --toggle offset
 alt - f : chunkc tiling::window --toggle fullscreen
 
 # toggle window native fullscreen
-shift + alt - f : chunkc tiling::window --toggle native-fullscreen
+alt + shift - f : chunkc tiling::window --toggle native-fullscreen
 
 # toggle window parent zoom
 alt - d : chunkc tiling::window --toggle parent
