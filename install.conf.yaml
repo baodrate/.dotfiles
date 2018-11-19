@@ -53,6 +53,7 @@
     ~/.base16_theme: base16_theme
     ~/.vimperator: vimperator
     ~/.vimperatorrc: vimperatorrc
+    ~/.config/alacritty/base16-colors.yml: alacritty/base16-colors.yml
 
 # ================
 # MacOS only links
@@ -72,7 +73,7 @@
     # files
     # -----
     ~/.Brewfile: brew/Brewfile
-    ~/.config/alacritty/alacritty.yml: alacritty/alacritty.macos.yml
+    ~/.config/alacritty/alacritty.base.yml: alacritty/alacritty.base.macos.yml
     ~/.chunkwmrc: chunkwm/chunkwmrc.sh
     ~/.skhdrc: chunkwm/skhdrc
     ~/Library/Application Support/Übersicht/widgets: ubersicht/widgets
@@ -95,8 +96,11 @@
 
     # files
     # -----
-    ~/.config/alacritty/alacritty.yml: alacritty/alacritty.linux.yml
+    ~/.config/alacritty/alacritty.base.yml: alacritty/alacritty.base.linux.yml
     ~/.xbindkeysrc: xbindkeysrc
     ~/.Xresources: Xresources
     ~/.xinitrc: xinitrc
     ~/.xprofile: xprofile
+
+- shell:
+    - [~/.colors/base16-shell-hooks/alacritty.sh, Generating alacritty config]

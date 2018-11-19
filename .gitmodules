@@ -25,3 +25,6 @@
 [submodule "colors/base16-tmux"]
 	path = colors/base16-tmux
 	url = https://github.com/Kraust/base16-tmux.git
+[submodule "colors/base16-alacritty"]
+	path = colors/base16-alacritty
+	url = https://github.com/aaron-williamson/base16-alacritty.git
