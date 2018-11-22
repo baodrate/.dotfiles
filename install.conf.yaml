@@ -6,6 +6,12 @@
 # ==========
 # Core links
 # ==========
+- defaults:
+    link:
+      relink: true
+      create: true
+      relative: true
+
 - link:
     ~/.dotfiles:
       path: ''
@@ -20,6 +26,12 @@
 # ============
 # Common links
 # ============
+- defaults:
+    link:
+      relink: true
+      create: true
+      relative: true
+
 - link:
     # directories
     # -----------

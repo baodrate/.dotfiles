@@ -1,7 +1,7 @@
 icons = "awesome"
 
 [theme]
-name = "solarized-dark"
+name = "seti"
 [theme.overrides]
 # idle_bg = "#123456"
 # idle_fg = "#abcdef"
@@ -38,11 +38,11 @@ block = "battery"
 interval = 10
 format = "{percentage}% {time}"
 
-[[block]]
-device = "BAT1"
-block = "battery"
-interval = 10
-format = "{percentage}% {time}"
+# [[block]]
+# device = "BAT1"
+# block = "battery"
+# interval = 10
+# format = "{percentage}% {time}"
 
 [[block]]
 block = "memory"
