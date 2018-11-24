@@ -19,16 +19,19 @@ fi
 CASK_HOME="/usr/local/Homebrew/Library/Taps"
 FORMULA_HOME="/usr/local/Cellar"
 
-ZPLG_HOME="${ZDOTDIR:-$HOME}/.zplugin"
+declare -A ZPLGM  # initial Zplugin's hash definition, if configuring before loading Zplugin, and then:
+
+ZPLGM[HOME_DIR]="${XDG_DATA_HOME:-$HOME/.local/share}/zplugin"
+ZPLGM[ZCOMPDUMP_PATH]=$ZDOTDIR/.zcompdump
+ZPFX="${ZPLGM[HOME_DIR]}/polaris"
 # => ZPFX (polaris) directory to store compiled programs
 [ -d $ZPFX/bin ] || mkdir -p $ZPFX/bin
 
 # ==> zplugin automatic compilation module
 #     lets you use source-study module to check load times
 #     (call with `zpmod source-study`)
-# module_path = 
-if [[ -d "$ZPLG_HOME/bin/zmodules/Src"  ]] ; then
-  module_path+=( "$ZPLG_HOME/bin/zmodules/Src" )
+if [[ -d "${ZPLGM[HOME_DIR]}/bin/zmodules/Src"  ]] ; then
+  module_path+=( "${ZPLGM[HOME_DIR]}/bin/zmodules/Src" )
   (zmodload zdharma/zplugin) >/dev/null 2>&1
 fi
 
@@ -47,9 +50,9 @@ fi
 # ------------------------
 
 # ==> bootstrapper
-if [[ ! -d "$ZPLG_HOME/bin" ]]; then
+if [[ ! -d "${ZPLGM[HOME_DIR]}/bin" ]]; then
   if (( $+commands[git] )); then
-    git clone https://github.com/zdharma/zplugin.git $ZPLG_HOME/bin
+    git clone https://github.com/zdharma/zplugin.git ${ZPLGM[HOME_DIR]}/bin
   else
     echo 'git not found' >&2
     return 1
@@ -128,20 +131,21 @@ local ls_human_filesizes=""
 local ls_group_dirs
 
 if (( $+commands[exa] )) ; then
-  local exa_grid="--grid"                           # -G show long format in grid (multi-column)
-  local exa_git="--git"                             #    show git status in table
-  local exa_gitignore="--git"                       #    hide files defined in gitignore
+  local exa_grid="--grid"                       # -G show long format in grid (multi-column)
+  local exa_git="--git"                         #    list files' git status
+  local exa_ext="--extended"                    # -@ show files’ extended attributes and sizes
+  local exa_group="--group"                     # -g show files’ group
 
-  ls_long="--long"                           # -l
-  ls_short="$exa_grid $ls_long"
-  ls_sort_newest="--sort=oldest"             # -sort=modified -reverse
-  ls_hidden="--git-ignore"
-  ls_show_hidden="--all"                     # -a (call twice to show . and ..)
-  ls_one_line="--oneline"                    # -1
-  ls_colors="--color=always"                 #    'always' to forward to e.g. less
-  ls_indicators="--classify"                 # -F
-  ls_human_filesizes="--binary"              # -b use binary prefixes (e.g. KiB vs KB)
-  ls_group_dirs="--group-directories-first"  #    self-explanatory
+  ls_short="$exa_grid $ls_long $exa_git"
+  ls_long="--long $exa_git $exa_ext $exa_group" # -l show metadata
+  ls_sort_newest="--sort=oldest"                #    --sort=modified --reverse
+  ls_hidden="--git-ignore"                      #    hide files defined in gitignore
+  ls_show_hidden="--all"                        # -a (call twice to show . and ..)
+  ls_one_line="--oneline"                       # -1
+  ls_colors="--color=always"                    #    'always' to forward to e.g. less
+  ls_indicators="--classify"                    # -F
+  ls_human_filesizes="--binary"                 # -b use binary prefixes (e.g. KiB vs KB)
+  ls_group_dirs="--group-directories-first"     #    self-explanatory
 
   ls_default_flags+=($exa_colors $exa_indicators $exa_human_filesizes $exa_group_dirs)
   ls_cmd="exa"
@@ -153,8 +157,8 @@ else
       ls_cmd="gls"
     fi
 
-    ls_long="-l"
     ls_short=""
+    ls_long="-l"
     ls_sort_newest="-t"
     ls_hidden=""
     ls_show_hidden="-A"
@@ -166,8 +170,8 @@ else
     ls_group_dirs="--group-directories-first"
 
   elif [[ $OS = 'osx' ]]; then
-    ls_long="-l"
     ls_short=""
+    ls_long="-l"
     ls_sort_newest="-t"
     ls_hidden=""
     ls_show_hidden="-A"
@@ -227,7 +231,7 @@ source ~/.colors/base16_profile_helper.sh # call before prompt because this chec
 # Plugins
 # =============================================================================
 
-source "$ZPLG_HOME/bin/zplugin.zsh"
+source "${ZPLGM[HOME_DIR]}/bin/zplugin.zsh"
 
 # -----
 # Theme
@@ -245,7 +249,10 @@ zplugin load sindresorhus/pure
 # --------------
 # custom plugins
 # --------------
-# zplugin "$XDG_CONFIG_HOME/zsh/*.zsh", from:local
+# glob qualifiers: `.` for regular files; `N` for `null_glob`
+for plugin in $ZDOTDIR/plugins/*/**/*.plugin.zsh(.N); do
+  zplugin load "${plugin%/*}"
+done
 
 # ---------------------
 # prezto plugin options
