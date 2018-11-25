@@ -95,8 +95,8 @@ setopt NO_CHECK_JOBS
 # -------
 # ==> cp/mv
 #     prompt for overwrite; displays changes
-alias cp='cp -iv'
-alias mv='mv -iv'
+# alias cp='cp -iv'
+# alias mv='mv -iv'
 
 # ==> mkdir
 #     create intermediate directories; display created directories
@@ -141,9 +141,10 @@ source "${ZPLGM[HOME_DIR]}/bin/zplugin.zsh"
 # --------------
 # ==> plugins
 # glob qualifiers: `.` for regular files; `N` for `null_glob`
+zplugin snippet "$ZDOTDIR/plugins/cp-mv-safe.plugin.zsh"
 zplugin snippet "$ZDOTDIR/plugins/git.plugin.zsh"
 zplugin snippet "$ZDOTDIR/plugins/history.plugin.zsh"
-zplugin snippet "$ZDOTDIR/plugins/ls_aliases.plugin.zsh"
+zplugin snippet "$ZDOTDIR/plugins/ls-aliases.plugin.zsh"
 zplugin ice if"[[ $OSTYPE == darwin* ]]"; zplugin snippet "$ZDOTDIR/plugins/homebrew.plugin.zsh"
 
 # github-plugins

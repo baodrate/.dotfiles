@@ -81,11 +81,6 @@ zplugin load caarlos0/zsh-git-sync                              # Sync git repos
 
 # ==> colored manpages
 zplugin snippet OMZ::plugins/colored-man-pages/colored-man-pages.plugin.zsh
-# ==> cat with syntax highlighting
-zplugin snippet OMZ::plugins/colorize/colorize.plugin.zsh
-# ==> cp: `cpv` function that uses rsync so that you get the features and security of this command
-#     rsync -pogbr -hhh --backup-dir=/tmp/rsync -e /dev/null --progress "$@"
-zplugin snippet OMZ::plugins/cp/cp.plugin.zsh
 
 # ==> suggests aliases
 zplugin load djui/alias-tips
