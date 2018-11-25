@@ -96,7 +96,8 @@ if dein#load_state(s:settings.dein_cache)
 
   call dein#add('justinmk/vim-dirvish')           " netrw replacement
 
-  call dein#add('junegunn/fzf', { 'build': './install --all', 'merged': 0 }) 
+  " depend on zsh to install fzf binary
+  " call dein#add('junegunn/fzf', { 'build': './install --all', 'merged': 0 }) 
   call dein#add('junegunn/fzf.vim', { 'depends': 'fzf' })
   call dein#add('junegunn/vim-easy-align')
 
