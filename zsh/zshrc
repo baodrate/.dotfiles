@@ -143,6 +143,7 @@ source "${ZPLGM[HOME_DIR]}/bin/zplugin.zsh"
 # glob qualifiers: `.` for regular files; `N` for `null_glob`
 zplugin snippet "$ZDOTDIR/plugins/cp-mv-safe.plugin.zsh"
 zplugin snippet "$ZDOTDIR/plugins/git.plugin.zsh"
+zplugin snippet "$ZDOTDIR/plugins/keybindings.plugin.zsh"
 zplugin snippet "$ZDOTDIR/plugins/history.plugin.zsh"
 zplugin snippet "$ZDOTDIR/plugins/ls-aliases.plugin.zsh"
 zplugin ice if"[[ $OSTYPE == darwin* ]]"; zplugin snippet "$ZDOTDIR/plugins/homebrew.plugin.zsh"

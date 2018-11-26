@@ -91,16 +91,6 @@ zplugin load zdharma/zui
 zplugin light zdharma/zplugin-crasis
 
 
-# ------------
-# vi emulation
-# ------------
-# ==> built-in vi-mode
-bindkey -v
-# ==> Sane bindings for zsh's vi mode so it behaves more vim like
-#     NOTE:   doesn't work atm, kills highlighting in history-search-multi-word
-#             see: https://github.com/softmoth/zsh-vim-mode/issues/8
-# zplugin load softmoth/zsh-vim-mode
-
 # -------------------------------
 # autocomplete / search / history
 # -------------------------------
