@@ -40,6 +40,8 @@ zplugin light iwata/git-now
 # ==> git extras
 zplugin ice wait"2" lucid as"program" pick"$ZPFX/bin/git-alias" make"PREFIX=$ZPFX" nocompile
 zplugin light tj/git-extras
+zplugin ice wait"2" lucid pick"etc/git-extras-completion.zsh"
+zplugin light tj/git-extras
 
 # docker-machine-port-forwarder
 zplugin ice as"program" pick"pf"

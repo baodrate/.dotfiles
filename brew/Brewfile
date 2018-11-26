@@ -19,9 +19,9 @@ cask 'tunnelblick'
 
 # usability
 tap 'crisidev/homebrew-chunkwm'
-brew 'chunkwm', args: ["HEAD"]
+brew 'chunkwm', args: ["HEAD", "with-purify"]
 tap 'koekeishiya/homebrew-formulae'
-brew 'skhd', restart_service: :changed
+brew 'skhd', args: ["HEAD", "with-logging"], restart_service: :changed
 cask 'ubersicht'
 cask 'bitbar'
 
@@ -102,6 +102,7 @@ brew 'tmux'
 brew 'iproute2mac'    # wraps ip commands
 brew 'watch'
 brew 'pidof'
+brew 'rsync'          # updated version of rsync (system version is 10yo 2.6.9!)
 
 # utility:alternatives
 brew 'bat'            # prettier cat tool

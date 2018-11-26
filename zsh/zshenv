@@ -3,20 +3,29 @@ export SHELL="zsh"
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 
-export NVIM_LISTEN_ADDRESS=/tmp/nvimsocket
-
 # fix for https://github.com/swaywm/sway/issues/595
 export _JAVA_AWT_WM_NONREPARENTING=1
 
-if (( ! ${+XDG_CONFIG_HOME} )); then
-  XDG_CONFIG_HOME="$HOME/.config"
-fi
+if (( ! ${+XDG_CONFIG_HOME} )); then XDG_CONFIG_HOME="$HOME/.config"; fi
+if [ ! -d ${+XDG_CONFIG_HOME} ]; then mkdir -p $XDG_CONFIG_HOME; fi
+if (( ! ${+XDG_DATA_HOME} )); then XDG_DATA_HOME="$HOME/.local/share"; fi
+if [ ! -d ${+XDG_DATA_HOME} ]; then mkdir -p $XDG_DATA_HOME; fi
+if (( ! ${+XDG_RUNTIME_DIR} )); then XDG_RUNTIME_DIR="$HOME/.run"; fi
+if [ ! -d ${+XDG_RUNTIME_DIR} ]; then mkdir -p $XDG_RUNTIME_DIR; fi
+if (( ! ${+XDG_CACHE_HOME} )); then XDG_CACHE_HOME="$HOME/.cache"; fi
+if [ ! -d ${+XDG_CACHE_HOME} ]; then mkdir -p $XDG_CACHE_HOME; fi
+
 export CONFIG_DIR="$XDG_CONFIG_HOME"
 export COLORS_DIR="$HOME/.colors"
 export SCRIPTS_DIR="$HOME/.scripts"
-BASE16_SHELL_HOOKS=$HOME/.colors/base16-shell-hooks
-BASE16_SHELL=$HOME/.colors/base16-shell
 
+# ==> nvim-remote
+[ -d ${XDG_RUNTIME_DIR}/nvim ] || mkdir -p ${XDG_RUNTIME_DIR}/nvim
+export NVIM_LISTEN_ADDRESS=/tmp/nvimsocket
+
+# ==> colors
+export BASE16_SHELL_HOOKS=$HOME/.colors/base16-shell-hooks
+export BASE16_SHELL=$HOME/.colors/base16-shell
 
 # ==> setup default editor
 if (( $+commands[nvim] )) ; then
@@ -28,7 +37,7 @@ else
   echo 'could not find neovim or vim; not setting $VISUAL'
 fi
 
-# ==> Setup PATH env variable
+# ==> Setup PATH
 PATH="$(getconf PATH)"
 
 [[ -d "$SCRIPTS_DIR" ]] && PATH="$SCRIPTS_DIR:$PATH"

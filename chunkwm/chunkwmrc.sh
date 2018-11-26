@@ -14,7 +14,7 @@
 #       'stdout' or 'stderr' can be used instead of an actual filepath.
 #
 
-chunkc core::log_file stdout
+chunkc core::log_file /usr/local/var/log/chunkwm/chunkwm.log
 
 #
 # NOTE: specify the desired level of logging.

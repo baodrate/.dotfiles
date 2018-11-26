@@ -1,16 +1,22 @@
 # safer versions of cp/mv using rsync
 
 cp_safe() {
-    rsync -abXv -hhh --backup-dir=$HOME/tmp/rsync -e /dev/null --progress "$@"
+  printf "rsync -abXv -hhh --backup-dir=$HOME/tmp/rsync -e /dev/null --progress " && \
+  printf "'%s' " "$@" && \
+  printf "\n" && \
+  rsync -abXv -hhh --backup-dir=$HOME/tmp/rsync -e /dev/null --progress "$@"
 }
 compdef _files cp_safe
 alias cp=cp_safe
 
 mv_safe() {
-    rsync -abXv -hhh --remove-source-files --backup-dir=$HOME/tmp/rsync -e /dev/null --progress "$@" && \
-      for target in ${@[1,-1]}; do
-        [ -d $target ] && find -P $target -type d -empty -delete
-      done
+  printf "rsync -abXv -hhh --remove-source-files --backup-dir=$HOME/tmp/rsync -e /dev/null --progress " && \
+  printf "'%s' " "$@" && \
+  printf "\n" && \
+  rsync -abXv -hhh --remove-source-files --backup-dir=$HOME/tmp/rsync -e /dev/null --progress "$@" && \
+    for target in ${@[1,-1]}; do
+      [ -d $target ] && find -P $target -type d -empty -delete
+    done
 }
 compdef _files mv_safe
 alias mv=mv_safe
