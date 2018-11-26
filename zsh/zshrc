@@ -146,6 +146,7 @@ zplugin snippet "$ZDOTDIR/plugins/git.plugin.zsh"
 zplugin snippet "$ZDOTDIR/plugins/keybindings.plugin.zsh"
 zplugin snippet "$ZDOTDIR/plugins/history.plugin.zsh"
 zplugin snippet "$ZDOTDIR/plugins/ls-aliases.plugin.zsh"
+zplugin snippet "$ZDOTDIR/plugins/pipenv.plugin.zsh"
 zplugin ice if"[[ $OSTYPE == darwin* ]]"; zplugin snippet "$ZDOTDIR/plugins/homebrew.plugin.zsh"
 
 # github-plugins

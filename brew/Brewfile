@@ -42,6 +42,8 @@ brew 'bash'
 brew 'bash-completion@2'
 brew 'zsh'
 brew 'zsh-completions'
+brew 'protobuf', args: ["without-python@2"]     # depended-on by mosh
+brew 'mosh'
 
 # editors
 brew 'neovim'
@@ -74,8 +76,7 @@ cask 'adoptopenjdk'
 cask 'dbschema'
 
 # dev:python
-brew 'python'
-brew 'python@2'
+brew 'python'         # python3
 brew 'pipenv'
 
 # dev:C++
