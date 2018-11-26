@@ -19,6 +19,11 @@ set nofsync
 "                                     options
 " ==============================================================================
 
+" In :terminal, use neovim-remote instead of opening child nvim instance
+if has('nvim')
+  let $VISUAL = 'nvr -cc split --remote-wait'
+endif
+
 " from default 4000ms; mostly for vim-gitgutter
 set updatetime=100
 

@@ -6,6 +6,12 @@
 # ==========
 # Core links
 # ==========
+- defaults:
+    link:
+      relink: true
+      create: true
+      relative: true
+
 - link:
     ~/.dotfiles:
       path: ''
@@ -20,6 +26,12 @@
 # ============
 # Common links
 # ============
+- defaults:
+    link:
+      relink: true
+      create: true
+      relative: true
+
 - link:
     # directories
     # -----------
@@ -44,11 +56,8 @@
     ~/.tmux.conf: tmux/tmux.conf
     ~/.tmuxline.conf: tmux/tmuxline.conf
     # -- zsh
-    ~/.zlogin: zsh/zlogin.zsh
-    ~/.zlogout: zsh/zlogout.zsh
-    ~/.zprofile: zsh/zprofile.zsh
-    ~/.zshenv: zsh/zshenv.zsh
-    ~/.zshrc: zsh/zshrc.zsh
+    ~/.zshenv: zshenv
+    ~/.config/zsh: zsh
     # -- misc
     ~/.base16_theme: base16_theme
     ~/.vimperator: vimperator

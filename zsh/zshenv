@@ -1,0 +1,67 @@
+export SHELL="zsh"
+
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+
+# fix for https://github.com/swaywm/sway/issues/595
+export _JAVA_AWT_WM_NONREPARENTING=1
+
+(( ${+XDG_CONFIG_HOME}  )) || export XDG_CONFIG_HOME="$HOME/.config"
+(( ${+XDG_DATA_HOME}    )) || export XDG_DATA_HOME="$HOME/.local/share"
+(( ${+XDG_RUNTIME_DIR}  )) || export XDG_RUNTIME_DIR="$HOME/.run"
+(( ${+XDG_CACHE_HOME}   )) || export XDG_CACHE_HOME="$HOME/.cache"
+
+[[ -d ${XDG_CONFIG_HOME}  ]] || mkdir -p $XDG_CONFIG_HOME
+[[ -d ${XDG_DATA_HOME}    ]] || mkdir -p $XDG_DATA_HOME
+[[ -d ${XDG_RUNTIME_DIR}  ]] || mkdir -p $XDG_RUNTIME_DIR
+[[ -d ${XDG_CACHE_HOME}   ]] || mkdir -p $XDG_CACHE_HOME
+
+export CONFIG_DIR="$XDG_CONFIG_HOME"
+export COLORS_DIR="$HOME/.colors"
+export SCRIPTS_DIR="$HOME/.scripts"
+
+# ==> nvim-remote
+export NVIM_LISTEN_ADDRESS=/tmp/nvimsocket
+# [[ -d ${XDG_RUNTIME_DIR}/nvim ]] || mkdir -p ${XDG_RUNTIME_DIR}/nvim
+
+# ==> colors
+export BASE16_SHELL_HOOKS=$HOME/.colors/base16-shell-hooks
+export BASE16_SHELL=$HOME/.colors/base16-shell
+
+# ==> setup default editor
+if (( $+commands[nvim] )) ; then
+  export VISUAL=nvim
+  export NVIM_TUI_ENABLE_TRUE_COLOR=1
+elif (( $+commands[vim] )) ; then
+  export VISUAL=vim
+else
+  echo 'could not find neovim or vim; not setting $VISUAL'
+fi
+
+# ==> npm
+if (( $+commands[npm] )); then
+  export npm_config_cache="$XDG_CACHE_HOME/npm"
+  export npm_config_prefix="${XDG_DATA_HOME}/node_modules"
+fi
+
+# ==> use gpg-agent as ssh-agent
+unset SSH_AGENT_PID
+if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ]; then
+  export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
+fi
+
+# workaround for issue with qtwebengine + opengl + nouveau
+# see https://bugs.archlinux.org/task/59057
+QT_XCB_FORCE_SOFTWARE_OPENGL=1
+
+
+# ====
+# WORK
+# ====
+export AWS_SDK_CPP_DIR="~/aws-sdk-cpp/"
+
+
+# ===
+# MAC
+# ===
+# ulimit -n 32768

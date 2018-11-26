@@ -1,0 +1,153 @@
+# =============================================================================
+# Setup
+# =============================================================================
+
+if [[ $OSTYPE = linux* ]]; then
+  alias yolo='pacaur -Syuu --noconfirm'
+fi
+
+local CASK_HOME="/usr/local/Homebrew/Library/Taps"
+local FORMULA_HOME="/usr/local/Cellar"
+
+declare -A ZPLGM  # initial Zplugin's hash definition, if configuring before loading Zplugin, and then:
+
+ZPLGM[HOME_DIR]="${XDG_DATA_HOME:-$HOME/.local/share}/zplugin"
+ZPLGM[ZCOMPDUMP_PATH]=$ZDOTDIR/.zcompdump
+ZPFX="${ZPLGM[HOME_DIR]}/polaris"
+# => ZPFX (polaris) directory to store compiled programs
+[ -d $ZPFX/bin ] || mkdir -p $ZPFX/bin
+
+# ==> zplugin automatic compilation module
+#     lets you use source-study module to check load times
+#     (call with `zpmod source-study`)
+if [[ -d "${ZPLGM[HOME_DIR]}/bin/zmodules/Src"  ]] ; then
+  module_path+=( "${ZPLGM[HOME_DIR]}/bin/zmodules/Src" )
+  (zmodload zdharma/zplugin) >/dev/null 2>&1
+fi
+
+# -------------
+# gpg ssh agent
+# -------------
+if [[ $OSTYPE == linux* ]]; then
+  unset SSH_AGENT_PID
+  if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ]; then
+    export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
+  fi
+fi
+
+# ------------------------
+# zplugin (plugin manager)
+# ------------------------
+
+# ==> bootstrapper
+if [[ ! -d "${ZPLGM[HOME_DIR]}/bin" ]]; then
+  if (( $+commands[git] )); then
+    git clone https://github.com/zdharma/zplugin.git ${ZPLGM[HOME_DIR]}/bin
+  else
+    echo 'git not found' >&2
+    return 1
+  fi
+fi
+
+# =============================================================================
+# Configuration
+# =============================================================================
+# ------------
+# zsh settings
+# ------------
+# ==> correct commands
+setopt CORRECT
+# ==> Make Vi mode transitions faster (KEYTIMEOUT is in hundredths of a second)
+export KEYTIMEOUT=1
+
+# ==> General settings
+#     from zim:modules/environment
+# Use smart URL pasting and escaping.
+autoload -Uz bracketed-paste-url-magic && zle -N bracketed-paste bracketed-paste-url-magic
+autoload -Uz url-quote-magic && zle -N self-insert url-quote-magic
+# Allow comments starting with `#` even in interactive shells.
+setopt INTERACTIVE_COMMENTS
+# Remove path separtor from WORDCHARS.
+WORDCHARS=${WORDCHARS//[\/]}
+# Set less or more as the default pager.
+if (( ! ${+PAGER} )); then
+  if (( ${+commands[less]} )); then
+    export PAGER=less
+  else
+    export PAGER=more
+  fi
+fi
+
+# ==> Jobs
+#     from prezto:modules/environment
+setopt LONG_LIST_JOBS     # List jobs in the long format by default.
+setopt AUTO_RESUME        # Treat single word simple commands without redirection as candidates for resumption of an existing job.
+setopt NOTIFY             # Report the status of background jobs immediately, rather than waiting until just before printing a prompt.
+setopt NO_BG_NICE         # Prevent runing all background jobs at a lower priority.
+setopt NO_HUP             # Prevent sending the HUP signal to running jobs when the shell exits.
+# Don't report on jobs when shell exit.
+# Prevent reporting the status of background and suspended jobs before exiting a shell with job control.
+# NO_CHECK_JOBS is best used only in combination with NO_HUP, else such jobs will be killed automatically.
+setopt NO_CHECK_JOBS
+
+# -------
+# aliases
+# -------
+# ==> cp/mv
+#     prompt for overwrite; displays changes
+# alias cp='cp -iv'
+# alias mv='mv -iv'
+
+# ==> mkdir
+#     create intermediate directories; display created directories
+alias mkdir='mkdir -pv'
+
+# ==> less
+#     F: quit-if-one-screen
+#     S: aka chop-long-lines (truncate; don't wrap long lines)
+#     R: output ANSI color escape sequences in raw form (useful for piping)
+#     X: don't send init/de-init strings to terminal (i.e. don't clear screen)
+#     c: repaint screen from top-down (rather than bottom-up)
+alias less='less -SRF'
+
+alias v='nvim'
+alias n='nvim'
+
+# ----------------
+# install programs
+# ----------------
+
+if (( $+commands[bat] )); then
+  alias cat='bat'
+fi
+
+if (( $+commands[prettyping] )); then
+  alias ping='prettyping --nolegend'
+fi
+
+# ------
+# Colors
+# ------
+source ~/.colors/base16_profile_helper.sh # call before prompt because this checks [ -n "$PS1" ]
+
+# =============================================================================
+# Plugins
+# =============================================================================
+
+source "${ZPLGM[HOME_DIR]}/bin/zplugin.zsh"
+
+# --------------
+# custom plugins
+# --------------
+# ==> plugins
+# glob qualifiers: `.` for regular files; `N` for `null_glob`
+zplugin snippet "$ZDOTDIR/plugins/cp-mv-safe.plugin.zsh"
+zplugin snippet "$ZDOTDIR/plugins/git.plugin.zsh"
+zplugin snippet "$ZDOTDIR/plugins/keybindings.plugin.zsh"
+zplugin snippet "$ZDOTDIR/plugins/history.plugin.zsh"
+zplugin snippet "$ZDOTDIR/plugins/ls-aliases.plugin.zsh"
+zplugin snippet "$ZDOTDIR/plugins/pipenv.plugin.zsh"
+zplugin ice if"[[ $OSTYPE == darwin* ]]"; zplugin snippet "$ZDOTDIR/plugins/homebrew.plugin.zsh"
+
+# github-plugins
+source $ZDOTDIR/zplugins.zsh
