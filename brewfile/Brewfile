@@ -1,5 +1,6 @@
 # meta
 brew 'mas'
+brew 'rcmdnk/file/brew-file'    # brew-bundle alternative
 
 # system
 cask 'parallels'

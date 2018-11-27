@@ -1,22 +1,50 @@
+#!/usr/bin/env zsh
+
 # safer versions of cp/mv using rsync
 
 cp_safe() {
-  printf "rsync -abXv -hhh --backup-dir=$HOME/tmp/rsync -e /dev/null --progress " && \
-  printf "'%s' " "$@" && \
-  printf "\n" && \
-  rsync -abXv -hhh --backup-dir=$HOME/tmp/rsync -e /dev/null --progress "$@"
+  target="$@[-1]"
+  [[ ${target[1]} != '.' && ${target[1]} != '/' ]] && target="./$target"
+
+  for source in $@[1,-2]; do
+    [[ ${source[1]} != '.' && ${source[1]} != '/' ]] && source="./$source"
+
+    if [[ -d $source ]]; then
+      [[ $source[-1] != '/' && -d $source ]] && \
+        [[ $target[-1] != '/' ]] && \
+        source="$source/"
+    fi
+
+    printf "rsync -abXv -hhh --backup-dir=$HOME/tmp/rsync -e /dev/null --progress " && \
+    printf "'%s' " "$source" && \
+    printf "'%s' " "$target" && \
+    printf "\n" && \
+    rsync -abXv -hhh --backup-dir=$HOME/tmp/rsync -e /dev/null --progress "$source" "$target"
+  done
 }
 compdef _files cp_safe
 alias cp=cp_safe
 
 mv_safe() {
-  printf "rsync -abXv -hhh --remove-source-files --backup-dir=$HOME/tmp/rsync -e /dev/null --progress " && \
-  printf "'%s' " "$@" && \
-  printf "\n" && \
-  rsync -abXv -hhh --remove-source-files --backup-dir=$HOME/tmp/rsync -e /dev/null --progress "$@" && \
-    for target in ${@[1,-1]}; do
-      [ -d $target ] && find -P $target -type d -empty -delete
-    done
+  target="$@[-1]"
+  [[ ${target[1]} != '.' && ${target[1]} != '/' ]] && target="./$target"
+
+  for source in $@[1,-2]; do
+    [[ ${source[1]} != '.' && ${source[1]} != '/' ]] && source="./$source"
+
+    if [[ -d $source ]]; then
+      [[ $source[-1] != '/' && -d $source ]] && \
+        [[ $target[-1] != '/' ]] && \
+        source="$source/"
+    fi
+
+    printf "rsync -abXv -hhh --remove-source-files --backup-dir=$HOME/tmp/rsync -e /dev/null --progress " && \
+    printf "'%s' " "$source" && \
+    printf "'%s' " "$target" && \
+    printf "\n" && \
+    rsync -abXv -hhh --remove-source-files --backup-dir=$HOME/tmp/rsync -e /dev/null --progress "$source" "$target" && \
+      [ -d $source ] && find $source -type d -depth -empty -exec rmdir -- {} \;
+  done
 }
 compdef _files mv_safe
 alias mv=mv_safe
