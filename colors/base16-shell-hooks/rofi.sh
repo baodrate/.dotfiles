@@ -1,7 +1,8 @@
 #!/bin/sh
 
-required_vars=(SCRIPTS_DIR COLORS_DIR CONFIG_DIR BASE16_THEME)
-for i in ${required_vars[@]}; do eval "val=\$$i"; if [ -z "$val" ]; then echo "$i is unset or empty"; exit -1; fi; done
+required_vars="SCRIPTS_DIR COLORS_DIR CONFIG_DIR BASE16_THEME"
+
+for i in $required_vars; do eval "val=\$$i"; if [ -z "$val" ]; then echo "$i is unset or empty"; exit -1; fi; done
 
 . "${SCRIPTS_DIR}/sh-update-link.sh" || exit -1
 

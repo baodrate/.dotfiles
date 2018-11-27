@@ -17,14 +17,16 @@ _base16()
     if source $script && update_link "$current_theme_link" "$script"; then
       export BASE16_THEME=${theme}
       if [ -n "$BASE16_SHELL_HOOKS" ] && [ -d "${BASE16_SHELL_HOOKS}" ]; then
+        failures=
         for hook in $BASE16_SHELL_HOOKS/*; do
-          if [ -f "$hook" ] && [ -x "$hook" ] && "$hook"; then
+          if [ -f "$hook" ] && [ -x "$hook" ] && hook_output=$($hook); then
             echo "Hook ran successfully: $hook"
           else
-            echo "Hook failed: $hook" 1>&2
-            return 1
+            echo "Hook failed: $hook ($hook_output)" 1>&2
+            failures="$hook;$failures"
           fi
         done
+        [ -z "$failures" ] && return 0 || return 1
       fi
     else
       return 1
