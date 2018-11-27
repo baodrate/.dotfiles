@@ -1,6 +1,3 @@
-[submodule ".dotbot"]
-	path = .dotbot
-	url = https://github.com/anishathalye/dotbot.git
 [submodule "neovim/dein.vim"]
 	path = neovim/dein.vim
 	url = https://github.com/Shougo/dein.vim.git
@@ -28,3 +25,6 @@
 [submodule "colors/base16-alacritty"]
 	path = colors/base16-alacritty
 	url = https://github.com/aaron-williamson/base16-alacritty.git
+[submodule ".dotbot"]
+	path = .dotbot
+	url = ../../anishathalye/dotbot.git
