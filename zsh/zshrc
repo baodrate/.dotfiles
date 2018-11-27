@@ -63,8 +63,6 @@ fi
 # ------------
 # ==> correct commands
 setopt CORRECT
-# ==> Make Vi mode transitions faster (KEYTIMEOUT is in hundredths of a second)
-export KEYTIMEOUT=1
 
 # ==> General settings
 #     from zim:modules/environment

@@ -1,5 +1,8 @@
 typeset -A key
 
+# Make Vi mode transitions faster (KEYTIMEOUT is in hundredths of a second)
+export KEYTIMEOUT=1
+
 key[Home]=${terminfo[khome]}
 
 key[End]=${terminfo[kend]}
@@ -34,3 +37,12 @@ bindkey -v
 #             see: https://github.com/softmoth/zsh-vim-mode/issues/8
 # zplugin load softmoth/zsh-vim-mode
 
+# Beginning search with arrow keys
+autoload -U up-line-or-beginning-search
+autoload -U down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+bindkey "^[OA" up-line-or-beginning-search
+bindkey "^[OB" down-line-or-beginning-search
+bindkey -M vicmd "k" up-line-or-beginning-search
+bindkey -M vicmd "j" down-line-or-beginning-search

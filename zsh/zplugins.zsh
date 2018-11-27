@@ -22,8 +22,9 @@ zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 # scripts
 # -------
 # ==> prettyping
-zplugin ice as"program" cp"prettyping -> ping" pick"prettyping"
-zplugin snippet https://github.com/denilsonsa/prettyping/raw/master/prettyping
+zplugin ice as"program" pick"prettyping"
+zplugin load "denilsonsa/prettyping"
+alias ping=prettyping
 
 # ==> httpstat
 zplugin ice as"program" cp"httpstat.sh -> httpstat" pick"httpstat"
@@ -34,18 +35,17 @@ zplugin ice as"program" pick"diff-so-fancy"
 zplugin load "so-fancy/diff-so-fancy"
 
 # ==> git-now
-zplugin ice wait"2" lucid as"program" pick"$ZPFX/bin/git-now" make"prefix=$ZPFX install"
+zplugin ice as"program" pick"$ZPFX/bin/git-*" make"prefix=$ZPFX"
 zplugin load iwata/git-now
 
 # ==> git extras
-zplugin ice wait"2" lucid as"program" pick"$ZPFX/bin/git-alias" make"PREFIX=$ZPFX" nocompile
+zplugin ice as"program" make"PREFIX=$ZPFX" pick"$ZPFX/bin/git-*"
 zplugin load tj/git-extras
-zplugin ice wait"2" lucid pick"etc/git-extras-completion.zsh"
-zplugin load tj/git-extras
+source "${ZPLGM[HOME_DIR]}/plugins/tj---git-extras/etc/git-extras-completion.zsh"
 
-# docker-machine-port-forwarder
-zplugin ice as"program" pick"pf"
-zplugin load "johanhaleby/docker-machine-port-forwarder"
+# zplugin ice as"program" make"PREFIX=$ZPFX" pick"$ZPFX/bin/git-*"
+# zplugin load tj/git-extras
+
 
 # -------------
 # basic plugins
@@ -102,9 +102,10 @@ export FZF_DEFAULT_OPTS='--preview "[[ $(file --mime {}) =~ binary ]] &&
            echo {} is a binary file ||
            (bat --color=\"always\" {} || cat {}) 2> /dev/null | head -500"'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-zplugin snippet "https://raw.githubusercontent.com/junegunn/fzf/master/shell/completion.zsh"
-zplugin snippet "https://raw.githubusercontent.com/junegunn/fzf/master/shell/key-bindings.zsh"
-zplugin ice from"gh-r" as"program"; zplugin load junegunn/fzf-bin
+zplugin ice from"gh-r" as"program"
+zplugin load junegunn/fzf-bin
+zplugin ice multisrc'shell/{completion,key-bindings}.zsh'
+zplugin load junegunn/fzf
 
 # ==> History Search Multi-Word
 #     set reset-prompt-protect to be able to use zle reset-prompt in your e.g.
@@ -136,6 +137,18 @@ zplugin load "zsh-users/zsh-completions"
 zplugin ice blockf
 zplugin load qubidt/emoji-cli
 
+# ==> zsh-autosuggestions
+#     Autosuggestions uses precmd hook that is called right after processing
+#     zshrc (before prompt). Turbo Mode will wait 1 second so precmd will be
+#     called earlier than load of the plugin. This makes autosuggestions
+#     inactive at first prompt. But the given atload Ice-mod fixes this, it
+#     calls the same function precmd would, right after loading autosuggestions
+# not working yet, conflicts with history serach
+# see https://github.com/zdharma/zplugin/issues/69
+#   bindkey '^\n' autosuggest-execute
+zplugin ice lucid atload'_zsh_autosuggest_start; bindkey "^ " autosuggest-execute'  # load after fast-syntax-highlighting
+zplugin load zsh-users/zsh-autosuggestions
+
 # ==> Syntax Highlighting
 #     If you load completions using wait'' mode then you can add
 #     atinit'zpcompinit' to syntax-highlighting plugin (which should be the last
@@ -148,18 +161,6 @@ zplugin load qubidt/emoji-cli
 #     ZPLGM[COMPINIT_OPTS]=-C skips compaudit (audit the fpath to assure that it
 #     contains all the directories needed by the completion system, and that
 #     those directories are at least unlikely to contain dangerous files)
-zplugin ice wait"1" lucid atload"zpcompinit; zpcdreplay"
+zplugin ice lucid atload"zpcompinit; zpcdreplay"
 zplugin load "zdharma/fast-syntax-highlighting"
-
-# ==> zsh-autosuggestions
-#     Autosuggestions uses precmd hook that is called right after processing
-#     zshrc (before prompt). Turbo Mode will wait 1 second so precmd will be
-#     called earlier than load of the plugin. This makes autosuggestions
-#     inactive at first prompt. But the given atload Ice-mod fixes this, it
-#     calls the same function precmd would, right after loading autosuggestions
-# not working yet, conflicts with history serach
-# see https://github.com/zdharma/zplugin/issues/69
-#   bindkey '^\n' autosuggest-execute
-zplugin ice wait'0' lucid atload'_zsh_autosuggest_start; bindkey "^ " autosuggest-execute'  # load after fast-syntax-highlighting
-zplugin load zsh-users/zsh-autosuggestions
 
