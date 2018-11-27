@@ -5,7 +5,7 @@ for i in ${required_vars[@]}; do eval "val=\$$i"; if [ -z "$val" ]; then echo "$
 
 . "${SCRIPTS_DIR}/sh-update-link.sh" || exit -1
 
-alacritty_config_dir=$CONFIG_DIR/alacritty
+alacritty_config_dir=$XDG_CONFIG_HOME/alacritty
 
 link_to_update=$alacritty_config_dir/base16-colors.yml
 source_file_path=$COLORS_DIR/base16-alacritty/colors/base16-$BASE16_THEME-256.yml

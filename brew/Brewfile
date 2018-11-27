@@ -75,6 +75,9 @@ tap 'AdoptOpenJDK/openjdk'
 cask 'adoptopenjdk'
 cask 'dbschema'
 
+# dev:shell
+brew 'shellcheck'
+
 # dev:python
 brew 'python'         # python3
 brew 'pipenv'
