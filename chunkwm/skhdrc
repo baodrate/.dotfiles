@@ -29,6 +29,10 @@
 #
 #                                  an EOL character signifies the end of the bind.
 
+# key literals
+# "["           (0x21)
+# "]"           (0x1E)
+
 # stolen from https://github.com/chris-kahn/dotfiles/blob/master/conf/osx/chunkwm/.skhdrc
 
 # open terminal, blazingly fast compared to iTerm/Hyper
@@ -90,6 +94,16 @@ cmd + shift - 8 : chunkc tiling::window --send-to-desktop 8
 cmd + shift - 9 : chunkc tiling::window --send-to-desktop 9
 cmd + shift - 0 : chunkc tiling::window --send-to-desktop 10
 
+# create desktop, move window and follow focus
+# shift + cmd - n : chunkc tiling::desktop --create;\
+#                   ids=$(chunkc tiling::query --desktops-for-monitor $(chunkc tiling::query --monitor-for-desktop $(chunkc tiling::query --desktop id)));\
+#                   chunkc tiling::window --send-to-desktop $(echo ${ids##* });\
+#                   chunkc tiling::desktop --focus $(echo ${ids##* })
+
+# cmd - u : [ "$(chunkc tiling::query --desktop monocle-index)" = "$(chunkc tiling::query --desktop monocle-count)" ] && chunkc tiling::monitor -f next || chunkc tiling::window --focus east
+
+cmd - n : chunkc tiling::desktop --focus next
+cmd - p : chunkc tiling::desktop --focus prev
 cmd - 1 : chunkc tiling::desktop --focus 1
 cmd - 2 : chunkc tiling::desktop --focus 2
 cmd - 3 : chunkc tiling::desktop --focus 3
@@ -102,8 +116,10 @@ cmd - 9 : chunkc tiling::desktop --focus 9
 cmd - 0 : chunkc tiling::desktop --focus 10
 
 # focus monitor
-cmd - p  : chunkc tiling::monitor -f prev
-cmd - n  : chunkc tiling::monitor -f next
+# cmd - p  : chunkc tiling::monitor -f prev
+# cmd - n  : chunkc tiling::monitor -f next
+cmd - 0x21  : chunkc tiling::monitor -f 1     # [
+cmd - 0x1E  : chunkc tiling::monitor -f 2     # ]
 # ctrl + alt - 1  : chunkc tiling::monitor -f 1
 # ctrl + alt - 2  : chunkc tiling::monitor -f 2
 # ctrl + alt - 3  : chunkc tiling::monitor -f 3
@@ -190,8 +206,8 @@ resize < cmd + shift - escape ; default
 
 # resize window in different directions
 # (i'm using hjkl but you could just as easily use arrow keys, wasd, etc.)
-resize < h : chunkc tiling::window --use-temporary-ratio 0.05 --adjust-window-edge west; chunkc tiling::window --use-temporary-ratio -0.05 --adjust-window-edge east;
-resize < j : chunkc tiling::window --use-temporary-ratio 0.05 --adjust-window-edge south; chunkc tiling::window --use-temporary-ratio -0.05 --adjust-window-edge north;
-resize < k : chunkc tiling::window --use-temporary-ratio 0.05 --adjust-window-edge north; chunkc tiling::window --use-temporary-ratio -0.05 --adjust-window-edge south;
-resize < l : chunkc tiling::window --use-temporary-ratio 0.05 --adjust-window-edge east; chunkc tiling::window --use-temporary-ratio -0.05 --adjust-window-edge west;
+resize < h : chunkc tiling::window --use-temporary-ratio 0.03 --adjust-window-edge west; chunkc tiling::window --use-temporary-ratio -0.03 --adjust-window-edge east;
+resize < j : chunkc tiling::window --use-temporary-ratio 0.03 --adjust-window-edge south; chunkc tiling::window --use-temporary-ratio -0.03 --adjust-window-edge north;
+resize < k : chunkc tiling::window --use-temporary-ratio 0.03 --adjust-window-edge north; chunkc tiling::window --use-temporary-ratio -0.03 --adjust-window-edge south;
+resize < l : chunkc tiling::window --use-temporary-ratio 0.03 --adjust-window-edge east; chunkc tiling::window --use-temporary-ratio -0.03 --adjust-window-edge west;
 

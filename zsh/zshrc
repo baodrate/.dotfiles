@@ -138,6 +138,9 @@ source ~/.colors/base16_profile_helper.sh # call before prompt because this chec
 # Plugins
 # =============================================================================
 
+zplugin ice if"(( ${+commands[brew-file]} ))" pick"etc/brew-wrap"
+zplugin load rcmdnk/homebrew-file
+
 # --------------
 # custom plugins
 # --------------
@@ -149,7 +152,6 @@ zplugin snippet "$ZDOTDIR/plugins/ls-aliases.plugin.zsh"
 zplugin snippet "$ZDOTDIR/plugins/git.plugin.zsh"
 zplugin ice if"(( $+commands[rsync] ))"; zplugin snippet "$ZDOTDIR/plugins/cp-mv-safe.plugin.zsh"
 zplugin ice if"(( $+commands[pipenv] ))"; zplugin snippet "$ZDOTDIR/plugins/pipenv.plugin.zsh"
-zplugin ice if"[[ $OSTYPE == darwin* ]]"; zplugin snippet "$ZDOTDIR/plugins/homebrew.plugin.zsh"
 
 # github-plugins
 source $ZDOTDIR/zplugins.zsh

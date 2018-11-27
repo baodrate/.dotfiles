@@ -21,17 +21,24 @@ export COLORS_DIR="$HOME/.colors"
 export SCRIPTS_DIR="$HOME/.scripts"
 
 # ==> setup PATH variable
-# PATH="$(getconf PATH)"
-[[ -d "$SCRIPTS_DIR" ]] && PATH="$SCRIPTS_DIR:$PATH"
-[[ -d "$HOME/.cargo/bin" ]] && PATH="$HOME/.cargo/bin:$PATH"
-[[ -d "/usr/local/bin" ]] && PATH="/usr/local/bin:$PATH"
-[[ -d "/usr/local/sbin" ]] && PATH="/usr/local/sbin:$PATH"
-[[ -d "/usr/local/opt/ccache/libexec" ]] && PATH="/usr/local/opt/ccache/libexec:$PATH"
-(( $+commands[python2] )) && PATH="$(python2 -m site --user-base)/bin:$(python2 -m site --user-site):$PATH"
-(( $+commands[python3] )) && PATH="$(python3 -m site --user-base)/bin:$(python3 -m site --user-site):$PATH"
-(( $+commands[npm] )) && PATH="$npm_config_prefix/bin:$PATH"
+# new_path="$(getconf new_path)"
+[[ -d "$SCRIPTS_DIR" ]] && new_path="${new_path:+${new_path}:}$SCRIPTS_DIR"
+[[ -d "$HOME/.cargo/bin" ]] && new_path="${new_path:+${new_path}:}$HOME/.cargo/bin"
+[[ -d "/usr/local/bin" ]] && new_path="${new_path:+${new_path}:}/usr/local/bin"
+[[ -d "/usr/local/sbin" ]] && new_path="${new_path:+${new_path}:}/usr/local/sbin"
+[[ -d "/usr/local/opt/ccache/libexec" ]] && new_path="${new_path:+${new_path}:}/usr/local/opt/ccache/libexec"
+(( $+commands[python2] )) && new_path="${new_path:+${new_path}:}$(python2 -m site --user-base)/bin:$(python2 -m site --user-site)"
+(( $+commands[python3] )) && new_path="${new_path:+${new_path}:}$(python3 -m site --user-base)/bin:$(python3 -m site --user-site)"
+(( $+commands[npm] )) && new_path="${new_path:+${new_path}:}$npm_config_prefix/bin"
+(( $+commands[brew] )) && \
+  new_path="${new_path:+${new_path}:}/usr/local/bin:/usr/local/sbin" && \
+  new_manpath="${new_manpath:+${new_path}:}/usr/local/share/info" && \
+  new_infopath="${new_infopath:+${new_path}:}/usr/local/share/infopath"
 
-export PATH="PATH:$PATH"
+
+[[ ! -z PATH     ]] && export PATH="${new_path:+${new_path}:}$PATH"
+[[ ! -z MANPATH  ]] && export MANPATH="${new_manpath:+${new_manpath}:}:$MANPATH"
+[[ ! -z INFOPATH ]] && export INFOPATH="${new_infopath:+${new_infopath}:}:$INFOPATH"
 
 # ==> nvim-remote
 #

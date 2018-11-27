@@ -130,12 +130,21 @@ chunkc set ffm_standby_on_float          1
 
 chunkc core::load border.so
 chunkc core::load tiling.so
-chunkc core::load ffm.so
+# focus-follows-mouse
+# chunkc core::load ffm.so
 
-#
 # NOTE: sample rules for the tiling plugin
-#
+# chunkc tiling::rule --owner \"System Preferences\" --subrole AXStandardWindow --state tile
+# chunkc tiling::rule --owner Finder --name Copy --state float
+# chunkc tiling::rule --owner Spotify --desktop 5 --follow-desktop
+# chunkc tiling::rule --owner Messages --monitor 2 --follow-desktop
+# chunkc tiling::rule --owner mpv --state sticky --alpha 0.65 --grid-layout 5:5:4:0:1:1
+# chunkc tiling::rule --owner Terminal --state sticky --level 3 --grid-layout 1:1:0:0:1:1
 
-chunkc tiling::rule --owner Finder --name Copy --state float &
-chunkc tiling::rule --owner \"App Store\" --state float &
-chunkc tiling::rule --owner Emacs --except "^$" --state tile &
+chunkc tiling::rule --owner \"System Preferences\" --subrole AXStandardWindow --state tile
+chunkc tiling::rule --owner Finder --name Copy --state float
+chunkc tiling::rule --owner \"Google Chrome\" --name \"Picture in Picture\" --state float
+chunkc tiling::rule --owner Skype --monitor 2 --state sticky --state tile --follow-desktop
+
+chunkc tiling::rule --owner CLion --name \"Tip of the Day\" --state float
+
