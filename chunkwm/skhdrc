@@ -35,7 +35,7 @@
 cmd - return : open -na /Applications/Alacritty.app
 
 # close focused window
-alt - w : chunkc tiling::window --close
+cmd + shift - q : chunkc tiling::window --close
 
 # focus window
 # alt - h : chunkc tiling::window --focus west
