@@ -30,22 +30,22 @@ zplugin ice as"program" cp"httpstat.sh -> httpstat" pick"httpstat"
 zplugin load "b4b4r07/httpstat"
 
 # ==> diff-so-fancy
-zplugin ice as"program" pick"bin/git-dsf"
-zplugin light "zdharma/zsh-diff-so-fancy"
+zplugin ice as"program" pick"diff-so-fancy"
+zplugin load "so-fancy/diff-so-fancy"
 
 # ==> git-now
 zplugin ice wait"2" lucid as"program" pick"$ZPFX/bin/git-now" make"prefix=$ZPFX install"
-zplugin light iwata/git-now
+zplugin load iwata/git-now
 
 # ==> git extras
 zplugin ice wait"2" lucid as"program" pick"$ZPFX/bin/git-alias" make"PREFIX=$ZPFX" nocompile
-zplugin light tj/git-extras
+zplugin load tj/git-extras
 zplugin ice wait"2" lucid pick"etc/git-extras-completion.zsh"
-zplugin light tj/git-extras
+zplugin load tj/git-extras
 
 # docker-machine-port-forwarder
 zplugin ice as"program" pick"pf"
-zplugin light "johanhaleby/docker-machine-port-forwarder"
+zplugin load "johanhaleby/docker-machine-port-forwarder"
 
 # -------------
 # basic plugins
@@ -90,7 +90,7 @@ zplugin load djui/alias-tips
 # ==> crasis
 #     (depends on zdharma/fast-syntax-highlighting)
 zplugin load zdharma/zui
-zplugin light zdharma/zplugin-crasis
+zplugin load zdharma/zplugin-crasis
 
 
 # -------------------------------
