@@ -112,7 +112,7 @@ alias mkdir='mkdir -pv'
 #     R: output ANSI color escape sequences in raw form (useful for piping)
 #     X: don't send init/de-init strings to terminal (i.e. don't clear screen)
 #     c: repaint screen from top-down (rather than bottom-up)
-alias less='less -SRF'
+alias less='less -SRc'
 
 alias n='nvim'
 alias v='vim'
