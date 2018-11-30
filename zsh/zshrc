@@ -151,7 +151,8 @@ zplugin snippet "$ZDOTDIR/plugins/history.plugin.zsh"
 zplugin snippet "$ZDOTDIR/plugins/ls-aliases.plugin.zsh"
 zplugin snippet "$ZDOTDIR/plugins/git.plugin.zsh"
 zplugin ice if"(( $+commands[rsync] ))"; zplugin snippet "$ZDOTDIR/plugins/cp-mv-safe.plugin.zsh"
-zplugin ice if"(( $+commands[pipenv] ))"; zplugin snippet "$ZDOTDIR/plugins/pipenv.plugin.zsh"
+# super slow:
+# zplugin ice if"(( $+commands[pipenv] ))"; zplugin snippet "$ZDOTDIR/plugins/pipenv.plugin.zsh"
 
 # github-plugins
 source $ZDOTDIR/zplugins.zsh

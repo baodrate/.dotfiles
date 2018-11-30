@@ -27,6 +27,11 @@ zsh-pipenv-shell-activate() {
 # Add activate to change pwd functions
 chpwd_functions+=(zsh-pipenv-shell-activate)
 
-# enable pipenv tab completion
-eval "$(env _PIPENV_COMPLETE=source-zsh pipenv)"
-
+#compdef pipenv
+_pipenv() {
+  eval $(env COMMANDLINE="${words[1,$CURRENT]}" _PIPENV_COMPLETE=complete-zsh  pipenv)
+}
+if [[ "$(basename -- ${(%):-%x})" != "_pipenv" ]]; then
+  autoload -U compinit && compinit
+  compdef _pipenv pipenv
+fi

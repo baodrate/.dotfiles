@@ -141,10 +141,9 @@ chunkc core::load tiling.so
 # chunkc tiling::rule --owner mpv --state sticky --alpha 0.65 --grid-layout 5:5:4:0:1:1
 # chunkc tiling::rule --owner Terminal --state sticky --level 3 --grid-layout 1:1:0:0:1:1
 
-chunkc tiling::rule --owner \"System Preferences\" --subrole AXStandardWindow --state tile
-chunkc tiling::rule --owner Finder --name Copy --state float
-chunkc tiling::rule --owner \"Google Chrome\" --name \"Picture in Picture\" --state float
-chunkc tiling::rule --owner Skype --monitor 2 --state sticky --state tile --follow-desktop
-
-chunkc tiling::rule --owner CLion --name \"Tip of the Day\" --state float
+chunkc tiling::rule --owner \"System Preferences\" --subrole AXStandardWindow --state float &
+chunkc tiling::rule --owner Finder --name Copy --state float &
+chunkc tiling::rule --owner \"Google Chrome\" --name \"Picture in Picture\" --state float &
+chunkc tiling::rule --owner Skype --monitor 1 --state sticky --state tile --grid-layout 2:3:0:1:1:1 &
+chunkc tiling::rule --owner CLion --name \"Tip of the Day\" --state float &
 

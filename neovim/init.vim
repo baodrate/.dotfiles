@@ -121,6 +121,8 @@ if dein#load_state(s:settings.dein_cache)
   call dein#add('racer-rust/vim-racer')
   " ----------- csv --------------------
   call dein#add('chrisbra/csv.vim')
+  " ----------- json -------------------
+  call dein#add('elzr/vim-json')
   " ----------- Other Filetypes --------
   call dein#add('jceb/vim-orgmode')
   call dein#add('godlygeek/tabular')              " required to come before vim-markdown

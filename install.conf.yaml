@@ -54,7 +54,8 @@
     ~/.gnupg/sshcontrol: gnupg/sshcontrol
     # -- tmux
     ~/.tmux.conf: tmux/tmux.conf
-    ~/.tmuxline.conf: tmux/tmuxline.conf
+    ~/.config/tmux/tmux.conf: tmux/tmux.conf
+    ~/.config/tmux/tmux.d/tmuxline.conf: tmux/tmuxline.conf
     # -- zsh
     ~/.zshenv: zshenv
     ~/.config/zsh: zsh
@@ -81,6 +82,7 @@
     ~/.mpd: mpd
     ~/Library/Application Support/Übersicht/widgets: ubersicht/widgets
     ~/.config/brewfile: brewfile
+    ~/.config/chunkwm: chunkwm
 
     # files
     # -----
@@ -90,6 +92,7 @@
     ~/.chunkwmrc: chunkwm/chunkwmrc.sh
     ~/.skhdrc: chunkwm/skhdrc
     ~/Library/Application Support/Übersicht/widgets: ubersicht/widgets
+    ~/.config/tmux/tmux.d/tmux-shell.conf: tmux/tmux-shell.macos.conf
 
 # ================
 # Linux only links
