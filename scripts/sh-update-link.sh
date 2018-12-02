@@ -45,14 +45,14 @@ update_link() {
   [ -z "$1" ] && echo "No 1st (link_to_update) argument supplied" && return 1;
   [ -z "$2" ] && echo "No 2nd (source_file_path) argument supplied" && return 1;
 
-  [ ! -e $link_to_update ] && echo "Link does not exist at expected: '$link_to_update'" && return 1;
-
   link_to_update=$1
   target_file_dir=$(dirname "${link_to_update}")
   target_file_name=$(basename "${link_to_update}")
 
   source_file_path=$2
   source_file_name=$(basename $source_file_path)
+
+  [ ! -e $link_to_update ] && echo "Link does not exist at expected: '$link_to_update'" && return 1;
 
   if [ -L $link_to_update ]; then
     if [ ! -e $link_to_update ]; then
@@ -76,7 +76,7 @@ update_link() {
   real_source_file_path=$(get_abs_path $source_file_path)
 
   if [ ! -e "$real_source_file_path" ]; then
-    echo "Could not find source file at $real_source_file_path"6
+    echo "Could not find source file at $real_source_file_path"
     return 1
   fi
 

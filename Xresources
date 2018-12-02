@@ -1,4 +1,10 @@
 #include ".Xresources.d/rxvt-unicode"
+#include ".Xresources.d/base16"
 
-#define background_opacity 90
-#include ".colors/base16-xresources/xresources/base16-seti-256.Xresources"
+Xft.autohint: 0
+Xft.lcdfilter: lcddefault
+Xft.hintstyle: hintslight
+Xft.hinting: 1
+Xft.antialias: 1
+Xft.rgba: rgb
+

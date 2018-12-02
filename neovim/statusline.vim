@@ -3,7 +3,7 @@
 " mode() is defined by Vim
 let s:mode_labels={
   \ 'n' : 'Normal', 'no' : 'N·Operator Pending', 'v' : 'Visual',
-  \ 'V' : 'V·Line', '^V' : 'V·Block', 's' : 'Select', 'S': 'S·Line',
+  \ 'V' : 'V·Line', '' : 'V·Block', '^V' : 'V·Block', 's' : 'Select', 'S': 'S·Line',
   \ '^S' : 'S·Block', 'i' : 'Insert', 'R' : 'Replace', 'Rv' : 'V·Replace',
   \ 'c' : 'Command', 'cv' : 'Vim Ex', 'ce' : 'Ex', 'r' : 'Prompt',
   \ 'rm' : 'More', 'r?' : 'Confirm', '!' : 'Shell', 't' : 'Terminal'
@@ -136,7 +136,7 @@ endif " exists("+showtabline")
 "   StatusLine    base16_04 base16_02 base16_04 base16_02
 "   StatusLineNC  base16_03 base16_01 base16_03 base16_01
 " ----
-" base00 - Default Background
+
 " base01 - Lighter Background (Used for status bars)
 " base02 - Selection Background
 " base03 - Comments, Invisibles, Line Highlighting
@@ -153,39 +153,46 @@ endif " exists("+showtabline")
 " base0E - Keywords, Storage, Selector, Markup Italic, Diff Changed
 " base0F - Deprecated, Opening/Closing Embedded Language Tags, e.g. <?php ?>
 
-exec "hi TabLine                     ctermfg=".g:base16_cterm04." ctermbg=".g:base16_cterm02." cterm=none"
-exec "hi TabLineSel                  ctermfg=".g:base16_cterm04." ctermbg=".g:base16_cterm02." cterm=bold"
-exec "hi TabLineFill                 ctermfg=".g:base16_cterm04." ctermbg=".g:base16_cterm02." cterm=none"
-exec "hi VemTablineNormal            ctermfg=".g:base16_cterm04." ctermbg=".g:base16_cterm02." cterm=none"
-exec "hi VemTablineShown             ctermfg=".g:base16_cterm02." ctermbg=".g:base16_cterm04." cterm=none"
-exec "hi VemTablineSelected          ctermfg=".g:base16_cterm02." ctermbg=".g:base16_cterm06." cterm=bold"
-exec "hi VemTablineSeparator         ctermfg=".g:base16_cterm04." ctermbg=".g:base16_cterm02." cterm=none"
-exec "hi VemTablineLocation          ctermfg=".g:base16_cterm03." ctermbg=".g:base16_cterm01." cterm=none"
-exec "hi VemTablineLocationSelected  ctermfg=".g:base16_cterm04." ctermbg=".g:base16_cterm02." cterm=bold"
-exec "hi VemTablineTabNormal         ctermfg=".g:base16_cterm01." ctermbg=".g:base16_cterm03." cterm=none"
-exec "hi VemTablineTabSelected       ctermfg=".g:base16_cterm02." ctermbg=".g:base16_cterm04." cterm=bold"
+" exec "hi TabLine                cterm=none ctermfg=".g:base16_cterm0D." ctermbg=".g:base16_cterm0D
+" exec "hi TabLineSel             cterm=bold ctermfg=".g:base16_cterm04." ctermbg=".g:base16_cterm0D
+" exec "hi TabLineFill            cterm=none ctermfg=".g:base16_cterm04." ctermbg=".g:base16_cterm00
+call g:Base16hi("VemTablineNormal",       g:base16_gui04, g:base16_gui01, g:base16_cterm04, g:base16_cterm01)
+call g:Base16hi("VemTablineShown",        g:base16_gui02, g:base16_gui04, g:base16_cterm02, g:base16_cterm04)
+call g:Base16hi("VemTablineSelected",     g:base16_gui02, g:base16_gui0D, g:base16_cterm02, g:base16_cterm0D, "bold")
+call g:Base16hi("VemTablineSeparator",    g:base16_gui08, g:base16_gui08, g:base16_cterm08, g:base16_cterm08)
+call g:Base16hi("VemTablineLocation",     g:base16_gui03, g:base16_gui01, g:base16_cterm03, g:base16_cterm01)
+call g:Base16hi("VemTablineTabNormal",    g:base16_gui01, g:base16_gui04, g:base16_cterm01, g:base16_cterm04)
+call g:Base16hi("VemTablineTabSelected",  g:base16_gui02, g:base16_gui0D, g:base16_cterm02, g:base16_cterm0D, "bold")
 
+let s:statusline_guifg = g:base16_gui05
+let s:statusline_guibg = g:base16_gui02
+let s:statusline_ctermfg = g:base16_cterm05
+let s:statusline_ctermbg = g:base16_cterm02
 
 " Default StatusLine colors from base16-vim
-exec "hi StatusLine    cterm=none ctermfg=".g:base16_cterm04." ctermbg=".g:base16_cterm02
-exec "hi StatusLineNC  cterm=none ctermfg=".g:base16_cterm03." ctermbg=".g:base16_cterm01
+call g:Base16hi("StatusLine",   s:statusline_guifg, s:statusline_guibg, s:statusline_ctermfg, s:statusline_ctermbg, "bold")
+call g:Base16hi("StatusLineNC", g:base16_gui03, g:base16_gui01, g:base16_cterm03, g:base16_cterm01, "bold")
+
 " Panels
-exec "hi GitPanel      cterm=bold ctermfg=".g:base16_cterm01." ctermbg=".g:base16_cterm04
-exec "hi ModeVisual    cterm=bold ctermfg=".g:base16_cterm01." ctermbg=".g:base16_cterm08
-exec "hi ModeInsert    cterm=bold ctermfg=".g:base16_cterm01." ctermbg=".g:base16_cterm0B
-exec "hi ModeOther     cterm=bold ctermfg=".g:base16_cterm01." ctermbg=".g:base16_cterm0D
+call g:Base16hi("ModeVisual", g:base16_gui07, g:base16_gui08, g:base16_cterm00, g:base16_cterm08, "bold")
+call g:Base16hi("ModeInsert", g:base16_gui07, g:base16_gui0B, g:base16_cterm00, g:base16_cterm0B, "bold")
+call g:Base16hi("ModeOther",  g:base16_gui07, g:base16_gui0D, g:base16_cterm00, g:base16_cterm0D, "bold")
+
 " StatusLineBrightText
-exec "hi User1         cterm=bold ctermfg=".g:base16_cterm07." ctermbg=".g:base16_cterm02
-" StatusLineWarning
-exec "hi User9         cterm=none ctermfg=".g:base16_cterm08." ctermbg=".g:base16_cterm02
+call g:Base16hi("User1", g:base16_gui0E, s:statusline_guibg, g:base16_cterm0E, s:statusline_ctermbg, "bold")
+" GitStatus (Bold default text)
+call g:Base16hi("User2", s:statusline_guifg, s:statusline_guibg, s:statusline_ctermfg, s:statusline_ctermbg, "bold")
+
 " Other
-exec "hi User2         cterm=none ctermfg=".g:base16_cterm04." ctermbg=".g:base16_cterm02
-exec "hi User3         cterm=none ctermfg=".g:base16_cterm04." ctermbg=".g:base16_cterm02
-exec "hi User4         cterm=none ctermfg=".g:base16_cterm04." ctermbg=".g:base16_cterm02
-exec "hi User5         cterm=none ctermfg=".g:base16_cterm04." ctermbg=".g:base16_cterm02
-exec "hi User6         cterm=none ctermfg=".g:base16_cterm04." ctermbg=".g:base16_cterm02
-exec "hi User7         cterm=none ctermfg=".g:base16_cterm04." ctermbg=".g:base16_cterm02
-exec "hi User8         cterm=none ctermfg=".g:base16_cterm04." ctermbg=".g:base16_cterm02
+call g:Base16hi("User3", s:statusline_guifg, s:statusline_guibg, s:statusline_ctermfg, s:statusline_ctermbg, "bold")
+call g:Base16hi("User4", s:statusline_guifg, s:statusline_guibg, s:statusline_ctermfg, s:statusline_ctermbg, "bold")
+call g:Base16hi("User5", s:statusline_guifg, s:statusline_guibg, s:statusline_ctermfg, s:statusline_ctermbg, "bold")
+call g:Base16hi("User6", s:statusline_guifg, s:statusline_guibg, s:statusline_ctermfg, s:statusline_ctermbg, "bold")
+call g:Base16hi("User7", s:statusline_guifg, s:statusline_guibg, s:statusline_ctermfg, s:statusline_ctermbg, "bold")
+call g:Base16hi("User8", s:statusline_guifg, s:statusline_guibg, s:statusline_ctermfg, s:statusline_ctermbg, "bold")
+call g:Base16hi("User8", s:statusline_guifg, s:statusline_guibg, s:statusline_ctermfg, s:statusline_ctermbg, "bold")
+" StatusLineWarning
+call g:Base16hi("User9", s:statusline_guifg, s:statusline_guibg, s:statusline_ctermfg, s:statusline_ctermbg, "bold")
 
 
 " Function: return current mode
@@ -203,6 +210,8 @@ endfunction
 function! ShowMode(include, exclude)
   " show mode
   let active_mode = mode()
+  echo "active mode: " . active_mode . " stridx: " . stridx(a:include, active_mode)
+
   if !empty(a:include) && stridx(a:include, active_mode) == -1
     return ''
   endif
@@ -227,7 +236,7 @@ function! GitStatus() abort
   let l:git_branch=gitbranch#name()
   if strlen(l:git_branch)
     " git symbol alternatives: [⎇ , ]
-    return strlen(l:git_branch)>0 ? '  ' . l:git_branch . SignifyStatus() . '⎇  ' : ''
+    return strlen(l:git_branch)>0 ? '  ' . l:git_branch . SignifyStatus() . ' ' : ''
   endif
   return ''
 endfunction
@@ -241,18 +250,18 @@ endfunction
 
 set statusline=                                       " clear statusline
 
-set statusline+=%#GitPanel#%{GitStatus()}%*
-set statusline+=%#ModeVisual#%{ShowMode('^Vv','')}%*
+set statusline+=%2*%{GitStatus()}%*
 set statusline+=%#ModeInsert#%{ShowMode('i','')}%*
+set statusline+=%#ModeVisual#%{ShowMode('vV','')}%*
 set statusline+=%#ModeOther#%{ShowMode('','i^Vv')}%*
 set statusline+=\ %*
 set statusline+=%9*%{ReadOnly()}                      " readonly flag
 set statusline+=%h%*                                  " help buffer flag
 set statusline+=%w%*                                  " preview window flag
-set statusline+=%1*%t%*%*                             " short filename
+set statusline+=%1*%t%*                               " short filename
 set statusline+=%m%*                                  " modified flag
-set statusline+=\ %<                                  " truncate starting here
-                                                      " filename
+set statusline+=\ %<%*                                " truncate starting here
+" file directory (relative to pwd)
 set statusline+=%{&buftype!='terminal'?(strlen(expand('%:h'))?'›\ '.expand('%:h').'/':''):''}
 set statusline+=%=
 set statusline+=\ %{LinterStatus()}      " ALE status

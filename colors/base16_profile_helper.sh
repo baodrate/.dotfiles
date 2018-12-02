@@ -14,13 +14,13 @@ _base16()
   local script=$1
   local theme=$2
   if [[ -f "$script" ]]; then
-    if source $script && update_link "$current_theme_link" "$script"; then
+    if source "$script" && update_link "$current_theme_link" "$script"; then
       export BASE16_THEME=${theme}
       if [ -n "$BASE16_SHELL_HOOKS" ] && [ -d "${BASE16_SHELL_HOOKS}" ]; then
         failures=
-        for hook in $BASE16_SHELL_HOOKS/*; do
+        for hook in "$BASE16_SHELL_HOOKS"/*; do
           if [ -f "$hook" ] && [ -x "$hook" ] && hook_output=$($hook); then
-            echo "Hook ran successfully: $hook"
+            echo "Hook ran successfully: $(basename "$hook")${hook_output:+ ($hook_output)}"
           else
             echo "Hook failed: $hook ($hook_output)" 1>&2
             failures="$hook;$failures"

@@ -35,7 +35,6 @@
 - link:
     # directories
     # -----------
-    ~/.config/i3status-rust: i3status-rust
     ~/.config/nvim: neovim
     ~/.config/termite: termite
     ~/.config/fontconfig: fontconfig
@@ -109,6 +108,10 @@
     # -----------
     ~/.config/sway: sway
     ~/.config/rofi/config: rofi/config
+    ~/.Xresources.d: Xresources.d
+    ~/.config/i3status: i3status
+    ~/.config/i3status-rust: i3status-rust
+    ~/.config/i3: i3
 
     # files
     # -----

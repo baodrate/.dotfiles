@@ -41,6 +41,8 @@ endif
 if dein#load_state(s:settings.dein_cache)
   call dein#begin(s:settings.dein_cache)
 
+  call dein#add('noahfrederick/vim-noctu')
+
   " Dein utility Commands
   call dein#add('haya14busa/dein-command.vim', { 'on_cmd': 'Dein' })
   call dein#add('Shougo/denite.nvim', { 'on_cmd': 'Denite' })

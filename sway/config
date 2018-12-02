@@ -42,6 +42,7 @@ set $right l
 # Your preferred terminal emulator
 # set $term xterm
 set $term alacritty
+set $altterm i3-sensible-terminal
 # set $term ~/urxvtc.sh
 # set $term "urxvtc; if [ $? -eq 2 ]; then urxvtd -q -o -f && urxvtc; fi"
 
@@ -117,6 +118,7 @@ input "2:7:SynPS/2_Synaptics_TouchPad" {
 #
     # start a terminal
     bindsym $super+Return exec $term
+    bindsym $super+Shift+Return exec $altterm
 
     # kill focused window
     bindsym $super+Shift+q kill
@@ -256,8 +258,6 @@ bindsym $super+r mode "resize"
 bar {
     position top
 
-    # When the status_command prints a new line to stdout, swaybar updates.
-    # The default just shows the current date and time.
     # status_command while date +'%Y-%m-%d %l:%M:%S %p'; do sleep 1; done
     status_command i3status
     # status_command i3status-rs ~/.config/i3status-rust/config.toml
@@ -272,7 +272,7 @@ bar {
         active_workspace    $base05 $base03 $base00
         inactive_workspace  $base03 $base01 $base05
         urgent_workspace    $base08 $base08 $base00
-        binding_mode $base00 $base0A $base00
+        binding_mode        $base00 $base0A $base00
     }
 }
 
@@ -301,7 +301,7 @@ hide_edge_borders both
 #
 # Font:
 #
-font pango:Overpass Nerd Font 10
+font pango:monospace 10
 
 focus_follows_mouse no
 

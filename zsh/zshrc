@@ -132,7 +132,7 @@ fi
 # ------
 # Colors
 # ------
-source ~/.colors/base16_profile_helper.sh # call before prompt because this checks [ -n "$PS1" ]
+#source ~/.colors/base16_profile_helper.sh # call before prompt because this checks [ -n "$PS1" ]
 
 # =============================================================================
 # Plugins

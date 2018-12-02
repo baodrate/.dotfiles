@@ -4,4 +4,4 @@
 [ -f ~/.xprofile ] && source ~/.xprofile
 
 ibus-daemon --xim &
-exec awesome
+exec i3
