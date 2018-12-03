@@ -1,1 +1,2 @@
-../colors/base16-rofi/themes/base16-classic-dark.config
+#include ./base16.conf
+

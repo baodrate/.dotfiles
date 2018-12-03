@@ -47,7 +47,7 @@
     # set_from_resource $base0F i3wm.color14 #A16946
 
     # set wallpaper
-    # exec --no-startup-id "feh --bg-fill --randomize --recursive --no-fehbg ~/wallpapers/*"
+    exec --no-startup-id "feh --bg-fill --randomize --recursive --no-fehbg ~/wallpapers/*"
 
 ### Application behavior
 #
@@ -431,4 +431,5 @@ bindsym $super+r mode "resize"
     exec --no-startup-id "pidof -x $(basename udiskie) || udiskie"
     exec --no-startup-id "pidof -x $(basename mako) || mako"
     exec --no-startup-id "pidof -x $(basename urxvtd) || urxvtd -q -o -f"
+    exec --no-startup-id "compton -b -c"
     # exec --no-startup-id "pidof -x $(basename lxqt-policykit-agent) || lxqt-policykit-agent"

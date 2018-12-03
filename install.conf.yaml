@@ -107,7 +107,7 @@
     # directories
     # -----------
     ~/.config/sway: sway
-    ~/.config/rofi/config: rofi/config
+    ~/.config/rofi: rofi
     ~/.Xresources.d: Xresources.d
     ~/.config/i3status: i3status
     ~/.config/i3status-rust: i3status-rust
@@ -120,6 +120,7 @@
     ~/.Xresources: Xresources
     ~/.xinitrc: xinitrc
     ~/.xprofile: xprofile
+    ~/.config/compton.conf: compton.conf
 
 # =======
 # Scripts
