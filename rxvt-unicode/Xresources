@@ -1,6 +1,3 @@
-!URxvt.font: xft:Hack\ Nerd\ Font:size=9:minspace=False,xft:Noto\ Color\ Emoji:size=9
-!URxvt.font: xft:Hack Nerd Font:size=9:minspace=False,xft:NotoEmoji Nerd Font Mono:size=9
-
 #define font11   Hack Nerd Font
 #define font22   Inconsolata Nerd Font
 #define font33   DejaVu Sans Mono Nerd Font
@@ -14,23 +11,22 @@
 #define font3333 DejaVu Sans Mono Nerd Font
 #define font4444 Noto Sans Mono CJK JP
 
-#define font1size 12
-#define font2size 12
-#define font3size 12
-#define font4size 12
-
-#define font1minspace false
-#define font2minspace false
-#define font3minspace false
-#define font4minspace false
-
 #define font1    Hack Nerd Font Mono
 #define font2    NotoEmoji Nerd Font Mono
 #define font3    Fira Mono
 #define font4    Noto Sans Mono CJK JP
 
+#define font1size 12
+#define font2size 12
+#define font3size 12
+#define font4size 12
 
-!URxvt*letterSpace: 0
+#define font1minspace true
+#define font2minspace true
+#define font3minspace false
+#define font4minspace false
+
+URxvt.letterSpace: 0
 
 URxvt*font:           xft:font1:pixelsize=font1size:minspace=font1minspace, \
                       xft:font2:pixelsize=font2size:minspace=font2minspace, \
@@ -50,3 +46,7 @@ URxvt*boldItalicFont: xft:font1:bold:italic:pixelsize=font1size:minspace=font1mi
                       xft:font4:bold:italic:pixelsize=font4size:minspace=font4minspace
 
 URxvt.scrollBar: false
+
+URxvt.secondaryScreen: 1
+URxvt.secondaryScroll: 0
+URxvt.secondaryWheel: 1

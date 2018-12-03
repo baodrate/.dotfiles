@@ -210,7 +210,6 @@ endfunction
 function! ShowMode(include, exclude)
   " show mode
   let active_mode = mode()
-  echo "active mode: " . active_mode . " stridx: " . stridx(a:include, active_mode)
 
   if !empty(a:include) && stridx(a:include, active_mode) == -1
     return ''

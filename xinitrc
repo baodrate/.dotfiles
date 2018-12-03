@@ -4,4 +4,5 @@
 [ -f ~/.xprofile ] && source ~/.xprofile
 
 ibus-daemon --xim &
-exec i3
+xrdb ~/.Xresources
+exec i3 -d all 2>&1 > ~/tmp/i3.log
