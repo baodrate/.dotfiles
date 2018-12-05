@@ -2,24 +2,22 @@
 
 # safer versions of cp/mv using rsync
 
+timestamp() { date +%Y-%m-%d_%H:%M:%S }
+
 cp_safe() {
-  printf "rsync -abXv -hhh --backup-dir=$HOME/tmp/rsync -e /dev/null --progress " && \
-  printf "\"%s\" " "$@[1,-2]" && \
-  printf "\"%s\" " "$@[-1]" && \
-  printf "\n" && \
-  rsync -abXv -hhh --backup-dir=$HOME/tmp/rsync -e /dev/null --progress "$@[1,-2]" "$@[-1]"
+  rsync_cp=(rsync -abXv -hhh --inplace --backup-dir="backup_$(timestamp)" -e /dev/null --progress)
+  printf '%q ' ${rsync_cp[@]} && printf '"%q" ' "${@}" && printf '\n' && \
+    "${rsync_cp[@]}" "${@}"
 }
 compdef _files cp_safe
 alias cp=cp_safe
 
 mv_safe() {
-  printf "rsync -abXv -hhh --remove-source-files --backup-dir=$HOME/tmp/rsync -e /dev/null --progress " && \
-  printf "\"%s\" " "$@[1,-2]" && \
-  printf "\"%s\" " "$@[-1]" && \
-  printf "\n" && \
-  rsync -abXv -hhh --remove-source-files --backup-dir=$HOME/tmp/rsync -e /dev/null --progress "$@[1,-2]" "$@[-1]" && \
+  cp_safe --remove-source-files $@ && \
     for source in $@[1,-2]; do
-      [[ -d $source ]] && find $source -type d -depth -empty -exec rmdir -- {} \;
+      [[ -d $source ]] > /dev/null 2>&1 && \
+        echo "find $source -type d -empty -delete" && \
+          find $source -type d -empty -delete
     done
 }
 compdef _files mv_safe
