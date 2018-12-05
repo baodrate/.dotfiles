@@ -35,7 +35,7 @@ chunkc core::plugin_dir /usr/local/opt/chunkwm/share/chunkwm/plugins
 #       and automatically reload any '.so' file that is changed.
 #
 
-chunkc core::hotload 0
+chunkc core::hotload 1
 
 #
 # NOTE: the following are config variables for the chunkwm-tiling plugin.
@@ -82,8 +82,8 @@ chunkc set mouse_follows_focus           intrinsic
 chunkc set window_float_next             0
 chunkc set window_region_locked          1
 
-chunkc set mouse_move_window             \"fn 1\"
-chunkc set mouse_resize_window           \"fn 2\"
+chunkc set mouse_move_window             \"alt 1\"
+chunkc set mouse_resize_window           \"alt 2\"
 chunkc set mouse_motion_interval         35
 
 chunkc set preselect_border_color        0xffd75f5f
@@ -130,8 +130,8 @@ chunkc set ffm_standby_on_float          1
 
 chunkc core::load border.so
 chunkc core::load tiling.so
-# focus-follows-mouse
-# chunkc core::load ffm.so
+# focus-follows-mouse plugin
+chunkc core::load ffm.so
 
 # NOTE: sample rules for the tiling plugin
 # chunkc tiling::rule --owner \"System Preferences\" --subrole AXStandardWindow --state tile
@@ -144,6 +144,6 @@ chunkc core::load tiling.so
 chunkc tiling::rule --owner \"System Preferences\" --subrole AXStandardWindow --state float &
 chunkc tiling::rule --owner Finder --name Copy --state float &
 chunkc tiling::rule --owner \"Google Chrome\" --name \"Picture in Picture\" --state float &
-chunkc tiling::rule --owner Skype --monitor 1 --state sticky --state tile --grid-layout 2:3:0:1:1:1 &
+chunkc tiling::rule --owner Skype --state sticky --state tile --grid-layout 2:3:0:1:1:1 &
 chunkc tiling::rule --owner CLion --name \"Tip of the Day\" --state float &
 

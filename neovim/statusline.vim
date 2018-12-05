@@ -156,12 +156,12 @@ endif " exists("+showtabline")
 " exec "hi TabLine                cterm=none ctermfg=".g:base16_cterm0D." ctermbg=".g:base16_cterm0D
 " exec "hi TabLineSel             cterm=bold ctermfg=".g:base16_cterm04." ctermbg=".g:base16_cterm0D
 " exec "hi TabLineFill            cterm=none ctermfg=".g:base16_cterm04." ctermbg=".g:base16_cterm00
-call g:Base16hi("VemTablineNormal",       g:base16_gui04, g:base16_gui01, g:base16_cterm04, g:base16_cterm01)
-call g:Base16hi("VemTablineShown",        g:base16_gui02, g:base16_gui04, g:base16_cterm02, g:base16_cterm04)
+call g:Base16hi("VemTablineNormal",       g:base16_gui04, g:base16_gui01, g:base16_cterm04, g:base16_cterm01, "none")
+call g:Base16hi("VemTablineShown",        g:base16_gui02, g:base16_gui04, g:base16_cterm02, g:base16_cterm04, "none")
 call g:Base16hi("VemTablineSelected",     g:base16_gui02, g:base16_gui0D, g:base16_cterm02, g:base16_cterm0D, "bold")
-call g:Base16hi("VemTablineSeparator",    g:base16_gui08, g:base16_gui08, g:base16_cterm08, g:base16_cterm08)
-call g:Base16hi("VemTablineLocation",     g:base16_gui03, g:base16_gui01, g:base16_cterm03, g:base16_cterm01)
-call g:Base16hi("VemTablineTabNormal",    g:base16_gui01, g:base16_gui04, g:base16_cterm01, g:base16_cterm04)
+call g:Base16hi("VemTablineSeparator",    g:base16_gui08, g:base16_gui08, g:base16_cterm08, g:base16_cterm08, "none")
+call g:Base16hi("VemTablineLocation",     g:base16_gui03, g:base16_gui01, g:base16_cterm03, g:base16_cterm01, "none")
+call g:Base16hi("VemTablineTabNormal",    g:base16_gui01, g:base16_gui04, g:base16_cterm01, g:base16_cterm04, "none")
 call g:Base16hi("VemTablineTabSelected",  g:base16_gui02, g:base16_gui0D, g:base16_cterm02, g:base16_cterm0D, "bold")
 
 let s:statusline_guifg = g:base16_gui05

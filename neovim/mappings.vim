@@ -6,55 +6,58 @@ let mapleader="\<Space>"
 
 " Window controls
 nmap <silent> \ <C-W>
-tnoremap <M-h> <C-\><C-N><C-w>h
-tnoremap <M-j> <C-\><C-N><C-w>j
-tnoremap <M-k> <C-\><C-N><C-w>k
-tnoremap <M-l> <C-\><C-N><C-w>l
-inoremap <M-h> <C-\><C-N><C-w>h
-inoremap <M-j> <C-\><C-N><C-w>j
-inoremap <M-k> <C-\><C-N><C-w>k
-inoremap <M-l> <C-\><C-N><C-w>l
-nnoremap <M-h> <C-w>h
-nnoremap <M-j> <C-w>j
-nnoremap <M-k> <C-w>k
-nnoremap <M-l> <C-w>l
+tnoremap <C-h> <C-\><C-N><C-w>h
+inoremap <C-h> <C-\><C-N><C-w>h
+nnoremap <C-h> <C-w>h
+tnoremap <C-j> <C-\><C-N><C-w>j
+inoremap <C-j> <C-\><C-N><C-w>j
+nnoremap <C-j> <C-w>j
+tnoremap <C-k> <C-\><C-N><C-w>k
+inoremap <C-k> <C-\><C-N><C-w>k
+nnoremap <C-k> <C-w>k
+tnoremap <C-l> <C-\><C-N><C-w>l
+inoremap <C-l> <C-\><C-N><C-w>l
+nnoremap <C-l> <C-w>l
 
-tnoremap <M-q> <C-\><C-N><C-w>q
-inoremap <M-q> <C-\><C-N><C-w>q
-nnoremap <M-q> <C-w>q
-tnoremap <M-c> <C-\><C-N><C-w>c
-inoremap <M-c> <C-\><C-N><C-w>c
-nnoremap <M-c> <C-w>c
-tnoremap <M-s> <C-\><C-N><C-w>s
-inoremap <M-s> <C-\><C-N><C-w>s
-nnoremap <M-s> <C-w>s
-tnoremap <M-v> <C-\><C-N><C-w>v
-inoremap <M-v> <C-\><C-N><C-w>v
-nnoremap <M-v> <C-w>v
+tnoremap <C-,> <C-\><C-N>
+inoremap <C-,> <C-\><C-N>
 
-tnoremap <M-,> <C-\><C-N>
-inoremap <M-,> <C-\><C-N>
+tnoremap <C-M-q> <C-\><C-N><C-w>q
+inoremap <C-M-q> <C-\><C-N><C-w>q
+nnoremap <C-M-q> <C-w>q
+tnoremap <C-M-c> <C-\><C-N><C-w>c
+inoremap <C-M-c> <C-\><C-N><C-w>c
+nnoremap <C-M-c> <C-w>c
 
-tnoremap <C-l> <C-\><C-N>:tabnext<CR>
-inoremap <C-l> <C-\><C-N>:tabnext<CR>
-nnoremap <C-l> :tabnext<CR>
-tnoremap <C-h> <C-\><C-N>:tabprev<CR>
-inoremap <C-h> <C-\><C-N>:tabprev<CR>
-nnoremap <C-h> :tabprev<CR>
+tnoremap <C-M-s> <C-\><C-N><C-w>s
+inoremap <C-M-s> <C-\><C-N><C-w>s
+nnoremap <C-M-s> <C-w>s
 
-" next buffer
-tnoremap <C-j> <C-\><C-N>:bn<CR>
-inoremap <C-j> <C-\><C-N>:bn<CR>
-nnoremap <C-j> :bn<CR>
-" previous buffer
-tnoremap <C-k> <C-\><C-N>:bp<CR>
-inoremap <C-k> <C-\><C-N>:bp<CR>
-nnoremap <C-k> :bp<CR>
+tnoremap <C-M-v> <C-\><C-N><C-w>v
+inoremap <C-M-v> <C-\><C-N><C-w>v
+nnoremap <C-M-v> <C-w>v
+
+tnoremap <C-M-h> <C-\><C-N>:tabprev<CR>
+inoremap <C-M-h> <C-\><C-N>:tabprev<CR>
+nnoremap <C-M-h> :tabprev<CR>
+tnoremap <C-M-l> <C-\><C-N>:tabnext<CR>
+inoremap <C-M-l> <C-\><C-N>:tabnext<CR>
+nnoremap <C-M-l> :tabnext<CR>
+
+" buffer controls
+tnoremap <C-M-j> <C-\><C-N>:bn<CR>
+inoremap <C-M-j> <C-\><C-N>:bn<CR>
+nnoremap <C-M-j> :bn<CR>
+
+tnoremap <C-M-k> <C-\><C-N>:bp<CR>
+inoremap <C-M-k> <C-\><C-N>:bp<CR>
+nnoremap <C-M-k> :bp<CR>
+
 " delete buffer
 " use 'qpkorr/vim-bufkill' to move through/delete buffers withouut closing splits
-tnoremap <C-q> <C-\><C-N>:BD<CR>
-inoremap <C-q> <C-\><C-N>:BD<CR>
-nnoremap <C-q> :BD<CR>
+tnoremap <C-M-q> <C-\><C-N>:BD<CR>
+inoremap <C-M-q> <C-\><C-N>:BD<CR>
+nnoremap <C-M-q> :BD<CR>
 
 " Folding
 nnoremap <leader><Space> za

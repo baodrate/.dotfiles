@@ -53,8 +53,6 @@
     ~/.gnupg/sshcontrol: gnupg/sshcontrol
     # -- tmux
     ~/.tmux.conf: tmux/tmux.conf
-    ~/.config/tmux/tmux.conf: tmux/tmux.conf
-    ~/.config/tmux/tmux.d/tmuxline.conf: tmux/tmuxline.conf
     # -- zsh
     ~/.zshenv: zshenv
     ~/.config/zsh: zsh

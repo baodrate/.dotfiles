@@ -37,7 +37,6 @@ endif
 "                                  Load Plugins
 " ==============================================================================
 
-
 if dein#load_state(s:settings.dein_cache)
   call dein#begin(s:settings.dein_cache)
 
@@ -68,18 +67,18 @@ if dein#load_state(s:settings.dein_cache)
   " ----------- language-server --------
   call dein#add('w0rp/ale')
 
-  " call dein#add('autozimu/LanguageClient-neovim', {
-  "     \ 'rev': 'next',
-  "     \ 'build': 'bash install.sh',
-  "     \ })
+  call dein#add('autozimu/LanguageClient-neovim', {
+      \ 'rev': 'next',
+      \ 'build': 'bash install.sh',
+      \ })
 
   " ----------- autocompletion ---------
   call dein#add('ncm2/ncm2', { 'depends': 'nvim-yarp' })
   call dein#add('roxma/nvim-yarp')
-  call dein#add('roxma/vim-hug-neovim-rpc', { 'depends': 'ncm2' })
   call dein#add('ncm2/ncm2-bufword')
   call dein#add('ncm2/ncm2-tmux')
   call dein#add('ncm2/ncm2-path')
+  call dein#add('ncm2/ncm2-jedi')
 
   " ----------- Tags -------------------
   " call dein#add('ludovicchabant/vim-gutentags')
@@ -99,7 +98,7 @@ if dein#load_state(s:settings.dein_cache)
   call dein#add('justinmk/vim-dirvish')           " netrw replacement
 
   " depend on zsh to install fzf binary
-  " call dein#add('junegunn/fzf', { 'build': './install --all', 'merged': 0 }) 
+  " call dein#add('junegunn/fzf', { 'build': './install --all', 'merged': 0 })
   call dein#add('junegunn/fzf.vim', { 'depends': 'fzf' })
   call dein#add('junegunn/vim-easy-align')
 
@@ -143,6 +142,7 @@ endif
 "                                 Source Settings
 " ==============================================================================
 execute 'source ' . g:settings.config_dir . '/general.vim'
-execute 'source ' . g:settings.config_dir . '/statusline.vim'
-execute 'source ' . g:settings.config_dir . '/mappings.vim'
 execute 'source ' . g:settings.config_dir . '/plugins.vim'
+execute 'source ' . g:settings.config_dir . '/mappings.vim'
+execute 'source ' . g:settings.config_dir . '/autocomplete.vim'
+execute 'source ' . g:settings.config_dir . '/statusline.vim'

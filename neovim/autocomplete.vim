@@ -1,15 +1,18 @@
-" ==============================================================================
-"                             LanguageClient-neovim
-" ===============================================================================
 " Always draw the signcolumn.
 set signcolumn=yes
 
+" ==============================================================================
+"                             LanguageClient-neovim
+" ===============================================================================
+" Automatically start language servers.
+let g:LanguageClient_autoStart = 1
+
 let g:LanguageClient_serverCommands = {
-    \ 'c': ['cquery', '--log-file=~/tmp/cc.log', '--init={"cacheDirectory":"~/.cache/cquery/"}'],
-    \ 'cpp': ['cquery', '--log-file=~/tmp/cc.log', '--init={"cacheDirectory":"~/.cache/cquery/"}'],
-    \ 'cuda': ['cquery', '--log-file=~/tmp/cc.log', '--init={"cacheDirectory":"~/.cache/cquery/"}'],
-    \ 'objc': ['cquery', '--log-file=~/tmp/cc.log', '--init={"cacheDirectory":"~/.cache/cquery/"}'],
-    \ 'python': ['pyls'],
+    \ 'c': ['cquery', '--log-file', '~/tmp/lc-nvim/cc.log', '--init={"cacheDirectory":"~/.cache/cquery/"}'],
+    \ 'cpp': ['cquery', '--log-file', '~/tmp/lc-nvim/cc.log', '--init={"cacheDirectory":"~/.cache/cquery/"}'],
+    \ 'cuda': ['cquery', '--log-file', '~/tmp/lc-nvim/cc.log', '--init={"cacheDirectory":"~/.cache/cquery/"}'],
+    \ 'objc': ['cquery', '--log-file', '~/tmp/lc-nvim/cc.log', '--init={"cacheDirectory":"~/.cache/cquery/"}'],
+    \ 'python': ['pyls', '--log-file', '~/tmp/lc-nvim/pyls.log', '-v'],
     \ }
 
 let g:LanguageClient_loadSettings = 1 " Use an absolute configuration path if you want system-wide settings
@@ -44,7 +47,7 @@ endfunction()
 
 augroup LSP
   autocmd!
-  autocmd FileType cpp,c call SetLSPShortcuts()
+  autocmd FileType cpp,c,python call SetLSPShortcuts()
 augroup END
 
 " ==============================================================================
@@ -60,19 +63,25 @@ autocmd BufEnter * call ncm2#enable_for_buffer()
 " This will show the popup menu even if there's only one match (menuone),
 " prevent automatic selection (noselect) and prevent automatic text injection
 " into the current line (noinsert).
-"
 " :help Ncm2PopupOpen for more information
-set completeopt=noinsert,menuone,noselect
+" set completeopt=noinsert,menuone,noselect
+au User Ncm2PopupOpen set completeopt=noinsert,menuone
+au User Ncm2PopupClose set completeopt=menuone
+
+call ncm2#override_source('LanguageClient_python', {'enable': 0})
 
 " When the <Enter> key is pressed while the popup menu is visible, it only
 " hides the menu. Use this mapping to close the menu and also start a new
 " line.
 " inoremap <expr> <CR> pumvisible() ? "\<c-y>\<cr>" : "\<CR>"
-inoremap <expr> <CR> pumvisible() ? "\<c-y>" : "\<CR>"
 
 " Use <TAB> to select the popup menu:
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+" inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+" inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
+inoremap <expr> <Tab> pumvisible() ? "\<C-y>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-e>" : "\<S-Tab>"
 
 " ==============================================================================
 "                                       ale
@@ -89,10 +98,26 @@ let g:ale_linters = {
 \}
 let g:ale_linters_explicit = 1
 
+let g:ale_python_auto_pipenv = 1
+
 let g:ale_set_highlights = 1
-let g:ale_fix_on_save = 0
-let g:ale_sign_error = '>>'
-let g:ale_sign_warning = '--'
+let g:ale_fix_on_save = 1
+" let g:ale_sign_error = '>>'
+" let g:ale_sign_warning = '--'
+let g:ale_set_signs = 1
+let g:ale_sign_error = '!'
+let g:ale_sign_warning = '⚠'
+
+call g:Base16hi("ALEErrorSign", g:base16_gui09, g:base16_gui01, g:base16_cterm09, g:base16_cterm01, "bold")
+call g:Base16hi("ALEWarningSign", g:base16_gui0A, g:base16_gui01, g:base16_cterm0A, g:base16_cterm01, "bold")
+"call g:Base16hi("ALEErrorLine", g:base16_gui09, g:base16_gui00, g:base16_cterm09, g:base16_cterm00, "undercurl")
+"call g:Base16hi("ALEWarningLine", g:base16_gui0A, g:base16_gui00, g:base16_cterm0A, g:base16_cterm00, "undercurl")
+call g:Base16hi("ALEError", g:base16_gui09, g:base16_gui00, g:base16_cterm09, g:base16_cterm00, "undercurl,bold")
+call g:Base16hi("ALEWarning", g:base16_gui0A, g:base16_gui00, g:base16_cterm0A, g:base16_cterm00, "undercurl,bold")
+" hi link ALEErrorSign    Error
+" hi link ALEWarningSign  Warning
+" hi link ALEErrorLine    Error
+" hi link ALEWarningLine  WarningMsg
 
 let g:ale_completion_enabled = 1
 
@@ -108,5 +133,3 @@ function! LinterStatus() abort
     \   all_errors
     \)
 endfunction
-
-

@@ -1,0 +1,5 @@
+new  -s dev -n default zsh
+neww -n hiro26 ssh hiro26
+splitw -h -p 50 -t 0 ssh hiro26
+selectw -t 0
+# selectp -t 0
