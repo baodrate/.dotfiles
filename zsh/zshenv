@@ -24,8 +24,10 @@ export SCRIPTS_DIR="$HOME/.scripts"
 # new_path="$(getconf new_path)"
 [[ -d "$SCRIPTS_DIR" ]] && new_path="${new_path:+${new_path}:}$SCRIPTS_DIR"
 [[ -d "$HOME/.cargo/bin" ]] && new_path="${new_path:+${new_path}:}$HOME/.cargo/bin"
+[[ -d "$HOME/.poetry/bin" ]] && new_path="${new_path:+${new_path}:}$HOME/.poetry/bin"
 [[ -d "/usr/local/bin" ]] && new_path="${new_path:+${new_path}:}/usr/local/bin"
 [[ -d "/usr/local/sbin" ]] && new_path="${new_path:+${new_path}:}/usr/local/sbin"
+[[ -d "/usr/local/opt/llvm/bin" ]] && new_path="${new_path:+${new_path}:}/usr/local/opt/llvm/bin"
 [[ -d "/usr/local/opt/ccache/libexec" ]] && new_path="${new_path:+${new_path}:}/usr/local/opt/ccache/libexec"
 (( $+commands[python2] )) && new_path="${new_path:+${new_path}:}$(python2 -m site --user-base)/bin:$(python2 -m site --user-site)"
 (( $+commands[python3] )) && new_path="${new_path:+${new_path}:}$(python3 -m site --user-base)/bin:$(python3 -m site --user-site)"
@@ -79,7 +81,7 @@ QT_XCB_FORCE_SOFTWARE_OPENGL=1
 # ====
 # WORK
 # ====
-export AWS_SDK_CPP_DIR="~/aws-sdk-cpp/"
+# export AWS_SDK_CPP_DIR="~/aws-sdk-cpp/"
 
 
 # ===
