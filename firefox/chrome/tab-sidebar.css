@@ -1,0 +1,18 @@
+/* hides the native tabs */
+#TabsToolbar {
+  visibility: collapse;
+}
+
+/* adjust sidebar width limits */
+#sidebar {
+max-width: none !important;
+min-width: 20px !important; }
+
+/* credit:
+ * https://www.reddit.com/r/firefox/comments/84bvw5/has_good_tab_management_been_found_for_quantum/dvq4bhm/
+ */
+/* Remove title section from Tree Style Tabs/Tree Tabs sidebar */
+#sidebar-box[sidebarcommand="treestyletab_piro_sakura_ne_jp-sidebar-action"] #sidebar-header,
+#sidebar-box[sidebarcommand="treetabs_jagiello_it-sidebar-action"] #sidebar-header  {
+     visibility: collapse;
+}

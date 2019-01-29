@@ -40,3 +40,9 @@
 [submodule "firefox/chrome/firefox-csshacks"]
 	path = firefox/chrome/firefox-csshacks
 	url = https://github.com/MrOtherGuy/firefox-csshacks.git
+[submodule "firefox/chrome/Firefox-Minimal-Responsive-Theme"]
+	path = firefox/chrome/Firefox-Minimal-Responsive-Theme
+	url = https://github.com/moamenk/Firefox-Minimal-Responsive-Theme.git
+[submodule "firefox/chrome/TanzNukeTerror-TreeTabs/Custom-Firefox"]
+	path = firefox/chrome/TanzNukeTerror-TreeTabs/Custom-Firefox
+	url = https://github.com/TanzNukeTerror/Custom-Firefox.git

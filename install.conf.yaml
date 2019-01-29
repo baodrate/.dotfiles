@@ -38,6 +38,7 @@
     ~/.config/nvim: neovim
     ~/.config/termite: termite
     # ~/.config/fontconfig: fontconfig
+    ~/.config/firefox: firefox
 
     # files
     # -----

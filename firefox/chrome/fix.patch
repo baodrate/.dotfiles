@@ -1,0 +1,33 @@
+--- a/userChrome.css	2018-03-25 17:45:41.000000000 +0800
++++ b/userChrome.css	2018-03-25 17:42:37.000000000 +0800
+@@ -16,9 +16,10 @@
+ :root {
+     --titlebar-padding-x: 10px;
+     --titlebar-padding-y: 0px;
+-    --titlebar-height: 30px;
+-    --navbar-margin-top: -25px;
+-    --navbar-margin-right: 110px;
++    --titlebar-height: 23px;
++    --navbar-margin-top: 0px;
++    --navbar-margin-right: 0px;
++    --navbar-margin-left: 80px;
+ }
+ 
+ 
+@@ -58,9 +59,16 @@
+ #nav-bar {
+     margin-top: var(--navbar-margin-top);
+     margin-right: var(--navbar-margin-right);
++    margin-left: var(--navbar-margin-left);
+     box-shadow: none !important;
+ }
+ 
++#nav-bar[inFullscreen] {
++    margin-top: var(--navbar-margin-top);
++    margin-right: 0;
++    margin-left: 0;
++    box-shadow: none !important;
++}
+ 
+ /* Not sure what these do */
+ [uidensity="compact"]:root #titlebar-buttonbox {

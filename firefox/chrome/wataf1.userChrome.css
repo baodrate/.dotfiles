@@ -1,0 +1,234 @@
+@namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
+
+/*
+ * wataf1@github
+ * https://gist.github.com/wataf1/4f6dfaa616267d4151fad2eb90cb6f66
+ */
+
+/* Please forgive my shitty css, I'm not a web dev 
+
+Links:
+https://www.reddit.com/r/FirefoxCSS/
+For live debug: ctrl+alt+shift+i, grant remote permission, StyleEditor > userChrome.css
+https://www.reddit.com/r/FirefoxCSS/comments/73dvty/tutorial_how_to_create_and_livedebug_userchromecss/
+https://github.com/Timvde/UserChrome-Tweaks/blob/master/tabs/hide-tabs-windows.css
+https://www.howtogeek.com/334716/how-to-customize-firefoxs-user-interface-with-userchrome.css/
+http://kb.mozillazine.org/index.php?title=UserChrome.css&printable=yes
+https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XUL/Tutorial/Modifying_the_Default_Skin#Customize_with_userChrome.css
+https://github.com/piroor/treestyletab/wiki/Code-snippets-for-custom-style-rules#for-version-2x
+*/
+
+:root {
+    --titlebar-padding-x: 10px;
+    --titlebar-padding-y: 0px;
+    --titlebar-height: 30px;
+    --navbar-margin-top: -25px;
+    --navbar-margin-right: 110px;
+}
+
+
+/* Hide tab toolbar */
+#main-window[tabsintitlebar="true"]:not([extradragspace="true"]) #TabsToolbar {
+    opacity: 0;
+    pointer-events: none;
+}
+
+#main-window:not([tabsintitlebar="true"]) #TabsToolbar {
+    visibility: collapse !important;
+}
+
+
+/* Collapse tabs toolbar */
+#TabsToolbar {
+    visibility: collapse !important;
+}
+
+
+/* Box for minimize/max/close box. Can't go any higher than 30 or alignment gets weird */
+#titlebar-buttonbox {
+    height: var(--titlebar-height) !important;
+}
+
+
+/* Have to override padding to squeeze min/max/close buttons together */
+.titlebar-button {
+    padding-right: var(--titlebar-padding-x) !important;
+    padding-top: var(--titlebar-padding-y) !important;
+    padding-left: var(--titlebar-padding-x) !important;
+    padding-bottom: var(--titlebar-padding-y) !important;
+}
+
+
+/* Adjust nav bar to take up space where tabs/window buttons were */
+#nav-bar {
+    margin-top: var(--navbar-margin-top);
+    margin-right: var(--navbar-margin-right);
+    box-shadow: none !important;
+}
+
+
+/* Not sure what these do */
+[uidensity="compact"]:root #titlebar-buttonbox {
+    height: 32px !important;
+}
+
+[uidensity="compact"]:root #nav-bar {
+    margin-top: -32px;
+}
+
+#titlebar-spacer {
+    background-color: var(--chrome-secondary-background-color);
+}
+
+#titlebar-buttonbox-container {
+    background-color: var(--chrome-secondary-background-color);
+}
+
+
+/* Sidebar min and max width removal */
+#sidebar {
+    max-width: none !important;
+    min-width: 0px !important;
+}
+
+
+/* Turned off:Hide splitter, when using Tree Style Tab. */
+/* #sidebar-box[sidebarcommand="treestyletab_piro_sakura_ne_jp-sidebar-action"]+#sidebar-splitter {
+    display: none !important;
+} */
+
+
+/* Hide sidebar header, when using Tree Style Tab. */
+#sidebar-box[sidebarcommand="treestyletab_piro_sakura_ne_jp-sidebar-action"] #sidebar-header {
+    visibility: collapse;
+}
+
+/* Nav bar */
+/* Hide the green lock indicating SSL (HTTPS, encrypted connection) from the address bar.  */
+#urlbar[pageproxystate="valid"] :-moz-any(.verifiedDomain,.verifiedIdentity) #connection-icon {
+  display: none !important;
+}
+/* Hides the website name (when present) from the address bar, keeping only the location abbrevation.*/
+#identity-icon-label { /* Hides the EV SSL label */
+  visibility: collapse !important;
+}
+
+#identity-box:hover > #identity-icon-labels > #identity-icon-label { /* Shows the label on identity box hover */
+  visibility: visible !important;
+}
+
+/* Hide info icon for sites that don't have permissions */
+#identity-box > #identity-icon {
+    transition: 300ms !important; /* Animate icon hiding */
+	opacity: 0 !important; /* Make icons transparent */
+	-moz-margin-end: -1.1em !important; /* Hide icons by offsetting them */
+}
+
+/* Show info icon on navbar hover, except for new tab page search icon */
+#identity-box:hover #identity-icon {
+    transition: 300ms !important; /* Animate icon showing */
+	opacity: 1 !important; /* Make icons opaque */
+	-moz-margin-end: initial !important; /* Use initial margins to show icons */
+}
+/* remove (US) */
+#urlbar #identity-icon-country-label {
+    visibility: collapse !important;
+}
+/* show on hover */
+#identity-box:hover > #identity-icon-labels >  #identity-icon-country-label { /* Shows the label on identity box hover */
+  visibility: visible !important;
+}
+/* collapsed SSL id box */
+#identity-box {
+    padding-inline-end: 2px !important;
+    margin-inline-end: 4px !important;
+    padding-inline-start: 2px !important;
+}
+/* Show on hover */
+#identity-box:hover {
+    padding-inline-end: 8px !important;
+    margin-inline-end: 8px !important;
+    padding-inline-start: 8px !important;
+}
+/* if insecure, make background red */
+#urlbar[pageproxystate="valid"] > #identity-box.notSecure > #connection-icon,
+#urlbar[pageproxystate="valid"] > #identity-box.insecureLoginForms > #connection-icon,
+#urlbar[pageproxystate="valid"] > #identity-box.mixedActiveContent > #connection-icon {
+  background: red !important;
+}
+/* if secure, highlight with green  */
+#urlbar[pageproxystate="valid"] > #identity-box.verifiedIdentity,
+#urlbar[pageproxystate="valid"] > #identity-box.verifiedDomain {
+    background: rgba(66, 244, 167, 0.4) !important;
+}
+/* on hover, show normal colors */
+#urlbar[pageproxystate="valid"] > #identity-box.verifiedIdentity:hover,
+#urlbar[pageproxystate="valid"] > #identity-box.verifiedDomain:hover {
+    fill: currentColor !important;
+    fill-opacity: .6 !important;
+    background: rgba(66, 244, 167, 1.0) !important;
+}
+/* Hide those things on the right side of url bar */
+#pageActionButton,
+#pocket-button-box,
+#pageAction-urlbar-_e225ac78-5e83-484b-a16b-b6ed0924212f_,
+#pageAction-urlbar-jid1-xufzosoflzsoxg_jetpack {
+    visibility: collapse !important;
+}
+
+/* Compact findbar at the top of the window  */
+.browserContainer > findbar {
+  -moz-box-ordinal-group: 0;
+  position: fixed !important;
+  right: 1em;
+  border: 1px solid threedshadow !important;
+
+  /* Hide the "border" at the top by removing the box-shadow and background-image */
+  border-top: none !important;
+  box-shadow: none !important;
+  background-image: none !important;
+
+  /* a transition from the top */
+  transition: 400ms !important;
+  z-index: 0 !important;
+ 
+}
+
+/* Margin from top when hidden (necessary for the transition to work) */
+findbar[hidden]{ margin-top: -2em !important; }
+
+/* Aligns the close button to the center */
+.findbar-closebutton {
+  margin-inline-start: 0.5em !important;
+  vertical-align: middle !important;
+  margin-bottom: 0.25em !important;
+  height: inherit !important;
+}
+
+/* Context menu cleanup */
+#context-pocket,
+#context-selectall {
+    display: none !important;
+}
+
+/* Bookmarks */
+toolbarbutton.bookmark-item {
+    margin-left: 1px !important;
+    margin-right: 1px !important;
+    margin-top: 0px !important;
+    margin-bottom: 0px !important;
+    padding: 1px 1px !important;
+}
+.bookmark-item > .toolbarbutton-text {
+    font-size: 10px !important;;
+}
+/* Make icons smaller */
+#PersonalToolbar .toolbarbutton-1 > .toolbarbutton-icon, 
+#PersonalToolbar .toolbarbutton-1 > .toolbarbutton-badge-stack, 
+.bookmark-item > .toolbarbutton-icon {
+	width: 13px !important;
+	height: 13px !important;
+}
+#PlacesToolbarItems > .bookmark-item > .toolbarbutton-icon[label]:not([label=""]) {
+	margin-inline-end: 2px !important;
+}
