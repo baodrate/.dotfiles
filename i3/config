@@ -46,9 +46,6 @@
     # set_from_resource $base09 i3wm.color9  #DC9656
     # set_from_resource $base0F i3wm.color14 #A16946
 
-    # set wallpaper
-    exec --no-startup-id "feh --bg-fill --randomize --recursive --no-fehbg ~/wallpapers/*"
-
 ### Application behavior
 #
 #
@@ -162,19 +159,21 @@
 
         status_command "i3status --config ~/.config/i3status/essentials.conf"
 
+        tray_output primary
+
         colors {
             background $base00
             separator  $base03
             statusline $base04
 
-    # # Property Name         Border  BG      Text    Indicator Child Border
-    # client.focused          $base02 $base02 $base06 $base0B   $base0D
-    # client.focused_inactive $base01 $base01 $base03 $base0D   $base02
-    # client.unfocused        $base01 $base00 $base03 $base00   $base01
-    # client.urgent           $base08 $base08 $base00 $base08   $base08
-    # # i3-only
-    # client.placeholder      $base05 $base05 $base07 $base00   $base05
-    # client.background       $base02
+            # # Property Name         Border  BG      Text    Indicator Child Border
+            # client.focused          $base02 $base02 $base06 $base0B   $base0D
+            # client.focused_inactive $base01 $base01 $base03 $base0D   $base02
+            # client.unfocused        $base01 $base00 $base03 $base00   $base01
+            # client.urgent           $base08 $base08 $base00 $base08   $base08
+            # # i3-only
+            # client.placeholder      $base05 $base05 $base07 $base00   $base05
+            # client.background       $base02
 
             # State             Border  BG      Text
             focused_workspace   $base02 $base02 $base07
@@ -268,6 +267,15 @@
     bindsym $super+Shift+Right move right
 
 #
+# Outputs:
+#
+    bindsym $super+bracketright focus output left
+    bindsym $super+bracketleft focus output right
+
+    bindsym $super+Shift+bracketleft move container to output left; focus output left
+    bindsym $super+Shift+bracketright move container to output right; focus output right
+
+#
 # Workspaces:
 #
     # Define names for default workspaces for which we configure key bindings later on.
@@ -298,24 +306,11 @@
     bindsym $super+8 workspace $ws8
     bindsym $super+9 workspace $ws9
     bindsym $super+0 workspace $ws10
+    bindsym --whole-window $super+button4 workspace next_on_output
+    bindsym --whole-window $super+button5 workspace prev_on_output
     bindsym $super+n workspace next
     bindsym $super+p workspace prev
     bindsym $super+Tab workspace back_and_forth
-
-    # move focused container to workspace
-    # bindsym $super+Shift+1 move container to workspace number $ws1
-    # bindsym $super+Shift+2 move container to workspace number $ws2
-    # bindsym $super+Shift+3 move container to workspace number $ws3
-    # bindsym $super+Shift+4 move container to workspace number $ws4
-    # bindsym $super+Shift+5 move container to workspace number $ws5
-    # bindsym $super+Shift+6 move container to workspace number $ws6
-    # bindsym $super+Shift+7 move container to workspace number $ws7
-    # bindsym $super+Shift+8 move container to workspace number $ws8
-    # bindsym $super+Shift+9 move container to workspace number $ws9
-    # bindsym $super+Shift+0 move container to workspace number $ws10
-    # bindsym $super+Shift+n move container to workspace next
-    # bindsym $super+Shift+p move container to workspace prev
-    # bindsym $super+Shift+Tab move container to workspace back_and_forth
 
     # move focused container to workspace and follow
     bindsym $super+Shift+1 move container to workspace number $ws1 ; workspace number $ws1
@@ -331,6 +326,20 @@
     bindsym $super+Shift+n move container to workspace next ; workspace next
     bindsym $super+Shift+p move container to workspace prev ; workspace prev
     bindsym $super+Shift+Tab move container to workspace back_and_forth ; workspace back_and_forth
+
+#
+# Move workspaces
+#
+    # Move workspace to a different output
+    bindsym $super+Ctrl+Shift+$left move workspace to output left
+    bindsym $super+Ctrl+Shift+$down move workspace to output down
+    bindsym $super+Ctrl+Shift+$up move workspace to output up
+    bindsym $super+Ctrl+Shift+$right move workspace to output right
+    # ditto, with arrow keys
+    bindsym $super+Ctrl+Shift+Left move workspace to output left
+    bindsym $super+Ctrl+Shift+Down move workspace to output down
+    bindsym $super+Ctrl+Shift+Up move workspace to output up
+    bindsym $super+Ctrl+Shift+Right move workspace to output right
 
 #
 # Layout stuff:
@@ -427,9 +436,8 @@ bindsym $super+r mode "resize"
 #
 # Launch utils
 #
-    exec --no-startup-id "xrdb ~/.Xresources"
-    exec --no-startup-id "pidof -x $(basename udiskie) || udiskie"
-    exec --no-startup-id "pidof -x $(basename mako) || mako"
     exec --no-startup-id "pidof -x $(basename urxvtd) || urxvtd -q -o -f"
+    # set wallpaper
+    exec --no-startup-id "feh --bg-fill --randomize --recursive --no-fehbg ~/wallpapers/*"
     exec --no-startup-id "compton -b -c"
     # exec --no-startup-id "pidof -x $(basename lxqt-policykit-agent) || lxqt-policykit-agent"
