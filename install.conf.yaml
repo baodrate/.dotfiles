@@ -123,6 +123,25 @@
     ~/.xprofile: xprofile
     ~/.config/compton.conf: compton.conf
 
+# ================
+# machine specific
+# ================
+- defaults:
+    link:
+      relink: true
+      create: true
+      relative: true
+      if: '[ "$(hostname)" "==" "cerebro" ]'
+
+- link:
+    # directories
+    # -----------
+    ~/.local/share/barrier: barrier
+
+    # files
+    # -----
+
+
 # =======
 # Scripts
 # =======

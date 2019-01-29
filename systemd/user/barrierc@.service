@@ -1,0 +1,24 @@
+[Unit]
+Description=Barrier Client Daemon
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/barrierc --enable-crypto --no-restart --no-daemon %i
+ProtectHome=true
+ProtectSystem=true
+PrivateTmp=true
+Restart=always
+RestartSec=2
+
+[Install]
+WantedBy=default.target
+
+# Credit: https://github.com/AdrianKoshka/config/wiki/My-barrier-setup
+
+# This user unit expects localbarrier@<alias>.service to be running and to have
+# trusted fingerprints setup in ~/.barrier/SSL/Fingerprints/TrustedServers.txt
+#   $ systemctl --user start barrierc@<hostname_or_ip>.service
+# where <hostname_or_ip> is the address or hostname of the server.
+# e.g.
+#   $ systemctl --user start barrierc@localhost.service
