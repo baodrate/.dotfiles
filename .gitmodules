@@ -46,3 +46,6 @@
 [submodule "firefox/chrome/TanzNukeTerror-TreeTabs/Custom-Firefox"]
 	path = firefox/chrome/TanzNukeTerror-TreeTabs/Custom-Firefox
 	url = https://github.com/TanzNukeTerror/Custom-Firefox.git
+[submodule "firefox/chrome/ShadowFox"]
+	path = firefox/chrome/ShadowFox
+	url = https://github.com/overdodactyl/ShadowFox.git
