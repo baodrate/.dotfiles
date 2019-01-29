@@ -32,6 +32,7 @@ setopt no_global_rcs
 [[ -d "$HOME/.poetry/bin" ]] && new_path="${new_path:+${new_path}:}$HOME/.poetry/bin"
 [[ -d "/usr/local/bin" ]] && new_path="${new_path:+${new_path}:}/usr/local/bin"
 [[ -d "/usr/local/sbin" ]] && new_path="${new_path:+${new_path}:}/usr/local/sbin"
+[[ -d "/usr/local/opt/llvm/bin" ]] && new_path="${new_path:+${new_path}:}/usr/local/opt/llvm/bin"
 [[ -d "/usr/local/opt/ccache/libexec" ]] && new_path="${new_path:+${new_path}:}/usr/local/opt/ccache/libexec"
 (( $+commands[brew] )) && \
   new_path="${new_path:+${new_path}:}/usr/local/bin:/usr/local/sbin" && \
@@ -91,7 +92,7 @@ QT_XCB_FORCE_SOFTWARE_OPENGL=1
 # ====
 # WORK
 # ====
-export AWS_SDK_CPP_DIR="~/aws-sdk-cpp/"
+# export AWS_SDK_CPP_DIR="~/aws-sdk-cpp/"
 
 
 # ===

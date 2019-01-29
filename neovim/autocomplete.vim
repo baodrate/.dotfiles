@@ -65,7 +65,7 @@ autocmd BufEnter * call ncm2#enable_for_buffer()
 " into the current line (noinsert).
 " :help Ncm2PopupOpen for more information
 " set completeopt=noinsert,menuone,noselect
-au User Ncm2PopupOpen set completeopt=noinsert,menuone
+au User Ncm2PopupOpen set completeopt=menuone,noselect,noinsert
 au User Ncm2PopupClose set completeopt=menuone
 
 call ncm2#override_source('LanguageClient_python', {'enable': 0})
@@ -76,12 +76,10 @@ call ncm2#override_source('LanguageClient_python', {'enable': 0})
 " inoremap <expr> <CR> pumvisible() ? "\<c-y>\<cr>" : "\<CR>"
 
 " Use <TAB> to select the popup menu:
-" inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-" inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
 inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
-inoremap <expr> <Tab> pumvisible() ? "\<C-y>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-e>" : "\<S-Tab>"
 
 " ==============================================================================
 "                                       ale

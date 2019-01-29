@@ -104,16 +104,16 @@ set list
 " colors
 " ------
 set background=dark
-if exists('+termguicolors')
-  let &t_8f="\<Esc>[38;2;%lu;%lu;%lum"
-  let &t_8b="\<Esc>[48;2;%lu;%lu;%lum"
-  set termguicolors             " send truecolor to term; mutually exclusive with base16colorspace
-else
-  let base16colorspace=256      " For base16-shell: Use colors from base16-shell-modified 256 colorspace
-endif
+" if exists('+termguicolors')
+"   let &t_8f="\<Esc>[38;2;%lu;%lu;%lum"
+"   let &t_8b="\<Esc>[48;2;%lu;%lu;%lum"
+"   set termguicolors             " send truecolor to term; mutually exclusive with base16colorspace
+" else
+"   let base16colorspace=256      " For base16-shell: Use colors from base16-shell-modified 256 colorspace
+" endif
+let base16colorspace=256        " For base16-shell: Use colors from base16-shell-modified 256 colorspace
 colorscheme base16-current      " specific base16 theme is symlinked
-let g:colors_name = "base16-current"
-" let g:colors_name = "noctu"
+let g:colors_name = "base16-ia-dark"
 
 
 " gvim
