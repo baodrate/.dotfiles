@@ -22,14 +22,17 @@ export SCRIPTS_DIR="$HOME/.scripts"
 
 # ==> setup PATH variable
 # new_path="$(getconf new_path)"
+
+# /etc/zprofile on macOS loads /usr/libexec/path_helper which overwrites PATH
+# disable it
+setopt no_global_rcs
+
 [[ -d "$SCRIPTS_DIR" ]] && new_path="${new_path:+${new_path}:}$SCRIPTS_DIR"
 [[ -d "$HOME/.cargo/bin" ]] && new_path="${new_path:+${new_path}:}$HOME/.cargo/bin"
+[[ -d "$HOME/.poetry/bin" ]] && new_path="${new_path:+${new_path}:}$HOME/.poetry/bin"
 [[ -d "/usr/local/bin" ]] && new_path="${new_path:+${new_path}:}/usr/local/bin"
 [[ -d "/usr/local/sbin" ]] && new_path="${new_path:+${new_path}:}/usr/local/sbin"
 [[ -d "/usr/local/opt/ccache/libexec" ]] && new_path="${new_path:+${new_path}:}/usr/local/opt/ccache/libexec"
-(( $+commands[python2] )) && new_path="${new_path:+${new_path}:}$(python2 -m site --user-base)/bin:$(python2 -m site --user-site)"
-(( $+commands[python3] )) && new_path="${new_path:+${new_path}:}$(python3 -m site --user-base)/bin:$(python3 -m site --user-site)"
-(( $+commands[npm] )) && new_path="${new_path:+${new_path}:}$npm_config_prefix/bin"
 (( $+commands[brew] )) && \
   new_path="${new_path:+${new_path}:}/usr/local/bin:/usr/local/sbin" && \
   new_manpath="${new_manpath:+${new_path}:}/usr/local/share/info" && \
@@ -39,6 +42,21 @@ export SCRIPTS_DIR="$HOME/.scripts"
 [[ ! -z PATH     ]] && export PATH="${new_path:+${new_path}:}$PATH"
 [[ ! -z MANPATH  ]] && export MANPATH="${new_manpath:+${new_manpath}:}:$MANPATH"
 [[ ! -z INFOPATH ]] && export INFOPATH="${new_infopath:+${new_infopath}:}:$INFOPATH"
+
+# ==> python
+[[ -d "$HOME/.pyenv/bin" ]] && new_path="${new_path:+${new_path}:}$HOME/.pyenv/bin"
+[[ ! -z PATH ]] && export PATH="${new_path:+${new_path}:}$PATH"
+(( $+commands[pyenv] )) && eval "$(pyenv init -)"
+(( $+commands[pyenv] )) && eval "$(pyenv virtualenv-init -)"
+(( $+commands[python3] )) && new_path="${new_path:+${new_path}:}$(python3 -m site --user-base)/bin:$(python3 -m site --user-site)"
+# ==> npm
+if (( $+commands[npm] )); then
+  export npm_config_cache="$XDG_CACHE_HOME/npm"
+  export npm_config_prefix="${XDG_DATA_HOME}/node_modules"
+fi
+[[ -d "$npm_config_prefix" ]] && new_path="${new_path:+${new_path}:}$npm_config_prefix/bin"
+
+[[ ! -z PATH ]] && export PATH="${new_path:+${new_path}:}$PATH"
 
 # ==> nvim-remote
 #
@@ -57,12 +75,6 @@ elif (( $+commands[vim] )) ; then
   export VISUAL=vim
 else
   echo 'could not find neovim or vim; not setting $VISUAL'
-fi
-
-# ==> npm
-if (( $+commands[npm] )); then
-  export npm_config_cache="$XDG_CACHE_HOME/npm"
-  export npm_config_prefix="${XDG_DATA_HOME}/node_modules"
 fi
 
 # ==> use gpg-agent as ssh-agent
