@@ -132,7 +132,7 @@ fi
 # ------
 # Colors
 # ------
-# source ~/.colors/base16_profile_helper.sh # call before prompt because this checks [ -n "$PS1" ]
+source ~/.colors/base16_profile_helper.sh # call before prompt because this checks [ -n "$PS1" ]
 
 # =============================================================================
 # Plugins
@@ -154,6 +154,7 @@ zplugin ice if"(( $+commands[rsync] ))"; zplugin snippet "$ZDOTDIR/plugins/cp-mv
 # super slow:
 # zplugin ice if"(( $+commands[pipenv] ))"; zplugin snippet "$ZDOTDIR/plugins/pipenv.plugin.zsh"
 
+zplugin ice if"(( $+commands[poetry] ))" as"completion"; zplugin snippet "$ZDOTDIR/completions/_poetry"
+
 # github-plugins
 source $ZDOTDIR/zplugins.zsh
-
