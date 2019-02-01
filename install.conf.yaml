@@ -62,7 +62,34 @@
     ~/.base16_theme: base16_theme
     ~/.vimperator: vimperator
     ~/.vimperatorrc: vimperatorrc
-    ~/.config/alacritty/alacritty.d/base16-colors.yml: alacritty/base16-colors.yml
+
+# =========
+# Alacritty
+# =========
+- defaults:
+    link:
+      relink: true
+      create: true
+      relative: true
+
+- link:
+    ~/.config/alacritty/alacritty.d/base16-colors.yml:
+      path: alacritty/base16-colors.yml
+    ~/.config/alacritty/alacritty.d/alacritty.base.yml:
+      path: alacritty/alacritty.base.macos.yml
+      if: '[ "$(uname)" "==" "Darwin" ]'
+    ~/.config/alacritty/alacritty.d/alacritty.base.yml:
+      path: alacritty/alacritty.base.linux.yml
+      if: '[ "$(expr substr $(uname -s) 1 5)" "==" "Linux" ]'
+
+- shell:
+  -
+    command: cat ~/.config/alacritty/alacritty.d/*.yml > ~/.config/alacritty/alacritty.yml
+    stdin: true
+    stdout: true
+    stderr: true
+    description: Generating alacritty config
+    quiet: false
 
 # ================
 # MacOS only links
@@ -87,7 +114,6 @@
     # -----
     ~/.chunkwmrc: chunkwm/chunkwmrc.sh
     ~/.skhdrc: chunkwm/skhdrc
-    ~/.config/alacritty/alacritty.d/alacritty.base.yml: alacritty/alacritty.base.macos.yml
     ~/.chunkwmrc: chunkwm/chunkwmrc.sh
     ~/.skhdrc: chunkwm/skhdrc
     ~/Library/Application Support/Übersicht/widgets: ubersicht/widgets
@@ -117,21 +143,8 @@
 
     # files
     # -----
-    ~/.config/alacritty/alacritty.d/alacritty.base.yml: alacritty/alacritty.base.linux.yml
     ~/.xbindkeysrc: xbindkeysrc
     ~/.Xresources: Xresources
     ~/.xinitrc: xinitrc
     ~/.xprofile: xprofile
     ~/.config/compton.conf: compton.conf
-
-# =======
-# Scripts
-# =======
-- shell:
-  -
-    command: cat ~/.config/alacritty/alacritty.d/*.yml > ~/.config/alacritty/alacritty.yml
-    stdin: true
-    stdout: true
-    stderr: true
-    description: Generating alacritty config
-    quiet: false
