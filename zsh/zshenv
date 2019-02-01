@@ -16,8 +16,6 @@ export _JAVA_AWT_WM_NONREPARENTING=1
 [[ -d ${XDG_RUNTIME_DIR}  ]] || mkdir -p $XDG_RUNTIME_DIR
 [[ -d ${XDG_CACHE_HOME}   ]] || mkdir -p $XDG_CACHE_HOME
 
-export CONFIG_DIR="$XDG_CONFIG_HOME"
-export COLORS_DIR="$HOME/.colors"
 export SCRIPTS_DIR="$HOME/.scripts"
 
 # ==> setup PATH variable
@@ -65,8 +63,8 @@ export NVIM_LISTEN_ADDRESS=/tmp/nvimsocket
 # [[ -d ${XDG_RUNTIME_DIR}/nvim ]] || mkdir -p ${XDG_RUNTIME_DIR}/nvim
 
 # ==> colors
-export BASE16_SHELL_HOOKS=$HOME/.colors/base16-shell-hooks
-export BASE16_SHELL=$HOME/.colors/base16-shell
+export BASE16_SHELL_HOOKS=$XDG_CONFIG_HOME/colors/base16-shell-hooks
+export BASE16_SHELL=$XDG_CONFIG_HOME/colors/base16-shell
 
 # ==> setup default editor
 if (( $+commands[nvim] )) ; then

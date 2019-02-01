@@ -19,9 +19,6 @@
     ~/.scripts:
       path: scripts
       relink: true
-    ~/.colors:
-      path: colors
-      relink: true
 
 # ============
 # Common links
@@ -39,6 +36,7 @@
     ~/.config/termite: termite
     # ~/.config/fontconfig: fontconfig
     ~/.config/firefox: firefox
+    ~/.config/colors: colors
 
     # files
     # -----
@@ -148,3 +146,15 @@
     ~/.xinitrc: xinitrc
     ~/.xprofile: xprofile
     ~/.config/compton.conf: compton.conf
+
+# =======
+# Scripts
+# =======
+- shell:
+  -
+    command: $XDG_CONFIG_HOME/colors/base16_profile_helper.sh
+    stdin: true
+    stdout: true
+    stderr: true
+    description: Applying colors
+    quiet: false

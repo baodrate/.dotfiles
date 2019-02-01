@@ -13,6 +13,10 @@ if has('win32') || has('win64')
   let s:settings.sys_cache_dir = expand('~/AppData/Local')
   let s:settings.sys_config_dir = expand('~/AppData/Roaming')
 else
+  if !empty($NERD_TREE_ROOT)
+    autocmd VimEnter * NERDTree $HOME/$NERD_TREE_ROOT
+  endif
+  let s:settings.sys_cache_dir = get(g:, 'pluginname_setting', "default")
   let s:settings.sys_cache_dir = expand('~/.cache')
   let s:settings.sys_config_dir = expand('~/.config')
 endif

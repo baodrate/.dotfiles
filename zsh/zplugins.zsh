@@ -36,15 +36,13 @@ zplugin load "so-fancy/diff-so-fancy"
 
 # ==> git-now
 zplugin ice as"program" pick"$ZPFX/bin/git-*" make"prefix=$ZPFX"
+zplugin ice src'etc/_git-now' as'completion'
 zplugin load iwata/git-now
 
 # ==> git extras
 zplugin ice as"program" make"PREFIX=$ZPFX" pick"$ZPFX/bin/git-*"
+zplugin ice src'etc/git-extras-completion.zsh' as'completion'
 zplugin load tj/git-extras
-source "${ZPLGM[HOME_DIR]}/plugins/tj---git-extras/etc/git-extras-completion.zsh"
-
-# zplugin ice as"program" make"PREFIX=$ZPFX" pick"$ZPFX/bin/git-*"
-# zplugin load tj/git-extras
 
 
 # -------------
@@ -163,4 +161,3 @@ zplugin load zsh-users/zsh-autosuggestions
 #     those directories are at least unlikely to contain dangerous files)
 zplugin ice lucid atload"zpcompinit; zpcdreplay"
 zplugin load "zdharma/fast-syntax-highlighting"
-

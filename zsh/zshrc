@@ -132,7 +132,7 @@ fi
 # ------
 # Colors
 # ------
-# source ~/.colors/base16_profile_helper.sh # call before prompt because this checks [ -n "$PS1" ]
+source "$XDG_CONFIG_HOME/colors/current_base16_theme" # call before prompt because this checks [ -n "$PS1" ]
 
 # =============================================================================
 # Plugins
@@ -150,10 +150,10 @@ zplugin snippet "$ZDOTDIR/plugins/keybindings.plugin.zsh"
 zplugin snippet "$ZDOTDIR/plugins/history.plugin.zsh"
 zplugin snippet "$ZDOTDIR/plugins/ls-aliases.plugin.zsh"
 zplugin snippet "$ZDOTDIR/plugins/git.plugin.zsh"
+zplugin snippet "$ZDOTDIR/plugins/base16-shell.zsh"
 zplugin ice if"(( $+commands[rsync] ))"; zplugin snippet "$ZDOTDIR/plugins/cp-mv-safe.plugin.zsh"
 # super slow:
 # zplugin ice if"(( $+commands[pipenv] ))"; zplugin snippet "$ZDOTDIR/plugins/pipenv.plugin.zsh"
 
 # github-plugins
 source $ZDOTDIR/zplugins.zsh
-

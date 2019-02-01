@@ -1,15 +1,16 @@
 #!/usr/bin/env bash
 
-required_vars=(SCRIPTS_DIR COLORS_DIR)
+required_vars=(SCRIPTS_DIR XDG_CONFIG_HOME BASE16_SHELL BASE16_SHELL_HOOKS)
 for i in "${required_vars[@]}"; do eval "val=\$$i"; if [ -z "$val" ]; then echo "$i is unset or empty"; exit -1; fi; done
+[ -d "$XDG_CONFIG_HOME"/colors ] || exit -1
 
-. "${SCRIPTS_DIR}/sh-update-link.sh" || exit -1
+source "${SCRIPTS_DIR}/sh-update-link.sh" || exit -1
 
-current_theme_link="$COLORS_DIR/current_base16_theme"
+current_theme_link="$XDG_CONFIG_HOME/colors/current_base16_theme"
 
 debug() { echo "$1"; }
 
-_base16()
+base16()
 {
   local script=$1
   local theme=$2
@@ -34,16 +35,9 @@ _base16()
   fi
 }
 
-for script in $BASE16_SHELL/scripts/base16*.sh; do
-  script_name=${script##*/}
-  script_name=${script_name%.sh}
-  theme=${script_name#*-}
-  func_name="base16_${theme}"
-  alias $func_name="_base16 ${script} $theme"
-done;
-
 if [ -f "$current_theme_link" ]; then
-  script_name=$(basename "$(perl -MCwd -le 'print Cwd::abs_path(shift)' "$current_theme_link")" .sh)
+  script=$(perl -MCwd -le 'print Cwd::abs_path(shift)' "$current_theme_link")
+  script_name=$(basename "$script" .sh)
   export BASE16_THEME=${script_name//base16-/}
   source "$BASE16_SHELL/scripts/$script_name.sh"
 fi
