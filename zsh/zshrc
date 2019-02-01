@@ -129,11 +129,6 @@ if (( $+commands[prettyping] )); then
   alias ping='prettyping --nolegend'
 fi
 
-# ------
-# Colors
-# ------
-source "$XDG_CONFIG_HOME/colors/current_base16_theme" # call before prompt because this checks [ -n "$PS1" ]
-
 # =============================================================================
 # Plugins
 # =============================================================================
@@ -154,6 +149,8 @@ zplugin snippet "$ZDOTDIR/plugins/base16-shell.zsh"
 zplugin ice if"(( $+commands[rsync] ))"; zplugin snippet "$ZDOTDIR/plugins/cp-mv-safe.plugin.zsh"
 # super slow:
 # zplugin ice if"(( $+commands[pipenv] ))"; zplugin snippet "$ZDOTDIR/plugins/pipenv.plugin.zsh"
+
+zplugin ice if"(( $+commands[poetry] ))" as"completion"; zplugin snippet "$ZDOTDIR/completions/_poetry"
 
 # github-plugins
 source $ZDOTDIR/zplugins.zsh

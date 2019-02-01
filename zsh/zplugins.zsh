@@ -31,8 +31,10 @@ zplugin ice as"program" cp"httpstat.sh -> httpstat" pick"httpstat"
 zplugin load "b4b4r07/httpstat"
 
 # ==> diff-so-fancy
-zplugin ice as"program" pick"diff-so-fancy"
-zplugin load "so-fancy/diff-so-fancy"
+# zplugin ice as"program" pick"diff-so-fancy"
+# zplugin load "so-fancy/diff-so-fancy"
+zplugin ice as"program" pick"bin/git-dsf"
+zplugin light "zdharma/zsh-diff-so-fancy"
 
 # ==> git-now
 zplugin ice as"program" pick"$ZPFX/bin/git-*" make"prefix=$ZPFX"

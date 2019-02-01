@@ -32,15 +32,29 @@ setopt no_global_rcs
 [[ -d "/usr/local/sbin" ]] && new_path="${new_path:+${new_path}:}/usr/local/sbin"
 [[ -d "/usr/local/opt/llvm/bin" ]] && new_path="${new_path:+${new_path}:}/usr/local/opt/llvm/bin"
 [[ -d "/usr/local/opt/ccache/libexec" ]] && new_path="${new_path:+${new_path}:}/usr/local/opt/ccache/libexec"
+
+# ==> brew
 (( $+commands[brew] )) && \
   new_path="${new_path:+${new_path}:}/usr/local/bin:/usr/local/sbin" && \
   new_manpath="${new_manpath:+${new_path}:}/usr/local/share/info" && \
   new_infopath="${new_infopath:+${new_path}:}/usr/local/share/infopath"
 
+# ==> python
+[[ -d "/Users/baot/.pyenv/bin" ]] && new_path="${new_path:+${new_path}:}/Users/baot/.pyenv/bin"
+# export path to get python executables
+[[ ! -z PATH     ]] && export PATH="${new_path:+${new_path}:}$PATH"
+#new_path="${new_path:+${new_path}:}$(python2 -m site --user-base)/bin:$(python2 -m site --user-site)"
+new_path="${new_path:+${new_path}:}$(python3 -m site --user-base)/bin:$(python3 -m site --user-site)"
+# ==> npm
+export npm_config_cache="$XDG_CACHE_HOME/npm"
+export npm_config_prefix="${XDG_DATA_HOME}/node_modules"
+new_path="${new_path:+${new_path}:}$npm_config_prefix/bin"
+
 
 [[ ! -z PATH     ]] && export PATH="${new_path:+${new_path}:}$PATH"
 [[ ! -z MANPATH  ]] && export MANPATH="${new_manpath:+${new_manpath}:}:$MANPATH"
 [[ ! -z INFOPATH ]] && export INFOPATH="${new_infopath:+${new_infopath}:}:$INFOPATH"
+
 
 # ==> python
 [[ -d "$HOME/.pyenv/bin" ]] && new_path="${new_path:+${new_path}:}$HOME/.pyenv/bin"
@@ -48,6 +62,10 @@ setopt no_global_rcs
 (( $+commands[pyenv] )) && eval "$(pyenv init -)"
 (( $+commands[pyenv] )) && eval "$(pyenv virtualenv-init -)"
 (( $+commands[python3] )) && new_path="${new_path:+${new_path}:}$(python3 -m site --user-base)/bin:$(python3 -m site --user-site)"
+# if [[ -n $VIRTUAL_ENV && -e "${VIRTUAL_ENV}/bin/activate" ]]; then
+#   source "${VIRTUAL_ENV}/bin/activate"
+# fi
+
 # ==> npm
 if (( $+commands[npm] )); then
   export npm_config_cache="$XDG_CACHE_HOME/npm"
