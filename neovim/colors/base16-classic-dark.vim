@@ -1,1 +1,0 @@
-../../colors/base16-vim/colors/base16-classic-dark.vim
