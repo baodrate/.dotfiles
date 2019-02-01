@@ -1,5 +1,5 @@
 [core]
-  pager = diff-so-fancy | less --tabs=1,5 -RFX
+  # pager = diff-so-fancy | less --tabs=1,5 -RFX
   excludesfile = ~/.gitignore_global
 
 [user]
@@ -12,7 +12,7 @@
 
 [difftool "sourcetree"]
   cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-  path = 
+  path =
 [mergetool "sourcetree"]
   cmd = /Users/baot/Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
   trustExitCode = true

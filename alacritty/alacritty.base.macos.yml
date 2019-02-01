@@ -114,11 +114,6 @@ font:
     x: 0
     y: 0
 
-  # no longer supported (https://github.com/jwilm/alacritty/issues/1791)
-  # Scale the font size based on the monitor's DPI. This will lead to bigger text on HiDPI
-  # screens and make reading text a little easier.
-  scale_with_dpi: true
-
   # Thin stroke font rendering (OS X only)
   #
   # Thin strokes are suitable for retina displays, but for non-retina screens
@@ -127,6 +122,7 @@ font:
   # https://github.com/jwilm/alacritty/issues/1635
   # https://github.com/jwilm/alacritty/issues/486
   # https://github.com/jwilm/alacritty/issues/957
+  # https://github.com/jwilm/alacritty/issues/1212
   use_thin_strokes: true
 
 # Display the time it takes to redraw each frame.
@@ -503,12 +499,15 @@ key_bindings:
 
   # launch new window (see https://github.com/jwilm/alacritty/issues/607)
   # https://github.com/jwilm/alacritty/issues/607#issuecomment-329083060
-  - { key: N,        mods: Command,       command: { program: "open", args: ["-n", "/Applications/Alacritty.app"] } }
+  # https://github.com/jwilm/alacritty/issues/1988 (Crash on macOS with SpawnNewInstance action)
+  # - { key: N,        mods: Command,   command: { program: "open", args: ["-n", "/Applications/Alacritty.app"] } }
+  - { key: N,        mods: Command,   action: SpawnNewInstance           }
 
   # workaround for https://github.com/jwilm/alacritty/issues/1359
   - { key: Q, mods: Control,          chars: "\x11"                      }
 
-  # https://github.com/jwilm/alacritty/issues/808#issuecomment-334200570
-  # doesn't work on mac
-  # - { key: N,        mods: Command|Shift, command: { program: "/bin/bash", args: ["-c", "$HOME/.scripts/spawn-alacritty-cwd.sh"] } }
-
+  # skhdrc:
+  # ```
+  # open terminal, blazingly fast compared to iTerm/Hyper
+  # cmd - return : open -na /Applications/Alacritty.app
+  # ```

@@ -2375,7 +2375,7 @@
 		</dict>
 	</dict>
 	<key>PrefsCustomFolder</key>
-	<string>/Users/baot/.dotfiles/iterm2</string>
+	<string>/Users/baot/.config/iterm2</string>
 	<key>SUAutomaticallyUpdate</key>
 	<false/>
 	<key>SUEnableAutomaticChecks</key>
