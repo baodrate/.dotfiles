@@ -19,61 +19,44 @@ export _JAVA_AWT_WM_NONREPARENTING=1
 export SCRIPTS_DIR="$HOME/.scripts"
 
 # ==> setup PATH variable
-# new_path="$(getconf new_path)"
+_PATH=$(getconf PATH)
+_MANPATH=${$(getconf MANPATH 2>/dev/null):-}
+_INFOPATH=${$(getconf INFOPATH 2>/dev/null):-}
 
 # /etc/zprofile on macOS loads /usr/libexec/path_helper which overwrites PATH
 # disable it
 setopt no_global_rcs
 
-[[ -d "$SCRIPTS_DIR" ]] && new_path="${new_path:+${new_path}:}$SCRIPTS_DIR"
-[[ -d "$HOME/.cargo/bin" ]] && new_path="${new_path:+${new_path}:}$HOME/.cargo/bin"
-[[ -d "$HOME/.poetry/bin" ]] && new_path="${new_path:+${new_path}:}$HOME/.poetry/bin"
-[[ -d "/usr/local/bin" ]] && new_path="${new_path:+${new_path}:}/usr/local/bin"
-[[ -d "/usr/local/sbin" ]] && new_path="${new_path:+${new_path}:}/usr/local/sbin"
-[[ -d "/usr/local/opt/llvm/bin" ]] && new_path="${new_path:+${new_path}:}/usr/local/opt/llvm/bin"
-[[ -d "/usr/local/opt/ccache/libexec" ]] && new_path="${new_path:+${new_path}:}/usr/local/opt/ccache/libexec"
+[[ -d "$SCRIPTS_DIR" ]] && _PATH="$SCRIPTS_DIR:$_PATH"
+[[ -d "$HOME/.cargo/bin" ]] && _PATH="$HOME/.cargo/bin:$_PATH"
+[[ -d "$HOME/.poetry/bin" ]] && _PATH="$HOME/.poetry/bin:$_PATH"
+[[ -d "/usr/local/opt/llvm/bin" ]] && _PATH="/usr/local/opt/llvm/bin:$_PATH"
+[[ -d "/usr/local/opt/ccache/libexec" ]] && _PATH="/usr/local/opt/ccache/libexec:$_PATH"
 
 # ==> brew
-(( $+commands[brew] )) && \
-  new_path="${new_path:+${new_path}:}/usr/local/bin:/usr/local/sbin" && \
-  new_manpath="${new_manpath:+${new_path}:}/usr/local/share/info" && \
-  new_infopath="${new_infopath:+${new_path}:}/usr/local/share/infopath"
+[[ -d "/usr/local/bin" ]] && _PATH="/usr/local/bin:$_PATH"
+[[ -d "/usr/local/sbin" ]] && _PATH="/usr/local/sbin:$_PATH"
+[[ -d "/usr/local/share/info" ]] && _MANPATH="/usr/local/share/info:$_MANPATH"
+[[ -d "/usr/local/share/infopath" ]] && _INFOPATH="/usr/local/share/infopath:$_INFOPATH"
 
 # ==> python
-[[ -d "/Users/baot/.pyenv/bin" ]] && new_path="${new_path:+${new_path}:}/Users/baot/.pyenv/bin"
-# export path to get python executables
-[[ ! -z PATH     ]] && export PATH="${new_path:+${new_path}:}$PATH"
-#new_path="${new_path:+${new_path}:}$(python2 -m site --user-base)/bin:$(python2 -m site --user-site)"
-new_path="${new_path:+${new_path}:}$(python3 -m site --user-base)/bin:$(python3 -m site --user-site)"
-# ==> npm
-export npm_config_cache="$XDG_CACHE_HOME/npm"
-export npm_config_prefix="${XDG_DATA_HOME}/node_modules"
-new_path="${new_path:+${new_path}:}$npm_config_prefix/bin"
-
-
-[[ ! -z PATH     ]] && export PATH="${new_path:+${new_path}:}$PATH"
-[[ ! -z MANPATH  ]] && export MANPATH="${new_manpath:+${new_manpath}:}:$MANPATH"
-[[ ! -z INFOPATH ]] && export INFOPATH="${new_infopath:+${new_infopath}:}:$INFOPATH"
-
-
-# ==> python
-[[ -d "$HOME/.pyenv/bin" ]] && new_path="${new_path:+${new_path}:}$HOME/.pyenv/bin"
-[[ ! -z PATH ]] && export PATH="${new_path:+${new_path}:}$PATH"
-(( $+commands[pyenv] )) && eval "$(pyenv init -)"
-(( $+commands[pyenv] )) && eval "$(pyenv virtualenv-init -)"
-(( $+commands[python3] )) && new_path="${new_path:+${new_path}:}$(python3 -m site --user-base)/bin:$(python3 -m site --user-site)"
-# if [[ -n $VIRTUAL_ENV && -e "${VIRTUAL_ENV}/bin/activate" ]]; then
-#   source "${VIRTUAL_ENV}/bin/activate"
-# fi
-
-# ==> npm
-if (( $+commands[npm] )); then
-  export npm_config_cache="$XDG_CACHE_HOME/npm"
-  export npm_config_prefix="${XDG_DATA_HOME}/node_modules"
+(( $+commands[python3] )) && _PATH="$(python3 -m site --user-base)/bin:$(python3 -m site --user-site):$_PATH"
+if [[ -d "$HOME/.pyenv/bin" ]] ; then
+  export PATH="$HOME/.pyenv/bin:$_PATH"
+  eval "$(pyenv init -)"
+  eval "$(pyenv virtualenv-init -)"
+  _PATH=$PATH
 fi
-[[ -d "$npm_config_prefix" ]] && new_path="${new_path:+${new_path}:}$npm_config_prefix/bin"
 
-[[ ! -z PATH ]] && export PATH="${new_path:+${new_path}:}$PATH"
+# ==> npm
+export npm_config_prefix="$XDG_DATA_HOME/node_modules"
+export npm_config_cache="$XDG_CACHE_HOME/npm"
+[[ -d "$npm_config_prefix" ]] && _PATH="$npm_config_prefix/bin:$_PATH"
+
+
+export PATH="$_PATH"
+export MANPATH="$_MANPATH"
+export INFOPATH=":$_INFOPATH"
 
 # ==> nvim-remote
 #
