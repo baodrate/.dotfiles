@@ -1,30 +1,45 @@
-# default
-Host github.com
-  HostName github.com
-  User git
-  IdentityFile ~/.ssh/gpg-baot.pub
+# ======
+# Common
+# ======
+Host *
   IdentitiesOnly yes
 
-# qubidt
-Host gh-qubidt
-  HostName github.com
-  User git
-  IdentityFile ~/.ssh/gpg-qubidt.pub
-  IdentitiesOnly yes
-
-# bao-gxg
+# ==============
+# work (bao-gxg)
+# ==============
 Host gh-bao-gxg
   HostName github.com
+  IdentityFile ~/.ssh/gpg-baot.pub
+
+# =================
+# personal (qubidt)
+# =================
+Host gh-qubidt
+  HostName github.com
+  IdentityFile ~/.ssh/gpg-qubidt.pub
+
+# ====
+# misc
+# ====
+Host github.com
   User git
-  IdentityFile ~/.ssh/gpg-baot.pub
-  IdentitiesOnly yes
 
-Host bao-imac
-  HostName 10.11.110.33
-  User baot
-  IdentityFile ~/.ssh/gpg-baot.pub
+# mulitplex tunnels
+Host *.ftdna.com *.poorboys.casa
+  ControlPath ~/.cache/ssh/%r@%h:%p
+  ControlPersist 10m
+  ControlMaster auto
+  ForwardAgent yes
 
-Host devolnx02
-  HostName devolnx02.unx.ftdna.com
-  User baot
+# use FQDN
+Host *
+  CanonicalDomains int.ftdna.com unx.ftdna.com
+  CanonicalizeFallbackLocal no
+  CanonicalizeHostname yes
+  CanonicalizeMaxDots 0
+
+# ================
+# default identity
+# ================
+Host *
   IdentityFile ~/.ssh/gpg-baot.pub
