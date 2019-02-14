@@ -11,6 +11,7 @@
       relink: true
       create: true
       relative: true
+      glob: true
 
 - link:
     ~/.dotfiles:
@@ -23,12 +24,6 @@
 # ============
 # Common links
 # ============
-- defaults:
-    link:
-      relink: true
-      create: true
-      relative: true
-
 - link:
     # directories
     # -----------
@@ -38,6 +33,11 @@
     ~/.config/firefox: firefox
     ~/.config/colors: colors
 
+    # globs
+    # -----
+    ~/.ssh/:
+      path: ssh/*
+
     # files
     # -----
     # -- gpg
@@ -45,17 +45,27 @@
     ~/.gitconfig-work: git/config-work
     ~/.gitconfig-personal: git/config-personal
     ~/.gitignore_global: git/gitignore_global
-    ~/.ssh/config: ssh/config
-    ~/.ssh/gpg-qubidt.pub: ssh/gpg-qubidt.pub
-    ~/.ssh/gpg-baot.pub: ssh/gpg-baot.pub
     ~/.gnupg/gpg-agent.conf: gnupg/gpg-agent.conf
     ~/.gnupg/sshcontrol: gnupg/sshcontrol
+
     # -- tmux
     ~/.tmux.conf: tmux/tmux.conf
-    ~/.config/tmux/tmux.d/base16.256.conf: tmux/base16.256.tmuxtheme
+    # ~/.config/tmux/base16.conf: tmux/base16.256.tmuxtheme
+    ~/.config/tmux/base16.conf: tmux/base16.tmuxtheme
+    ~/.config/tmux/copy-paste.macos.conf:
+      path: tmux/copy-paste.macos.conf
+      if: '[ "$(uname -s)" "==" "Darwin" ]'
+    ~/.config/tmux/copy-paste.xorg.conf:
+      path: tmux/copy-paste.xorg.conf
+      if: '[ "$(uname -s)" "==" "Linux" ]'
+    ~/.config/tmux/tmux-shell.macos.conf:
+      path: tmux/tmux-shell.macos.conf
+      if: '[ "$(uname -s)" "==" "Darwin" ]'
+
     # -- zsh
     ~/.zshenv: zshenv
     ~/.config/zsh: zsh
+
     # -- misc
     ~/.base16_theme: base16_theme
     ~/.vimperator: vimperator
@@ -64,25 +74,35 @@
 # =========
 # Alacritty
 # =========
+- link:
+    ~/.config/alacritty/base.yml:
+      path: alacritty/base.yml
+    ~/.config/alacritty/base16-colors.yml:
+      path: alacritty/base16-colors.yml
+    ~/.config/alacritty/keybindings.yml:
+      path: alacritty/keybindings.yml
+
 - defaults:
     link:
-      relink: true
-      create: true
-      relative: true
-
-- link:
-    ~/.config/alacritty/alacritty.d/base16-colors.yml:
-      path: alacritty/base16-colors.yml
-    ~/.config/alacritty/alacritty.d/alacritty.base.yml:
-      path: alacritty/alacritty.base.macos.yml
       if: '[ "$(uname -s)" "==" "Darwin" ]'
-    ~/.config/alacritty/alacritty.d/alacritty.base.yml:
-      path: alacritty/alacritty.base.linux.yml
+- link:
+    ~/.config/alacritty/base.macos.yml:
+      path: alacritty/base.macos.yml
+    ~/.config/alacritty/keybindings.macos.yml:
+      path: alacritty/keybindings.macos.yml
+
+- defaults:
+    link:
       if: '[ "$(uname -s)" "==" "Linux" ]'
+- link:
+    ~/.config/alacritty/alacritty.linux.yml:
+      path: alacritty/alacritty.linux.yml
+    ~/.config/alacritty/keybindings.linux.yml:
+      path: alacritty/keybindings.linux.yml
 
 - shell:
   -
-    command: cat ~/.config/alacritty/alacritty.d/*.yml > ~/.config/alacritty/alacritty.yml
+    command:  cat ~/.config/alacritty/base.yml ~/.config/alacritty/base.*.yml ~/.config/alacritty/base16-colors.yml ~/.config/alacritty/keybindings.yml ~/.config/alacritty/keybindings.*.yml > ~/.config/alacritty/alacritty.yml
     stdin: true
     stdout: true
     stderr: true
@@ -94,9 +114,6 @@
 # ================
 - defaults:
     link:
-      relink: true
-      create: true
-      relative: true
       if: '[ "$(uname -s)" "==" "Darwin" ]'
 
 - link:
@@ -112,19 +129,13 @@
     # -----
     ~/.chunkwmrc: chunkwm/chunkwmrc.sh
     ~/.skhdrc: chunkwm/skhdrc
-    ~/.chunkwmrc: chunkwm/chunkwmrc.sh
-    ~/.skhdrc: chunkwm/skhdrc
     ~/Library/Application Support/Übersicht/widgets: ubersicht/widgets
-    ~/.config/tmux/tmux.d/tmux-shell.conf: tmux/tmux-shell.macos.conf
 
 # ================
 # Linux only links
 # ================
 - defaults:
     link:
-      relink: true
-      create: true
-      relative: true
       if: '[ "$(uname -s)" "==" "Linux" ]'
 
 - link:
