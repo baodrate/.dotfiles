@@ -30,14 +30,22 @@ setopt no_global_rcs
 [[ -d "$SCRIPTS_DIR" ]] && _PATH="$SCRIPTS_DIR:$_PATH"
 [[ -d "$HOME/.cargo/bin" ]] && _PATH="$HOME/.cargo/bin:$_PATH"
 [[ -d "$HOME/.poetry/bin" ]] && _PATH="$HOME/.poetry/bin:$_PATH"
-[[ -d "/usr/local/opt/llvm/bin" ]] && _PATH="/usr/local/opt/llvm/bin:$_PATH"
-[[ -d "/usr/local/opt/ccache/libexec" ]] && _PATH="/usr/local/opt/ccache/libexec:$_PATH"
 
-# ==> brew
-[[ -d "/usr/local/bin" ]] && _PATH="/usr/local/bin:$_PATH"
-[[ -d "/usr/local/sbin" ]] && _PATH="/usr/local/sbin:$_PATH"
-[[ -d "/usr/local/share/info" ]] && _MANPATH="/usr/local/share/info:$_MANPATH"
-[[ -d "/usr/local/share/infopath" ]] && _INFOPATH="/usr/local/share/infopath:$_INFOPATH"
+# ==> macOS
+if [[ "$(uname -s)" == "Darwin" ]]; then
+  # ==> llvm
+  [[ -d "/usr/local/opt/llvm/bin" ]] && _PATH="/usr/local/opt/llvm/bin:$_PATH"
+  [[ -d "/usr/local/opt/ccache/libexec" ]] && _PATH="/usr/local/opt/ccache/libexec:$_PATH"
+
+  # ==> brew
+  [[ -d "/usr/local/bin" ]] && _PATH="/usr/local/bin:$_PATH"
+  [[ -d "/usr/local/sbin" ]] && _PATH="/usr/local/sbin:$_PATH"
+  [[ -d "/usr/local/share/info" ]] && _MANPATH="/usr/local/share/info:$_MANPATH"
+  [[ -d "/usr/local/share/infopath" ]] && _INFOPATH="/usr/local/share/infopath:$_INFOPATH"
+
+  # ==> homebrew curl
+  [[ -d "/usr/local/opt/curl" ]] && _PATH="/usr/local/opt/curl/bin:$_PATH"
+fi
 
 # ==> python
 (( $+commands[python3] )) && _PATH="$(python3 -m site --user-base)/bin:$(python3 -m site --user-site):$_PATH"
@@ -49,14 +57,9 @@ if [[ -d "$HOME/.pyenv/bin" ]] ; then
 fi
 
 # ==> npm
-export npm_config_prefix="$XDG_DATA_HOME/node_modules"
+export npm_config_prefix="$XDG_DATA_HOME/npm"
 export npm_config_cache="$XDG_CACHE_HOME/npm"
 [[ -d "$npm_config_prefix" ]] && _PATH="$npm_config_prefix/bin:$_PATH"
-
-
-export PATH="$_PATH"
-export MANPATH="$_MANPATH"
-export INFOPATH=":$_INFOPATH"
 
 # ==> nvim-remote
 #
@@ -98,3 +101,7 @@ QT_XCB_FORCE_SOFTWARE_OPENGL=1
 # MAC
 # ===
 # ulimit -n 32768
+
+export PATH="$_PATH"
+export MANPATH="$_MANPATH"
+export INFOPATH=":$_INFOPATH"
