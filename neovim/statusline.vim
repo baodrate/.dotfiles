@@ -220,6 +220,7 @@ function! ShowMode(include, exclude)
   return '  ' . get(s:mode_labels, active_mode, active_mode) . ' '
 endfunction
 
+" Using ALE
 function! LinterStatus() abort
    let l:counts = ale#statusline#Count(bufnr(''))
    let l:all_errors = l:counts.error + l:counts.style_error
@@ -229,6 +230,20 @@ function! LinterStatus() abort
    \ l:all_non_errors,
    \ l:all_errors
    \)
+endfunction
+
+" Using coc
+function! StatusDiagnostic() abort
+  let info = get(b:, 'coc_diagnostic_info', {})
+  if empty(info) | return '' | endif
+  let msgs = []
+  if get(info, 'error', 0)
+    call add(msgs, 'E' . info['error'])
+  endif
+  if get(info, 'warning', 0)
+    call add(msgs, 'W' . info['warning'])
+  endif
+  return join(msgs, ' '). ' ' . get(g:, 'coc_status', '')
 endfunction
 
 function! GitStatus() abort
@@ -263,7 +278,8 @@ set statusline+=\ %<%*                                " truncate starting here
 " file directory (relative to pwd)
 set statusline+=%{&buftype!='terminal'?(strlen(expand('%:h'))?'›\ '.expand('%:h').'/':''):''}
 set statusline+=%=
-set statusline+=\ %{LinterStatus()}      " ALE status
+" set statusline+=\ %{LinterStatus()}      " ALE status
+set statusline+=\ %{StatusDiagnostic()}    " coc status
 set statusline+=\ %2p%%                  " current line percentage
 set statusline+=｢%l:%c｣                  " current line/column number
 set statusline+=\ «\ %*
