@@ -10,12 +10,21 @@ current_theme_link="$XDG_CONFIG_HOME/colors/current_base16_theme"
 
 debug() { echo "$1"; }
 
+get_abs_path() { perl -MCwd -le 'print Cwd::abs_path(shift)' "$1" ; }
+
 base16()
 {
-  local script=$1
-  local theme=$2
+  local theme=$1
+
+  echo "Changing base16: $theme"
+
+  [[ -f "$XDG_CONFIG_HOME"/colors/current_base16_theme ]] || (echo "Can't find current_base16_theme" && return 1)
+
+  scripts_dir=$(dirname $(get_abs_path "$XDG_CONFIG_HOME/colors/current_base16_theme"))
+  script="$scripts_dir/base16-$theme.sh"
+
   if [[ -f "$script" ]]; then
-    if source "$script" && update_link "$current_theme_link" "$script"; then
+    if source "$script" && update_link "$XDG_CONFIG_HOME/colors/current_base16_theme" "$script"; then
       export BASE16_THEME=${theme}
       if [ -n "$BASE16_SHELL_HOOKS" ] && [ -d "${BASE16_SHELL_HOOKS}" ]; then
         failures=
@@ -27,16 +36,18 @@ base16()
             failures="$hook;$failures"
           fi
         done
-        [ -z "$failures" ] && return 0 || return 1
+        [ -z "$failures" ] || return 1
       fi
     else
-      return 1
+      echo "failed to source script ($script) for theme ($theme)" && return 1
     fi
+  else
+    echo "failed to find script ($script) for theme ($theme)" && return 1
   fi
 }
 
 if [ -f "$current_theme_link" ]; then
-  script=$(perl -MCwd -le 'print Cwd::abs_path(shift)' "$current_theme_link")
+  script=$(get_abs_path "$current_theme_link")
   script_name=$(basename "$script" .sh)
   export BASE16_THEME=${script_name//base16-/}
   source "$BASE16_SHELL/scripts/$script_name.sh"

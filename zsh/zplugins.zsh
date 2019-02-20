@@ -92,6 +92,9 @@ zplugin load djui/alias-tips
 zplugin load zdharma/zui
 zplugin load zdharma/zplugin-crasis
 
+# ==> translate-shell (trans)
+#     google translate CLI
+zplugin load soimort/translate-shell
 
 # -------------------------------
 # autocomplete / search / history

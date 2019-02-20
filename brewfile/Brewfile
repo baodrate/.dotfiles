@@ -1,150 +1,131 @@
+# meta
+brew 'mas'
+brew 'rcmdnk/file/brew-file'    # brew-bundle alternative
 
-# tap repositories and their packages
+# system
+cask 'parallels'
 
+# hardware
 tap 'homebrew/cask-drivers'
-cask 'logitech-gaming-software'
 cask 'steelseries-exactmouse-tool'
+cask 'logitech-gaming-software'
 
-tap 'homebrew/cask-fonts'
-cask 'font-fontawesome'
-cask 'font-hack-nerd-font-mono'
+# security
+brew 'gnupg'
+brew 'telnet'
+brew 'openssh'
+brew 'ssh-copy-id'
+cask 'keybase'
+cask 'tunnelblick'
 
+# usability
+tap 'crisidev/homebrew-chunkwm'
+brew 'chunkwm', args: ["HEAD", "with-purify"]
+tap 'koekeishiya/homebrew-formulae'
+brew 'skhd', args: ["HEAD", "with-logging"], restart_service: :changed
+cask 'ubersicht'
+cask 'bitbar'
+
+# browsers
 tap 'homebrew/cask-versions'
 cask 'firefox-developer-edition'
 cask 'google-chrome-dev'
-cask 'java8'
 
-tap 'AdoptOpenJDK/openjdk'
-
-tap 'brewsci/bio'
-
-tap 'crisidev/homebrew-chunkwm'
-
-tap 'koekeishiya/homebrew-formulae'
-
+# terminals
+cask 'iterm2'
 tap 'mscharley/homebrew'
 brew 'alacritty'
+# exec 'sudo tic -e alacritty,alacritty-direct /usr/local/share/alacritty/alacritty.info'
+# exec 'ln -s /usr/local/opt/alacritty/Applications/Alacritty.app /Applications/'
 
-tap 'rcmdnk/file'
-brew 'brew-file'
-brew 'rcmdnk/file/brew-file', args: ['#', 'brew-bundle', 'alternative']
-
-tap 'twlz0ne/homebrew-ccls'
-
-tap 'universal-ctags/universal-ctags'
-brew 'universal-ctags', args: ['HEAD']
-
-# Other Homebrew packages
-brew 'abduco', args: ['#', 'session', 'management']
-brew 'autoconf'
+# shells
 brew 'bash'
 brew 'bash-completion@2'
-brew 'bat', args: ['#', 'prettier', 'cat', 'tool']
-brew 'bindfs'
-brew 'bitwarden-cli'
-brew 'byobu'
-brew 'chunkwm'
-brew 'clang-format'
-brew 'cmake'
-brew 'coreutils'
-brew 'curl'
-brew 'docker'
-brew 'docker-compose'
-brew 'entr'
-brew 'exa', args: ['#', 'ls', 'alternative']
-brew 'findutils'
-brew 'fltk'
-brew 'fzf'
-brew 'gdbm'
-brew 'gettext'
-brew 'git'
-brew 'glances', args: ['#', 'top', 'alternative']
-brew 'gmp'
-brew 'gnu-sed'
-brew 'gnupg'
-brew 'gnutls'
-brew 'gpsbabel'
-brew 'icu4c'
-brew 'iproute2mac', args: ['#', 'wraps', 'ip', 'commands']
-brew 'jpeg'
-brew 'jpeg-turbo'
-brew 'jq'
-brew 'libevent'
-brew 'libffi'
-brew 'libpng'
-brew 'libtasn1'
-brew 'libunistring'
-brew 'libusb'
-brew 'llvm'
-brew 'mas'
-brew 'mosh'
-brew 'mpd'
-brew 'ncmpcpp', args: ['#', 'mpd', 'client']
-brew 'neovim'
-brew 'nettle'
-brew 'newt'
-brew 'nnn'
-brew 'node'
-brew 'openssh'
-brew 'openssl'
-brew 'p11-kit'
-brew 'pandoc'
-brew 'pidof'
-brew 'pkg-config'
-brew 'popt'
-brew 'protobuf', args: ['without-python@2', '#', 'depended-on', 'by', 'mosh']
-brew 'python'
-brew 'python2'
-brew 'qt'
-brew 'readline'
-brew 'ripgrep', args: ['#', 'grep', 'alternative']
-brew 'rsync', args: ['#', 'updated', 'version', 'of', 'rsync', '(system', 'version', 'is', '10yo', '2.6.9!)']
-brew 's-lang'
-brew 'shellcheck'
-brew 'shfmt'
-brew 'skhd', args: ['HEAD', 'with-logging', 'restart_service:', ':changed']
-brew 'sqlite'
-brew 'ssh-copy-id'
-brew 'sshfs'
-brew 'subversion'
-brew 'swift'
-brew 'telnet'
-brew 'tiger-vnc'
-brew 'tmux'
-brew 'watch'
-brew 'watchexec'
-brew 'wget'
-brew 'wine'
-brew 'xz'
 brew 'zsh'
 brew 'zsh-completions'
+brew 'protobuf', args: ["without-python@2"]     # depended-on by mosh
+brew 'mosh'
 
-# Other Cask applications
-cask 'adoptopenjdk'
-cask 'alacritty'
-cask 'azure-data-studio'
-cask 'barrier'
-cask 'bee'
-cask 'bitbar'
-cask 'dbschema'
-cask 'dotnet'
-cask 'font-hack-nerd-font'
-cask 'gimp'
-cask 'google-drive-file-stream'
-cask 'insomnia'
-cask 'iterm2'
-cask 'jadengeller-helium'
-cask 'java'
-cask 'jetbrains-toolbox'
-cask 'keybase'
+# editors
+brew 'neovim'
 cask 'oni'
-cask 'osxfuse'
-cask 'parallels'
-cask 'pgadmin4'
-cask 'pocket-casts'
-cask 'spotify'
-cask 'synergy'
-cask 'tunnelblick'
-cask 'ubersicht'
 cask 'visual-studio-code'
-cask 'xquartz'
+
+# fonts
+tap 'homebrew/cask-fonts'
+cask 'font-hack-nerd-font'
+cask 'font-hack-nerd-font-mono'
+cask 'font-fontawesome'
+
+# dev
+cask 'dotnet'
+brew 'git'
+brew 'subversion'
+cask 'jetbrains-toolbox'
+
+# ctags
+tap 'universal-ctags/universal-ctags'
+brew 'universal-ctags', args: ["HEAD"]
+
+# dev:docker
+brew 'docker'
+brew 'docker-compose'
+
+# dev:sql
+tap 'AdoptOpenJDK/openjdk'
+cask 'adoptopenjdk'
+cask 'dbschema'
+
+# dev:shell
+brew 'shellcheck'
+
+# dev:python
+brew 'python'         # python3
+brew 'pipenv'
+
+# dev:C++
+brew 'clang-format'
+tap 'twlz0ne/homebrew-ccls'
+brew 'ccls'
+brew 'cquery'
+
+# dev:swift
+brew 'swift'
+
+# system
+cask 'osxfuse'
+brew 'sshfs'
+brew 'bindfs'
+
+# utility:common
+brew 'wget'
+brew 'curl'
+brew 'coreutils'
+brew 'findutils'
+brew 'gnu-sed'
+brew 'tmux'
+brew 'iproute2mac'    # wraps ip commands
+brew 'watch'
+brew 'pidof'
+brew 'rsync'          # updated version of rsync (system version is 10yo 2.6.9!)
+
+# utility:alternatives
+brew 'bat'            # prettier cat tool
+brew 'glances'        # top alternative
+brew 'ripgrep'        # grep alternative
+brew 'exa'            # ls alternative
+
+# utility:misc
+brew 'jq'
+brew 'fzf'
+brew 'abduco'         # session management
+brew 'nnn'
+
+# media
+cask 'spotify'
+brew 'mpd'
+brew 'ncmpcpp'        # mpd client
+cask 'pocket-casts'
+
+# other
+cask 'jadengeller-helium'
