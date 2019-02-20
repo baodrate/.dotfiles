@@ -41,8 +41,11 @@ setopt no_global_rcs
 
 # ==> python
 (( $+commands[python3] )) && _PATH="$(python3 -m site --user-base)/bin:$(python3 -m site --user-site):$_PATH"
+#if [[ -d "$HOME/.pyenv/bin" ]] ; then
 if [[ -d "$HOME/.pyenv/bin" ]] ; then
   export PATH="$HOME/.pyenv/bin:$_PATH"
+fi
+if (( $+commands[pyenv] )); then
   eval "$(pyenv init -)"
   eval "$(pyenv virtualenv-init -)"
   _PATH=$PATH
