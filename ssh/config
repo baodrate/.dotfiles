@@ -45,5 +45,6 @@ Host *
 # ================
 # default identity
 # ================
-Host *
-  IdentityFile ~/.ssh/gpg-baot.pub
+# Host *
+#   IdentityFile ~/.ssh/gpg-qubidt.pub
+#   IdentityFile ~/.ssh/gpg-baot.pub
