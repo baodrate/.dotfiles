@@ -39,6 +39,7 @@ source /etc/profile
 # disable it
 setopt no_global_rcs
 
+<<<<<<< HEAD
 [[ -d "$SCRIPTS_DIR" ]] && appendpath "$SCRIPTS_DIR"
 [[ -d "$HOME/.cargo/bin" ]] && appendpath "$HOME/.cargo/bin"
 [[ -d "$HOME/.poetry/bin" ]] && appendpath "$HOME/.poetry/bin"
@@ -50,6 +51,27 @@ setopt no_global_rcs
 [[ -d "/usr/local/sbin" ]] && appendpath "/usr/local/sbin"
 [[ -d "/usr/local/share/info" ]] && _MANPATH="/usr/local/share/info:$_MANPATH"
 [[ -d "/usr/local/share/infopath" ]] && _INFOPATH="/usr/local/share/infopath:$_INFOPATH"
+=======
+[[ -d "$SCRIPTS_DIR" ]] && _PATH="$SCRIPTS_DIR:$_PATH"
+[[ -d "$HOME/.cargo/bin" ]] && _PATH="$HOME/.cargo/bin:$_PATH"
+[[ -d "$HOME/.poetry/bin" ]] && _PATH="$HOME/.poetry/bin:$_PATH"
+
+# ==> macOS
+if [[ "$(uname -s)" == "Darwin" ]]; then
+  # ==> llvm
+  [[ -d "/usr/local/opt/llvm/bin" ]] && _PATH="/usr/local/opt/llvm/bin:$_PATH"
+  [[ -d "/usr/local/opt/ccache/libexec" ]] && _PATH="/usr/local/opt/ccache/libexec:$_PATH"
+
+  # ==> brew
+  [[ -d "/usr/local/bin" ]] && _PATH="/usr/local/bin:$_PATH"
+  [[ -d "/usr/local/sbin" ]] && _PATH="/usr/local/sbin:$_PATH"
+  [[ -d "/usr/local/share/info" ]] && _MANPATH="/usr/local/share/info:$_MANPATH"
+  [[ -d "/usr/local/share/infopath" ]] && _INFOPATH="/usr/local/share/infopath:$_INFOPATH"
+
+  # ==> homebrew curl
+  [[ -d "/usr/local/opt/curl" ]] && _PATH="/usr/local/opt/curl/bin:$_PATH"
+fi
+>>>>>>> 8f4331509f6396f7a50e0de93c09307277ebac70
 
 # ==> python
 # (( $+commands[python3] )) && appendpath "$(python3 -m site --user-base)/bin:$(python3 -m site --user-site)/bin"
@@ -60,16 +82,19 @@ setopt no_global_rcs
 # fi
 
 # ==> npm
-export npm_config_prefix="$XDG_DATA_HOME/node_modules"
+export npm_config_prefix="$XDG_DATA_HOME/npm"
 export npm_config_cache="$XDG_CACHE_HOME/npm"
 [[ -d "$npm_config_prefix" ]] && appendpath "$npm_config_prefix/bin"
 
+<<<<<<< HEAD
 
 unset appendpath
 export PATH
 export MANPATH="$_MANPATH"
 export INFOPATH=":$_INFOPATH"
 
+=======
+>>>>>>> 8f4331509f6396f7a50e0de93c09307277ebac70
 # ==> nvim-remote
 #
 export NVIM_LISTEN_ADDRESS=/tmp/nvimsocket
@@ -110,3 +135,7 @@ QT_XCB_FORCE_SOFTWARE_OPENGL=1
 # MAC
 # ===
 # ulimit -n 32768
+
+export PATH="$_PATH"
+export MANPATH="$_MANPATH"
+export INFOPATH=":$_INFOPATH"

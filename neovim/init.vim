@@ -1,3 +1,6 @@
+"  let $NVIM_COC_LOG_LEVEL = 'debug'
+"  let g:coc_node_args = ['--nolazy', '--inspect-brk=6045']
+
 " ==============================================================================
 "                                  Init Settings
 " ==============================================================================
@@ -27,7 +30,7 @@ let g:settings.cache_dir = s:settings.sys_cache_dir . '/nvim'
 
 " local paths
 let s:settings.dein_cache = g:settings.cache_dir . '/dein'
-let s:settings.dein_dir = s:settings.dein_cache . '/repos/github.com/Shougo/dein.vim'
+let s:settings.dein_dir = s:settings.dein_cache . '/dein.vim'
 
 " ------------ Bootstrap -------------
 if &runtimepath !~# '/dein.vim'
@@ -68,21 +71,26 @@ if dein#load_state(s:settings.dein_cache)
   call dein#add('tpope/vim-surround')
 
   " =========== Intellisense ===========
-  " ----------- language-server --------
-  call dein#add('w0rp/ale')
+  " ----------- LS & auto-complete -----
+  " call dein#add('neoclide/coc.nvim', {'hook_post_update': 'call coc#util#install()'})
+  call dein#add('neoclide/coc.nvim', {'build': 'yarn install'})
 
-  call dein#add('autozimu/LanguageClient-neovim', {
-      \ 'rev': 'next',
-      \ 'build': 'bash install.sh',
-      \ })
+  " ----------- linting ----------------
+  " call dein#add('w0rp/ale')
+
+  " ----------- language-server --------
+  " call dein#add('autozimu/LanguageClient-neovim', {
+  "     \ 'rev': 'next',
+  "     \ 'build': 'bash install.sh',
+  "     \ })
 
   " ----------- autocompletion ---------
-  call dein#add('ncm2/ncm2', { 'depends': 'nvim-yarp' })
-  call dein#add('roxma/nvim-yarp')
-  call dein#add('ncm2/ncm2-bufword')
-  call dein#add('ncm2/ncm2-tmux')
-  call dein#add('ncm2/ncm2-path')
-  call dein#add('ncm2/ncm2-jedi')
+  " call dein#add('ncm2/ncm2', { 'depends': 'nvim-yarp' })
+  " call dein#add('roxma/nvim-yarp')
+  " call dein#add('ncm2/ncm2-bufword')
+  " call dein#add('ncm2/ncm2-tmux')
+  " call dein#add('ncm2/ncm2-path')
+  " call dein#add('ncm2/ncm2-jedi')
 
   " ----------- Tags -------------------
   " call dein#add('ludovicchabant/vim-gutentags')
@@ -93,7 +101,7 @@ if dein#load_state(s:settings.dein_cache)
   " ----------- Auto-close -------------
   " call dein#add('Raimondi/delimitMate')
   " call dein#add('cohama/lexima.vim')
-  call dein#add('jiangmiao/auto-pairs')
+  " call dein#add('jiangmiao/auto-pairs')
   " call dein#add('tpope/vim-endwise')
 
   " ----------- Utility ----------------
@@ -119,6 +127,9 @@ if dein#load_state(s:settings.dein_cache)
   " ----------- C/C++ ------------------
   call dein#add('vim-scripts/DoxygenToolkit.vim')
   call dein#add('rhysd/vim-clang-format')
+  " call dein#add('lyuts/vim-rtags')
+  " ----------- javascript -------------
+  call dein#add('posva/vim-vue')
   " ----------- nand2tetris ------------
   call dein#add('sevko/vim-nand2tetris-syntax')
   " ----------- Rust -------------------

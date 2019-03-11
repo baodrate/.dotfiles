@@ -1,0 +1,35 @@
+{
+  "coc.preferences.autoTrigger": "always",
+  "coc.preferences.triggerAfterInsertEnter": false,
+  "coc.preferences.timeout": 500,
+  "coc.preferences.noselect": true,
+  "coc.preferences.formatOnType": true,
+  "coc.preferences.formatOnSaveFiletypes": ["python3", "vue", "javascript"],
+  "coc.preferences.minTriggerInputLength": 2,
+  "coc.preferences.preferCompleteThanJumpPlaceholder": true,
+  "coc.preferences.acceptSuggestionOnCommitCharacter": true,
+  "coc.preferences.diagnostic.enable": true,
+  "coc.preferences.diagnostic.signOffset": 1000,
+  "coc.preferences.snippetIndicator": "►",
+  "coc.preferences.diagnostic.errorSign": "☠",
+  "coc.preferences.diagnostic.warningSign": "⚠️",
+  "coc.preferences.diagnostic.infoSign": "⚡︎",
+  "coc.preferences.diagnostic.hintSign": "?",
+  "languageserver": {
+    "ccls": {
+      "command": "ccls",
+      "filetypes": ["c", "cpp", "objc", "objcpp"],
+      "rootPatterns": [".ccls", "compile_commands.json", ".vim/", ".git/", ".hg/"],
+      "initializationOptions": {
+        "cacheDirectory": "/Users/baot/.cache/ccls"
+      }
+    }
+  },
+  "eslint.filetypes": [
+    "javascript",
+    "javascriptreact",
+    "vue"
+  ],
+  "eslint.autoFixOnSave": true,
+  "eslint.packageManager": "yarn"
+}

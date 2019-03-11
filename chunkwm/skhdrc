@@ -94,6 +94,17 @@ alt + shift - 8 : chunkc tiling::window --send-to-desktop 8
 alt + shift - 9 : chunkc tiling::window --send-to-desktop 9
 alt + shift - 0 : chunkc tiling::window --send-to-desktop 10
 
+ctrl + shift - 1 : chunkc tiling::window --send-to-desktop 1
+ctrl + shift - 2 : chunkc tiling::window --send-to-desktop 2
+ctrl + shift - 3 : chunkc tiling::window --send-to-desktop 3
+ctrl + shift - 4 : chunkc tiling::window --send-to-desktop 4
+ctrl + shift - 5 : chunkc tiling::window --send-to-desktop 5
+ctrl + shift - 6 : chunkc tiling::window --send-to-desktop 6
+ctrl + shift - 7 : chunkc tiling::window --send-to-desktop 7
+ctrl + shift - 8 : chunkc tiling::window --send-to-desktop 8
+ctrl + shift - 9 : chunkc tiling::window --send-to-desktop 9
+ctrl + shift - 0 : chunkc tiling::window --send-to-desktop 10
+
 # send window to monitor and follow focus
 alt + shift - n      : chunkc tiling::window --send-to-desktop next; chunkc tiling::desktop -f next
 alt + shift - p      : chunkc tiling::window --send-to-desktop prev; chunkc tiling::desktop -f prev
@@ -119,8 +130,20 @@ alt - 8 : chunkc tiling::desktop --focus 8
 alt - 9 : chunkc tiling::desktop --focus 9
 alt - 0 : chunkc tiling::desktop --focus 10
 
+ctrl - 1 : chunkc tiling::desktop --focus 1
+ctrl - 2 : chunkc tiling::desktop --focus 2
+ctrl - 3 : chunkc tiling::desktop --focus 3
+ctrl - 4 : chunkc tiling::desktop --focus 4
+ctrl - 5 : chunkc tiling::desktop --focus 5
+ctrl - 6 : chunkc tiling::desktop --focus 6
+ctrl - 7 : chunkc tiling::desktop --focus 7
+ctrl - 8 : chunkc tiling::desktop --focus 8
+ctrl - 9 : chunkc tiling::desktop --focus 9
+ctrl - 0 : chunkc tiling::desktop --focus 10
+
 alt - n        : chunkc tiling::desktop --focus next
 alt - p        : chunkc tiling::desktop --focus prev
+
 ctrl - right   : chunkc tiling::desktop --focus next
 ctrl - left    : chunkc tiling::desktop --focus prev
 
@@ -134,8 +157,8 @@ alt - 0x1E  : chunkc tiling::monitor -f 2     # ]
 # ctrl + alt - 3  : chunkc tiling::monitor -f 3
 
 # send window to monitor and follow focus
-alt + shift - 0x21  : chunkc tiling::window --send-to-monitor 1; chunkc tiling::monitor -f 1
-alt + shift - 0x1E  : chunkc tiling::window --send-to-monitor 2; chunkc tiling::monitor -f 2
+alt + shift - 0x21  : chunkc tiling::window --send-to-monitor 1; chunkc tiling::monitor -f 1  # [
+alt + shift - 0x1E  : chunkc tiling::window --send-to-monitor 2; chunkc tiling::monitor -f 2  # ]
 # cmd + ctrl - 1  : chunkc tiling::window --send-to-monitor 1; chunkc tiling::monitor -f 1
 # cmd + ctrl - 2  : chunkc tiling::window --send-to-monitor 2; chunkc tiling::monitor -f 2
 # cmd + ctrl - 3  : chunkc tiling::window --send-to-monitor 3; chunkc tiling::monitor -f 3

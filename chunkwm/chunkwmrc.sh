@@ -96,7 +96,7 @@ chunkc set preselect_border_outline      0
 #       (https://github.com/koekeishiya/chwm-sa)
 #
 
-chunkc set window_float_topmost          0
+chunkc set window_float_topmost          1
 chunkc set window_fade_inactive          0
 chunkc set window_fade_alpha             0.85
 chunkc set window_fade_duration          0.25
@@ -124,6 +124,8 @@ chunkc set focused_border_skip_monocle   0
 chunkc set ffm_bypass_modifier           fn
 chunkc set ffm_standby_on_float          1
 
+chunkc set 5_desktop_mode float
+
 #
 # NOTE: specify plugins to load when chunkwm starts.
 #
@@ -141,9 +143,8 @@ chunkc core::load ffm.so
 # chunkc tiling::rule --owner mpv --state sticky --alpha 0.65 --grid-layout 5:5:4:0:1:1
 # chunkc tiling::rule --owner Terminal --state sticky --level 3 --grid-layout 1:1:0:0:1:1
 
-chunkc tiling::rule --owner \"System Preferences\" --subrole AXStandardWindow --state float &
 chunkc tiling::rule --owner Finder --name Copy --state float &
-chunkc tiling::rule --owner \"Google Chrome\" --name \"Picture in Picture\" --state float &
-chunkc tiling::rule --owner Skype --state sticky --state tile --grid-layout 2:3:0:1:1:1 &
+chunkc tiling::rule --owner Skype --state sticky &
 chunkc tiling::rule --owner CLion --name \"Tip of the Day\" --state float &
+chunkc tiling::rule --owner "System Preferences" --subrole AXStandardWindow --state float &
 

@@ -112,14 +112,23 @@ set background=dark
 "   let base16colorspace=256      " For base16-shell: Use colors from base16-shell-modified 256 colorspace
 " endif
 " For base16-shell: Use colors from base16-shell-modified 256 colorspace
-if exists('$BASE16_THEME')
-  let base16colorspace=256
-  colorscheme base16-$BASE16_THEME
-else
-  let base16colorspace=256
-  echo "Couldn't find $BASE16_THEME, loading default: base16-classic-dark"
-  colorscheme base16-classic-dark
+
+let current_base16_theme_link = '~/.config/colors/current_base16_theme'
+
+if ! exists('$BASE16_THEME')
+  " check link in colors config directory
+  " for gui apps that don't know env vars (on e.g. macOS)
+  let current_theme_script=resolve(fnamemodify(current_base16_theme_link, ':p'))
+
+  if filereadable(current_theme_script)
+    let $BASE16_THEME = matchstr(current_theme_script, '^.*base16-\zs.*\ze.sh')
+  else
+    echo "Couldn't find $BASE16_THEME or ".current_base16_theme_link.", loading default: base16-classic-dark"
+    let $BASE16_THEME = classic-dark
+  endif
 endif
+let base16colorspace=256
+colorscheme base16-$BASE16_THEME
 
 
 " gvim
