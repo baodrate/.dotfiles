@@ -11,6 +11,10 @@ Host gh-bao-gxg
   HostName github.com
   IdentityFile ~/.ssh/gpg-baot.pub
 
+Host *.ftdna.com
+  User baot
+  IdentityFile ~/.ssh/gpg-bao-gxg.pub
+
 # =================
 # personal (qubidt)
 # =================
