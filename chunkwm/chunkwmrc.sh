@@ -125,6 +125,7 @@ chunkc set ffm_bypass_modifier           fn
 chunkc set ffm_standby_on_float          1
 
 chunkc set 5_desktop_mode float
+chunkc set 10_desktop_mode float
 
 #
 # NOTE: specify plugins to load when chunkwm starts.
@@ -144,7 +145,7 @@ chunkc core::load ffm.so
 # chunkc tiling::rule --owner Terminal --state sticky --level 3 --grid-layout 1:1:0:0:1:1
 
 chunkc tiling::rule --owner Finder --name Copy --state float &
-chunkc tiling::rule --owner Skype --state sticky &
+# chunkc tiling::rule --owner Skype --state sticky &
 chunkc tiling::rule --owner CLion --name \"Tip of the Day\" --state float &
 chunkc tiling::rule --owner "System Preferences" --subrole AXStandardWindow --state float &
 
