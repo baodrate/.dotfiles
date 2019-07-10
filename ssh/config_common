@@ -24,4 +24,3 @@ Host *
   #   %u    The local username.
   ControlPath ~/.ssh/%r@%n:%h:%p.controlmaster
   ControlPersist 10m
-  ForwardAgent yes

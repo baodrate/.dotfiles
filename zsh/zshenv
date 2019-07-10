@@ -18,48 +18,73 @@ export _JAVA_AWT_WM_NONREPARENTING=1
 
 export SCRIPTS_DIR="$HOME/.scripts"
 
+appendpath () {
+    case ":$PATH:" in
+        *:"$1":*)
+            ;;
+        *)
+            PATH="${PATH:+$PATH:}$1"
+    esac
+}
+
 # ==> setup PATH variable
-_PATH=$(getconf PATH)
+# PATH=$(getconf PATH)
+unset PATH
 _MANPATH=${$(getconf MANPATH 2>/dev/null):-}
 _INFOPATH=${$(getconf INFOPATH 2>/dev/null):-}
+
+source /etc/profile
 
 # /etc/zprofile on macOS loads /usr/libexec/path_helper which overwrites PATH
 # disable it
 setopt no_global_rcs
 
-[[ -d "$SCRIPTS_DIR" ]] && _PATH="$SCRIPTS_DIR:$_PATH"
-[[ -d "$HOME/.cargo/bin" ]] && _PATH="$HOME/.cargo/bin:$_PATH"
-[[ -d "$HOME/.poetry/bin" ]] && _PATH="$HOME/.poetry/bin:$_PATH"
+[[ -d "$SCRIPTS_DIR" ]] && appendpath "$SCRIPTS_DIR"
+[[ -d "$HOME/.cargo/bin" ]] && appendpath "$HOME/.cargo/bin"
+[[ -d "$HOME/.poetry/bin" ]] && appendpath "$HOME/.poetry/bin"
+[[ -d "/usr/local/opt/llvm/bin" ]] && appendpath "/usr/local/opt/llvm/bin"
+[[ -d "/usr/local/opt/ccache/libexec" ]] && appendpath "/usr/local/opt/ccache/libexec"
+
+# ==> brew
+[[ -d "/usr/local/bin" ]] && appendpath "/usr/local/bin"
+[[ -d "/usr/local/sbin" ]] && appendpath "/usr/local/sbin"
+[[ -d "/usr/local/share/info" ]] && _MANPATH="/usr/local/share/info:$_MANPATH"
+[[ -d "/usr/local/share/infopath" ]] && _INFOPATH="/usr/local/share/infopath:$_INFOPATH"
 
 # ==> macOS
 if [[ "$(uname -s)" == "Darwin" ]]; then
   # ==> llvm
-  [[ -d "/usr/local/opt/llvm/bin" ]] && _PATH="/usr/local/opt/llvm/bin:$_PATH"
-  [[ -d "/usr/local/opt/ccache/libexec" ]] && _PATH="/usr/local/opt/ccache/libexec:$_PATH"
+  [[ -d "/usr/local/opt/llvm/bin" ]] && appendpath "/usr/local/opt/llvm/bin"
+  [[ -d "/usr/local/opt/ccache/libexec" ]] && appendpath "/usr/local/opt/ccache/libexec"
 
   # ==> brew
-  [[ -d "/usr/local/bin" ]] && _PATH="/usr/local/bin:$_PATH"
-  [[ -d "/usr/local/sbin" ]] && _PATH="/usr/local/sbin:$_PATH"
+  [[ -d "/usr/local/bin" ]] && appendpath "/usr/local/bin"
+  [[ -d "/usr/local/sbin" ]] && appendpath "/usr/local/sbin"
   [[ -d "/usr/local/share/info" ]] && _MANPATH="/usr/local/share/info:$_MANPATH"
   [[ -d "/usr/local/share/infopath" ]] && _INFOPATH="/usr/local/share/infopath:$_INFOPATH"
 
   # ==> homebrew curl
-  [[ -d "/usr/local/opt/curl" ]] && _PATH="/usr/local/opt/curl/bin:$_PATH"
+  [[ -d "/usr/local/opt/curl" ]] && appendpath "/usr/local/opt/curl/bin"
 fi
 
 # ==> python
-(( $+commands[python3] )) && _PATH="$(python3 -m site --user-base)/bin:$(python3 -m site --user-site):$_PATH"
-if [[ -d "$HOME/.pyenv/bin" ]] ; then
-  export PATH="$HOME/.pyenv/bin:$_PATH"
+(( $+commands[python3] )) && appendpath "$(python3 -m site --user-base)/bin:$(python3 -m site --user-site)"
+[[ -d "$HOME/.pyenv/bin" ]] && appendpath "$HOME/.pyenv/bin"
+if (( $+commands[pyenv] )); then
   eval "$(pyenv init -)"
   eval "$(pyenv virtualenv-init -)"
-  _PATH=$PATH
 fi
 
 # ==> npm
 export npm_config_prefix="$XDG_DATA_HOME/npm"
 export npm_config_cache="$XDG_CACHE_HOME/npm"
-[[ -d "$npm_config_prefix" ]] && _PATH="$npm_config_prefix/bin:$_PATH"
+[[ -d "$npm_config_prefix" ]] && appendpath "$npm_config_prefix/bin"
+
+
+unset appendpath
+export PATH
+export MANPATH="$_MANPATH"
+export INFOPATH=":$_INFOPATH"
 
 # ==> nvim-remote
 #
@@ -101,7 +126,3 @@ QT_XCB_FORCE_SOFTWARE_OPENGL=1
 # MAC
 # ===
 # ulimit -n 32768
-
-export PATH="$_PATH"
-export MANPATH="$_MANPATH"
-export INFOPATH=":$_INFOPATH"

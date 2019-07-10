@@ -3,6 +3,7 @@ CanonicalDomains int.poorboys.casa
 Host *.poorboys.casa *.baodtrinh.com
   IdentityFile ~/.ssh/gpg-qubidt.pub
   ControlMaster auto
+  ForwardAgent yes
 
 Host gh-qubidt
   IdentityFile ~/.ssh/gpg-qubidt.pub

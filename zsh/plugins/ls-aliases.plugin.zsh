@@ -23,7 +23,7 @@ if (( $+commands[exa] )) ; then
 
   ls_short="$exa_grid $ls_long $exa_git"
   ls_long="--long $exa_git $exa_ext $exa_group" # -l show metadata
-  ls_sort_newest="--sort=oldest"                #    --sort=modified --reverse
+  ls_sort_newest="--sort=newest"                #    --sort=modified --reverse
   ls_hidden="--git-ignore"                      #    hide files defined in gitignore
   ls_show_hidden="--all"                        # -a (call twice to show . and ..)
   ls_one_line="--oneline"                       # -1

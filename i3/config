@@ -124,10 +124,12 @@
     ### Window Decorations
     #
     # new_window pixel
-    hide_edge_borders none
+    hide_edge_borders smart_no_gaps
+    # smart_borders no_gaps
     default_border pixel 2
     gaps inner 8
     gaps outer 0
+    smart_gaps on
 
     ### Font
     #
@@ -163,8 +165,6 @@
         strip_workspace_numbers yes
 
         status_command "i3status --config ~/.config/i3status/essentials.conf | sed --unbuffered -e 's/#FF0000/$base08/g' -e 's/#00FF00/$base0B/g'"
-
-        tray_output primary
 
         colors {
             background $base00
@@ -363,6 +363,9 @@
     # enter fullscreen mode for the focused container
     bindsym $super+f fullscreen toggle
 
+    # Toggle sticky window
+    bindsym $super+Shift+s sticky toggle
+
     # Toggle the current focus between tiling and floating mode
     bindsym $super+Shift+space floating toggle
 
@@ -445,5 +448,5 @@ bindsym $super+r mode "resize"
 #
     # set wallpaper
     exec --no-startup-id "feh --bg-fill --randomize --recursive --no-fehbg ~/wallpapers/*"
-    exec --no-startup-id "compton -b -c"
+    # exec --no-startup-id "compton -b -c"
     # exec --no-startup-id "pidof -x $(basename lxqt-policykit-agent) || lxqt-policykit-agent"

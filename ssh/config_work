@@ -4,6 +4,7 @@ CanonicalizePermittedCNAMEs *.*.ftdna.com:*.*.ftdna.com
 Host *.ftdna.com
   IdentityFile ~/.ssh/gpg-bao-gxg.pub
   ControlMaster auto
+  ForwardAgent yes
 
 Host github.com
   IdentityFile ~/.ssh/gpg-bao-gxg.pub
