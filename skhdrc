@@ -7,6 +7,9 @@ cmd - h : return # disable hide-windows shortcut
 
 # .load ".config/yabai/skhdrc"
 
+# close window
+alt + shift - q : osascript -e 'tell application "System Events" to perform action "AXPress" of (first button whose subrole is "AXCloseButton") of (first window whose subrole is "AXStandardWindow") of (first process whose frontmost is true)'
+
 # focus window
 alt - h : yabai -m window --focus west
 alt - j : yabai -m window --focus south
