@@ -15,6 +15,7 @@ brew 'exa'
 brew 'htop'
 brew 'ripgrep'
 brew 'rsync'
+brew 'jq'
 
 # editors
 # -------

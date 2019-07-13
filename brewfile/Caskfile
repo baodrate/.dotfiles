@@ -10,6 +10,7 @@ cask bitwarden # /Applications/Bitwarden.app
 cask console # /Applications/Console.app
 #cask console # /Applications/Utilities/Console.app
 cask iterm2 # /Applications/iTerm.app
+cask jetbrains-toolbox # /Applications/JetBrains Toolbox.app
 cask keybase # /Applications/Keybase.app
 cask near-lock # /Applications/Near Lock.app
 cask skype # /Applications/Skype.app
