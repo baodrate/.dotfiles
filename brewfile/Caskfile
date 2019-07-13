@@ -1,0 +1,86 @@
+# Cask applications
+# Please copy these lines to your Brewfile and use with `brew-file install`.
+
+# Main tap repository for homebrew/cask
+tap homebrew/cask
+
+# Apps installed by Cask in homebrew/cask
+cask alacritty # /Applications/Alacritty.app
+cask bitwarden # /Applications/Bitwarden.app
+cask console # /Applications/Console.app
+#cask console # /Applications/Utilities/Console.app
+cask iterm2 # /Applications/iTerm.app
+cask keybase # /Applications/Keybase.app
+cask near-lock # /Applications/Near Lock.app
+cask skype # /Applications/Skype.app
+cask unlox # /Applications/Unlox.app
+
+# Casks in homebrew/cask-drivers
+tap homebrew/cask-drivers
+
+# Cask is found, but no applications are found.
+# (fonts, system settins, or installed in other directory.)
+cask logitech-gaming-software
+
+# Casks in homebrew/cask-versions
+tap homebrew/cask-versions
+
+# Apps installed by Cask in homebrew/cask-versions
+cask firefox-developer-edition # /Applications/Firefox Developer Edition.app
+
+# Apps installed from AppStore
+appstore 497799835 Xcode (10.2.1) # /Applications/Xcode.app
+
+# Apps installed but no casks are available
+# (System applications or directory installed.)
+# /Applications/Logitech
+# /Applications/Siri.app
+# /Applications/QuickTime Player.app
+# /Applications/Chess.app
+# /Applications/Photo Booth.app
+# /Applications/Books.app
+# /Applications/Notes.app
+# /Applications/Image Capture.app
+# /Applications/Home.app
+# /Applications/Preview.app
+# /Applications/Dashboard.app
+# /Applications/News.app
+# /Applications/TextEdit.app
+# /Applications/Stocks.app
+# /Applications/Mail.app
+# /Applications/Safari.app
+# /Applications/Dictionary.app
+# /Applications/Contacts.app
+# /Applications/Time Machine.app
+# /Applications/Font Book.app
+# /Applications/FaceTime.app
+# /Applications/Maps.app
+# /Applications/Mission Control.app
+# /Applications/Stickies.app
+# /Applications/Photos.app
+# /Applications/Messages.app
+# /Applications/Calculator.app
+# /Applications/VoiceMemos.app
+# /Applications/iTunes.app
+# /Applications/Launchpad.app
+# /Applications/Reminders.app
+# /Applications/App Store.app
+# /Applications/Automator.app
+# /Applications/Calendar.app
+# /Applications/System Preferences.app
+# /Applications/Utilities/AirPort Utility.app
+# /Applications/Utilities/VoiceOver Utility.app
+# /Applications/Utilities/Terminal.app
+# /Applications/Utilities/Activity Monitor.app
+# /Applications/Utilities/Screenshot.app
+# /Applications/Utilities/Grapher.app
+# /Applications/Utilities/Audio MIDI Setup.app
+# /Applications/Utilities/System Information.app
+# /Applications/Utilities/Keychain Access.app
+# /Applications/Utilities/Migration Assistant.app
+# /Applications/Utilities/Script Editor.app
+# /Applications/Utilities/ColorSync Utility.app
+# /Applications/Utilities/Disk Utility.app
+# /Applications/Utilities/Bluetooth File Exchange.app
+# /Applications/Utilities/Boot Camp Assistant.app
+# /Applications/Utilities/Digital Color Meter.app

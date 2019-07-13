@@ -3,23 +3,15 @@
 - shell:
     - [git submodule update --init --recursive, Installing submodules]
 
-# ==========
-# Core links
-# ==========
+# ========
+# Defaults
+# ========
 - defaults:
     link:
       relink: true
       create: true
       relative: true
       glob: true
-
-- link:
-    ~/.dotfiles:
-      path: ''
-      if: '[ ! -d ~/.dotfiles ]'
-    ~/.scripts:
-      path: scripts
-      relink: true
 
 # ============
 # Common links
@@ -29,7 +21,6 @@
     # -----------
     ~/.config/nvim: neovim
     ~/.config/termite: termite
-    # ~/.config/fontconfig: fontconfig
     ~/.config/firefox: firefox
     ~/.config/colors: colors
 
@@ -37,6 +28,8 @@
     # -----
     ~/.ssh/:
       path: ssh/*
+    ~/bin/:
+      path: scripts/*
 
     # files
     # -----
@@ -145,6 +138,7 @@
     # -----------
     ~/.config/sway: sway
     ~/.config/rofi: rofi
+    # ~/.config/fontconfig: fontconfig
     ~/.Xresources.d: Xresources.d
     ~/.config/i3status: i3status
     ~/.config/i3status-rust: i3status-rust

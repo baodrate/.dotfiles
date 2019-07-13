@@ -16,7 +16,7 @@ export _JAVA_AWT_WM_NONREPARENTING=1
 [[ -d ${XDG_RUNTIME_DIR}  ]] || mkdir -p $XDG_RUNTIME_DIR
 [[ -d ${XDG_CACHE_HOME}   ]] || mkdir -p $XDG_CACHE_HOME
 
-export SCRIPTS_DIR="$HOME/.scripts"
+export SCRIPTS_DIR="$HOME/bin"
 
 appendpath () {
     case ":$PATH:" in
