@@ -47,7 +47,7 @@ endif
 if dein#load_state(s:settings.dein_cache)
   call dein#begin(s:settings.dein_cache)
 
-  call dein#add(s:settings.dein_cache . '/repos/github.com/Shougo/dein.vim')
+  call dein#add(s:settings.dein_dir)
 
   call dein#add('noahfrederick/vim-noctu')
 
