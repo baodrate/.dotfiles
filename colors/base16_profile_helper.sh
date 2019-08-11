@@ -1,15 +1,26 @@
 #!/usr/bin/env bash
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 # https://stackoverflow.com/a/25515370
 yell() { echo "$0: $*" >&2; }
-die() { yell "$*"; exit 111; }
+die() { yell "$*"; return -1; }
 try() { "$@" || die "cannot ($?): $*"; }
 
-source "${DIR}/sh-update-link.sh" || exit -1
+# https://stackoverflow.com/a/11097703
+curr_shell=$(ps -ocomm= -q $$)
+if [ "$curr_shell" = "zsh" ]; then
+  file_name=${(%):-%x}
+elif [ "$curr_shell" = "bash" ]; then
+  file_name=${BASH_SOURCE[0]}
+else
+  die "don't recognize running shell: $curr_shell"
+fi
+script_dir="$( cd "$( dirname "$file_name" )" && pwd )"
+# script_dir="$( cd "$( dirname "$file_name" )" >/dev/null 2>&1 && pwd )"
 
-required_vars=(DIR XDG_CONFIG_HOME BASE16_SHELL_HOOKS)
-for i in "${required_vars[@]}"; do eval "val=\$$i"; if [ -z "$val" ]; then echo "$i is unset or empty"; exit -1; fi; done
-[ -d "${XDG_CONFIG_HOME}/colors" ] || exit -1
+source "${script_dir}/sh-update-link.sh" >&2 || die "couldn't source script: ${script_dir}/sh-update-link.sh" 
+
+required_vars=(script_dir XDG_CONFIG_HOME BASE16_SHELL_HOOKS)
+for i in "${required_vars[@]}"; do eval "val=\$$i"; try [ ! -z "$val" ]; done
+try [ -d "${XDG_CONFIG_HOME}/colors" ]
 
 current_theme_link="$XDG_CONFIG_HOME/colors/current_base16_theme"
 
@@ -25,7 +36,7 @@ base16()
 
   script="$XDG_CONFIG_HOME/colors/base16-shell/scripts/base16-${theme}.sh"
   [ -f "$script" ] || { echo "failed to find script ($script) for theme ($theme)" && return 1 ; }
-  try source "$script"
+  source "$script" >&2 || die "couldn't source script: $script"
 
   export BASE16_THEME="${theme}"
 
