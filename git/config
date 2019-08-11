@@ -8,7 +8,7 @@
   signingkey = 6DD044E46EB7DB25
 
 [commit]
-  gpgsign = true
+  # gpgsign = true
 
 [mergetool "neovim"]
   cmd = nvim -d $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'

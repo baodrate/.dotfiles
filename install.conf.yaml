@@ -92,9 +92,9 @@
       glob: true
       if: '[ "$(uname -s)" "==" "Darwin" ]'
 - link:
-    ~/.config/alacritty/base.macos.yml:
+    ~/.config/alacritty/base.platform.yml:
       path: alacritty/base.macos.yml
-    ~/.config/alacritty/keybindings.macos.yml:
+    ~/.config/alacritty/keybindings.platform.yml:
       path: alacritty/keybindings.macos.yml
 
 - defaults:
@@ -105,14 +105,14 @@
       glob: true
       if: '[ "$(uname -s)" "==" "Linux" ]'
 - link:
-    ~/.config/alacritty/base.linux.yml:
+    ~/.config/alacritty/base.platform.yml:
       path: alacritty/base.linux.yml
-    ~/.config/alacritty/keybindings.linux.yml:
+    ~/.config/alacritty/keybindings.platform.yml:
       path: alacritty/keybindings.linux.yml
 
 - shell:
   -
-    command:  cat ~/.config/alacritty/base.yml ~/.config/alacritty/base.*.yml ~/.config/alacritty/base16-colors.yml ~/.config/alacritty/keybindings.yml ~/.config/alacritty/keybindings.*.yml > ~/.config/alacritty/alacritty.yml
+    command:  cat ~/.config/alacritty/base.yml ~/.config/alacritty/base.platform.yml ~/.config/alacritty/base16-colors.yml ~/.config/alacritty/keybindings.yml ~/.config/alacritty/keybindings.platform.yml > ~/.config/alacritty/alacritty.yml
     stdin: true
     stdout: true
     stderr: true

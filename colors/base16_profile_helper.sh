@@ -23,14 +23,10 @@ base16()
 
   echo "Changing base16: $theme"
 
-  [[ -f "$XDG_CONFIG_HOME"/colors/current_base16_theme ]] || (echo "Can't find current_base16_theme" && return 1)
-
-  scripts_dir=$(dirname $(get_abs_path "$XDG_CONFIG_HOME/colors/current_base16_theme"))
-  script="$scripts_dir/base16-$theme.sh"
+  script="$XDG_CONFIG_HOME/colors/base16-shell/scripts/base16-${theme}.sh"
   [ -f "$script" ] || { echo "failed to find script ($script) for theme ($theme)" && return 1 ; }
   try source "$script"
 
-  try update_link "$XDG_CONFIG_HOME/colors/current_base16_theme" "$script"
   export BASE16_THEME="${theme}"
 
   # run shell hooks

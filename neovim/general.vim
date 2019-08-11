@@ -104,18 +104,17 @@ set list
 " colors
 " ------
 set background=dark
-" if exists('+termguicolors')
-"   let &t_8f="\<Esc>[38;2;%lu;%lu;%lum"
-"   let &t_8b="\<Esc>[48;2;%lu;%lu;%lum"
-"   set termguicolors             " send truecolor to term; mutually exclusive with base16colorspace
-" else
-"   let base16colorspace=256      " For base16-shell: Use colors from base16-shell-modified 256 colorspace
-" endif
-" For base16-shell: Use colors from base16-shell-modified 256 colorspace
-
-let current_base16_theme_link = '~/.config/colors/current_base16_theme'
+if exists('+termguicolors')
+  let &t_8f="\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b="\<Esc>[48;2;%lu;%lu;%lum"
+  set termguicolors             " send truecolor to term; mutually exclusive with base16colorspace
+else
+  let base16colorspace=256      " For base16-shell: Use colors from base16-shell-modified 256 colorspace
+endif
 
 if ! exists('$BASE16_THEME')
+  let current_base16_theme_link = '~/.config/colors/current_base16_theme'
+
   " check link in colors config directory
   " for gui apps that don't know env vars (on e.g. macOS)
   let current_theme_script=resolve(fnamemodify(current_base16_theme_link, ':p'))
@@ -127,9 +126,7 @@ if ! exists('$BASE16_THEME')
     let $BASE16_THEME = classic-dark
   endif
 endif
-let base16colorspace=256
 colorscheme base16-$BASE16_THEME
-
 
 " gvim
 " ----
