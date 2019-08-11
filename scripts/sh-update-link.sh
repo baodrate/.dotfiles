@@ -1,4 +1,5 @@
 #!/bin/sh
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
 required_vars="SCRIPTS_DIR"
 for i in $required_vars; do eval "val=\$$i"; if [ -z "${val:?}" ]; then echo "$i is unset or empty"; exit 1; fi; done

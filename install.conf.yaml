@@ -37,6 +37,8 @@
     # -----
     ~/.ssh/:
       path: ssh/*
+    ~/bin/:
+      path: bin/*
 
     # files
     # -----
@@ -84,6 +86,10 @@
 
 - defaults:
     link:
+      relink: true
+      create: true
+      relative: true
+      glob: true
       if: '[ "$(uname -s)" "==" "Darwin" ]'
 - link:
     ~/.config/alacritty/base.macos.yml:
@@ -93,10 +99,14 @@
 
 - defaults:
     link:
+      relink: true
+      create: true
+      relative: true
+      glob: true
       if: '[ "$(uname -s)" "==" "Linux" ]'
 - link:
-    ~/.config/alacritty/alacritty.linux.yml:
-      path: alacritty/alacritty.linux.yml
+    ~/.config/alacritty/base.linux.yml:
+      path: alacritty/base.linux.yml
     ~/.config/alacritty/keybindings.linux.yml:
       path: alacritty/keybindings.linux.yml
 
@@ -114,6 +124,10 @@
 # ================
 - defaults:
     link:
+      relink: true
+      create: true
+      relative: true
+      glob: true
       if: '[ "$(uname -s)" "==" "Darwin" ]'
 
 - link:
@@ -138,6 +152,10 @@
 # ================
 - defaults:
     link:
+      relink: true
+      create: true
+      relative: true
+      glob: true
       if: '[ "$(uname -s)" "==" "Linux" ]'
 
 - link:

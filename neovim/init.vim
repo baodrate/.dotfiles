@@ -30,7 +30,7 @@ let g:settings.cache_dir = s:settings.sys_cache_dir . '/nvim'
 
 " local paths
 let s:settings.dein_cache = g:settings.cache_dir . '/dein'
-let s:settings.dein_dir = s:settings.dein_cache . '/dein.vim'
+let s:settings.dein_dir = s:settings.dein_cache . '/repos/github.com/Shougo/dein.vim'
 
 " ------------ Bootstrap -------------
 if &runtimepath !~# '/dein.vim'
@@ -46,6 +46,8 @@ endif
 
 if dein#load_state(s:settings.dein_cache)
   call dein#begin(s:settings.dein_cache)
+
+  call dein#add(s:settings.dein_cache . '/repos/github.com/Shougo/dein.vim')
 
   call dein#add('noahfrederick/vim-noctu')
 
@@ -73,7 +75,8 @@ if dein#load_state(s:settings.dein_cache)
   " =========== Intellisense ===========
   " ----------- LS & auto-complete -----
   " call dein#add('neoclide/coc.nvim', {'hook_post_update': 'call coc#util#install()'})
-  call dein#add('neoclide/coc.nvim', {'build': 'yarn install'})
+  " call dein#add('neoclide/coc.nvim', {'build': 'yarn install --frozen-lockfile'})
+  call dein#add('neoclide/coc.nvim', {"rev": "release"})
 
   " ----------- linting ----------------
   " call dein#add('w0rp/ale')
