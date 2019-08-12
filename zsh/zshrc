@@ -64,6 +64,9 @@ fi
 # ==> correct commands
 setopt CORRECT
 
+# http://zsh.sourceforge.net/Intro/intro_6.html
+setopt autopushd pushdminus pushdsilent pushdtohome
+
 # ==> General settings
 #     from zim:modules/environment
 # Use smart URL pasting and escaping.
@@ -81,6 +84,10 @@ if (( ! ${+PAGER} )); then
     export PAGER=more
   fi
 fi
+
+# ==> misc
+# zsh calculator utility
+autoload -Uz zcalc
 
 # ==> Jobs
 #     from prezto:modules/environment

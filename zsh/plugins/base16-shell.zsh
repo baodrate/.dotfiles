@@ -4,4 +4,4 @@ for i in "${required_vars[@]}"; do eval "val=\$$i"; if [ -z "$val" ]; then echo 
 profile_helper="$XDG_CONFIG_HOME"/colors/base16_profile_helper.sh
 
 if [ -d $profile_helper ]; then echo "Couldn't find base16_profile_helper at $profile_helper"; exit -1; fi
-source $profile_helper
+eval "$($profile_helper)"

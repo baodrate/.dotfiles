@@ -1,3 +1,4 @@
+# vim: set ft=sshconfig:
 CanonicalDomains int.ftdna.com unx.ftdna.com
 CanonicalizePermittedCNAMEs *.*.ftdna.com:*.*.ftdna.com
 
@@ -6,8 +7,6 @@ Host *.ftdna.com
   ControlMaster auto
   ForwardAgent yes
 
-Host github.com
+Host github.com gh-bao-gxg
   IdentityFile ~/.ssh/gpg-bao-gxg.pub
-
-Host gh-bao-gxg
   HostName github.com

@@ -1,54 +1,65 @@
 #!/usr/bin/env bash
+# https://stackoverflow.com/a/25515370
+yell() { echo "$0: $*" >&2; }
+die() { yell "$*"; return -1; }
+try() { "$@" || die "cannot ($?): $*"; }
 
-required_vars=(SCRIPTS_DIR XDG_CONFIG_HOME BASE16_SHELL BASE16_SHELL_HOOKS)
-for i in "${required_vars[@]}"; do eval "val=\$$i"; if [ -z "$val" ]; then echo "$i is unset or empty"; exit -1; fi; done
-[ -d "$XDG_CONFIG_HOME"/colors ] || exit -1
+# https://stackoverflow.com/a/11097703
+curr_shell=$(ps -ocomm= -q $$)
+if [ "$curr_shell" = "zsh" ]; then
+  file_name=${(%):-%x}
+elif [ "$curr_shell" = "bash" ]; then
+  file_name=${BASH_SOURCE[0]}
+else
+  die "don't recognize running shell: $curr_shell"
+fi
+script_dir="$( cd "$( dirname "$file_name" )" >/dev/null 2>&1 && pwd )"
 
-source "${SCRIPTS_DIR}/sh-update-link.sh" || exit -1
+required_vars=(script_dir XDG_CONFIG_HOME BASE16_SHELL_HOOKS)
+for i in "${required_vars[@]}"; do eval "val=\$$i"; try [ -n "$val" ]; done
 
-current_theme_link="$XDG_CONFIG_HOME/colors/current_base16_theme"
+try [ -d "${XDG_CONFIG_HOME}/colors" ]
 
-debug() { echo "$1"; }
+themes_dir="$script_dir/base16-shell/scripts"
+current_theme_link="$script_dir/current_base16_theme"
 
 get_abs_path() { perl -MCwd -le 'print Cwd::abs_path(shift)' "$1" ; }
 
-base16()
+cat <<FUNC
+_base16()
 {
-  local theme=$1
+  local theme=\$1
 
-  echo "Changing base16: $theme"
+  echo "Changing base16: \$theme"
 
-  [[ -f "$XDG_CONFIG_HOME"/colors/current_base16_theme ]] || (echo "Can't find current_base16_theme" && return 1)
+  script="$themes_dir/base16-\${theme}.sh"
+  [ -f "\$script" ] || { echo "failed to find script (\$script) for theme (\$theme)" && return 1 ; }
+  source "\$script" >&2 || die "couldn't source script: \$script"
 
-  scripts_dir=$(dirname $(get_abs_path "$XDG_CONFIG_HOME/colors/current_base16_theme"))
-  script="$scripts_dir/base16-$theme.sh"
+  export BASE16_THEME="\${theme}"
 
-  if [[ -f "$script" ]]; then
-    if source "$script" && update_link "$XDG_CONFIG_HOME/colors/current_base16_theme" "$script"; then
-      export BASE16_THEME=${theme}
-      if [ -n "$BASE16_SHELL_HOOKS" ] && [ -d "${BASE16_SHELL_HOOKS}" ]; then
-        failures=
-        for hook in "$BASE16_SHELL_HOOKS"/*; do
-          if [ -f "$hook" ] && [ -x "$hook" ] && hook_output=$($hook); then
-            echo "Hook ran successfully: $(basename "$hook")${hook_output:+ ($hook_output)}"
-          else
-            echo "Hook failed: $hook ($hook_output)" 1>&2
-            failures="$hook;$failures"
-          fi
-        done
-        [ -z "$failures" ] || return 1
+  # run shell hooks
+  if [ -n "\$BASE16_SHELL_HOOKS" ] && [ -d "\${BASE16_SHELL_HOOKS}" ]; then
+    failures=
+    for hook in "\$BASE16_SHELL_HOOKS"/*; do
+      if [ -f "\$hook" ] && [ -x "\$hook" ] && hook_output=\$(\$hook); then
+        echo "Hook ran successfully: \$(basename "\$hook")\${hook_output:+ (\$hook_output)}"
+      else
+        echo "Hook failed: \$hook (\$hook_output)" 1>&2
+        failures="\$hook;\$failures"
       fi
-    else
-      echo "failed to source script ($script) for theme ($theme)" && return 1
-    fi
-  else
-    echo "failed to find script ($script) for theme ($theme)" && return 1
+    done
+    [ -z "\$failures" ] || return 1
   fi
 }
+FUNC
 
-if [ -f "$current_theme_link" ]; then
-  script=$(get_abs_path "$current_theme_link")
-  script_name=$(basename "$script" .sh)
-  export BASE16_THEME=${script_name//base16-/}
-  source "$BASE16_SHELL/scripts/$script_name.sh"
+ls $themes_dir | sed 's/^base16-\(.*\)\.sh/alias base16-\1="_base16 \\"\1\\""/'
+
+if [ -n "$BASE16_THEME" ]; then
+  echo ". $themes_dir/base16-\${BASE16_THEME}.sh"
+elif [ -f "$current_theme_link" ]; then
+  script_name=$(basename "$(get_abs_path "$current_theme_link")" .sh)
+  echo "export BASE16_THEME=${script_name##base16-}"
+  echo ". $current_theme_link"
 fi

@@ -29,8 +29,8 @@ appendpath () {
 }
 
 # ==> setup PATH variable
-# PATH=$(getconf PATH)
-unset PATH
+PATH=$(getconf PATH)
+# unset PATH
 _MANPATH=${$(getconf MANPATH 2>/dev/null):-}
 _INFOPATH=${$(getconf INFOPATH 2>/dev/null):-}
 
@@ -111,6 +111,8 @@ unset SSH_AGENT_PID
 if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ]; then
   export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
 fi
+export GPG_TTY=$(tty)
+echo "UPDATESTARTUPTTY" | gpg-connect-agent > /dev/null 2>&1
 
 # workaround for issue with qtwebengine + opengl + nouveau
 # see https://bugs.archlinux.org/task/59057
