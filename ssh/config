@@ -6,7 +6,7 @@ Host github.com
 # default parameters
 Host *
   IdentitiesOnly yes
-  ControlMaster auto
+  ControlMaster no
 
   CanonicalizeHostname yes
   CanonicalizeFallbackLocal no
