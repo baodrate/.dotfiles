@@ -1,13 +1,14 @@
+# vim: set ft=sshconfig:
 CanonicalDomains int.poorboys.casa
+
+Host 144.76.82.49
+  IdentityFile ~/.ssh/gpg-qubidt.pub
 
 Host *.poorboys.casa *.baodtrinh.com
   IdentityFile ~/.ssh/gpg-qubidt.pub
   ControlMaster auto
   ForwardAgent yes
 
-Host gh-qubidt
+Host github.com gh-qubidt
   IdentityFile ~/.ssh/gpg-qubidt.pub
   HostName github.com
-
-# Host github.com
-#   IdentityFile ~/.ssh/gpg-qubidt.pub

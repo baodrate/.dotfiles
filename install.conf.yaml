@@ -69,7 +69,6 @@
     ~/.config/zsh: zsh
 
     # -- misc
-    ~/.base16_theme: base16_theme
     ~/.vimperator: vimperator
     ~/.vimperatorrc: vimperatorrc
 
