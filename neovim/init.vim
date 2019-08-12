@@ -30,7 +30,7 @@ let g:settings.cache_dir = s:settings.sys_cache_dir . '/nvim'
 
 " local paths
 let s:settings.dein_cache = g:settings.cache_dir . '/dein'
-let s:settings.dein_dir = s:settings.dein_cache . '/repos/github.com/Shougo/dein.vim'
+let s:settings.dein_dir = g:settings.config_dir . '/dein.vim'
 
 " ------------ Bootstrap -------------
 if &runtimepath !~# '/dein.vim'

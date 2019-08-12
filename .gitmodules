@@ -46,3 +46,6 @@
 [submodule "firefox/chrome/ShadowFox"]
 	path = firefox/chrome/ShadowFox
 	url = https://github.com/overdodactyl/ShadowFox.git
+[submodule "neovim/dein.vim"]
+	path = neovim/dein.vim
+	url = https://github.com/Shougo/dein.vim.git

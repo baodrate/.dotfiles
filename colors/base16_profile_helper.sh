@@ -5,13 +5,13 @@ die() { yell "$*"; return -1; }
 try() { "$@" || die "cannot ($?): $*"; }
 
 # https://stackoverflow.com/a/11097703
-curr_shell=$(ps -ocomm= -q $$)
+curr_shell=$(ps -p $$ -o ucomm= | sed 's/[[:space:]]*//g')
 if [ "$curr_shell" = "zsh" ]; then
   file_name=${(%):-%x}
 elif [ "$curr_shell" = "bash" ]; then
   file_name=${BASH_SOURCE[0]}
 else
-  die "don't recognize running shell: $curr_shell"
+  die "don't recognize running shell: '$curr_shell'"
 fi
 script_dir="$( cd "$( dirname "$file_name" )" >/dev/null 2>&1 && pwd )"
 
