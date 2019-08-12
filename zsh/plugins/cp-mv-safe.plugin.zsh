@@ -7,7 +7,7 @@ timestamp() { date +%Y-%m-%d_%H:%M:%S }
 cp_safe() {
   rsync_cp=(rsync --archive --xattrs --verbose -hhh --inplace --backup-dir="backup_$(timestamp)" --progress)
   printf '%q ' ${rsync_cp[@]} && printf '%q ' "${@}" && printf '\n' && \
-    "${rsync_cp[@]}" ${@}
+    "${rsync_cp[@]}" "${@}"
 }
 compdef _files cp_safe
 alias cp=cp_safe
