@@ -148,11 +148,11 @@ zplugin load rcmdnk/homebrew-file
 # --------------
 # ==> plugins
 # glob qualifiers: `.` for regular files; `N` for `null_glob`
+zplugin snippet "$ZDOTDIR/plugins/base16-shell.zsh"
 zplugin snippet "$ZDOTDIR/plugins/keybindings.plugin.zsh"
 zplugin snippet "$ZDOTDIR/plugins/history.plugin.zsh"
 zplugin snippet "$ZDOTDIR/plugins/ls-aliases.plugin.zsh"
 zplugin snippet "$ZDOTDIR/plugins/git.plugin.zsh"
-zplugin snippet "$ZDOTDIR/plugins/base16-shell.zsh"
 zplugin snippet "$ZDOTDIR/plugins/ssht.zsh"
 zplugin ice if"(( $+commands[rsync] ))"; zplugin snippet "$ZDOTDIR/plugins/cp-mv-safe.plugin.zsh"
 # super slow:
