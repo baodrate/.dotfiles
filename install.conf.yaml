@@ -12,6 +12,7 @@
       create: true
       relative: true
       glob: true
+      force: true
 
 - link:
     ~/.dotfiles:

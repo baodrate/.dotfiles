@@ -13,7 +13,7 @@ Host gh-bao-gxg
 
 Host *.ftdna.com
   User baot
-  IdentityFile ~/.ssh/gpg-bao-gxg.pub
+  IdentityFile ~/.ssh/gpg-baot.pub
 
 # =================
 # personal (qubidt)

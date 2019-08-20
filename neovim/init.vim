@@ -122,6 +122,7 @@ if dein#load_state(s:settings.dein_cache)
   " ----------- Git --------------------
   call dein#add('mhinz/vim-signify')
   call dein#add('itchyny/vim-gitbranch')
+  call dein#add('tpope/vim-fugitive')
 
   " =========== Code ===================
   " ----------- C/C++ ------------------
