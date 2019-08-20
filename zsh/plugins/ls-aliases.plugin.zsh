@@ -27,7 +27,7 @@ if (( $+commands[exa] )) ; then
   ls_hidden="--git-ignore"                      #    hide files defined in gitignore
   ls_show_hidden="--all"                        # -a (call twice to show . and ..)
   ls_one_line="--oneline"                       # -1
-  ls_colors="--color=always"                    #    'always' to forward to e.g. less
+  ls_colors="--color=automatic"                 #    'always' to forward to e.g. less
   ls_indicators="--classify"                    # -F
   ls_human_filesizes="--binary"                 # -b use binary prefixes (e.g. KiB vs KB)
   ls_group_dirs="--group-directories-first"     #    self-explanatory

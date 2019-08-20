@@ -31,5 +31,10 @@
     "vue"
   ],
   "eslint.autoFixOnSave": true,
-  "eslint.packageManager": "yarn"
+  "eslint.packageManager": "yarn",
+  "python.formatting.provider": "black",
+  "coc.preferences.formatOnType": true,
+  "coc.preferences.formatOnSaveFiletypes": ["python"],
+  "python.jediEnabled": true,
+  "python.trace.serverZ": "on"
 }

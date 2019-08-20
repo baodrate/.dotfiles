@@ -9,6 +9,7 @@
 
 # ==> pure prompt
 zplugin ice pick"async.zsh" src"pure.zsh"
+PURE_CMD_MAX_EXEC_TIME=0
 zplugin load sindresorhus/pure
 
 # ---------------------

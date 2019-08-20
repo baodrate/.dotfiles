@@ -3,9 +3,9 @@
 - shell:
     - [git submodule update --init --recursive, Installing submodules]
 
-# ==========
-# Core links
-# ==========
+# ========
+# Defaults
+# ========
 - defaults:
     link:
       relink: true
@@ -13,14 +13,6 @@
       relative: true
       glob: true
       force: true
-
-- link:
-    ~/.dotfiles:
-      path: ''
-      if: '[ ! -d ~/.dotfiles ]'
-    ~/.scripts:
-      path: scripts
-      relink: true
 
 # ============
 # Common links
@@ -30,7 +22,6 @@
     # -----------
     ~/.config/nvim: neovim
     ~/.config/termite: termite
-    # ~/.config/fontconfig: fontconfig
     ~/.config/firefox: firefox
     ~/.config/colors: colors
 
@@ -38,6 +29,8 @@
     # -----
     ~/.ssh/:
       path: ssh/*
+    ~/bin/:
+      path: bin/*
 
     # files
     # -----
@@ -68,7 +61,6 @@
     ~/.config/zsh: zsh
 
     # -- misc
-    ~/.base16_theme: base16_theme
     ~/.vimperator: vimperator
     ~/.vimperatorrc: vimperatorrc
 
@@ -85,25 +77,33 @@
 
 - defaults:
     link:
+      relink: true
+      create: true
+      relative: true
+      glob: true
       if: '[ "$(uname -s)" "==" "Darwin" ]'
 - link:
-    ~/.config/alacritty/base.macos.yml:
+    ~/.config/alacritty/base.platform.yml:
       path: alacritty/base.macos.yml
-    ~/.config/alacritty/keybindings.macos.yml:
+    ~/.config/alacritty/keybindings.platform.yml:
       path: alacritty/keybindings.macos.yml
 
 - defaults:
     link:
+      relink: true
+      create: true
+      relative: true
+      glob: true
       if: '[ "$(uname -s)" "==" "Linux" ]'
 - link:
-    ~/.config/alacritty/alacritty.linux.yml:
-      path: alacritty/alacritty.linux.yml
-    ~/.config/alacritty/keybindings.linux.yml:
+    ~/.config/alacritty/base.platform.yml:
+      path: alacritty/base.linux.yml
+    ~/.config/alacritty/keybindings.platform.yml:
       path: alacritty/keybindings.linux.yml
 
 - shell:
   -
-    command:  cat ~/.config/alacritty/base.yml ~/.config/alacritty/base.*.yml ~/.config/alacritty/base16-colors.yml ~/.config/alacritty/keybindings.yml ~/.config/alacritty/keybindings.*.yml > ~/.config/alacritty/alacritty.yml
+    command:  cat ~/.config/alacritty/base.yml ~/.config/alacritty/base.platform.yml ~/.config/alacritty/base16-colors.yml ~/.config/alacritty/keybindings.yml ~/.config/alacritty/keybindings.platform.yml > ~/.config/alacritty/alacritty.yml
     stdin: true
     stdout: true
     stderr: true
@@ -115,6 +115,10 @@
 # ================
 - defaults:
     link:
+      relink: true
+      create: true
+      relative: true
+      glob: true
       if: '[ "$(uname -s)" "==" "Darwin" ]'
 
 - link:
@@ -125,11 +129,13 @@
     ~/Library/Application Support/Übersicht/widgets: ubersicht/widgets
     ~/.config/brewfile: brewfile
     ~/.config/chunkwm: chunkwm
+    ~/.config/yabai: yabai
 
     # files
     # -----
     ~/.chunkwmrc: chunkwm/chunkwmrc.sh
-    ~/.skhdrc: chunkwm/skhdrc
+    ~/.yabairc: yabai/yabairc.sh
+    ~/.skhdrc: skhdrc
     ~/Library/Application Support/Übersicht/widgets: ubersicht/widgets
 
 # ================
@@ -137,6 +143,10 @@
 # ================
 - defaults:
     link:
+      relink: true
+      create: true
+      relative: true
+      glob: true
       if: '[ "$(uname -s)" "==" "Linux" ]'
 
 - link:
@@ -144,6 +154,7 @@
     # -----------
     ~/.config/sway: sway
     ~/.config/rofi: rofi
+    # ~/.config/fontconfig: fontconfig
     ~/.Xresources.d: Xresources.d
     ~/.config/i3status: i3status
     ~/.config/i3status-rust: i3status-rust

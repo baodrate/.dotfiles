@@ -1,5 +1,5 @@
 [core]
-  # pager = diff-so-fancy | less --tabs=1,5 -RFX
+  pager = diff-so-fancy | less --tabs=1,5 -RFX
   excludesfile = ~/.gitignore_global
 
 [user]
@@ -8,18 +8,11 @@
   signingkey = 6DD044E46EB7DB25
 
 [commit]
-  gpgsign = true
+  # gpgsign = true
 
 [mergetool "neovim"]
   # cmd = nvim -d $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
   cmd = nvim -f -c \"Gdiff\" \"$MERGED\"
-
-[difftool "sourcetree"]
-  cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-  path =
-[mergetool "sourcetree"]
-  cmd = /Users/baot/Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-  trustExitCode = true
 
 [includeIf "gitdir:/usr/local/Homebrew/"]
   path = ~/.gitconfig-personal
@@ -63,6 +56,8 @@
   lg2-specific = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(auto)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)'
   lg3-specific = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset) %C(bold cyan)(committed: %cD)%C(reset) %C(auto)%d%C(reset)%n''          %C(white)%s%C(reset)%n''          %C(dim white)- %an <%ae> %C(reset) %C(dim white)(committer: %cn <%ce>)%C(reset)'
 
+[mergetool]
+  tool = neovim
 [difftool]
   prompt = true
 [diff]

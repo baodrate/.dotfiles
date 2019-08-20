@@ -1,0 +1,129 @@
+# meta
+brew 'mas'
+brew 'rcmdnk/file/brew-file'    # brew-bundle alternative
+
+# system
+cask 'parallels'
+
+# hardware
+tap 'homebrew/cask-drivers'
+cask 'steelseries-exactmouse-tool'
+cask 'logitech-gaming-software'
+
+# security
+brew 'gnupg'
+brew 'telnet'
+brew 'openssh'
+brew 'ssh-copy-id'
+cask 'keybase'
+cask 'tunnelblick'
+
+# usability
+tap 'koekeishiya/formulae'
+brew 'chunkwm', args: ["HEAD", "with-purify"]
+brew 'skhd', args: ["HEAD", "with-logging"], restart_service: :changed
+cask 'ubersicht'
+cask 'bitbar'
+
+# browsers
+tap 'homebrew/cask-versions'
+cask 'firefox-developer-edition'
+cask 'google-chrome-dev'
+
+# terminals
+cask 'iterm2'
+cask 'alacritty'
+# exec 'sudo tic -e alacritty,alacritty-direct /usr/local/share/alacritty/alacritty.info'
+# exec 'ln -s /usr/local/opt/alacritty/Applications/Alacritty.app /Applications/'
+
+# shells
+brew 'bash'
+brew 'bash-completion@2'
+brew 'zsh'
+brew 'zsh-completions'
+brew 'protobuf', args: ["without-python@2"]     # depended-on by mosh
+brew 'mosh'
+
+# editors
+brew 'neovim'
+cask 'oni'
+cask 'visual-studio-code'
+
+# fonts
+tap 'homebrew/cask-fonts'
+cask 'font-hack-nerd-font'
+cask 'font-hack-nerd-font-mono'
+cask 'font-fontawesome'
+
+# dev
+cask 'dotnet'
+brew 'git'
+brew 'subversion'
+cask 'jetbrains-toolbox'
+
+# ctags
+tap 'universal-ctags/universal-ctags'
+brew 'universal-ctags', args: ["HEAD"]
+
+# dev:docker
+brew 'docker'
+brew 'docker-compose'
+
+# dev:sql
+tap 'AdoptOpenJDK/openjdk'
+cask 'adoptopenjdk'
+cask 'dbschema'
+
+# dev:shell
+brew 'shellcheck'
+
+# dev:python
+brew 'python'         # python3
+brew 'python@2'       # python2
+
+# dev:C++
+brew 'clang-format'
+tap 'twlz0ne/homebrew-ccls'
+brew 'ccls'
+brew 'cquery'
+
+# dev:swift
+brew 'swift'
+
+# system
+cask 'osxfuse'
+brew 'sshfs'
+brew 'bindfs'
+
+# utility:common
+brew 'wget'
+brew 'curl'
+brew 'coreutils'
+brew 'findutils'
+brew 'gnu-sed'
+brew 'tmux'
+brew 'iproute2mac'    # wraps ip commands
+brew 'watch'
+brew 'pidof'
+brew 'rsync'          # updated version of rsync (system version is 10yo 2.6.9!)
+
+# utility:alternatives
+brew 'bat'            # prettier cat tool
+brew 'glances'        # top alternative
+brew 'ripgrep'        # grep alternative
+brew 'exa'            # ls alternative
+
+# utility:misc
+brew 'jq'
+brew 'fzf'
+brew 'abduco'         # session management
+brew 'nnn'
+
+# media
+cask 'spotify'
+brew 'mpd'
+brew 'ncmpcpp'        # mpd client
+cask 'pocket-casts'
+
+# other
+cask 'jadengeller-helium'

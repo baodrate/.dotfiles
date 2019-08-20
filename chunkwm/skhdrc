@@ -33,12 +33,7 @@
 # "["           (0x21)
 # "]"           (0x1E)
 
-cmd - h : return # disable hide-windows shortcut
-
 # stolen from https://github.com/chris-kahn/dotfiles/blob/master/conf/osx/chunkwm/.skhdrc
-
-# open terminal, blazingly fast compared to iTerm/Hyper
-alt - return : open -na /Applications/Alacritty.app
 
 # close focused window
 alt + shift - q : chunkc tiling::window --close
