@@ -173,11 +173,11 @@
 # =======
 # Scripts
 # =======
-- shell:
-  -
-    command: $XDG_CONFIG_HOME/colors/base16_profile_helper.sh
-    stdin: true
-    stdout: true
-    stderr: true
-    description: Applying colors
-    quiet: false
+# - shell:
+#   -
+#     command: $XDG_CONFIG_HOME/colors/base16_profile_helper.sh
+#     stdin: true
+#     stdout: true
+#     stderr: true
+#     description: Applying colors
+#     quiet: false
