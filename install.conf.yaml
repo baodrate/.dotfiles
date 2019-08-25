@@ -57,8 +57,11 @@
       if: '[ "$(uname -s)" "==" "Darwin" ]'
 
     # -- zsh
-    ~/.zshenv: zshenv
     ~/.config/zsh: zsh
+    ~/.zshenv: zshenv
+
+    # -- profile
+    ~/.profile: .profile
 
     # -- misc
     ~/.vimperator: vimperator
@@ -130,6 +133,11 @@
     ~/.config/brewfile: brewfile
     ~/.config/chunkwm: chunkwm
     ~/.config/yabai: yabai
+
+    # globs
+    # -----
+    ~/Library/LaunchAgents/:
+      path: Library/LaunchAgents/*
 
     # files
     # -----

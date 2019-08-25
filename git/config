@@ -1,64 +1,65 @@
 [core]
-  pager = diff-so-fancy | less --tabs=1,5 -RFX
-  excludesfile = ~/.gitignore_global
+	pager = diff-so-fancy | less --tabs=1,5 -RFX
+	excludesfile = ~/.gitignore_global
 
 [user]
-  name = Bao Trinh
-  email = baot@genebygene.com
-  signingkey = 6DD044E46EB7DB25
+	name = Bao Trinh
+	email = baot@genebygene.com
+	signingKey = 6DD044E46EB7DB25
 
 [commit]
-  # gpgsign = true
+	gpgSign = true
 
 [mergetool "neovim"]
-  # cmd = nvim -d $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
-  cmd = nvim -f -c \"Gdiff\" \"$MERGED\"
+	# cmd = nvim -d $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
+	cmd = nvim -f -c \"Gdiff\" \"$MERGED\"
 
 [includeIf "gitdir:/usr/local/Homebrew/"]
-  path = ~/.gitconfig-personal
-
+	path = ~/.gitconfig-personal
 [includeIf "gitdir:~/wdev/"]
-  path = ~/.gitconfig-work
+	path = ~/.gitconfig-work
 [includeIf "gitdir:~/pdev/"]
-  path = ~/.gitconfig-personal
+	path = ~/.gitconfig-personal
 [includeIf "gitdir:~/.scripts/"]
-  path = ~/.gitconfig-personal
+	path = ~/.gitconfig-personal
 [includeIf "gitdir:~/.dotfiles/"]
-  path = ~/.gitconfig-personal
+	path = ~/.gitconfig-personal
 [includeIf "gitdir:~/.journal/"]
-  path = ~/.gitconfig-personal
+	path = ~/.gitconfig-personal
 
 [color]
-  ui = true
+	ui = true
 [color "diff-highlight"]
-  oldNormal = red bold
-  oldHighlight = red bold 52
-  newNormal = green bold
-  newHighlight = green bold 22
+	oldNormal = red bold
+	oldHighlight = red bold 52
+	newNormal = green bold
+	newHighlight = green bold 22
 [color "diff"]
-  meta = yellow
-  frag = magenta bold
-  commit = yellow bold
-  old = red bold
-  new = green bold
-  whitespace = red reverse
+	meta = yellow
+	frag = magenta bold
+	commit = yellow bold
+	old = red bold
+	new = green bold
+	whitespace = red reverse
 [diff-so-fancy]
-  stripLeadingSymbols = false
-  markEmptyLines = false
+	stripLeadingSymbols = false
+	markEmptyLines = false
 [alias]
-  tree = !"git log --all --graph --decorate --oneline --simplify-by-decoration"
-  # from https://stackoverflow.com/a/34467298
-  lg = !"git lg1"
-  lg1 = !"git lg1-specific --all"
-  lg2 = !"git lg2-specific --all"
-  lg3 = !"git lg3-specific --all"
-  lg1-specific = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(auto)%d%C(reset)'
-  lg2-specific = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(auto)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)'
-  lg3-specific = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset) %C(bold cyan)(committed: %cD)%C(reset) %C(auto)%d%C(reset)%n''          %C(white)%s%C(reset)%n''          %C(dim white)- %an <%ae> %C(reset) %C(dim white)(committer: %cn <%ce>)%C(reset)'
+	tree = !"git log --all --graph --decorate --oneline --simplify-by-decoration"
+	# from https://stackoverflow.com/a/34467298
+	lg = !"git lg1"
+	lg1 = !"git lg1-specific --all"
+	lg2 = !"git lg2-specific --all"
+	lg3 = !"git lg3-specific --all"
+	lg1-specific = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(auto)%d%C(reset)'
+	lg2-specific = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(auto)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)'
+	lg3-specific = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset) %C(bold cyan)(committed: %cD)%C(reset) %C(auto)%d%C(reset)%n''          %C(white)%s%C(reset)%n''          %C(dim white)- %an <%ae> %C(reset) %C(dim white)(committer: %cn <%ce>)%C(reset)'
 
 [mergetool]
-  tool = neovim
+	tool = neovim
 [difftool]
-  prompt = true
+	prompt = true
 [diff]
-  tool = neovim
+	tool = neovim
+[tag]
+	forceSignAnnotated = true
