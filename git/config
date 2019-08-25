@@ -4,8 +4,8 @@
 
 [user]
 	name = Bao Trinh
-	email = baot@genebygene.com
-	signingKey = 6DD044E46EB7DB25
+	email = qubidt@gmail.com
+	signingKey = A9B3110B4EA55E36
 
 [commit]
 	gpgSign = true
