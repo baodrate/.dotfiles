@@ -1,5 +1,9 @@
 Include config.d/*
 
+Host *.ftdna.com
+  User baot
+  IdentityFile ~/.ssh/gpg-baot.pub
+
 Host github.com
   User git
 

@@ -1,0 +1,28 @@
+/* Example file enabling theme + some features */
+
+/* @import url(firefox-csshacks/chrome/theme_color_variables.css); */
+/* @import url(firefox-csshacks/chrome/theme_toolbars.css); */
+/* @import url(firefox-csshacks/chrome/theme_sidebar.css); */
+/* @import url(firefox-csshacks/chrome/theme_popups_and_menus.css); */
+/* @import url(firefox-csshacks/chrome/status_inside_urlbar.us.css); */
+/* @import url(firefox-csshacks/chrome/navigation_buttons_inside_urlbar.css); */
+/* @import url(firefox-csshacks/chrome/tab_close_button_always_on_hover.css); */
+/* @import url(firefox-csshacks/chrome/tab_loading_progress_throbber.css); */
+/* @import url(firefox-csshacks/chrome/button_effect_scale_onclick.css); */
+/* @import url(firefox-csshacks/chrome/blank_page_background.css); */
+/* @import url(firefox-csshacks/chrome/page_action_buttons_on_hover.css); */
+/* @import url(firefox-csshacks/chrome/autohide_sidebar.css); */
+/* @import url(firefox-csshacks/chrome/hide_toolbox_top_bottom_;borders.css); */
+
+@import url(tab-sidebar.css);
+
+/*
+@import url(firefox-csshacks/chrome/menubar_in_toolbar.css);
+@import url(firefox-csshacks/chrome/navbar_tabs_oneliner.css);
+@import url(firefox-csshacks/chrome/navbar_tabs_oneliner_menu_buttons_on_right.css);
+*/
+
+/* checkout:
+ * https://www.reddit.com/r/FirefoxCSS/comments/agmfln/pure_css_vertical_tabs/
+ * https://github.com/lopis/i3config/blob/master/userChrome.css
+ */
