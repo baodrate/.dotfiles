@@ -60,8 +60,13 @@
     ~/.config/zsh: zsh
     ~/.zshenv: zshenv
 
-    # -- profile
+    # -- bash
+    ~/.bash_profile: .bash_profile
+    ~/.bashrc: .bashrc
+
+    # -- generic shell
     ~/.profile: .profile
+    ~/.env: .env
 
     # -- misc
     ~/.vimperator: vimperator
