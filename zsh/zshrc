@@ -153,6 +153,7 @@ source "${ZPLGM[BIN_DIR]:?}/zplugin.zsh"
 # glob qualifiers: `.` for regular files; `N` for `null_glob`
 zplugin ice lucid wait'0'
 zplugin snippet "$ZDOTDIR/plugins/base16-shell.zsh"
+zplugin ice lucid wait'!0'
 zplugin snippet "$ZDOTDIR/plugins/keybindings.plugin.zsh"
 zplugin snippet "$ZDOTDIR/plugins/history.plugin.zsh"
 zplugin snippet "$ZDOTDIR/plugins/ls-aliases.plugin.zsh"

@@ -1,5 +1,4 @@
-Include config.d/work.config
-Include config.d/personal.config
+Include config.d/*
 
 Host *.ftdna.com
   User baot
@@ -12,10 +11,10 @@ Host github.com
 # default parameters
 Host *
   IdentitiesOnly no
-  ControlMaster no
+  ControlMaster auto
 
   CanonicalizeHostname yes
-  CanonicalizeFallbackLocal no
+  CanonicalizeFallbackLocal yes
   CanonicalizeMaxDots 0
 
   #   %%    A literal `%'.

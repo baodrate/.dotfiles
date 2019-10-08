@@ -27,10 +27,8 @@
 
     # globs
     # -----
-    ~/.ssh/:
-      path: ssh/*
-    ~/bin/:
-      path: bin/*
+    ~/.ssh/: ssh/*
+    ~/bin/: bin/*
 
     # files
     # -----
@@ -61,16 +59,18 @@
     ~/.zshenv: zshenv
 
     # -- bash
-    ~/.bash_profile: .bash_profile
-    ~/.bashrc: .bashrc
+    ~/.bash_profile: bash_profile
+    ~/.bash_logout: bash_logout
+    ~/.bashrc: bashrc
+    ~/.bashrc.d/: bashrc.d/*
 
     # -- generic shell
     ~/.profile: .profile
-    ~/.profile.d/:
-      path: .profile.d/*
+    ~/.profile.d/: .profile.d/*
     ~/.env: env
-    ~/.env.d/:
-      path: env.d/*
+    ~/.env.d/: env.d/*
+    # gnu readline keybindings
+    ~/.inputrc: inputrc
 
     # -- misc
     ~/.vimperator: vimperator
@@ -92,12 +92,9 @@
 # Alacritty
 # =========
 - link:
-    ~/.config/alacritty/base.yml:
-      path: alacritty/base.yml
-    ~/.config/alacritty/base16-colors.yml:
-      path: alacritty/base16-colors.yml
-    ~/.config/alacritty/keybindings.yml:
-      path: alacritty/keybindings.yml
+    ~/.config/alacritty/base.yml: alacritty/base.yml
+    ~/.config/alacritty/base16-colors.yml: alacritty/base16-colors.yml
+    ~/.config/alacritty/keybindings.yml: alacritty/keybindings.yml
 
 - defaults:
     link:
@@ -107,10 +104,8 @@
       glob: true
       if: '[ "$(uname -s)" "==" "Darwin" ]'
 - link:
-    ~/.config/alacritty/base.platform.yml:
-      path: alacritty/base.macos.yml
-    ~/.config/alacritty/keybindings.platform.yml:
-      path: alacritty/keybindings.macos.yml
+    ~/.config/alacritty/base.platform.yml: alacritty/base.macos.yml
+    ~/.config/alacritty/keybindings.platform.yml: alacritty/keybindings.macos.yml
 
 - defaults:
     link:
@@ -120,10 +115,8 @@
       glob: true
       if: '[ "$(uname -s)" "==" "Linux" ]'
 - link:
-    ~/.config/alacritty/base.platform.yml:
-      path: alacritty/base.linux.yml
-    ~/.config/alacritty/keybindings.platform.yml:
-      path: alacritty/keybindings.linux.yml
+    ~/.config/alacritty/base.platform.yml: alacritty/base.linux.yml
+    ~/.config/alacritty/keybindings.platform.yml: alacritty/keybindings.linux.yml
 
 - shell:
   -
@@ -164,8 +157,7 @@
 
     # globs
     # -----
-    ~/Library/LaunchAgents/:
-      path: Library/LaunchAgents/*
+    ~/Library/LaunchAgents/: Library/LaunchAgents/*
 
     # files
     # -----

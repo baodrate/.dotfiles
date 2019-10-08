@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+# only apply for interactive sessions
+if [[ $- == *i* ]]; then
+  # if zsh exists and not in a nested ZSH session
+  if hash zsh 2>/dev/null && [ -n "$ZSH_VERSION" ]; then
+    zsh
+  fi
+fi

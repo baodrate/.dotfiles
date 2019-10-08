@@ -6,6 +6,7 @@ Host *.ftdna.com
   IdentityFile ~/.ssh/gpg-bao-gxg.pub
   ControlMaster auto
   ForwardAgent yes
+  # IdentitiesOnly no
 
 Host github.com gh-bao-gxg
   IdentityFile ~/.ssh/gpg-bao-gxg.pub

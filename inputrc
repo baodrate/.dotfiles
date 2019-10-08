@@ -1,0 +1,31 @@
+# editing mode
+# ------------
+set editing-mode vi
+
+set show-mode-in-prompt on
+# use different cursors for bash
+$if term=linux
+  set vi-ins-mode-string \1\e[?0c\2
+  set vi-cmd-mode-string \1\e[?8c\2
+$else
+  set vi-ins-mode-string \1\e[6 q\2
+  set vi-cmd-mode-string \1\e[2 q\2
+$endif
+
+# completion
+# ----------
+set show-all-if-ambiguous on
+# Color files by types
+set colored-stats On
+# Append char to indicate type
+set visible-stats On
+# Mark symlinked directories
+set mark-symlinked-directories On
+# Color the common prefix
+set colored-completion-prefix On
+# Color the common prefix in menu-complete
+set menu-complete-display-prefix On
+
+# misc
+# ----
+set echo-control-characters off

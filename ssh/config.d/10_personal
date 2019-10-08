@@ -11,6 +11,6 @@ Host *.poorboys.casa *.baodtrinh.com
   ControlMaster auto
   ForwardAgent yes
 
-Host github.com gh-qubidt
+Host gh-qubidt
   IdentityFile ~/.ssh/gpg-qubidt.pub
   HostName github.com

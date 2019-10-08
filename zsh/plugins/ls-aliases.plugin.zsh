@@ -15,10 +15,6 @@ local ls_indicators=""
 local ls_human_filesizes=""
 local ls_group_dirs
 
-if [[ ! -z "$LS_COLORS" ]]; then
-  export CLICOLOR=1
-fi
-
 if (( $+commands[exa] )) ; then
   local exa_grid="--grid"                       # -G show long format in grid (multi-column)
   local exa_git="--git"                         #    list files' git status
