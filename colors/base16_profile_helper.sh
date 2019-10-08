@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/usr/bin/env bash
 # https://stackoverflow.com/a/25515370
 yell() { echo "$0: $*" >&2; }
 die() { yell "$*"; return -1; }

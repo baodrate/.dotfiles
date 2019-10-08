@@ -36,9 +36,9 @@ if (( $+commands[exa] )) ; then
   ls_cmd="exa"
 
 else
-  if [[ $OS = 'linux' || $OS = 'osx' && (( $+commands[gls] )) ]] ; then
+  if [[ $OSTYPE = linux* || $OSTYPE = darwin* && (( $+commands[gls] )) ]] ; then
     # macOS but we have `brew coreutils`
-    if [[ $OS = 'osx' ]] ; then
+    if [[ $OSTYPE = darwin* && (( $+commands[gls] )) ]] ; then
       ls_cmd="gls"
     fi
 
@@ -54,7 +54,7 @@ else
 
     ls_group_dirs="--group-directories-first"
 
-  elif [[ $OS = 'osx' ]]; then
+  elif [[ $OSTYPE = 'osx' ]]; then
     ls_short=""
     ls_long="-l"
     ls_sort_newest="-t"
