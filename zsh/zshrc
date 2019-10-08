@@ -270,22 +270,41 @@ zplugin load soimort/translate-shell
 zplugin ice as"program" from"gh-r"
 zplugin light junegunn/fzf-bin
 
-export FZF_DEFAULT_COMMAND='
-  (fd --type f --hidden --follow --exclude .git ||
-   rg --files 2>/dev/null ||
-   git ls-tree -r --name-only HEAD ||
-   find . -path "*/\.*" -prune -o -type f -print -o -type l -print |
-   sed s/^..//) 2> /dev/null'
-export FZF_DEFAULT_OPTS='--preview "[[ $(file --mime {}) =~ binary ]] &&
-           echo {} is a binary file ||
-           (bat --color=\"always\" {} || cat {}) 2> /dev/null | head -500"'
+if (( $+commands[fd] )) ; then
+  export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
+
+  _fzf_compgen_path() {
+    fd --hidden --follow --exclude ".git" . "$1"
+  }
+  _fzf_compgen_dir() {
+    fd --type d --hidden --follow --exclude ".git" . "$1"
+  }
+elif (( $+commands[rg] )) ; then
+  export FZF_DEFAULT_COMMAND='rg --files 2>/dev/null'
+elif (( $+commands[git] )) ; then
+  export FZF_DEFAULT_COMMAND='git ls-tree -r --name-only HEAD'
+elif (( $+commands[find] )) ; then
+  export FZF_DEFAULT_COMMAND='find . -path "*/\.*" -prune -o -type f -print -o -type l -print | sed s/^..//'
+fi
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-_fzf_compgen_path() {
-	fd --hidden --follow --exclude ".git" . "$1"
+
+_gen_fzf_preview_cmd() {
+  local -r _line_limit=500
+
+  printf '[[ $(file --mime {}) =~ binary ]] && echo \"{} is a binary file\"'
+
+  printf ' || { '
+
+  if (( ${+commands[bat]} )) ; then
+    printf "bat --color=always --plain --line-range :$_line_limit {} 2> /dev/null"
+  else
+    printf "cat {} 2> /dev/null | head -$_line_limit"
+  fi
+
+  printf ' ; }'
 }
-_fzf_compgen_dir() {
-	fd --type d --hidden --follow --exclude ".git" . "$1"
-}
+export FZF_DEFAULT_OPTS="--preview=\"$(_gen_fzf_preview_cmd)\" --bind='ctrl-o:execute(\${VISUAL:-vi} {} < /dev/tty > /dev/tty 2>&1)'"
+unset _gen_fzf_preview_cmd
 
 # zplugin ice lucid wait'0' multisrc'shell/completion,key-bindings}.zsh' as"completion" pick"/dev/null"
 # zplugin ice lucid wait'0' multisrc'shell/{completion,key-bindings}.zsh' id-as"junegunn/fzf_completions" pick"/dev/null"
