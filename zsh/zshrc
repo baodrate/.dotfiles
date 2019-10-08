@@ -330,7 +330,7 @@ zplugin load qubidt/emoji-cli
 # not working yet, conflicts with history serach
 # see https://github.com/zdharma/zplugin/issues/69
 #   bindkey '^\n' autosuggest-execute
-# zplugin ice lucid atload'_zsh_autosuggest_start; bindkey "^ " autosuggest-execute'  # load after fast-syntax-highlighting
+zplugin ice lucid atload'_zsh_autosuggest_start; bindkey "^ " autosuggest-execute'  # load after fast-syntax-highlighting
 zplugin light zsh-users/zsh-autosuggestions
 
 # ==> Syntax Highlighting
