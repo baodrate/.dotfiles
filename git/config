@@ -16,9 +16,13 @@
 
 [includeIf "gitdir:/usr/local/Homebrew/"]
 	path = ~/.gitconfig-personal
+[includeIf "gitdir:~/dev/"]
+	path = ~/.gitconfig-work
 [includeIf "gitdir:~/wdev/"]
 	path = ~/.gitconfig-work
 [includeIf "gitdir:~/pdev/"]
+	path = ~/.gitconfig-personal
+[includeIf "gitdir:~/github/"]
 	path = ~/.gitconfig-personal
 [includeIf "gitdir:~/.scripts/"]
 	path = ~/.gitconfig-personal

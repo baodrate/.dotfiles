@@ -1,8 +1,5 @@
 typeset -A key
 
-# Make Vi mode transitions faster (KEYTIMEOUT is in hundredths of a second)
-export KEYTIMEOUT=1
-
 key[Home]=${terminfo[khome]}
 
 key[End]=${terminfo[kend]}
@@ -32,17 +29,19 @@ key[PageDown]=${terminfo[knp]}
 # ------------
 # ==> built-in vi-mode
 bindkey -v
-# ==> Sane bindings for zsh's vi mode so it behaves more vim like
-#     NOTE:   doesn't work atm, kills highlighting in history-search-multi-word
-#             see: https://github.com/softmoth/zsh-vim-mode/issues/8
-# zplugin load softmoth/zsh-vim-mode
 
-# Beginning search with arrow keys
-autoload -U up-line-or-beginning-search
-autoload -U down-line-or-beginning-search
-zle -N up-line-or-beginning-search
-zle -N down-line-or-beginning-search
-bindkey "^[OA" up-line-or-beginning-search
-bindkey "^[OB" down-line-or-beginning-search
-bindkey -M vicmd "k" up-line-or-beginning-search
-bindkey -M vicmd "j" down-line-or-beginning-search
+# Make Vi mode transitions faster (KEYTIMEOUT is in hundredths of a second)
+# Warning: Setting this too low can break some zsh functionality, eg:
+#     https://github.com/zsh-users/zsh-autosuggestions/issues/254#issuecomment-345175735
+export KEYTIMEOUT=30
+
+bindkey '^P' up-history
+bindkey '^N' down-history
+
+# backspace and ^h working even after
+# returning from command mode
+bindkey '^?' backward-delete-char
+bindkey '^H' backward-delete-char
+
+# ctrl-r starts searching history backward
+bindkey '^r' history-incremental-search-backward

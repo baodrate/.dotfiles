@@ -16,7 +16,7 @@ yabai -m config status_bar_clock_icon        🕑
 yabai -m config mouse_follows_focus          off
 yabai -m config focus_follows_mouse          off
 yabai -m config window_placement             second_child
-yabai -m config window_topmost               off
+yabai -m config window_topmost               on
 yabai -m config window_opacity               on
 yabai -m config window_shadow                on
 yabai -m config window_border                on
@@ -27,7 +27,7 @@ yabai -m config insert_window_border_color   0xffd75f5f
 yabai -m config active_window_opacity        1.0
 yabai -m config normal_window_opacity        0.90
 yabai -m config split_ratio                  0.50
-yabai -m config auto_balance                 off
+yabai -m config auto_balance                 on
 yabai -m config mouse_modifier               alt
 yabai -m config mouse_action1                move
 yabai -m config mouse_action2                resize
@@ -40,4 +40,4 @@ yabai -m config left_padding                 20
 yabai -m config right_padding                20
 yabai -m config window_gap                   10
 
-echo "$(date +%Y-%m-%dT%H:%M:%S%z) yabai configuration loaded.."
+echo "`date +%Y-%m-%dT%H:%M:%S%z` yabai configuration loaded.."

@@ -21,7 +21,9 @@
       "filetypes": ["c", "cpp", "objc", "objcpp"],
       "rootPatterns": [".ccls", "compile_commands.json", ".vim/", ".git/", ".hg/"],
       "initializationOptions": {
-        "cacheDirectory": "/Users/baot/.cache/ccls"
+        "cache": {
+          "directory": "/Users/baot/.cache/ccls"
+        }
       }
     }
   },

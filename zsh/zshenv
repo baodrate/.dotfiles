@@ -1,6 +1,8 @@
 #!/usr/bin/env zsh
 [[ -r ~/.env ]] && emulate sh -c ". ~/.env"
 
+(( ${+ZDOTDIR} )) || export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
+
 export SHELL="zsh"
 
 # /etc/zprofile on macOS loads /usr/libexec/path_helper which overwrites PATH
@@ -24,16 +26,18 @@ else
   echo 'could not find neovim or vim; not setting $VISUAL'
 fi
 
-# ==> use gpg-agent as ssh-agent
-## unset SSH_AGENT_PID
-## if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ]; then
-##   export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
-## fi
-## export GPG_TTY=$(tty)
-## echo "UPDATESTARTUPTTY" | gpg-connect-agent > /dev/null 2>&1
-
-# workaround for issue with qtwebengine + opengl + nouveau
-# see https://bugs.archlinux.org/task/59057
-QT_XCB_FORCE_SOFTWARE_OPENGL=1
-
-export DOTNET_CLI_TELEMETRY_OPTOUT=1
+# -------------
+# gpg ssh agent
+# -------------
+if (( $+commands[gpgconf] )) ; then
+  unset SSH_AGENT_PID
+  if [[ -v SSH_AUTH_SOCK && "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ]]; then
+    export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
+  fi
+fi
+if (( $+commands[gpg-connect-aggent] )) ; then
+  if [[ -v SSH_AUTH_SOCK ]]; then
+    export GPG_TTY=$(tty)
+    echo "UPDATESTARTUPTTY" | gpg-connect-agent > /dev/null 2>&1
+  fi
+fi

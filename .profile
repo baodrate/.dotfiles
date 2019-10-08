@@ -7,3 +7,9 @@
 
 [ -r "/etc/profile" ] && . "/etc/profile"
 [ -r "~/.env" ] && . "~/.env"
+
+for file in $HOME/.profile.d/*; do
+  if [ -r "$file" ]; then
+    . "$file"
+  fi
+done

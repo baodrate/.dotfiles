@@ -1,15 +1,17 @@
-Include config.d/*
+Include config.d/work.config
+Include config.d/personal.config
 
 Host *.ftdna.com
   User baot
-  IdentityFile ~/.ssh/gpg-baot.pub
+  IdentityFile ~/.ssh/gpg-bao-gxg.pub
 
 Host github.com
   User git
+  IdentitiesOnly yes
 
 # default parameters
 Host *
-  IdentitiesOnly yes
+  IdentitiesOnly no
   ControlMaster no
 
   CanonicalizeHostname yes

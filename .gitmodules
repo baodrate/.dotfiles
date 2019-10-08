@@ -49,3 +49,6 @@
 [submodule "neovim/dein.vim"]
 	path = neovim/dein.vim
 	url = https://github.com/Shougo/dein.vim.git
+[submodule "colors/LS_COLORS"]
+	path = colors/LS_COLORS
+	url = https://github.com/trapd00r/LS_COLORS.git

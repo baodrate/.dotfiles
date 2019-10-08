@@ -15,6 +15,10 @@ local ls_indicators=""
 local ls_human_filesizes=""
 local ls_group_dirs
 
+if [[ ! -z "$LS_COLORS" ]]; then
+  export CLICOLOR=1
+fi
+
 if (( $+commands[exa] )) ; then
   local exa_grid="--grid"                       # -G show long format in grid (multi-column)
   local exa_git="--git"                         #    list files' git status
@@ -83,4 +87,3 @@ alias ll="$ls_cmd_long $ls_hidden"
 alias lla="$ls_cmd_long $ls_show_hidden"
 alias llt="$ls_cmd_long $ls_hidden $ls_sort_newest"
 alias llat="$ls_cmd_long $ls_show_hidden $ls_sort_newest"
-

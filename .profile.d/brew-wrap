@@ -1,0 +1,6 @@
+#!/bin/sh
+if command -v foo >/dev/null 2>&1; then
+  if [ -f "$(brew --prefix)/etc/brew-wrap" ];then
+    . "$(brew --prefix)/etc/brew-wrap"
+  fi
+fi

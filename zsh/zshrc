@@ -1,19 +1,9 @@
 # =============================================================================
-# Setup
+# : basic settings
 # =============================================================================
 
 zrundir="${XDG_DATA_HOME:-$HOME/.local/share}/zsh"
 [[ -d "${zrundir:?}" ]] || mkdir -p "${zrundir:?}"
-
-# -------------
-# gpg ssh agent
-# -------------
-if [[ $OSTYPE == linux* ]]; then
-  unset SSH_AGENT_PID
-  if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ]; then
-    export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
-  fi
-fi
 
 # =============================================================================
 # Configuration
@@ -29,21 +19,16 @@ setopt autopushd pushdminus pushdsilent pushdtohome
 
 # ==> General settings
 #     from zim:modules/environment
+#
 # Use smart URL pasting and escaping.
 autoload -Uz bracketed-paste-url-magic && zle -N bracketed-paste bracketed-paste-url-magic
 autoload -Uz url-quote-magic && zle -N self-insert url-quote-magic
+
 # Allow comments starting with `#` even in interactive shells.
 setopt INTERACTIVE_COMMENTS
+
 # Remove path separtor from WORDCHARS.
 WORDCHARS=${WORDCHARS//[\/]}
-# Set less or more as the default pager.
-if (( ! ${+PAGER} )); then
-  if (( ${+commands[less]} )); then
-    export PAGER=less
-  else
-    export PAGER=more
-  fi
-fi
 
 # ==> misc
 # zsh calculator utility
@@ -60,6 +45,18 @@ setopt NO_HUP             # Prevent sending the HUP signal to running jobs when 
 # Prevent reporting the status of background and suspended jobs before exiting a shell with job control.
 # NO_CHECK_JOBS is best used only in combination with NO_HUP, else such jobs will be killed automatically.
 setopt NO_CHECK_JOBS
+
+# =============================================================================
+# : programs
+# =============================================================================
+# Set less or more as the default pager.
+if (( ! ${+PAGER} )); then
+  if (( ${+commands[less]} )); then
+    export PAGER=less
+  else
+    export PAGER=more
+  fi
+fi
 
 # -------
 # aliases
@@ -81,16 +78,18 @@ alias mkdir='mkdir -pv'
 #     c: repaint screen from top-down (rather than bottom-up)
 alias less='less -SRc'
 
-if (( $+commands[nvim] )); then
-  alias n='nvim'
-fi
+# ---------------------
+# replacement utilities
+# ---------------------
 if (( $+commands[vim] )); then
   alias v='vim'
+  export VISUAL=vim
 fi
 
-# ----------------
-# install programs
-# ----------------
+if (( $+commands[nvim] )); then
+  alias n='nvim'
+  export VISUAL=nvim
+fi
 
 if (( $+commands[bat] )); then
   alias cat='bat'
@@ -99,9 +98,8 @@ fi
 if (( $+commands[prettyping] )); then
   alias ping='prettyping --nolegend'
 fi
-
 # =============================================================================
-# Plugins
+# : plugins
 # =============================================================================
 
 # ------------------------
@@ -160,12 +158,16 @@ zplugin snippet "$ZDOTDIR/plugins/history.plugin.zsh"
 zplugin snippet "$ZDOTDIR/plugins/ls-aliases.plugin.zsh"
 zplugin snippet "$ZDOTDIR/plugins/git.plugin.zsh"
 zplugin snippet "$ZDOTDIR/plugins/ssht.zsh"
-# zplugin snippet "$ZDOTDIR/plugins/pyenv.zsh"
-zplugin ice if"(( $+commands[rsync] ))"; zplugin snippet "$ZDOTDIR/plugins/cp-mv-safe.plugin.zsh"
+zplugin snippet "$ZDOTDIR/plugins/pyenv.zsh"
+
+zplugin ice if"(( $+commands[rsync] ))"
+zplugin snippet "$ZDOTDIR/plugins/cp-mv-safe.plugin.zsh"
+
 # super slow:
 # zplugin ice if"(( $+commands[pipenv] ))"; zplugin snippet "$ZDOTDIR/plugins/pipenv.plugin.zsh"
 
-zplugin ice if"(( $+commands[poetry] ))" as"completion"; zplugin snippet "$ZDOTDIR/completions/_poetry"
+zplugin ice if"(( $+commands[poetry] ))" as"completion"
+zplugin snippet "$ZDOTDIR/completions/_poetry"
 
 # ------
 # Prompt

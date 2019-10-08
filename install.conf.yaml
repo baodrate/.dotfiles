@@ -66,11 +66,27 @@
 
     # -- generic shell
     ~/.profile: .profile
-    ~/.env: .env
+    ~/.profile.d/:
+      path: .profile.d/*
+    ~/.env: env
+    ~/.env.d/:
+      path: env.d/*
 
     # -- misc
     ~/.vimperator: vimperator
     ~/.vimperatorrc: vimperatorrc
+
+- shell:
+  -
+    command: |-
+      cmd="$(command -v dircolors || command -v gdircolors)" || { echo "no dircolors command found " ; exit 1; }
+      [ -d ~/.env.d ] || mkdir -p ~/.env.d
+      $cmd colors/LS_COLORS/LS_COLORS > ~/.env.d/LS_COLORS
+    stdin: true
+    stdout: true
+    stderr: true
+    description: Generating LS_COLORS
+    quiet: false
 
 # =========
 # Alacritty
@@ -111,7 +127,14 @@
 
 - shell:
   -
-    command:  cat ~/.config/alacritty/base.yml ~/.config/alacritty/base.platform.yml ~/.config/alacritty/base16-colors.yml ~/.config/alacritty/keybindings.yml ~/.config/alacritty/keybindings.platform.yml > ~/.config/alacritty/alacritty.yml
+    command: >-
+      cat
+      ~/.config/alacritty/base.yml
+      ~/.config/alacritty/base.platform.yml
+      ~/.config/alacritty/base16-colors.yml
+      ~/.config/alacritty/keybindings.yml
+      ~/.config/alacritty/keybindings.platform.yml
+      > ~/.config/alacritty/alacritty.yml
     stdin: true
     stdout: true
     stderr: true
