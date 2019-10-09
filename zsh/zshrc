@@ -1,3 +1,9 @@
+for file in $HOME/.shrc.d/*; do
+  if [ -x "$file" ]; then
+    emulate sh -c ". $file"
+  fi
+done
+
 # =============================================================================
 # : basic settings
 # =============================================================================
@@ -156,10 +162,10 @@ zplugin snippet "$ZDOTDIR/plugins/base16-shell.zsh"
 zplugin ice lucid wait'!0'
 zplugin snippet "$ZDOTDIR/plugins/keybindings.plugin.zsh"
 zplugin snippet "$ZDOTDIR/plugins/history.plugin.zsh"
-zplugin snippet "$ZDOTDIR/plugins/ls-aliases.plugin.zsh"
+# zplugin snippet "$ZDOTDIR/plugins/ls-aliases.plugin.zsh"
 zplugin snippet "$ZDOTDIR/plugins/git.plugin.zsh"
 zplugin snippet "$ZDOTDIR/plugins/ssht.zsh"
-zplugin snippet "$ZDOTDIR/plugins/pyenv.zsh"
+# zplugin snippet "$ZDOTDIR/plugins/pyenv.zsh"
 
 zplugin ice if"(( $+commands[rsync] ))"
 zplugin snippet "$ZDOTDIR/plugins/cp-mv-safe.plugin.zsh"
@@ -187,7 +193,8 @@ zplugin ice pick"async.zsh" src"pure.zsh" compile"(pure|async).zsh"
 zplugin light sindresorhus/pure
 
 # ==> powerlevel10k
-# zplugin ice depth=1
+# To customize prompt, run `p10k configure` or edit ${ZDOTDIR}/.p10k.zsh.
+# zplugin ice depth=1 atload"[[ -f ${ZDOTDIR}/.p10k.zsh ]] && source ${ZDOTDIR}/.p10k.zsh"
 # zplugin light romkatv/powerlevel10k
 
 # ---------------------
@@ -257,6 +264,7 @@ zplugin light pyenv/pyenv-virtualenv
 zplugin snippet OMZ::plugins/colored-man-pages/colored-man-pages.plugin.zsh
 
 # ==> suggests aliases
+zplugin ice if"(( $+commands[python] ))"
 zplugin load djui/alias-tips
 
 # ==> translate-shell (trans)
@@ -367,6 +375,3 @@ zplugin light zsh-users/zsh-autosuggestions
 #     those directories are at least unlikely to contain dangerous files)
 zplugin ice lucid wait"!0" atload"ZPLGM[COMPINIT_OPTS]=-C; zpcompinit; zpcdreplay"
 zplugin light "zdharma/fast-syntax-highlighting"
-
-# To customize prompt, run `p10k configure` or edit ~/.config/zsh/.p10k.zsh.
-[[ -f ~/.config/zsh/.p10k.zsh ]] && source ~/.config/zsh/.p10k.zsh
