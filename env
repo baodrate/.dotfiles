@@ -15,9 +15,13 @@ export QT_XCB_FORCE_SOFTWARE_OPENGL=1
 
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
 
-# ==============================================================================
+export BASH_ENV="$HOME/.bash_env"
+
+export CLICOLOR=1
+
+# ============
 # update paths
-# ==============================================================================
+# ============
 prependpath () {
     case ":$PATH:" in
         *:"$1":*)
@@ -66,20 +70,11 @@ export PATH
 export MANPATH="$MANPATH"
 export INFOPATH=":$INFOPATH"
 
-# ==============================================================================
-
-# only apply for interactive sessions
-if [[ $- == *i* ]]; then
-  if [[ "$OSTYPE" == "darwin"* ]]; then
-    export CLICOLOR=1
-  fi
-fi
-
-# ==============================================================================
+# ======================
 # inlude other env files
-# ==============================================================================
+# ======================
 for file in $HOME/.env.d/*; do
-  if [ -r "$file" ]; then
+  if [ -x "$file" ]; then
     . "$file"
   fi
 done

@@ -5,11 +5,12 @@
 # export SSH_AUTH_SOCKET=$HOME/.gnupg/S.gpg-agent.ssh
 # export SSH_AUTH_SOCK=$HOME/.gnupg/S.gpg-agent.ssh
 
-[ -r "/etc/profile" ] && . "/etc/profile"
 [ -r "~/.env" ] && . "~/.env"
 
+[ -r "/etc/profile" ] && . "/etc/profile"
+
 for file in $HOME/.profile.d/*; do
-  if [ -r "$file" ]; then
+  if [ -x "$file" ]; then
     . "$file"
   fi
 done

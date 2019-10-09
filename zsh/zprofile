@@ -2,3 +2,4 @@
 # https://evilmartians.com/chronicles/stick-with-security-yubikey-ssh-gnupg-macos
 # eval "$(gpg-agent --daemon --enable-ssh-support)"
 [[ -r /etc/profile ]] && emulate sh -c '. /etc/profile'
+[[ -r ~/.profile ]] && emulate sh -c '. ~/.profile'

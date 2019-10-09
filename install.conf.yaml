@@ -60,9 +60,10 @@
 
     # -- bash
     ~/.bash_profile: bash_profile
+    ~/.bash_profile.d: bash_profile.d
     ~/.bash_logout: bash_logout
     ~/.bashrc: bashrc
-    ~/.bashrc.d/: bashrc.d/*
+    ~/.bashrc.d: bashrc.d
 
     # -- generic shell
     ~/.profile: .profile
