@@ -159,7 +159,7 @@ zplugin snippet "$ZDOTDIR/plugins/history.plugin.zsh"
 zplugin snippet "$ZDOTDIR/plugins/ls-aliases.plugin.zsh"
 zplugin snippet "$ZDOTDIR/plugins/git.plugin.zsh"
 zplugin snippet "$ZDOTDIR/plugins/ssht.zsh"
-zplugin snippet "$ZDOTDIR/plugins/pyenv.zsh"
+# zplugin snippet "$ZDOTDIR/plugins/pyenv.zsh"
 
 zplugin ice if"(( $+commands[rsync] ))"
 zplugin snippet "$ZDOTDIR/plugins/cp-mv-safe.plugin.zsh"
@@ -240,7 +240,7 @@ zplugin load '/usr/local/Homebrew/Library/Taps/homebrew/homebrew-command-not-fou
 # python
 # ------
 zplugin ice lucid wait'0' \
-    atload'eval "$(pyenv init - zsh --no-rehash)"' \
+    atload'eval "$(pyenv init - --no-rehash zsh)"' \
     as'command' pick'bin/pyenv' src'completions/pyenv.zsh'
 zplugin light pyenv/pyenv
 
@@ -271,7 +271,7 @@ zplugin ice as"program" from"gh-r"
 zplugin light junegunn/fzf-bin
 
 if (( $+commands[fd] )) ; then
-  export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
+  export FZF_DEFAULT_COMMAND='fd --color=always --type f --hidden --follow --exclude .git'
 
   _fzf_compgen_path() {
     fd --hidden --follow --exclude ".git" . "$1"
@@ -288,23 +288,37 @@ elif (( $+commands[find] )) ; then
 fi
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
-_gen_fzf_preview_cmd() {
+_gen_fzf_opts() {
   local -r _line_limit=500
 
-  printf '[[ $(file --mime {}) =~ binary ]] && echo \"{} is a binary file\"'
-
-  printf ' || { '
-
   if (( ${+commands[bat]} )) ; then
-    printf "bat --color=always --plain --line-range :$_line_limit {} 2> /dev/null"
+    local _cat_cmd="bat --color=always --plain --line-range :$_line_limit {}"
   else
-    printf "cat {} 2> /dev/null | head -$_line_limit"
+    local _cat_cmd="cat {} | head -$_line_limit"
   fi
 
-  printf ' ; }'
+  read -r -d '' _preview_cmd <<- EOM
+	case \$(file --mime {}) in
+	  (*binary*) echo '{} is a binary file' ;;
+	  (*) $_cat_cmd 2> /dev/null ;;
+	esac
+	EOM
+
+  _fzf_binds=(
+    "ctrl-o:execute(${VISUAL:-vi} {} < /dev/tty > /dev/tty 2>&1)"
+    'ctrl-y:execute-silent(echo {} | pbcopy)+abort'
+  )
+
+  _fzf_opts=(
+    --ansi
+    --preview=\""$_preview_cmd"\"
+    --preview-window=right:60%
+    --bind=\"$(IFS=,; printf "%s" "${_fzf_binds[*]}")\"
+  )
+
+  echo "${_fzf_opts[@]}"
 }
-export FZF_DEFAULT_OPTS="--preview=\"$(_gen_fzf_preview_cmd)\" --bind='ctrl-o:execute(\${VISUAL:-vi} {} < /dev/tty > /dev/tty 2>&1)'"
-unset _gen_fzf_preview_cmd
+export FZF_DEFAULT_OPTS="$(_gen_fzf_opts)"
 
 # zplugin ice lucid wait'0' multisrc'shell/completion,key-bindings}.zsh' as"completion" pick"/dev/null"
 # zplugin ice lucid wait'0' multisrc'shell/{completion,key-bindings}.zsh' id-as"junegunn/fzf_completions" pick"/dev/null"
@@ -318,6 +332,7 @@ zplugin light junegunn/fzf
 #     plugins that hook up into Zshell by overloading Zle widgets. In general,
 #     HSMW should be loaded in bulk (no gap) with all those plugins, right
 #     before them.
+zplugin ice lucid wait"0"
 zplugin load zdharma/history-search-multi-word
 zstyle ":plugin:history-search-multi-word" reset-prompt-protect 1
 zstyle ":history-search-multi-word" page-size "$LINES/3"               # Number of entries to show (default is $LINES/3)
