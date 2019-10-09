@@ -45,3 +45,8 @@ bindkey '^H' backward-delete-char
 
 # ctrl-r starts searching history backward
 bindkey '^r' history-incremental-search-backward
+
+# edit-command-line
+autoload -U edit-command-line
+zle -N edit-command-line
+bindkey -M vicmd '^V' edit-command-line
