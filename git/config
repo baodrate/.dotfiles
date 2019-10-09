@@ -1,6 +1,5 @@
 [core]
 	pager = command -v diff-so-fancy 2>/dev/null && (diff-so-fancy | less --tabs=1,5 -RFX) || less
-	excludesfile = ~/.gitignore_global
 
 [user]
 	name = Bao Trinh
@@ -15,21 +14,21 @@
 	cmd = nvim -f -c \"Gdiff\" \"$MERGED\"
 
 [includeIf "gitdir:/usr/local/Homebrew/"]
-	path = ~/.gitconfig-personal
+	path = ./config-personal
 [includeIf "gitdir:~/dev/"]
-	path = ~/.gitconfig-work
+	path = ./config-work
 [includeIf "gitdir:~/wdev/"]
-	path = ~/.gitconfig-work
+	path = ./config-work
 [includeIf "gitdir:~/pdev/"]
-	path = ~/.gitconfig-personal
+	path = ./config-personal
 [includeIf "gitdir:~/github/"]
-	path = ~/.gitconfig-personal
+	path = ./config-personal
 [includeIf "gitdir:~/.scripts/"]
-	path = ~/.gitconfig-personal
+	path = ./config-personal
 [includeIf "gitdir:~/.dotfiles/"]
-	path = ~/.gitconfig-personal
+	path = ./config-personal
 [includeIf "gitdir:~/.journal/"]
-	path = ~/.gitconfig-personal
+	path = ./config-personal
 
 [color]
 	ui = true

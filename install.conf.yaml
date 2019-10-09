@@ -33,10 +33,7 @@
     # files
     # -----
     # -- gpg
-    ~/.gitconfig: git/config
-    ~/.gitconfig-work: git/config-work
-    ~/.gitconfig-personal: git/config-personal
-    ~/.gitignore_global: git/gitignore_global
+    ~/.config/git: git
     ~/.gnupg/gpg-agent.conf: gnupg/gpg-agent.conf
     ~/.gnupg/sshcontrol: gnupg/sshcontrol
 
