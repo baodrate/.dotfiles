@@ -1,3 +1,16 @@
+# add an on_enter command to the default mode
+:: default : yabai -m config active_window_border_color 0xff0f6288
+
+# open terminal, blazingly fast compared to iTerm/Hyper
+alt + shift - return : open -na /Applications/Alacritty.app
+alt + ctrl - return : osascript -e 'tell application "iTerm2"' -e 'activate' -e 'create window with default profile' -e 'end tell'
+
+# cmd - h : return # disable hide-windows shortcut
+cmd - h : return 0
+
+# old chunkwm config for reference (remove rest of conf if using):
+# .load ".config/chunkwm/skhdrc"
+
 #  NOTE(koekeishiya): A list of all built-in modifier and literal keywords can
 #                     be found at https://github.com/koekeishiya/skhd/issues/1
 #
@@ -49,13 +62,13 @@ shift + alt - k : yabai -m window --swap north
 shift + alt - l : yabai -m window --swap east
 
 # move window
-shift + ctrl + alt - h : yabai -m window --warp west
-shift + ctrl + alt - j : yabai -m window --warp south
-shift + ctrl + alt - k : yabai -m window --warp north
-shift + ctrl + alt - l : yabai -m window --warp east
+ctrl + shift + alt - h : yabai -m window --warp west
+ctrl + shift + alt - j : yabai -m window --warp south
+ctrl + shift + alt - k : yabai -m window --warp north
+ctrl + shift + alt - l : yabai -m window --warp east
 
 # balance size of windows
-shift + ctrl + alt - 0 : yabai -m space --balance
+ctrl + shift + alt - 0 : yabai -m space --balance
 
 # make floating window fill screen
 shift + alt - up     : yabai -m window --grid 1:1:0:0:1:1
@@ -80,6 +93,10 @@ shift + alt - right  : yabai -m window --grid 1:2:1:0:1:1
 # destroy desktop
 # cmd + alt - w : yabai -m space --destroy
 
+# override default desktop switching
+ctrl - left : yabai -m space --focus prev
+ctrl - right : yabai -m space --focus next
+
 # fast focus desktop
 alt - x : yabai -m space --focus recent
 alt - p : yabai -m space --focus prev
@@ -95,28 +112,31 @@ alt - 8 : yabai -m space --focus 8
 alt - 9 : yabai -m space --focus 9
 alt - 0 : yabai -m space --focus 10
 
+
 # send window to desktop and follow focus
-shift + alt - x : yabai -m window --space recent; yabai -m space --focus recent
-shift + alt - p : yabai -m window --space prev; yabai -m space --focus prev
-shift + alt - n : yabai -m window --space next; yabai -m space --focus next
-shift + alt - 1 : yabai -m window --space  1; yabai -m space --focus  1
-shift + alt - 2 : yabai -m window --space  2; yabai -m space --focus  2
-shift + alt - 3 : yabai -m window --space  3; yabai -m space --focus  3
-shift + alt - 4 : yabai -m window --space  4; yabai -m space --focus  4
-shift + alt - 5 : yabai -m window --space  5; yabai -m space --focus  5
-shift + alt - 6 : yabai -m window --space  6; yabai -m space --focus  6
-shift + alt - 7 : yabai -m window --space  7; yabai -m space --focus  7
-shift + alt - 8 : yabai -m window --space  8; yabai -m space --focus  8
-shift + alt - 9 : yabai -m window --space  9; yabai -m space --focus  9
-shift + alt - 0 : yabai -m window --space 10; yabai -m space --focus 10
+shift + alt - x : wid="$(yabai -m query --windows --window | jq -r '.id')" && yabai -m window --space recent && yabai -m space --focus recent && yabai -m window --focus "${wid}"
+shift + alt - p : wid="$(yabai -m query --windows --window | jq -r '.id')" && yabai -m window --space prev   && yabai -m space --focus prev   && yabai -m window --focus "${wid}"
+shift + alt - n : wid="$(yabai -m query --windows --window | jq -r '.id')" && yabai -m window --space next   && yabai -m space --focus next   && yabai -m window --focus "${wid}"
+shift + alt - 1 : wid="$(yabai -m query --windows --window | jq -r '.id')" && yabai -m window --space 1      && yabai -m space --focus 1      && yabai -m window --focus  "${wid}"
+shift + alt - 2 : wid="$(yabai -m query --windows --window | jq -r '.id')" && yabai -m window --space 2      && yabai -m space --focus 2      && yabai -m window --focus  "${wid}"
+shift + alt - 3 : wid="$(yabai -m query --windows --window | jq -r '.id')" && yabai -m window --space 3      && yabai -m space --focus 3      && yabai -m window --focus  "${wid}"
+shift + alt - 4 : wid="$(yabai -m query --windows --window | jq -r '.id')" && yabai -m window --space 4      && yabai -m space --focus 4      && yabai -m window --focus  "${wid}"
+shift + alt - 5 : wid="$(yabai -m query --windows --window | jq -r '.id')" && yabai -m window --space 5      && yabai -m space --focus 5      && yabai -m window --focus  "${wid}"
+shift + alt - 6 : wid="$(yabai -m query --windows --window | jq -r '.id')" && yabai -m window --space 6      && yabai -m space --focus 6      && yabai -m window --focus  "${wid}"
+shift + alt - 7 : wid="$(yabai -m query --windows --window | jq -r '.id')" && yabai -m window --space 7      && yabai -m space --focus 7      && yabai -m window --focus  "${wid}"
+shift + alt - 8 : wid="$(yabai -m query --windows --window | jq -r '.id')" && yabai -m window --space 8      && yabai -m space --focus 8      && yabai -m window --focus  "${wid}"
+shift + alt - 9 : wid="$(yabai -m query --windows --window | jq -r '.id')" && yabai -m window --space 9      && yabai -m space --focus 9      && yabai -m window --focus  "${wid}"
+shift + alt - 0 : wid="$(yabai -m query --windows --window | jq -r '.id')" && yabai -m window --space 10     && yabai -m space --focus 10     && yabai -m window --focus "${wid}"
 
 # focus monitor
 alt - 0x21 : yabai -m display --focus 2 # alt - [
 alt - 0x1E : yabai -m display --focus 1 # alt - ]
 
 # send window to monitor and follow focus
-shift + alt - 0x21 : yabai -m window --display 2; yabai -m display --focus 2 # shift +  alt - [
-shift + alt - 0x1E : yabai -m window --display 1; yabai -m display --focus 1 # shift +  alt - ]
+# shift + alt - [
+shift + alt - 0x21 : wid="$(yabai -m query --windows --window | jq -r '.id')" && yabai -m window --display 2 && yabai -m window --focus "${wid}"
+# shift + alt - ]
+shift + alt - 0x1E : wid="$(yabai -m query --windows --window | jq -r '.id')" && yabai -m window --display 1 && yabai -m window --focus "${wid}"
 
 # move window
 shift + ctrl - a : yabai -m window --move rel:-20:0
@@ -124,23 +144,18 @@ shift + ctrl - s : yabai -m window --move rel:0:20
 shift + ctrl - w : yabai -m window --move rel:0:-20
 shift + ctrl - d : yabai -m window --move rel:20:0
 
-# increase window size
-shift + alt - a : yabai -m window --resize left:-20:0
-shift + alt - s : yabai -m window --resize bottom:0:20
-shift + alt - w : yabai -m window --resize top:0:-20
-shift + alt - d : yabai -m window --resize right:20:0
-
-# decrease window size
-shift + cmd - a : yabai -m window --resize left:20:0
-shift + cmd - s : yabai -m window --resize bottom:0:-20
-shift + cmd - w : yabai -m window --resize top:0:20
-shift + cmd - d : yabai -m window --resize right:-20:0
+# shift and resize
+# https://github.com/koekeishiya/yabai/issues/200#issuecomment-519257233
+shift + alt - a : yabai -m window west --resize right:-20:0 2> /dev/null || yabai -m window --resize right:-20:0
+shift + alt - s : yabai -m window north --resize bottom:0:20 2> /dev/null || yabai -m window --resize bottom:0:20
+shift + alt - w : yabai -m window south --resize top:0:-20 2> /dev/null || yabai -m window --resize top:0:-20
+shift + alt - d : yabai -m window east --resize left:20:0 2> /dev/null || yabai -m window --resize left:20:0
 
 # set insertion point in focused container
-# cmd + alt - h : yabai -m window --insert west
-# cmd + alt - j : yabai -m window --insert south
-# cmd + alt - k : yabai -m window --insert north
-# cmd + alt - l : yabai -m window --insert east
+cmd + alt - h : yabai -m window --insert west
+cmd + alt - j : yabai -m window --insert south
+cmd + alt - k : yabai -m window --insert north
+cmd + alt - l : yabai -m window --insert east
 
 # rotate tree
 alt - r : yabai -m space --rotate 90
@@ -184,8 +199,6 @@ alt - p : yabai -m window --toggle sticky;\
 cmd + alt - a : yabai -m space --layout bsp
 cmd + alt - d : yabai -m space --layout float
 
-# ctrl + cmd - w : chunkc tiling::desktop --deserialize ~/.chunkwm_layouts/dev_1
-
 # signal dock to make windows topmost when floated
 # chunkc set window_float_topmost 1
 # signal dock to move window when using mouse-drag on floating windows
@@ -196,32 +209,24 @@ cmd + alt - d : yabai -m space --layout float
 # ===============
 # https://pietergorsira.com/posts/2018/08/06/chunkwm-modal-resizing.html
 
-:: resize @ : chunkc border::color 0xff24ccaa
-alt + shift - r ; resize
-    resize < escape : chunkc border::color 0xff0f6288; skhd -k "cmd + shift - escape"
-    resize < cmd + shift - escape ; default
+:: resize @ : yabai -m config active_window_border_color 0xff24ccaa
+    # binding to enter resize mode
+    alt + shift - r ; resize
+
+    # return to default mode
+    resize < return ; default
+    resize < escape ; default
 
     # keep movement controls
-    resize < alt - h : chunkc tiling::window --focus west
-    resize < alt - j : chunkc tiling::window --focus south
-    resize < alt - k : chunkc tiling::window --focus north
-    resize < alt - l : chunkc tiling::window --focus east
+    resize < alt - h : yabai -m window --focus west
+    resize < alt - j : yabai -m window --focus south
+    resize < alt - k : yabai -m window --focus north
+    resize < alt - l : yabai -m window --focus east
 
-    # resize bindings (sticky desktop-edge + movement)
-    resize < h : chunkc tiling::window --use-temporary-ratio 0.03 --adjust-window-edge west; chunkc tiling::window --use-temporary-ratio -0.03 --adjust-window-edge east;
-    resize < j : chunkc tiling::window --use-temporary-ratio 0.03 --adjust-window-edge south; chunkc tiling::window --use-temporary-ratio -0.03 --adjust-window-edge north;
-    resize < k : chunkc tiling::window --use-temporary-ratio 0.03 --adjust-window-edge north; chunkc tiling::window --use-temporary-ratio -0.03 --adjust-window-edge south;
-    resize < l : chunkc tiling::window --use-temporary-ratio 0.03 --adjust-window-edge east; chunkc tiling::window --use-temporary-ratio -0.03 --adjust-window-edge west;
-
-    # resize - grow edges
-    resize < shift - h : chunkc tiling::window --use-temporary-ratio 0.03 --adjust-window-edge west
-    resize < shift - j : chunkc tiling::window --use-temporary-ratio 0.03 --adjust-window-edge south
-    resize < shift - k : chunkc tiling::window --use-temporary-ratio 0.03 --adjust-window-edge north
-    resize < shift - l : chunkc tiling::window --use-temporary-ratio 0.03 --adjust-window-edge east
-
-    # resize - shrink edges
-    resize < ctrl - h : chunkc tiling::window --use-temporary-ratio -0.03 --adjust-window-edge west
-    resize < ctrl - j : chunkc tiling::window --use-temporary-ratio -0.03 --adjust-window-edge south
-    resize < ctrl - k : chunkc tiling::window --use-temporary-ratio -0.03 --adjust-window-edge north
-    resize < ctrl - l : chunkc tiling::window --use-temporary-ratio -0.03 --adjust-window-edge east
+    # shift and resize
+    # https://github.com/koekeishiya/yabai/issues/200#issuecomment-519257233
+    resize < h : yabai -m window west --resize right:-20:0 2> /dev/null || yabai -m window --resize right:-20:0
+    resize < j : yabai -m window north --resize bottom:0:20 2> /dev/null || yabai -m window --resize bottom:0:20
+    resize < k : yabai -m window south --resize top:0:-20 2> /dev/null || yabai -m window --resize top:0:-20
+    resize < l : yabai -m window east --resize left:20:0 2> /dev/null || yabai -m window --resize left:20:0
 

@@ -1,4 +1,5 @@
 .zcompdump*
 .zhistory
 .zcalc_history
+.zsh_history
 .p10k.zsh

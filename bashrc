@@ -1,27 +1,9 @@
 #!/usr/bin/env bash
 
-# [ -r "/etc/bashrc" ] && source "/etc/bashrc"
-# [ -r "/etc/bash.bashrc" ] && source "/etc/bash.bashrc"
+[ -r ~/.env ] && source ~/.env
 
-# --------
-# load zsh
-# --------
-# only apply for interactive sessions
-if [[ $- == *i* ]]; then
-  # if zsh exists and not in a nested ZSH session
-  if hash zsh 2>/dev/null && (( $SHLVL == 1 )); then
-    exec zsh
-  fi
-fi
-
-# ------------------------
-# include other .d scripts
-# ------------------------
-for file in $HOME/.shrc.d/*; do
-  if [ -x "$file" ]; then
-    . "$file"
-  fi
-done
+[ -r "/etc/bashrc" ] && source "/etc/bashrc"
+[ -r "/etc/bash.bashrc" ] && source "/etc/bash.bashrc"
 
 # -----------------
 # bash prompt (ps1)
@@ -56,6 +38,20 @@ _PROMPT() {
 }
 
 export PROMPT_COMMAND=_PROMPT
+
+# ------------------------
+# include other .d scripts
+# ------------------------
+for file in $HOME/.shrc.d/*; do
+  if [ -x "$file" ]; then
+    . "$file"
+  fi
+done
+for file in $HOME/.bashrc.d/*; do
+  if [ -x "$file" ]; then
+    . "$file"
+  fi
+done
 
 # -----------------------------------
 # run bash_logout in non-login shells

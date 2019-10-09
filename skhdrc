@@ -1,8 +1,0 @@
-# .load ".config/chunkwm/skhdrc"
-
-# open terminal, blazingly fast compared to iTerm/Hyper
-alt + shift - return : open -na /Applications/Alacritty.app
-
-cmd - h : return # disable hide-windows shortcut
-
-.load ".config/yabai/skhdrc"

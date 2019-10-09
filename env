@@ -4,71 +4,82 @@ export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 export LC_CTYPE=en_US.UTF-8
 
-# fix for https://github.com/swaywm/sway/issues/595
-export _JAVA_AWT_WM_NONREPARENTING=1
+export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-"$HOME/.config"}"
+export XDG_DATA_HOME="${XDG_DATA_HOME:-"$HOME/.local/share"}"
+export XDG_RUNTIME_DIR="${XDG_RUNTIME_DIR:-"$HOME/.run"}"
+export XDG_CACHE_HOME="${XDG_CACHE_HOME:-"$HOME/.cache"}"
 
 export SCRIPTS_DIR="$HOME/bin"
+
+# fix for https://github.com/swaywm/sway/issues/595
+export _JAVA_AWT_WM_NONREPARENTING=1
 
 # workaround for issue with qtwebengine + opengl + nouveau
 # see https://bugs.archlinux.org/task/59057
 export QT_XCB_FORCE_SOFTWARE_OPENGL=1
 
+# opt out of telemetry
+export HOMEBREW_NO_ANALYTICS=1
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
 
+# ===========
+# shell stuff
+# ===========
 export BASH_ENV="$HOME/.bash_env"
-
 export CLICOLOR=1
+
+# ================================
+# other path environment variables
+# ================================
+
+# ==> nvim-remote
+export NVIM_LISTEN_ADDRESS=/tmp/nvimsocket
+
+# ==> colors
+export BASE16_SHELL_HOOKS=$XDG_CONFIG_HOME/colors/base16-shell-hooks
+export BASE16_SHELL=$XDG_CONFIG_HOME/colors/base16-shell
 
 # ============
 # update paths
 # ============
-prependpath () {
-    case ":$PATH:" in
-        *:"$1":*)
-            ;;
-        *)
-            PATH="$1${PATH:+:$PATH}"
-    esac
+# ==> setup PATH variable
+
+pathmunge () {
+  case ":${PATH}:" in
+    *:"$1":*)
+      ;;
+    *)
+      if [ "$2" = "after" ] ; then
+        PATH="${PATH:+"$PATH:"}$1"
+      else
+        PATH="$1${PATH:+":$PATH"}"
+      fi
+  esac
 }
 
-# ==> setup PATH variable
-PATH=$(getconf PATH)
-MANPATH=$(getconf MANPATH 2>/dev/null)
-INFOPATH=$(getconf INFOPATH 2>/dev/null)
+[ ! -d "$SCRIPTS_DIR" ] || pathmunge "$SCRIPTS_DIR"
 
-[ -z "$XDG_CONFIG_HOME"  ] && export XDG_CONFIG_HOME="$HOME/.config"
-[ -z "$XDG_DATA_HOME"    ] && export XDG_DATA_HOME="$HOME/.local/share"
-[ -z "$XDG_RUNTIME_DIR"  ] && export XDG_RUNTIME_DIR="$HOME/.run"
-[ -z "$XDG_CACHE_HOME"   ] && export XDG_CACHE_HOME="$HOME/.cache"
-
-[ -d "$XDG_CONFIG_HOME"  ] || mkdir -p "$XDG_CONFIG_HOME"
-[ -d "$XDG_DATA_HOME"    ] || mkdir -p "$XDG_DATA_HOME"
-[ -d "$XDG_RUNTIME_DIR"  ] || mkdir -p "$XDG_RUNTIME_DIR"
-[ -d "$XDG_CACHE_HOME"   ] || mkdir -p "$XDG_CACHE_HOME"
-
-[ -d "$SCRIPTS_DIR" ] && prependpath "$SCRIPTS_DIR"
-[ -d "/usr/local/opt/llvm/bin" ] && prependpath "/usr/local/opt/llvm/bin"
-[ -d "/usr/local/opt/ccache/libexec" ] && prependpath "/usr/local/opt/ccache/libexec"
+# ==> generic
+[ ! -d "$HOME/.local/bin" ] || pathmunge "$HOME/.local/bin"
 
 # ==> rust
-[ -d "$HOME/.cargo/bin" ] && prependpath "$HOME/.cargo/bin"
+[ ! -d "$HOME/.cargo/bin" ] || pathmunge "$HOME/.cargo/bin"
 
 # ==> python
 export PYTHONUSERBASE=${PYTHONUSERBASE:-"$HOME/.local"}
-[ -d "$PYTHONUSERBASE/bin" ] && prependpath "$PYTHONUSERBASE/bin"
-[ -d "$HOME/.poetry/bin" ] && prependpath "$HOME/.poetry/bin"
+[ ! -d "$PYTHONUSERBASE/bin" ] || pathmunge "$PYTHONUSERBASE/bin"
+[ ! -d "$HOME/.poetry/bin" ] || pathmunge "$HOME/.poetry/bin"
+
 export PYENV_ROOT="$HOME/.pyenv"
-[ -d "$HOME/.pyenv" ] && prependpath "$PYENV_ROOT"
+[ ! -d "$PYENV_ROOT/bin" ] || pathmunge "$PYENV_ROOT/bin"
 
 # ==> npm
 export npm_config_prefix="$XDG_DATA_HOME/npm"
 export npm_config_cache="$XDG_CACHE_HOME/npm"
-[ -d "$npm_config_prefix" ] && prependpath "$npm_config_prefix/bin"
+[ ! -d "$npm_config_prefix" ] || pathmunge "$npm_config_prefix/bin"
 
-unset prependpath
+unset pathmunge
 export PATH
-export MANPATH="$MANPATH"
-export INFOPATH=":$INFOPATH"
 
 # ======================
 # inlude other env files

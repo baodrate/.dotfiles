@@ -1,8 +1,14 @@
 #!/usr/bin/env zsh
-[[ -r /etc/profile ]] && emulate sh -c '. /etc/profile'
+
+[[ -r /etc/zprofile ]] && source /etc/zprofile
 [[ -r ~/.profile ]] && emulate sh -c '. ~/.profile'
 
-# not needed because we use .plist hack
-# https://evilmartians.com/chronicles/stick-with-security-yubikey-ssh-gnupg-macos
-# eval "$(gpg-agent --daemon --enable-ssh-support)"
-
+# ==> setup default editor
+if (( $+commands[nvim] )) ; then
+  export VISUAL=nvim
+  export NVIM_TUI_ENABLE_TRUE_COLOR=1
+elif (( $+commands[vim] )) ; then
+  export VISUAL=vim
+else
+  echo 'could not find neovim or vim; not setting $VISUAL'
+fi

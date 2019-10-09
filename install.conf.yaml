@@ -10,7 +10,7 @@
     link:
       relink: true
       create: true
-      relative: true
+      relative: false
       glob: true
       force: true
 
@@ -62,8 +62,8 @@
     ~/.bashrc: bashrc
 
     # -- generic shell
-    ~/.profile: .profile
-    ~/.profile.d: .profile.d
+    ~/.profile: profile
+    ~/.profile.d: profile.d
     ~/.shrc.d: shrc.d
     ~/.env: env
     ~/.env.d: env.d
@@ -99,7 +99,7 @@
     link:
       relink: true
       create: true
-      relative: true
+      relative: false
       glob: true
       if: '[ "$(uname -s)" "==" "Darwin" ]'
 - link:
@@ -110,7 +110,7 @@
     link:
       relink: true
       create: true
-      relative: true
+      relative: false
       glob: true
       if: '[ "$(uname -s)" "==" "Linux" ]'
 - link:
@@ -140,7 +140,7 @@
     link:
       relink: true
       create: true
-      relative: true
+      relative: false
       glob: true
       if: '[ "$(uname -s)" "==" "Darwin" ]'
 
@@ -161,8 +161,8 @@
     # files
     # -----
     ~/.chunkwmrc: chunkwm/chunkwmrc.sh
-    ~/.yabairc: yabai/yabairc.sh
-    ~/.skhdrc: skhdrc
+    ~/.config/yabai: yabai
+    ~/.config/skhd: skhd
     ~/Library/Application Support/Übersicht/widgets: ubersicht/widgets
 
 # ================
@@ -172,7 +172,7 @@
     link:
       relink: true
       create: true
-      relative: true
+      relative: false
       glob: true
       if: '[ "$(uname -s)" "==" "Linux" ]'
 

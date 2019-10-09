@@ -1,30 +1,34 @@
 #!/bin/sh
 
-appendpath () {
-    case ":$PATH:" in
-        *:"$1":*)
-            ;;
-        *)
-            PATH="${PATH:+$PATH:}$1"
-    esac
-}
-
 HOMEBREW_PREFIX=${HOMEBREW_PREFIX:-"/usr/local"}
 
+pathmunge () {
+  case ":${PATH}:" in
+    *:"$1":*)
+      ;;
+    *)
+      if [ "$2" = "after" ] ; then
+        PATH="${PATH:+"$PATH:"}$1"
+      else
+        PATH="$1${PATH:+":$PATH"}"
+      fi
+  esac
+}
+
 #     /usr/local
-[ -d "$HOMEBREW_PREFIX/bin" ] && appendpath "$HOMEBREW_PREFIX/bin"
-[ -d "$HOMEBREW_PREFIX/sbin" ] && appendpath "$HOMEBREW_PREFIX/sbin"
+[ -d "$HOMEBREW_PREFIX/bin" ] && pathmunge "$HOMEBREW_PREFIX/bin"
+[ -d "$HOMEBREW_PREFIX/sbin" ] && pathmunge "$HOMEBREW_PREFIX/sbin"
 [ -d "$HOMEBREW_PREFIX/share/info" ] && MANPATH="$MANPATH:$HOMEBREW_PREFIX/share/info"
 [ -d "$HOMEBREW_PREFIX/share/infopath" ] && INFOPATH="$INFOPATH:$HOMEBREW_PREFIX/share/infopath"
 
 #     llvm
-[ -d "$HOMEBREW_PREFIX/opt/llvm/bin" ] && appendpath "$HOMEBREW_PREFIX/opt/llvm/bin"
-[ -d "$HOMEBREW_PREFIX/opt/ccache/libexec" ] && appendpath "$HOMEBREW_PREFIX/opt/ccache/libexec"
+[ -d "$HOMEBREW_PREFIX/opt/llvm/bin" ] && pathmunge "$HOMEBREW_PREFIX/opt/llvm/bin"
+[ -d "$HOMEBREW_PREFIX/opt/ccache/libexec" ] && pathmunge "$HOMEBREW_PREFIX/opt/ccache/libexec"
 
 #     curl
-[ -d "$HOMEBREW_PREFIX/opt/curl" ] && appendpath "$HOMEBREW_PREFIX/opt/curl/bin"
+[ -d "$HOMEBREW_PREFIX/opt/curl" ] && pathmunge "$HOMEBREW_PREFIX/opt/curl/bin"
 
-unset appendpath
+unset pathmunge
 export PATH
-export MANPATH="$MANPATH"
-export INFOPATH=":$INFOPATH"
+export MANPATH
+export INFOPATH

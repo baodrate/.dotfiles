@@ -1,0 +1,9 @@
+#!/bin/sh
+profile_helper="${XDG_CONFIG_HOME:-"$HOME/.config"}"/colors/base16_profile_helper.sh
+
+if [ -d "$profile_helper" ]; then
+  echo "Couldn't find base16_profile_helper at $profile_helper"
+  exit 1
+fi
+
+eval "$($profile_helper)"

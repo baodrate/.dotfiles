@@ -1,79 +1,84 @@
 #!/bin/sh
+# shellcheck disable=SC2139
 
-# do this in a function so we don't pollute namespace
-declare_ls_aliases() {
-  # Default i.e. posix flags
-  local ls_cmd=`command -v ls`
+# Default i.e. posix flags
+_LS_CMD="ls"
+command -v gls >/dev/null && _LS_CMD="gls"
 
-  local _LS_L="-l"
-  local _LS_1="-1"
+_LS_VIS_HIDE=""
+_LS_VIS_MOST="-A"
+_LS_VIS_ALL="-a"
+_LS_SORT_NEW="-t"
+_LS_CLASSIFIERS="-F"
 
-  local _LS_VIS_HIDE=""
-  local _LS_VIS_MOST="-A"
-  local _LS_VIS_ALL="-a"
-  local _LS_SORT_NEW="-t"
-  local _LS_CLASSIFIERS="-F"
+# platform-specific flags
+_LS_COLORS=""
+_LS_HUMAN="-h"
+_LS_DIR_FIRST=""
 
-  # platform-specific flags
-  local _LS_COLORS=""
-  local _LS_HUMAN="-h"
-  local _LS_DIR_FIRST=""
+_LS_DEFAULT_FLAGS=""
 
-  local _LS_DEFAULT_FLAGS=""
+_UNAME_STR="$(uname)"
 
-  if command -v exa >/dev/null ; then
-    ls_cmd="exa"
+if command -v exa >/dev/null ; then
+  _LS_CMD="exa"
 
-    local exa_git="--git"                               #    list files' git status
-    local exa_ext="--extended"                          # -@ show files’ extended attributes and sizes
-    local exa_group="--group"                           # -g show files’ group
-    _LS_DEFAULT_FLAGS="$_LS_DEFAULT_FLAGS $exa_git $exa_ext $exa_group"
+  _LS_DEFAULT_FLAGS="$_LS_DEFAULT_FLAGS --git"        #    list files' git status
+# _LS_DEFAULT_FLAGS="$_LS_DEFAULT_FLAGS --extended"   # -@ show files’ extended attributes and sizes
+  _LS_DEFAULT_FLAGS="$_LS_DEFAULT_FLAGS --group"      # -g show files’ group
 
-    _LS_VIS_HIDE="--git-ignore"                         #    hide files defined in gitignore
-    _LS_VIS_MOST="--git-ignore --all"                   # -a (call twice to show . and ..)
-    _LS_VIS_ALL="--all --all"
+  _LS_VIS_HIDE="--git-ignore"                         #    hide files defined in gitignore
+  _LS_VIS_MOST="--git-ignore --all"                   # -a (call twice to show . and ..)
+  _LS_VIS_ALL="--all --all"
 
-    _LS_SORT_NEW="--sort=newest"                        #    --sort=modified --reverse
+  _LS_SORT_NEW="--sort=newest"                        #    --sort=modified --reverse
 
-    _LS_COLORS="--color=automatic"                      #    'always' to forward to e.g. less
-    _LS_HUMAN="--binary"                                # -b use binary prefixes (e.g. KiB vs KB)
-    _LS_DIR_FIRST="--group-directories-first"           #    self-explanatory
-  elif [[ $OSTYPE = linux* ]] || command -v gls >/dev/null ; then
-    ls_cmd=`command -v gls || command -v ls`
+  _LS_COLORS="--color=automatic"                      #    'always' to forward to e.g. less
+  _LS_HUMAN="--binary"                                # -b use binary prefixes (e.g. KiB vs KB)
+  _LS_DIR_FIRST="--group-directories-first"           #    self-explanatory
+elif [ "$_UNAME_STR" = Linux ] || [ "$_LS_CMD" = "gls" ] ; then
+  _LS_COLORS="--color=auto"
+  _LS_DIR_FIRST="--group-directories-first"
+elif [ "$_UNAME_STR" = Darwin ]; then
+  _LS_COLORS="-G"
+fi
 
-    _LS_COLORS="--color=auto"
-    _LS_DIR_FIRST="--group-directories-first"
-  elif [[ $OSTYPE = darwin* ]]; then
-    _LS_COLORS="-G"
-  fi
+_LS_DEFAULT_FLAGS="$_LS_DEFAULT_FLAGS $_LS_COLORS $_LS_CLASSIFIERS $_LS_HUMAN $_LS_DIR_FIRST"
 
-  _LS_DEFAULT_FLAGS="$_LS_DEFAULT_FLAGS $_LS_COLORS $_LS_CLASSIFIERS $_LS_HUMAN $_LS_DIR_FIRST"
+_LS_CMD="$_LS_CMD $_LS_DEFAULT_FLAGS"
 
-  alias _ls="$ls_cmd $_LS_DEFAULT_FLAGS"
+alias ls="$_LS_CMD $_LS_VIS_HIDE"
+alias lsa="$_LS_CMD $_LS_VIS_MOST"
+alias lsaa="$_LS_CMD $_LS_VIS_ALL"
 
-  alias ls="_ls $_LS_VIS_HIDE"
-  alias lsa="_ls $_LS_VIS_MOST"
-  alias lsaa="_ls $_LS_VIS_ALL"
+alias lst="$_LS_CMD $_LS_VIS_HIDE $_LS_SORT_NEW"
+alias lsat="$_LS_CMD $_LS_VIS_MOST $_LS_SORT_NEW"
+alias lsaat="$_LS_CMD $_LS_VIS_ALL $_LS_SORT_NEW"
 
-  alias lst="_ls $_LS_VIS_HIDE $_LS_SORT_NEW"
-  alias lsat="_ls $_LS_VIS_MOST $_LS_SORT_NEW"
-  alias lsaat="_ls $_LS_VIS_ALL $_LS_SORT_NEW"
+alias l="$_LS_CMD -1 $_LS_VIS_HIDE"
+alias la="$_LS_CMD -1 $_LS_VIS_MOST"
+alias laa="$_LS_CMD -1 $_LS_VIS_ALL"
 
-  alias l="_ls $_LS_1 $_LS_VIS_HIDE"
-  alias la="_ls $_LS_1 $_LS_VIS_MOST"
-  alias laa="_ls $_LS_1 $_LS_VIS_ALL"
+alias lt="$_LS_CMD -1 $_LS_VIS_HIDE $_LS_SORT_NEW"
+alias lat="$_LS_CMD -1 $_LS_VIS_MOST $_LS_SORT_NEW"
+alias laat="$_LS_CMD -1 $_LS_VIS_ALL $_LS_SORT_NEW"
 
-  alias lt="_ls $_LS_1 $_LS_VIS_HIDE $_LS_SORT_NEW"
-  alias lat="_ls $_LS_1 $_LS_VIS_MOST $_LS_SORT_NEW"
-  alias laat="_ls $_LS_1 $_LS_VIS_ALL $_LS_SORT_NEW"
+alias ll="$_LS_CMD -l $_LS_VIS_HIDE"
+alias lla="$_LS_CMD -l $_LS_VIS_MOST"
+alias llaa="$_LS_CMD -l $_LS_VIS_ALL"
 
-  alias ll="_ls $_LS_L $_LS_VIS_HIDE"
-  alias lla="_ls $_LS_L $_LS_VIS_MOST"
-  alias llaa="_ls $_LS_L $_LS_VIS_ALL"
+alias llt="$_LS_CMD -l $_LS_VIS_HIDE $_LS_SORT_NEW"
+alias llat="$_LS_CMD -l $_LS_VIS_MOST $_LS_SORT_NEW"
+alias llaat="$_LS_CMD -l $_LS_VIS_ALL $_LS_SORT_NEW"
 
-  alias llt="_ls $_LS_L $_LS_VIS_HIDE $_LS_SORT_NEW"
-  alias llat="_ls $_LS_L $_LS_VIS_MOST $_LS_SORT_NEW"
-  alias llaat="_ls $_LS_L $_LS_VIS_ALL $_LS_SORT_NEW"
-}
-
-declare_ls_aliases
+unset _LS_CMD
+unset _LS_DEFAULT_FLAGS
+unset _LS_VIS_HIDE
+unset _LS_VIS_MOST
+unset _LS_VIS_ALL
+unset _LS_SORT_NEW
+unset _LS_CLASSIFIERS
+unset _LS_COLORS
+unset _LS_HUMAN
+unset _LS_DIR_FIRST
+unset _UNAME_STR

@@ -1,30 +1,7 @@
 #!/usr/bin/env zsh
-[[ -r ~/.env ]] && emulate sh -c ". ~/.env"
-
-(( ${+ZDOTDIR} )) || export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
-
-export SHELL="zsh"
-
 # /etc/zprofile on macOS loads /usr/libexec/path_helper which overwrites PATH
 # disable it
-setopt no_global_rcs
-
-# ==> nvim-remote
-export NVIM_LISTEN_ADDRESS=/tmp/nvimsocket
-
-# ==> colors
-export BASE16_SHELL_HOOKS=$XDG_CONFIG_HOME/colors/base16-shell-hooks
-export BASE16_SHELL=$XDG_CONFIG_HOME/colors/base16-shell
-
-# ==> setup default editor
-if (( $+commands[nvim] )) ; then
-  export VISUAL=nvim
-  export NVIM_TUI_ENABLE_TRUE_COLOR=1
-elif (( $+commands[vim] )) ; then
-  export VISUAL=vim
-else
-  echo 'could not find neovim or vim; not setting $VISUAL'
-fi
+# setopt no_global_rcs
 
 # -------------
 # gpg ssh agent
@@ -41,3 +18,7 @@ if (( $+commands[gpg-connect-aggent] )) ; then
     echo "UPDATESTARTUPTTY" | gpg-connect-agent > /dev/null 2>&1
   fi
 fi
+
+# not needed because we use .plist hack
+# https://evilmartians.com/chronicles/stick-with-security-yubikey-ssh-gnupg-macos
+# eval "$(gpg-agent --daemon --enable-ssh-support)"
