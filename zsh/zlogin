@@ -1,1 +1,2 @@
-[ -r "~/.login" ] && . "~/.login"
+#!/usr/bin/env zsh
+[[ -r ~/.login ]] && emulate sh -c '. ~/.login'

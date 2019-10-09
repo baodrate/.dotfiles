@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+# only set once
+[ -z ${PROMPT_COMMAND+x} ] || return 0

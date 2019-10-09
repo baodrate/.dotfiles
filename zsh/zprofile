@@ -1,4 +1,8 @@
+#!/usr/bin/env zsh
+[[ -r /etc/profile ]] && emulate sh -c '. /etc/profile'
+[[ -r ~/.profile ]] && emulate sh -c '. ~/.profile'
+
 # not needed because we use .plist hack
 # https://evilmartians.com/chronicles/stick-with-security-yubikey-ssh-gnupg-macos
 # eval "$(gpg-agent --daemon --enable-ssh-support)"
-[[ -r /etc/profile ]] && emulate sh -c '. /etc/profile'
+
