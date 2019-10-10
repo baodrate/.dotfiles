@@ -15,3 +15,5 @@ for file in $HOME/.profile.d/*; do
     . "$file"
   fi
 done
+
+export PATH="$HOME/.cargo/bin:$PATH"

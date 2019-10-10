@@ -1,6 +1,7 @@
 #!/bin/sh
 
 HOMEBREW_PREFIX=${HOMEBREW_PREFIX:-"/usr/local"}
+[ -f "$HOMEBREW_PREFIX/bin/brew" ] || return 0
 
 pathmunge () {
   case ":${PATH}:" in
@@ -16,19 +17,21 @@ pathmunge () {
 }
 
 #     /usr/local
-[ -d "$HOMEBREW_PREFIX/bin" ] && pathmunge "$HOMEBREW_PREFIX/bin"
-[ -d "$HOMEBREW_PREFIX/sbin" ] && pathmunge "$HOMEBREW_PREFIX/sbin"
-[ -d "$HOMEBREW_PREFIX/share/info" ] && MANPATH="$MANPATH:$HOMEBREW_PREFIX/share/info"
-[ -d "$HOMEBREW_PREFIX/share/infopath" ] && INFOPATH="$INFOPATH:$HOMEBREW_PREFIX/share/infopath"
+pathmunge "$HOMEBREW_PREFIX/bin"
+pathmunge "$HOMEBREW_PREFIX/sbin"
+MANPATH="$MANPATH:$HOMEBREW_PREFIX/share/info"
+INFOPATH="$INFOPATH:$HOMEBREW_PREFIX/share/infopath"
 
 #     llvm
-[ -d "$HOMEBREW_PREFIX/opt/llvm/bin" ] && pathmunge "$HOMEBREW_PREFIX/opt/llvm/bin"
-[ -d "$HOMEBREW_PREFIX/opt/ccache/libexec" ] && pathmunge "$HOMEBREW_PREFIX/opt/ccache/libexec"
+pathmunge "$HOMEBREW_PREFIX/opt/llvm/bin"
+pathmunge "$HOMEBREW_PREFIX/opt/ccache/libexec"
 
 #     curl
-[ -d "$HOMEBREW_PREFIX/opt/curl" ] && pathmunge "$HOMEBREW_PREFIX/opt/curl/bin"
+pathmunge "$HOMEBREW_PREFIX/opt/curl/bin"
 
 unset pathmunge
+
+export HOMEBREW_PREFIX
 export PATH
 export MANPATH
 export INFOPATH

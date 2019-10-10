@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+[ -r ~/.env ] && source ~/.env
+
+for file in $HOME/.bash_env.d/*; do
+  if [ -x "$file" ]; then
+    . "$file"
+  fi
+done

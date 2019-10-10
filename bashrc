@@ -1,43 +1,67 @@
 #!/usr/bin/env bash
 
-[ -r ~/.env ] && source ~/.env
+export BASH_ENV="$HOME/.bash_env"
+[ -n "$BASH_ENV" ] && [ -r "$BASH_ENV" ] && source "$BASH_ENV"
 
 [ -r "/etc/bashrc" ] && source "/etc/bashrc"
 [ -r "/etc/bash.bashrc" ] && source "/etc/bash.bashrc"
 
-# -----------------
-# bash prompt (ps1)
-# -----------------
-_PROMPT() {
-  local _EXIT_STATUS=$?
+_gen_prompt() {
+  local -r ANSI_NORMAL="$(tput sgr0)"
+  local -r ANSI_BOLD="$(tput bold)"
+  local -r ANSI_DIM="$(tput dim)"
+  local -r ANSI_REVERSE="$(tput smso)"
+  local -r ANSI_UNDERLINE="$(tput smul)"
 
-  # credit: http://dotshare.it/dots/32/
+  local -r ANSI_RESET="$(tput init)"
 
-  local -r bold="\e[1m"
-  local -r _bold="\e[21m"
-  local -r dim="\e[2m"
-  local -r _dim="\e[22m"
+  local -r ANSI_BLACK="$(tput setaf 0)"
+  local -r ANSI_RED="$(tput setaf 1)"
+  local -r ANSI_GREEN="$(tput setaf 2)"
+  local -r ANSI_YELLOW="$(tput setaf 3)"
+  local -r ANSI_BLUE="$(tput setaf 4)"
+  local -r ANSI_MAGENTA="$(tput setaf 5)"
+  local -r ANSI_CYAN="$(tput setaf 6)"
+  local -r ANSI_WHITE="$(tput setaf 7)"
 
-  local -r reset="\e[0m"
+  local -r _PROMPT_SYM="\[${ANSI_BOLD}${ANSI_BLUE}\]»\[${ANSI_NORMAL}\]"
+  local -r _PRE_PROMPT="\[${ANSI_RESET}\]»"
+  local -r _HOSTNAME_STR="\[${ANSI_YELLOW}\]\h\[${ANSI_NORMAL}\]"
+  local -r _PATH_STR="\[${ANSI_DIM}\][\w]\[${ANSI_NORMAL}\]"
 
-  local -r blue="\e[34m"
-  local -r yellow="\e[33m"
-  local -r light_grey="\e[37m"
-  local -r white="\e[0m"
-  local -r red="\e[31m"
+  # -----------------
+  # bash prompt (ps1)
+  # -----------------
 
-  local -r _PROMPT_SYM=" ${bold}${blue}»${reset} "
-  local -r _PRE_PROMPT="${dim}${light_grey}${reset}» "
+  read -r -d '' PROMPT_COMMAND <<-EOF
+	_ret=\$?
+	if [ \$_ret != 0 ]; then
+	  _ret_str="\[${ANSI_RED}\][\${_ret}]\[${ANSI_RESET}\]"
+	else
+	  _ret_str=""
+	fi
 
-  local -r _HOSTNAME_STR="${yellow}\h${reset}"
-  local -r _PATH_STR="${light_grey}$dim[${reset}${white}\w${light_grey}${dim}]${reset}"
+	# PS1="${_PRE_PROMPT} ${_HOSTNAME_STR}╺─╸${_PATH_STR}\${_ret_str} ${_PROMPT_SYM} "
 
-  [ $_EXIT_STATUS != 0 ] && local _EXIT_STATUS_STR="${red}[${bold}${_EXIT_STATUS}${_bold}]${reset}"
+	_path_str="[\[${ANSI_DIM}\]${PWD}]\[${ANSI_NORMAL}\]"
+	case \$PWD in
+	  \$HOME)   _pwd="~";;
+	  \$HOME/*) _pwd="~\${PWD##\$HOME}";;
+	  *)        _pwd="\$PWD"
+	esac
 
-  PS1="${_PRE_PROMPT}${_HOSTNAME_STR}╺─╸${_PATH_STR}${_EXIT_STATUS_STR}${_PROMPT_SYM}"
+	case \$_pwd in
+	  */*) _path_str="[\[${ANSI_DIM}\]\${_pwd%/*}/\[${ANSI_NORMAL}\]\${_pwd##*/}]" ;;
+	  *) _path_str="[\${_pwd}]" ;;
+	esac
+
+	PS1="${_PRE_PROMPT} ${_HOSTNAME_STR}╺─╸\${_path_str}\${_ret_str} ${_PROMPT_SYM} "
+	EOF
+
+  printf '%s' "$PROMPT_COMMAND"
 }
 
-export PROMPT_COMMAND=_PROMPT
+export PROMPT_COMMAND="$(_gen_prompt)"
 
 # ------------------------
 # include other .d scripts
