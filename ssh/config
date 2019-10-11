@@ -8,6 +8,7 @@ Host github.com
 Host *
   ControlMaster auto
   IdentitiesOnly no
+  IdentityFile ~/.ssh/id_rsa
 
   CanonicalizeHostname yes
   CanonicalizeFallbackLocal yes

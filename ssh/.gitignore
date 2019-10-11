@@ -1,3 +1,4 @@
 authorized_keys
 known_hosts
 sockets/*.controlmaster
+id_rsa*
