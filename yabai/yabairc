@@ -44,4 +44,8 @@ yabai -m config left_padding                 20
 yabai -m config right_padding                20
 yabai -m config window_gap                   10
 
+# fix firefox not resizing properly
+# https://github.com/koekeishiya/yabai/issues/109
+# yabai -m signal --add event=window_created action='sleep 0.1 && ${XDG_CONFIG_HOME:-"$HOME/.config"}/yabai/reset-firefox.sh'
+
 echo "`date +%Y-%m-%dT%H:%M:%S%z` yabai configuration loaded.."

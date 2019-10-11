@@ -2,8 +2,8 @@
 :: default : yabai -m config active_window_border_color 0xff0f6288
 
 # open terminal, blazingly fast compared to iTerm/Hyper
-alt + shift - return : open -na /Applications/Alacritty.app
-alt + ctrl - return : osascript -e 'tell application "iTerm2"' -e 'activate' -e 'create window with default profile' -e 'end tell'
+shift + alt - return : open -na /Applications/Alacritty.app
+ctrl  + alt - return : osascript -e 'tell application "iTerm2"' -e 'activate' -e 'create window with default profile' -e 'end tell'
 
 # cmd - h : return # disable hide-windows shortcut
 cmd - h : return 0
@@ -47,7 +47,7 @@ cmd - h : return 0
 # "]"           (0x1E)
 
 # close window
-alt + shift - q : osascript -e 'tell application "System Events" to perform action "AXPress" of (first button whose subrole is "AXCloseButton") of (first window whose subrole is "AXStandardWindow") of (first process whose frontmost is true)'
+shift + alt - q : sid="$(yabai -m query --spaces --space | jq '.index')" && osascript -e "tell application \"Finder\" to set p to item 1 of (get file of (processes whose frontmost = true)) as text" -e "tell application p to quit" && yabai -m space --focus "${sid}"
 
 # focus window
 alt - h : yabai -m window --focus west
@@ -152,10 +152,10 @@ shift + alt - w : yabai -m window south --resize top:0:-20 2> /dev/null || yabai
 shift + alt - d : yabai -m window east --resize left:20:0 2> /dev/null || yabai -m window --resize left:20:0
 
 # set insertion point in focused container
-cmd + alt - h : yabai -m window --insert west
-cmd + alt - j : yabai -m window --insert south
-cmd + alt - k : yabai -m window --insert north
-cmd + alt - l : yabai -m window --insert east
+shift + cmd + alt - h : yabai -m window --insert west
+shift + cmd + alt - j : yabai -m window --insert south
+shift + cmd + alt - k : yabai -m window --insert north
+shift + cmd + alt - l : yabai -m window --insert east
 
 # rotate tree
 alt - r : yabai -m space --rotate 90
@@ -211,7 +211,7 @@ cmd + alt - d : yabai -m space --layout float
 
 :: resize @ : yabai -m config active_window_border_color 0xff24ccaa
     # binding to enter resize mode
-    alt + shift - r ; resize
+    shift + alt - r ; resize
 
     # return to default mode
     resize < return ; default

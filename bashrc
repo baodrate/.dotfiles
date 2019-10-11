@@ -6,14 +6,27 @@ export BASH_ENV="$HOME/.bash_env"
 [ -r "/etc/bashrc" ] && source "/etc/bashrc"
 [ -r "/etc/bash.bashrc" ] && source "/etc/bash.bashrc"
 
+alias sudo='/usr/bin/sudo'
+impersonate() {
+  local -r target_user=${1:?}
+  shift
+  args=("$@")
+
+  if [ -z "${args[@]}" ] ; then
+    args=(bash --login)
+  fi
+
+  echo "target_user $target_user"
+  echo "args ${args[@]}"
+  sudo -E -u ${target_user} "${args[@]}"
+}
+
 _gen_prompt() {
   local -r ANSI_NORMAL="$(tput sgr0)"
   local -r ANSI_BOLD="$(tput bold)"
   local -r ANSI_DIM="$(tput dim)"
   local -r ANSI_REVERSE="$(tput smso)"
   local -r ANSI_UNDERLINE="$(tput smul)"
-
-  local -r ANSI_RESET="$(tput init)"
 
   local -r ANSI_BLACK="$(tput setaf 0)"
   local -r ANSI_RED="$(tput setaf 1)"
@@ -25,38 +38,37 @@ _gen_prompt() {
   local -r ANSI_WHITE="$(tput setaf 7)"
 
   local -r _PROMPT_SYM="\[${ANSI_BOLD}${ANSI_BLUE}\]»\[${ANSI_NORMAL}\]"
-  local -r _PRE_PROMPT="\[${ANSI_RESET}\]»"
+  local -r _PRE_PROMPT="\[${ANSI_NORMAL}\]»"
   local -r _HOSTNAME_STR="\[${ANSI_YELLOW}\]\h\[${ANSI_NORMAL}\]"
+  local -r _USER_STR="\[${ANSI_GREEN}\]\u\[${ANSI_NORMAL}\]"
   local -r _PATH_STR="\[${ANSI_DIM}\][\w]\[${ANSI_NORMAL}\]"
 
   # -----------------
   # bash prompt (ps1)
   # -----------------
 
-  read -r -d '' PROMPT_COMMAND <<-EOF
-	_ret=\$?
-	if [ \$_ret != 0 ]; then
-	  _ret_str="\[${ANSI_RED}\][\${_ret}]\[${ANSI_RESET}\]"
-	else
-	  _ret_str=""
-	fi
+  read -r -d '' PROMPT_COMMAND <<EOF
+    _ret=\$?
+    if [ \$_ret != 0 ]; then
+      _ret_str="\[${ANSI_RED}\][\${_ret}]\[${ANSI_NORMAL}\]"
+    else
+      _ret_str=""
+    fi
 
-	# PS1="${_PRE_PROMPT} ${_HOSTNAME_STR}╺─╸${_PATH_STR}\${_ret_str} ${_PROMPT_SYM} "
+    _path_str="[\[${ANSI_DIM}\]${PWD}]\[${ANSI_NORMAL}\]"
+    case \$PWD in
+      \$HOME)   _pwd="~";;
+      \$HOME/*) _pwd="~\${PWD##\$HOME}";;
+      *)        _pwd="\$PWD"
+    esac
 
-	_path_str="[\[${ANSI_DIM}\]${PWD}]\[${ANSI_NORMAL}\]"
-	case \$PWD in
-	  \$HOME)   _pwd="~";;
-	  \$HOME/*) _pwd="~\${PWD##\$HOME}";;
-	  *)        _pwd="\$PWD"
-	esac
+    case \$_pwd in
+      */*) _path_str="[\[${ANSI_DIM}\]\${_pwd%/*}/\[${ANSI_NORMAL}\]\${_pwd##*/}]" ;;
+      *) _path_str="[\${_pwd}]" ;;
+    esac
 
-	case \$_pwd in
-	  */*) _path_str="[\[${ANSI_DIM}\]\${_pwd%/*}/\[${ANSI_NORMAL}\]\${_pwd##*/}]" ;;
-	  *) _path_str="[\${_pwd}]" ;;
-	esac
-
-	PS1="${_PRE_PROMPT} ${_HOSTNAME_STR}╺─╸\${_path_str}\${_ret_str} ${_PROMPT_SYM} "
-	EOF
+    PS1="${_PRE_PROMPT} ${_HOSTNAME_STR}╺─╸\${_path_str}\${_ret_str} ${_PROMPT_SYM} "
+EOF
 
   printf '%s' "$PROMPT_COMMAND"
 }

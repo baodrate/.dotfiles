@@ -5,16 +5,32 @@
 timestamp() { date +%Y-%m-%d_%H:%M:%S }
 
 cp_safe() {
+  dest="${@[#@]}"
+
+  sources=()
+  for source in "${@:1:$((${#@}-1))}"; do
+    if [ -e "$source" ] ; then
+      case $source in
+        /*) :;;
+        *) source=./$source;;
+      esac
+    fi
+    sources+=("$source")
+  done
+
   rsync_cp=(rsync --archive --xattrs --verbose -hhh --inplace --backup-dir="backup_$(timestamp)" --progress)
-  printf '%q ' ${rsync_cp[@]} && printf '%q ' "${@}" && printf '\n' && \
-    "${rsync_cp[@]}" "${@}"
+  printf '%q ' ${rsync_cp[@]} "${sources[@]}" "${dest}" && printf '\n' && \
+    "${rsync_cp[@]}" "${sources[@]}" "${dest}"
 }
 compdef _files cp_safe
 alias cp=cp_safe
 
 mv_safe() {
-  cp_safe --remove-source-files $@ && \
-    for source in $@[1,-2]; do
+  sources=("${@:1:$((${#@}-1))}")
+  dest="${@:$#}"
+
+  cp_safe --remove-source-files "${sources[@]}" "${dest}" && \
+    for source in "${sources[@]}"; do
       [[ -d $source ]] > /dev/null 2>&1 && \
         echo "cd $source && cd .. && find $(basename $source) -type d -empty -delete" && \
           (cd $source && cd .. && find $(basename $source) -type d -empty -delete)
