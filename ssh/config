@@ -26,5 +26,5 @@ Host *
   #   %r    The remote username.
   #   %T    The local tun(4) or tap(4) network interface assigned if tunnel forwarding was requested, or "NONE" otherwise.
   #   %u    The local username.
-  ControlPath ~/.ssh/sockets/%r@%n:%h:%p.controlmaster
+  ControlPath ~/.ssh/sockets/%r@%n.%C
   ControlPersist 10m
