@@ -3,11 +3,10 @@ CanonicalDomains int.ftdna.com unx.ftdna.com
 CanonicalizePermittedCNAMEs *.*.ftdna.com:*.*.ftdna.com
 
 Host *.ftdna.com
+  User baot
   IdentityFile ~/.ssh/gpg-bao-gxg.pub
-  ControlMaster auto
   ForwardAgent yes
-  # IdentitiesOnly no
 
-Host github.com gh-bao-gxg
+Host gh-bao-gxg
   IdentityFile ~/.ssh/gpg-bao-gxg.pub
   HostName github.com

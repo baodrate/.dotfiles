@@ -24,10 +24,10 @@
     ~/.config/termite: termite
     ~/.config/firefox: firefox
     ~/.config/colors: colors
+    ~/.ssh: ssh
 
     # globs
     # -----
-    ~/.ssh/: ssh/*
     ~/bin/: bin/*
 
     # files

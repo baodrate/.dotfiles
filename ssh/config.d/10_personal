@@ -1,15 +1,8 @@
 # vim: set ft=sshconfig:
 CanonicalDomains int.poorboys.casa
 
-Host 144.76.82.49
-  IdentityFile ~/.ssh/gpg-qubidt.pub
-  ControlMaster auto
-  ForwardAgent yes
-
 Host *.poorboys.casa *.baodtrinh.com
   IdentityFile ~/.ssh/gpg-qubidt.pub
-  ControlMaster auto
-  ForwardAgent yes
 
 Host gh-qubidt
   IdentityFile ~/.ssh/gpg-qubidt.pub

@@ -1,16 +1,13 @@
+# vim: set ft=sshconfig:
 Include config.d/*
-
-Host *.ftdna.com
-  User baot
-  IdentityFile ~/.ssh/gpg-bao-gxg.pub
 
 Host github.com
   User git
 
 # default parameters
 Host *
-  IdentitiesOnly no
   ControlMaster auto
+  IdentitiesOnly no
 
   CanonicalizeHostname yes
   CanonicalizeFallbackLocal yes
@@ -28,5 +25,5 @@ Host *
   #   %r    The remote username.
   #   %T    The local tun(4) or tap(4) network interface assigned if tunnel forwarding was requested, or "NONE" otherwise.
   #   %u    The local username.
-  ControlPath ~/.ssh/%r@%n:%h:%p.controlmaster
+  ControlPath ~/.ssh/sockets/%r@%n:%h:%p.controlmaster
   ControlPersist 10m
