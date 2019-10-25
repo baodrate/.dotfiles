@@ -1,0 +1,52 @@
+# vim: set ft=tmux:
+
+# Airline / Base16 Theme (tmux < 2.9)
+# airline inspired tmux theme designed to be compatibile with base16
+# https://github.com/Kraust/base16-tmux
+
+# Basic status bar colors
+set -g status-fg $_BASE16_LIGHT_FG
+set -g status-bg $_BASE16_LIGHT_BG
+
+# Left side of status bar
+set -g status-left-bg $_ANSI_BLUE
+set -g status-left-fg $_BASE16_LIGHT_BG
+set -g status-left-attr bold
+
+# Right side of status bar
+set -g status-right "#(uptime | rev | cut -d':' -f1 | rev | sed s/,//g) #[fg=$_BASE16_LIGHT_FG,bg=$_BASE16_SELECT_BG] %b %e %G - %I:%M %p #[fg=$_BASE16_LIGHT_BG,bg=$_ANSI_YELLOW,bold] #H $wg_is_keys_off"
+
+# Current window status
+set -g window-status-current-bg $_ANSI_GREEN
+set -g window-status-current-fg $_BASE16_LIGHT_BG
+
+# Window with activity status
+# fg and bg are flipped here due to a bug in tmux
+set -g window-status-activity-bg default
+set -g window-status-activity-fg default
+
+# Pane border
+set -g pane-border-bg $_BASE16_LIGHT_BG
+set -g pane-border-fg $_BASE16_LIGHT_BG
+
+set -g window-status-bell-fg $_ANSI_RED
+set -g window-status-bell-bg $_ANSI_BLACK
+
+# Active pane border
+set -g pane-active-border-bg $_ANSI_BLUE
+set -g pane-active-border-fg $_ANSI_BLUE
+
+# Clock mode
+set -g clock-mode-colour $_ANSI_BLUE
+
+# Message
+set -g message-bg $_BASE16_ALT_1
+set -g message-fg $_BASE16_LIGHT_BG
+
+# Command message
+set -g message-command-bg $_BASE16_ALT_1
+set -g message-command-fg $_BASE16_LIGHT_BG
+
+# Mode
+set -g mode-bg $_BASE16_SELECT_BG
+set -g mode-fg $_BASE16_LIGHT_BG

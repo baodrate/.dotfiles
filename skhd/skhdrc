@@ -5,8 +5,11 @@
 shift + alt - return : open -na /Applications/Alacritty.app
 ctrl  + alt - return : osascript -e 'tell application "iTerm2"' -e 'activate' -e 'create window with default profile' -e 'end tell'
 
-# cmd - h : return # disable hide-windows shortcut
+# disable hide-windows shortcut
 cmd - h : return 0
+
+# disable minimize-windows shortcut
+cmd - m : return 0
 
 # old chunkwm config for reference (remove rest of conf if using):
 # .load ".config/chunkwm/skhdrc"
@@ -45,9 +48,14 @@ cmd - h : return 0
 # key literals
 # "["           (0x21)
 # "]"           (0x1E)
+# "`" (`~`)     (0x32)
 
 # close window
-shift + alt - q : sid="$(yabai -m query --spaces --space | jq '.index')" && osascript -e "tell application \"Finder\" to set p to item 1 of (get file of (processes whose frontmost = true)) as text" -e "tell application p to quit" && yabai -m space --focus "${sid}"
+# shift + alt - q : sid="$(yabai -m query --spaces --space | jq '.index')" && osascript -e "tell application \"Finder\" to set p to item 1 of (get file of (processes whose frontmost = true)) as text" -e "tell application p to quit" && yabai -m space --focus "${sid}"
+shift + alt - q [
+    "alacritty" ~
+    *           : sid=$(yabai -m query --windows --window | jq -r '.space') && yabai -m window --close && yabai -m space --focus "${sid}"
+]
 
 # focus window
 alt - h : yabai -m window --focus west
@@ -93,12 +101,21 @@ shift + alt - right  : yabai -m window --grid 1:2:1:0:1:1
 # destroy desktop
 # cmd + alt - w : yabai -m space --destroy
 
+# reload config
+shift + alt - c : skhd --reload & ; exec ${XDG_CONFIG_HOME:-$HOME/.config}/yabai/yabairc
+
 # override default desktop switching
 ctrl - left : yabai -m space --focus prev
 ctrl - right : yabai -m space --focus next
 
+# cycle all windows
+# cmd - ` / cmd - ~
+cmd - 0x32 : ${XDG_CONFIG_HOME:-$HOME/.config}/skhd/cycle-windows
+
+ctrl + alt - n : ${XDG_CONFIG_HOME:-$HOME/.config}/skhd/cycle-windows
+ctrl + alt - p : ${XDG_CONFIG_HOME:-$HOME/.config}/skhd/cycle-windows reverse
+
 # fast focus desktop
-alt - x : yabai -m space --focus recent
 alt - p : yabai -m space --focus prev
 alt - n : yabai -m space --focus next
 alt - 1 : yabai -m space --focus 1
@@ -114,19 +131,18 @@ alt - 0 : yabai -m space --focus 10
 
 
 # send window to desktop and follow focus
-shift + alt - x : wid="$(yabai -m query --windows --window | jq -r '.id')" && yabai -m window --space recent && yabai -m space --focus recent && yabai -m window --focus "${wid}"
-shift + alt - p : wid="$(yabai -m query --windows --window | jq -r '.id')" && yabai -m window --space prev   && yabai -m space --focus prev   && yabai -m window --focus "${wid}"
-shift + alt - n : wid="$(yabai -m query --windows --window | jq -r '.id')" && yabai -m window --space next   && yabai -m space --focus next   && yabai -m window --focus "${wid}"
-shift + alt - 1 : wid="$(yabai -m query --windows --window | jq -r '.id')" && yabai -m window --space 1      && yabai -m space --focus 1      && yabai -m window --focus  "${wid}"
-shift + alt - 2 : wid="$(yabai -m query --windows --window | jq -r '.id')" && yabai -m window --space 2      && yabai -m space --focus 2      && yabai -m window --focus  "${wid}"
-shift + alt - 3 : wid="$(yabai -m query --windows --window | jq -r '.id')" && yabai -m window --space 3      && yabai -m space --focus 3      && yabai -m window --focus  "${wid}"
-shift + alt - 4 : wid="$(yabai -m query --windows --window | jq -r '.id')" && yabai -m window --space 4      && yabai -m space --focus 4      && yabai -m window --focus  "${wid}"
-shift + alt - 5 : wid="$(yabai -m query --windows --window | jq -r '.id')" && yabai -m window --space 5      && yabai -m space --focus 5      && yabai -m window --focus  "${wid}"
-shift + alt - 6 : wid="$(yabai -m query --windows --window | jq -r '.id')" && yabai -m window --space 6      && yabai -m space --focus 6      && yabai -m window --focus  "${wid}"
-shift + alt - 7 : wid="$(yabai -m query --windows --window | jq -r '.id')" && yabai -m window --space 7      && yabai -m space --focus 7      && yabai -m window --focus  "${wid}"
-shift + alt - 8 : wid="$(yabai -m query --windows --window | jq -r '.id')" && yabai -m window --space 8      && yabai -m space --focus 8      && yabai -m window --focus  "${wid}"
-shift + alt - 9 : wid="$(yabai -m query --windows --window | jq -r '.id')" && yabai -m window --space 9      && yabai -m space --focus 9      && yabai -m window --focus  "${wid}"
-shift + alt - 0 : wid="$(yabai -m query --windows --window | jq -r '.id')" && yabai -m window --space 10     && yabai -m space --focus 10     && yabai -m window --focus "${wid}"
+shift + alt - p : yabai -m window "${wid:=$(yabai -m query --windows --window | jq -cr '.id')}" --space prev   && yabai -m window --focus "${wid}"
+shift + alt - n : yabai -m window "${wid:=$(yabai -m query --windows --window | jq -cr '.id')}" --space next   && yabai -m window --focus "${wid}"
+shift + alt - 1 : yabai -m window "${wid:=$(yabai -m query --windows --window | jq -cr '.id')}" --space 1      && yabai -m window --focus "${wid}"
+shift + alt - 2 : yabai -m window "${wid:=$(yabai -m query --windows --window | jq -cr '.id')}" --space 2      && yabai -m window --focus "${wid}"
+shift + alt - 3 : yabai -m window "${wid:=$(yabai -m query --windows --window | jq -cr '.id')}" --space 3      && yabai -m window --focus "${wid}"
+shift + alt - 4 : yabai -m window "${wid:=$(yabai -m query --windows --window | jq -cr '.id')}" --space 4      && yabai -m window --focus "${wid}"
+shift + alt - 5 : yabai -m window "${wid:=$(yabai -m query --windows --window | jq -cr '.id')}" --space 5      && yabai -m window --focus "${wid}"
+shift + alt - 6 : yabai -m window "${wid:=$(yabai -m query --windows --window | jq -cr '.id')}" --space 6      && yabai -m window --focus "${wid}"
+shift + alt - 7 : yabai -m window "${wid:=$(yabai -m query --windows --window | jq -cr '.id')}" --space 7      && yabai -m window --focus "${wid}"
+shift + alt - 8 : yabai -m window "${wid:=$(yabai -m query --windows --window | jq -cr '.id')}" --space 8      && yabai -m window --focus "${wid}"
+shift + alt - 9 : yabai -m window "${wid:=$(yabai -m query --windows --window | jq -cr '.id')}" --space 9      && yabai -m window --focus "${wid}"
+shift + alt - 0 : yabai -m window "${wid:=$(yabai -m query --windows --window | jq -cr '.id')}" --space 10     && yabai -m window --focus "${wid}"
 
 # focus monitor
 alt - 0x21 : yabai -m display --focus 2 # alt - [
@@ -134,22 +150,15 @@ alt - 0x1E : yabai -m display --focus 1 # alt - ]
 
 # send window to monitor and follow focus
 # shift + alt - [
-shift + alt - 0x21 : wid="$(yabai -m query --windows --window | jq -r '.id')" && yabai -m window --display 2 && yabai -m window --focus "${wid}"
+shift + alt - 0x21 : yabai -m window "${wid:=$(yabai -m query --windows --window | jq -cr '.id')}" --display 2 && yabai -m window --focus "${wid}"
 # shift + alt - ]
-shift + alt - 0x1E : wid="$(yabai -m query --windows --window | jq -r '.id')" && yabai -m window --display 1 && yabai -m window --focus "${wid}"
+shift + alt - 0x1E : yabai -m window "${wid:=$(yabai -m query --windows --window | jq -cr '.id')}" --display 1 && yabai -m window --focus "${wid}"
 
 # move window
 shift + ctrl - a : yabai -m window --move rel:-20:0
 shift + ctrl - s : yabai -m window --move rel:0:20
 shift + ctrl - w : yabai -m window --move rel:0:-20
 shift + ctrl - d : yabai -m window --move rel:20:0
-
-# shift and resize
-# https://github.com/koekeishiya/yabai/issues/200#issuecomment-519257233
-shift + alt - a : yabai -m window west --resize right:-20:0 2> /dev/null || yabai -m window --resize right:-20:0
-shift + alt - s : yabai -m window north --resize bottom:0:20 2> /dev/null || yabai -m window --resize bottom:0:20
-shift + alt - w : yabai -m window south --resize top:0:-20 2> /dev/null || yabai -m window --resize top:0:-20
-shift + alt - d : yabai -m window east --resize left:20:0 2> /dev/null || yabai -m window --resize left:20:0
 
 # set insertion point in focused container
 shift + cmd + alt - h : yabai -m window --insert west
@@ -158,7 +167,7 @@ shift + cmd + alt - k : yabai -m window --insert north
 shift + cmd + alt - l : yabai -m window --insert east
 
 # rotate tree
-alt - r : yabai -m space --rotate 90
+shift + alt - r : yabai -m space --rotate 90
 
 # mirror tree y-axis
 alt - y : yabai -m space --mirror y-axis
@@ -167,10 +176,13 @@ alt - y : yabai -m space --mirror y-axis
 alt - x : yabai -m space --mirror x-axis
 
 # toggle desktop offset
-alt - a : yabai -m space --toggle padding; yabai -m space --toggle gap
+shift + alt - a : yabai -m space --toggle padding; yabai -m space --toggle gap
 
 # toggle window parent zoom
-alt - d : yabai -m window --toggle zoom-parent
+alt - w : yabai -m window --toggle zoom-parent
+
+# toggle window split type
+alt - e : yabai -m window --toggle split
 
 # toggle window fullscreen zoom
 alt - f : yabai -m window --toggle zoom-fullscreen
@@ -181,19 +193,14 @@ shift + alt - f : yabai -m window --toggle native-fullscreen
 # toggle window border
 shift + alt - b : yabai -m window --toggle border
 
-# toggle window split type
-alt - e : yabai -m window --toggle split
-
 # float / unfloat window and center on screen
-alt - t : yabai -m window --toggle float;\
-          yabai -m window --grid 4:4:1:1:2:2
+shift + alt - space : yabai -m window --toggle float; \
+                      yabai -m window --grid 4:4:1:1:2:2
 
-# toggle sticky
-alt - s : yabai -m window --toggle sticky
-
-# toggle sticky, float and resize to picture-in-picture size
-alt - p : yabai -m window --toggle sticky;\
-          yabai -m window --grid 5:5:4:0:1:1
+# toggle sticky, topmost and resize to picture-in-picture size
+shift + alt - s : yabai -m window --toggle sticky ; \
+                  yabai -m window --toggle topmost ; \
+                  yabai -m window --grid 10:10:7:7:3:3
 
 # change layout of desktop
 cmd + alt - a : yabai -m space --layout bsp
@@ -211,11 +218,12 @@ cmd + alt - d : yabai -m space --layout float
 
 :: resize @ : yabai -m config active_window_border_color 0xff24ccaa
     # binding to enter resize mode
-    shift + alt - r ; resize
+    alt - r ; resize
 
     # return to default mode
     resize < return ; default
     resize < escape ; default
+    resize < alt - r ; default
 
     # keep movement controls
     resize < alt - h : yabai -m window --focus west

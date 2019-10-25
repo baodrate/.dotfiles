@@ -2,13 +2,3 @@
 
 [[ -r /etc/zprofile ]] && source /etc/zprofile
 [[ -r ~/.profile ]] && emulate sh -c '. ~/.profile'
-
-# ==> setup default editor
-if (( $+commands[nvim] )) ; then
-  export VISUAL=nvim
-  export NVIM_TUI_ENABLE_TRUE_COLOR=1
-elif (( $+commands[vim] )) ; then
-  export VISUAL=vim
-else
-  echo 'could not find neovim or vim; not setting $VISUAL'
-fi

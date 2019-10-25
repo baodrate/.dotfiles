@@ -1,0 +1,26 @@
+# vim: set ft=tmux:
+
+_ANSI_BLACK=black
+_ANSI_RED=red
+_ANSI_GREEN=green
+_ANSI_YELLOW=yellow
+_ANSI_BLUE=blue
+_ANSI_MAGENTA=magenta
+_ANSI_CYAN=cyan
+_ANSI_WHITE=white
+
+_ANSI_BRIGHT_BLACK=brightblack
+_ANSI_BRIGHT_RED=brightred
+_ANSI_BRIGHT_GREEN=brightgreen
+_ANSI_BRIGHT_YELLOW=brightyellow
+_ANSI_BRIGHT_BLUE=brightblue
+_ANSI_BRIGHT_MAGENTA=brightmagenta
+_ANSI_BRIGHT_CYAN=brightcyan
+_ANSI_BRIGHT_WHITE=brightwhite
+
+_BASE16_ALT_1=colour16
+_BASE16_ALT_2=colour17
+_BASE16_LIGHT_BG=colour18
+_BASE16_SELECT_BG=colour19
+_BASE16_DARK_FG=colour20
+_BASE16_LIGHT_FG=colour21

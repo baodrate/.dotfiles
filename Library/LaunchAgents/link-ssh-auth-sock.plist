@@ -2,14 +2,19 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+  <!-- see https://evilmartians.com/chronicles/stick-with-security-yubikey-ssh-gnupg-macos -->
   <key>Label</key>
   <string>link-ssh-auth-sock</string>
   <key>ProgramArguments</key>
   <array>
-    <string>/bin/sh</string>
+    <string>/bin/zsh</string>
     <string>-c</string>
     <string>/bin/ln -sf $HOME/.gnupg/S.gpg-agent.ssh $SSH_AUTH_SOCK</string>
   </array>
+  <key>StandardErrorPath</key>
+  <string>/usr/local/var/log/gpg-agent/link-ssh-auth-sock.err.log</string>
+  <key>StandardOutPath</key>
+  <string>/usr/local/var/log/gpg-agent/link-ssh-auth-sock.out.log</string>
   <key>RunAtLoad</key>
   <true/>
 </dict>

@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+if [ "$1" = "reverse" ] ; then
+  OTHER_FILTERS=" ."
+else
+  OTHER_FILTERS=" reverse "
+fi
+
+read -r -d '\n' jq_filter << EOM
+sort_by(.display, .space, .frame.x, .frame.y, .id)
+| map(select(.focused == 1))[0].app as \$focused_app
+| map(select(.app == \$focused_app))
+| $OTHER_FILTERS
+| nth(index(map(select(.focused == 1))) - 1)
+| .id , .space
+EOM
+
+cycle_windows() {
+  local ids=( $(yabai -m query --windows | jq -cre "$jq_filter") )
+
+  yabai -m space --focus "${ids[1]}"
+  yabai -m window --focus "${ids[0]}"
+}
+
+cycle_windows >&2

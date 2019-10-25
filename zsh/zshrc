@@ -87,14 +87,16 @@ alias less='less -SRc'
 # ---------------------
 # replacement utilities
 # ---------------------
-if (( $+commands[vim] )); then
-  alias v='vim'
-  export VISUAL=vim
-fi
-
-if (( $+commands[nvim] )); then
+# ==> setup default editor
+if (( $+commands[nvim] )) ; then
   alias n='nvim'
   export VISUAL=nvim
+  export NVIM_TUI_ENABLE_TRUE_COLOR=1
+elif (( $+commands[vim] )) ; then
+  alias v='vim'
+  export VISUAL=vim
+else
+  echo 'could not find neovim or vim; not setting $VISUAL' >&2
 fi
 
 if (( $+commands[bat] )); then
@@ -165,7 +167,8 @@ source "${ZPLGM[BIN_DIR]:?}/zplugin.zsh"
 # --------------
 # ==> plugins
 # glob qualifiers: `.` for regular files; `N` for `null_glob`
-zplugin ice lucid wait'!0'
+# zplugin ice lucid wait'!0'
+zplugin ice blockf
 zplugin snippet "$ZDOTDIR/plugins/keybindings.plugin.zsh"
 zplugin snippet "$ZDOTDIR/plugins/history.plugin.zsh"
 # zplugin snippet "$ZDOTDIR/plugins/ls-aliases.plugin.zsh"
@@ -214,7 +217,7 @@ zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 # scripts
 # -------
 # ==> prettyping
-zplugin ice lucid wait'1' as"program" pick"prettyping" atload'alias ping=prettyping'
+zplugin ice lucid wait'' as"program" pick"prettyping" atload'alias ping=prettyping'
 # zplugin ice as"program" pick"prettyping"
 zplugin load "denilsonsa/prettyping"
 # alias ping=prettyping
@@ -240,24 +243,24 @@ zplugin load willghatch/zsh-saneopt
 
 # https://github.com/sorin-ionescu/prezto/blob/master/modules/command-not-found/init.zsh
 # Load command-not-found on Debian-based distributions.
-zplugin ice if"[[ -s '/etc/zsh_command_not_found' ]]"
+zplugin ice blockf if"[[ -s '/etc/zsh_command_not_found' ]]"
 zplugin load  '/etc/zsh_command_not_found'
 # Load command-not-found on Arch Linux-based distributions.
-zplugin ice if"[[ -s '/usr/share/doc/pkgfile/command-not-found.zsh' ]]"
+zplugin ice blockf if"[[ -s '/usr/share/doc/pkgfile/command-not-found.zsh' ]]"
 zplugin load '/usr/share/doc/pkgfile/command-not-found.zsh'
 # Load command-not-found on macOS when homebrew tap is configured.
-zplugin ice if"[[ -s '/usr/local/Homebrew/Library/Taps/homebrew/homebrew-command-not-found/handler.sh' ]]"
+zplugin ice blockf if"[[ -s '/usr/local/Homebrew/Library/Taps/homebrew/homebrew-command-not-found/handler.sh' ]]"
 zplugin load '/usr/local/Homebrew/Library/Taps/homebrew/homebrew-command-not-found/handler.sh'
 
 # ------
 # python
 # ------
-zplugin ice lucid wait'0' \
+zplugin ice lucid wait'' \
     atload'eval "$(pyenv init - --no-rehash zsh)"' \
     as'command' pick'bin/pyenv' src'completions/pyenv.zsh'
 zplugin light pyenv/pyenv
 
-zplugin ice lucid wait'1' \
+zplugin ice lucid wait'' \
     atload'eval "$(pyenv virtualenv-init - zsh)"' \
     as'command' pick'bin/*'
 zplugin light pyenv/pyenv-virtualenv
@@ -280,9 +283,10 @@ zplugin load soimort/translate-shell
 # -------------------------------
 # autocomplete / search / history
 # -------------------------------
+
 # ==> fzf
 zplugin ice as"program" from"gh-r"
-zplugin light junegunn/fzf-bin
+zplugin load junegunn/fzf-bin
 
 if (( $+commands[fd] )) ; then
   export FZF_DEFAULT_COMMAND='fd --color=always --type f --hidden --follow --exclude .git'
@@ -334,10 +338,11 @@ _gen_fzf_opts() {
 }
 export FZF_DEFAULT_OPTS="$(_gen_fzf_opts)"
 
-# zplugin ice lucid wait'0' multisrc'shell/completion,key-bindings}.zsh' as"completion" pick"/dev/null"
-# zplugin ice lucid wait'0' multisrc'shell/{completion,key-bindings}.zsh' id-as"junegunn/fzf_completions" pick"/dev/null"
+# zplugin ice lucid multisrc'shell/{completion,key-bindings}.zsh' as"completion" pick"/dev/null"
 zplugin ice lucid multisrc'shell/{completion,key-bindings}.zsh' pick"bin/fzf-tmux" as"program"
-zplugin light junegunn/fzf
+# zplugin ice lucid pick'shell/{completion,key-bindings}.zsh' pick"bin/fzf-tmux" as"program"
+# zplugin ice lucid pick'shell/completion.zsh' as"completion" src'shell/key-bindings.zsh'
+zplugin load junegunn/fzf
 
 # ==> History Search Multi-Word
 #     set reset-prompt-protect to be able to use zle reset-prompt in your e.g.
@@ -346,8 +351,6 @@ zplugin light junegunn/fzf
 #     plugins that hook up into Zshell by overloading Zle widgets. In general,
 #     HSMW should be loaded in bulk (no gap) with all those plugins, right
 #     before them.
-zplugin ice lucid wait"1"
-zplugin load zdharma/history-search-multi-word
 zstyle ":plugin:history-search-multi-word" reset-prompt-protect 1
 zstyle ":history-search-multi-word" page-size "$LINES/3"               # Number of entries to show (default is $LINES/3)
 zstyle ":history-search-multi-word" highlight-color "bold,underline"   # Color in which to highlight matched, searched text (default bg=17 on 256-color terminals)
@@ -355,19 +358,20 @@ zstyle ":plugin:history-search-multi-word" synhl "yes"                 # Whether
 zstyle ":plugin:history-search-multi-word" active "bg=base03"           # Effect on active history entry. Try: standout, bold, bg=blue (default underline)
 zstyle ":plugin:history-search-multi-word" check-paths "yes"           # Whether to check paths for existence and mark with magenta (default true)
 zstyle ":plugin:history-search-multi-word" clear-on-cancel "yes"       # Whether pressing Ctrl-C or ESC should clear entered query
+zplugin load zdharma/history-search-multi-word
 
 # ==> Additional completion definitions for Zsh
 #     blockf will block the traditional method of adding completions.
 #     Zplugin uses own method (based on symlinks instead of adding to $fpath).
 #     Zplugin will automatically install completions of newly downloaded plugin
-zplugin ice blockf
+zplugin ice lucid blockf
 zplugin load "zsh-users/zsh-completions"
 
 # ==> emoji-cli
 #     depends on: fzf, jp
 #     uses my copy of abbec/emoji-cli (a fork of b4b4r07/emoji-cli)
 #       to print the emoji directly
-zplugin ice blockf
+zplugin ice lucid blockf
 zplugin load qubidt/emoji-cli
 
 # ==> zsh-autosuggestions
@@ -379,8 +383,8 @@ zplugin load qubidt/emoji-cli
 # not working yet, conflicts with history serach
 # see https://github.com/zdharma/zplugin/issues/69
 #   bindkey '^\n' autosuggest-execute
-zplugin ice lucid atload'_zsh_autosuggest_start; bindkey "^ " autosuggest-execute'  # load after fast-syntax-highlighting
-zplugin light zsh-users/zsh-autosuggestions
+zplugin ice lucid atload'_zsh_autosuggest_start; bindkey "^ " autosuggest-execute' # nocd
+zplugin load zsh-users/zsh-autosuggestions
 
 # ==> Syntax Highlighting
 #     If you load completions using wait'' mode then you can add
@@ -394,5 +398,15 @@ zplugin light zsh-users/zsh-autosuggestions
 #     ZPLGM[COMPINIT_OPTS]=-C skips compaudit (audit the fpath to assure that it
 #     contains all the directories needed by the completion system, and that
 #     those directories are at least unlikely to contain dangerous files)
-zplugin ice lucid wait"!0" atload"ZPLGM[COMPINIT_OPTS]=-C; zpcompinit; zpcdreplay"
-zplugin light "zdharma/fast-syntax-highlighting"
+
+zplugin ice lucid wait'' atinit"ZPLGM[COMPINIT_OPTS]=-C; zpcompinit; zpcdreplay"
+zplugin load "zdharma/fast-syntax-highlighting"
+
+autoload -Uz compinit
+compinit
+
+zplugin cdreplay -q # -q is for quiet; actually run all the `compdef's saved before
+                    #`compinit` call (`compinit' declares the `compdef' function, so
+                    # it cannot be used until `compinit` is ran; Zplugin solves this
+                    # via intercepting the `compdef'-calls and storing them for later
+                    # use with `zplugin cdreplay')

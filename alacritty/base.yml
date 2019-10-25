@@ -112,7 +112,8 @@ draw_bold_text_with_bright_colors: false
 visual_bell:
   animation: EaseOutExpo
   duration: 0
-  color: '0xffffff'
+  # doesn't seem to have any effect?:
+  color: '0xb8bb26'
 
 # Background opacity
 #

@@ -1,5 +1,7 @@
 #!/usr/bin/env sh
 
+echo "`date +%Y-%m-%dT%H:%M:%S%z` loading yabai configuration"
+
 # bar settings
 yabai -m config status_bar                   on
 yabai -m config status_bar_text_font         "Helvetica Neue:Bold:12.0"
@@ -44,8 +46,32 @@ yabai -m config left_padding                 20
 yabai -m config right_padding                20
 yabai -m config window_gap                   10
 
+# ======
+# System
+# ======
+yabai -m rule --remove "system_preferences_float"
+yabai -m rule --add app="System Preferences" manage=off topmost=on label="system_preferences_float"
+
+# =======
+# Firefox
+# =======
 # fix firefox not resizing properly
 # https://github.com/koekeishiya/yabai/issues/109
 # yabai -m signal --add event=window_created action='sleep 0.1 && ${XDG_CONFIG_HOME:-"$HOME/.config"}/yabai/reset-firefox.sh'
+
+# =========
+# Jetbrains
+# =========
+# fix jetbrains floating windows
+# https://github.com/koekeishiya/yabai/issues/194
+jetbrains_apps_re='^(DataGrip)$'
+
+yabai -m rule --remove "jetbrains_float_default"
+yabai -m rule --add app="${jetbrains_apps_re}" manage=off topmost=on label="jetbrains_float_default"
+
+yabai -m signal --remove "jetbrains_unfloat_main"
+yabai -m signal --add event=window_created action="${XDG_CONFIG_HOME:-"$HOME/.config"}/yabai/handle-jetbrains-windows.sh" app="${jetbrains_apps_re}" label="jetbrains_unfloat_main"
+
+
 
 echo "`date +%Y-%m-%dT%H:%M:%S%z` yabai configuration loaded.."

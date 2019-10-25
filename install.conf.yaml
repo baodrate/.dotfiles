@@ -3,9 +3,9 @@
 - shell:
     - [git submodule update --init --recursive, Installing submodules]
 
-# ========
-# Defaults
-# ========
+# ============
+# Common links
+# ============
 - defaults:
     link:
       relink: true
@@ -14,9 +14,6 @@
       glob: true
       force: true
 
-# ============
-# Common links
-# ============
 - link:
     # directories
     # -----------
@@ -24,7 +21,6 @@
     ~/.config/termite: termite
     ~/.config/firefox: firefox
     ~/.config/colors: colors
-    ~/.ssh: ssh
 
     # globs
     # -----
@@ -38,18 +34,8 @@
     ~/.gnupg/sshcontrol: gnupg/sshcontrol
 
     # -- tmux
-    ~/.tmux.conf: tmux/tmux.conf
-    # ~/.config/tmux/base16.conf: tmux/base16.256.tmuxtheme
-    ~/.config/tmux/base16.conf: tmux/base16.tmuxtheme
-    ~/.config/tmux/copy-paste.macos.conf:
-      path: tmux/copy-paste.macos.conf
-      if: '[ "$(uname -s)" "==" "Darwin" ]'
-    ~/.config/tmux/copy-paste.xorg.conf:
-      path: tmux/copy-paste.xorg.conf
-      if: '[ "$(uname -s)" "==" "Linux" ]'
-    ~/.config/tmux/tmux-shell.macos.conf:
-      path: tmux/tmux-shell.macos.conf
-      if: '[ "$(uname -s)" "==" "Darwin" ]'
+    ~/.tmux.conf: tmux/config
+    ~/.config/tmux: tmux
 
     # -- zsh
     ~/.config/zsh: zsh
@@ -89,9 +75,32 @@
     description: Generating LS_COLORS
     quiet: false
 
+# ===
+# SSH
+# ===
+- defaults:
+    link:
+      relink: true
+      create: true
+      relative: false
+      glob: true
+
+- link:
+    ~/.ssh: ssh
+
+- shell:
+  - ['find -L ~/.ssh -type d -exec chmod 700 {} \;', Setting ssh permissions (dirs)]
+  - ['find -L ~/.ssh -type f -exec chmod 600 {} \;', Setting ssh permissions (files)]
+
 # =========
 # Alacritty
 # =========
+- defaults:
+    link:
+      relink: true
+      create: true
+      relative: false
+      glob: true
 - link:
     ~/.config/alacritty/base.yml: alacritty/base.yml
     ~/.config/alacritty/base16-colors.yml: alacritty/base16-colors.yml
@@ -133,6 +142,14 @@
     stdout: true
     stderr: true
     description: Generating alacritty config
+    quiet: false
+
+  -
+    command: mkdir -p ~/.terminfo && cd ~/.terminfo && curl -L https://raw.githubusercontent.com/jwilm/alacritty/master/extra/alacritty.info -O && tic -xe alacritty,alacritty-direct alacritty.info
+    stdin: true
+    stdout: true
+    stderr: true
+    description: Installing alacritty terminfo
     quiet: false
 
 # ================
@@ -183,7 +200,7 @@
     # -----------
     ~/.config/sway: sway
     ~/.config/rofi: rofi
-    # ~/.config/fontconfig: fontconfig
+    ~/.config/fontconfig: fontconfig
     ~/.Xresources.d: Xresources.d
     ~/.config/i3status: i3status
     ~/.config/i3status-rust: i3status-rust

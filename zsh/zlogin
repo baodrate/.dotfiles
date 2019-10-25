@@ -1,2 +1,22 @@
 #!/usr/bin/env zsh
 [ ! -r ~/.login ] || emulate sh -c '. ~/.login'
+
+# -------------
+# gpg ssh agent
+# -------------
+if (( $+commands[gpgconf] )) ; then
+  unset SSH_AGENT_PID
+  if [ -z "${SSH_AUTH_SOCK:+x}" ] && [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ]; then
+    export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
+  fi
+fi
+if (( $+commands[gpg-connect-aggent] )) ; then
+  if [ -n "${SSH_AUTH_SOCK:+x}" ]; then
+    export GPG_TTY=$(tty)
+    echo "UPDATESTARTUPTTY" | gpg-connect-agent > /dev/null 2>&1
+  fi
+fi
+
+# not needed because we use .plist hack
+# https://evilmartians.com/chronicles/stick-with-security-yubikey-ssh-gnupg-macos
+# eval "$(gpg-agent --daemon --enable-ssh-support)"
