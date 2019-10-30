@@ -1,5 +1,5 @@
 [core]
-	pager = command -v diff-so-fancy 2>/dev/null && (diff-so-fancy | less --tabs=1,5 -RFX) || less
+	pager = command -v diff-so-fancy 2>/dev/null >&2 && (diff-so-fancy | less --tabs=1,5 -RFX) || less
 
 [user]
 	name = Bao Trinh

@@ -1,9 +1,10 @@
 #!/usr/bin/env sh
 
 echo "`date +%Y-%m-%dT%H:%M:%S%z` loading yabai configuration"
+pushd "${XDG_CONFIG_HOME:-"$HOME/.config"}/yabai" >/dev/null
 
 # bar settings
-yabai -m config status_bar                   on
+yabai -m config status_bar                   off
 yabai -m config status_bar_text_font         "Helvetica Neue:Bold:12.0"
 yabai -m config status_bar_icon_font         "FontAwesome:Regular:12.0"
 yabai -m config status_bar_background_color  0xff202020
@@ -40,17 +41,36 @@ yabai -m config mouse_action2                resize
 
 # general space settings
 yabai -m config layout                       bsp
-yabai -m config top_padding                  20
+yabai -m config top_padding                  50
 yabai -m config bottom_padding               20
 yabai -m config left_padding                 20
 yabai -m config right_padding                20
 yabai -m config window_gap                   10
 
-# ======
-# System
-# ======
-yabai -m rule --remove "system_preferences_float"
-yabai -m rule --add app="System Preferences" manage=off topmost=on label="system_preferences_float"
+add_float_rule() {
+  label="_float_rule_${1:?}" ; shift
+  rules="$@"
+
+  yabai -m rule --remove "$label" && echo "removed rule: $label"
+  echo "adding rule  ($label) with arguments: ${rules[@]}"
+  yabai -m rule --add label="$label" manage=off topmost=on "${rules[@]}" && echo "added rule: $label"
+}
+
+add_window_created_signal() {
+  label="_window_created_signal_${1:?}" ; shift
+  action="${1:?}" ; shift
+  rules="$@"
+
+  yabai -m signal --remove "$label" && echo "removed signal: $label"
+  echo "adding signal  ($label -> $action) with arguments: ${rules[@]}"
+  yabai -m signal --add event=window_created action="$action" "${rules[@]}" label="$label" && echo "added signal: $label"
+}
+
+# ==================
+# Preference Windows
+# ==================
+add_float_rule "system_preferences" app='System Preferences'
+add_float_rule "generic_preferences" title='Preferences$'
 
 # =======
 # Firefox
@@ -64,14 +84,10 @@ yabai -m rule --add app="System Preferences" manage=off topmost=on label="system
 # =========
 # fix jetbrains floating windows
 # https://github.com/koekeishiya/yabai/issues/194
-jetbrains_apps_re='^(DataGrip)$'
+jetbrains_apps_re='^(DataGrip|PyCharm|CLion)$'
 
-yabai -m rule --remove "jetbrains_float_default"
-yabai -m rule --add app="${jetbrains_apps_re}" manage=off topmost=on label="jetbrains_float_default"
+add_float_rule "jetbrains_float_default" app="$jetbrains_apps_re"
+add_window_created_signal "jetbrains_unfloat_main" "${XDG_CONFIG_HOME:-"$HOME/.config"}/yabai/unfloat-main-jetbrains-windows.sh" app="$jetbrains_apps_re"
 
-yabai -m signal --remove "jetbrains_unfloat_main"
-yabai -m signal --add event=window_created action="${XDG_CONFIG_HOME:-"$HOME/.config"}/yabai/handle-jetbrains-windows.sh" app="${jetbrains_apps_re}" label="jetbrains_unfloat_main"
-
-
-
+popd >/dev/null
 echo "`date +%Y-%m-%dT%H:%M:%S%z` yabai configuration loaded.."
