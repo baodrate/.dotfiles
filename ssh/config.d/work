@@ -6,6 +6,7 @@ Host *.ftdna.com
   User baot
   IdentityFile ~/.ssh/gpg-bao-gxg.pub
   ForwardAgent yes
+  IdentityFile ~/.ssh/id_rsa.work
 
 Host gh-bao-gxg
   HostName github.com
