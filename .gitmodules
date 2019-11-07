@@ -52,3 +52,6 @@
 [submodule "colors/LS_COLORS"]
 	path = colors/LS_COLORS
 	url = https://github.com/trapd00r/LS_COLORS.git
+[submodule "ubersicht/bar"]
+	path = ubersicht/bar
+	url = https://github.com/callahanrts/bar.git

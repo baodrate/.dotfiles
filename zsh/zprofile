@@ -2,3 +2,12 @@
 
 [[ -r /etc/zprofile ]] && source /etc/zprofile
 [[ -r ~/.profile ]] && emulate sh -c '. ~/.profile'
+
+# =======================
+# inlude other conf files
+# =======================
+for file in ${ZDOTDIR:-$HOME}/.zprofile.d/*; do
+  if [ -x "$file" ]; then
+    . "$file"
+  fi
+done
