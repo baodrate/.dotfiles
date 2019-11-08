@@ -1,0 +1,170 @@
+#   --max-visible n
+#       Set maximum number of visible notifications to n. Older notifica‐
+#       tions will be hidden. If -1, all notifications are visible.
+#
+#       Default: 5
+max-visible=5
+
+#   --sort +/-time | +/-priority
+#       Sorts incoming notifications by time and/or priority in ascend‐
+#       ing(+) or descending(-) order.
+#
+#       Default: -time
+
+#   --output name
+#       Show notifications on the specified output. If empty, notifications
+#       will appear on the focused output.
+#
+#       Requires the compositor to support the Wayland protocol xdg-output-
+#       unstable-v1 version 2.
+#
+#       Default: ""
+
+#   --layer layer
+#       Arrange mako at the specified layer, relative to normal windows.
+#       Supported values are background, bottom, top, and overlay. Using
+#       overlay will cause notifications to be displayed above fullscreen
+#       windows, though this may also occur at top depending on your com‐
+#       positor.
+#
+#       Default: top
+
+#   --anchor position
+#       Show notifications at the specified position on the output. Sup‐
+#       ported values are top-right, top-center, top-left, bottom-right,
+#       bottom-center, bottom-left, and center.
+#
+#       Default: top-right
+
+#   --font font
+#       Set font to font, in Pango format.
+#
+#       Default: monospace 10
+
+#   --background-color color
+#       Set background color to color. See COLORS for more information.
+#
+#       Default: #285577FF
+
+#   --text-color color
+#       Set text color to color. See COLORS for more information.
+#
+#       Default: #FFFFFFFF
+
+#   --width px
+#       Set width of notification popups.
+#       note:
+#         wide notifications don't shrink to fit text
+#         see: https://github.com/emersion/mako/issues/69
+#
+#       Default: 300
+width=512
+
+#   --height px
+#       Set maximium height of notification popups. Notifications whose
+#       text takes up less space are shrunk to fit.
+#
+#       Default: 100
+height=256
+
+#   --margin directional
+#       Set margin of each edge to the size specified by directional. See
+#       DIRECTIONAL VALUES for more information.
+#
+#       Default: 10
+
+#   --padding directional
+#       Set padding on each side to the size specified by directional. See
+#       DIRECTIONAL VALUES for more information.
+#
+#       Default: 5
+
+#   --border-size px
+#       Set popup border size to px pixels.
+#
+#       Default: 1
+
+#   --border-color color
+#       Set popup border color to color. See COLORS for more information.
+#
+#       Default: #4C7899FF
+
+#   --border-radius px
+#       Set popup corner radius to px pixels.
+#
+#       Default: 0
+
+#   --progress-color [over|source] color
+#       Set popup progress indicator color to color. See COLOR for more in‐
+#       formation. To draw the progress indicator on top of the background
+#       color, use the over attribute. To replace the background color, use
+#       the source attribute (this can be useful when the notification is
+#       semi-transparent).
+#
+#       Default: over #5588AAFF
+
+#   --icons 0|1
+#       Show icons in notifications.
+#
+#       Default: 1
+icons=1
+
+#   --max-icon-size px
+#       Set maximum icon size to px pixels.
+#
+#       Default: 64
+max-icon-size=256
+
+#   --icon-path path[:path...]
+#       Paths to search for icons when a notification specifies a name in‐
+#       stead of a full path. Colon-delimited. This approximates the search
+#       algorithm used by the XDG Icon Theme Specification, but does not
+#       support any of the theme metadata. Therefore, if you want to search
+#       parent themes, you'll need to add them to the path manually.
+
+#       /usr/share/icons/hicolor and /usr/share/pixmaps are always
+#       searched.
+#
+#       Default: ""
+
+#   --markup 0|1
+#       If 1, enable Pango markup. If 0, disable Pango markup. If enabled,
+#       Pango markup will be interpreted in your format specifier and in
+#       the body of notifications.
+#
+#       Default: 1
+
+#   --actions 0|1
+#       Applications may request an action to be associated with activating
+#       a notification. Disabling this will cause mako to ignore these re‐
+#       quests.
+#
+#       Default: 1
+
+#   --format format
+#       Set notification format string to format. See FORMAT SPECIFIERS for
+#       more information. To change this for grouped notifications, set it
+#       within a grouped criteria.
+#
+#       Default: <b>%s</b>\n%b Default when grouped: (%g) <b>%s</b>\n%b
+
+#   --default-timeout timeout
+#       Set the default timeout to timeout in milliseconds. To disable the
+#       timeout, set it to zero.
+#
+#       Default: 0
+default-timeout=5000
+
+#   --ignore-timeout 0|1
+#       If set, mako will ignore the expire timeout sent by notifications
+#       and use the one provided by default-timeout instead.
+#
+#       Default: 0
+
+#   --group-by field[,field,...]
+#       A comma-separated list of criteria fields that will be compared to
+#       other visible notifications to determine if this one should form a
+#       group with them. All listed criteria must be exactly equal for two
+#       notifications to group.
+#
+#       Default: none

@@ -190,6 +190,6 @@ case $command in
 
   *)
     echo "unknown command: '$command'" >&2
-    return 1
+    exit 1
     ;;
 esac

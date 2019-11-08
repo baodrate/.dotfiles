@@ -1,119 +1,4 @@
-### Aliases
-#
-    # modifiers
-    # ---------
-    set $alt Mod1
-    set $super Mod4
-
-    # vim-style-direction keys
-    # ------------------------
-    set $left h
-    set $down j
-    set $up k
-    set $right l
-
-### sway-specific configs
-#
-    set $exit_command "swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'"
-
-    # load other configs (including Base16 colors)
-    include $XDG_CONFIG_HOME/sway/config.d/*
-
-    ### base16
-    #
-    # Set base16 variables from XResources
-    #
-    set_from_resource $base00 i3wm.color0  #181818
-    set_from_resource $base03 i3wm.color8  #585858
-    set_from_resource $base05 i3wm.color7  #D8D8D8
-    set_from_resource $base07 i3wm.color15 #F8F8F8
-    set_from_resource $base08 i3wm.color1  #AB4642
-    set_from_resource $base0A i3wm.color3  #F7CA88
-    set_from_resource $base0B i3wm.color2  #A1B56C
-    set_from_resource $base0C i3wm.color6  #86C1B9
-    set_from_resource $base0D i3wm.color4  #7CAFC2
-    set_from_resource $base0E i3wm.color5  #BA8BAF
-    # base16-256
-    set_from_resource $base01 i3wm.color18 #282828
-    set_from_resource $base02 i3wm.color19 #383838
-    set_from_resource $base04 i3wm.color20 #B8B8B8
-    set_from_resource $base06 i3wm.color21 #E8E8E8
-    set_from_resource $base09 i3wm.color16 #DC9656
-    set_from_resource $base0F i3wm.color17 #A16946
-    # base16 non-256
-    # set_from_resource $base01 i3wm.color10 #282828
-    # set_from_resource $base02 i3wm.color11 #383838
-    # set_from_resource $base04 i3wm.color12 #B8B8B8
-    # set_from_resource $base06 i3wm.color13 #E8E8E8
-    # set_from_resource $base09 i3wm.color9  #DC9656
-    # set_from_resource $base0F i3wm.color14 #A16946
-
-    ### Output configuration
-    #
-    # wallpaper
-    # ---------
-    # Default wallpaper (more resolutions are available in __DATADIR__/backgrounds/sway/)
-    # output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
-    # -----------------------------------------------------------------------------------
-    # output * bg ~/wallpapers/wallhaven-694734.jpg fill
-    bindsym $super+i swaybg_command swaybg ~/wallpapers/wallhaven-692204.jpg fill
-
-    # displays
-    # --------
-    # ex:
-    #   output HDMI-A-1 resolution 1920x1080 position 1920,0
-    # You can get the names of your outputs by running: swaymsg -t get_outputs
-    # ------------------------------------------------------------------------
-    # output DVI-I-1 transform 90
-    workspace 1 output DVI-D-1
-
-    ### Input configuration
-    #
-    # Example configuration:
-    #
-    #   input "2:14:SynPS/2_Synaptics_TouchPad" {
-    #       dwt enabled
-    #       tap enabled
-    #       natural_scroll enabled
-    #       middle_emulation enabled
-    #   }
-    #
-    # You can get the names of your inputs by running: swaymsg -t get_inputs
-    # Read `man 5 sway-input` for more information about this section.
-    #
-    input "2:7:SynPS/2_Synaptics_TouchPad" {
-        dwt enabled
-        tap enabled
-        natural_scroll enabled
-        scroll_method two_finger
-        middle_emulation enabled
-    }
-
-    ### Idle configuration
-    #
-    # Example configuration:
-    #
-    #exec swayidle \
-    #    timeout 300 'swaylock -c 000000' \
-    #    timeout 600 'swaymsg "output * dpms off"' \
-    #       resume 'swaymsg "output * dpms on"' \
-    #    before-sleep 'swaylock -c 000000'
-    #
-    # This will lock your screen after 300 seconds of inactivity, then turn off
-    # your displays after another 600 seconds, and turn your screens back on when
-    # resumed. It will also lock your screen before your computer goes to sleep.
-    exec swayidle \
-        timeout 300 'swaylock -c 000000' \
-        timeout 600 'swaymsg "output * dpms off"' \
-           resume 'swaymsg "output * dpms on"' \
-        before-sleep 'swaylock -c 000000'
-
-    # bindsym $super+Shift+l exec 'swaylock -c 000000'
-
-### Application behavior
-#
-#
-    # for_window [class="feh"] floating enable
+# swaywm config file
 
 ### Variables
 #
@@ -131,11 +16,9 @@
 
     # terminals
     # ---------
-    set $urxvt "urxvtc ; if [ $? -eq 2 ]; then urxvtd -q -o -f && urxvtc ; fi"
-    set $altterm i3-sensible-terminal
-    # exec --no-startup-id "pidof -x $(basename urxvtd) || urxvtd -q -o -f"
-    # set $term $SCRIPTS_DIR/urxvtc.sh
-    # set $term alacritty
+    # set $term "urxvtc ; if [ $? -eq 2 ]; then urxvtd -q -o -f && urxvtc || { swaynag -t warning -m 'Failed to launch urxvtd' ; urxvt ; } ; fi"
+    set $term alacritty
+    set $altterm xterm
 
     ### application launcher
     #
@@ -143,6 +26,68 @@
     # set $menu dmenu_path | dmenu | xargs swaymsg exec
     #
     set $menu "rofi -modi combi -show combi -combi-modi 'drun,run,ssh,window'"
+
+    # modifiers
+    # ---------
+    set $win Mod4
+    set $mod Mod1
+
+    # vim-style-direction keys
+    # ------------------------
+    set $left h
+    set $down j
+    set $up k
+    set $right l
+
+    set $wallpapers_path ~/wallpapers
+
+### sway-specific configs
+#
+#
+#
+    set $wm_name sway
+    set $nag_cmd swaynag
+    set $msg_cmd swaymsg
+
+    set $screenshot_script $HOME/bin/screenshot_wayland
+    set $copy_cmd wl-copy
+
+    # load other configs (including Base16 colors)
+    include $XDG_CONFIG_HOME/sway/config.d/*
+
+    ### Keybindings
+    #
+    #
+    bindsym $mod+i swaybg_command swaybg `find $wallpapers_path -type f | shuf -n 1` fill
+
+    ### Output configuration
+    #
+    #
+
+    # wallpaper
+    # ---------
+    # Default wallpaper (more resolutions are available in __DATADIR__/backgrounds/sway/)
+    # ex:
+    #   output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
+    # -----------------------------------------------------------------------------------
+    output * bg `find $wallpapers_path -type f | shuf -n 1` fill
+
+    # displays
+    # --------
+    # ex:
+    #   output HDMI-A-1 resolution 1920x1080 position 1920,0
+    # You can get the names of your outputs by running: swaymsg -t get_outputs
+    # ------------------------------------------------------------------------
+    # output DVI-I-1 transform 90
+    # workspace 1 output DVI-D-1
+
+    # bindsym $mod+shift+l exec 'swaylock -c 000000'
+
+### Application behavior
+#
+#
+    for_window [class="feh"] floating enable
+    for_window [class="^Firefox Developer Edition$" instance="^Toolkit$"] floating enable
 
 ### Look
 #
@@ -184,18 +129,21 @@
 
     ### Window Decorations
     #
-    new_window pixel
-    hide_edge_borders none
     default_border pixel 2
-    gaps inner 8
-    gaps outer 0
+    default_floating_border pixel 2
+    gaps inner 32
+    gaps outer 16
+    smart_borders on
+
+    # Only enable gaps on a workspace when there is at least one container
+    # smart_gaps on
 
     ### Font
     #
     # Font for window titles. Will also be used by the bar unless a different font
     # is used in the bar {} block below.
     #
-    font pango:Overpass Nerd Font 9
+    font pango:Overpass 9
 
     # This font is widely installed, provides lots of unicode glyphs, right-to-left
     # text rendering and scalability on retina/hidpi displays (thanks to pango).
@@ -208,34 +156,41 @@
     # X core fonts rendering does not support right-to-left and this being a bitmap
     # font, it doesn’t scale on retina/hidpi displays.
 
-    ### Status Bar
-    #
-    # bar: `man 5 sway-bar` / `man i3bar`
-    # status: `man i3status`
-    #
+### Basic Config
+#
+#
+    focus_follows_mouse no
+
+### Status Bar
+#
+# bar: `man 5 sway-bar` / `man i3bar`
+# status: `man i3status`
+#
     bar {
         position top
 
         workspace_buttons yes
         binding_mode_indicator yes
 
+        tray_output none
+
         strip_workspace_numbers yes
 
-        status_command "i3status --config ~/.config/i3status/essentials.conf"
+        status_command "i3status --config ~/.config/i3status/essentials.conf | sed --unbuffered -e 's/#FF0000/$base08/g' -e 's/#00FF00/$base0B/g'"
 
         colors {
             background $base00
             separator  $base03
             statusline $base04
 
-    # # Property Name         Border  BG      Text    Indicator Child Border
-    # client.focused          $base02 $base02 $base06 $base0B   $base0D
-    # client.focused_inactive $base01 $base01 $base03 $base0D   $base02
-    # client.unfocused        $base01 $base00 $base03 $base00   $base01
-    # client.urgent           $base08 $base08 $base00 $base08   $base08
-    # # i3-only
-    # client.placeholder      $base05 $base05 $base07 $base00   $base05
-    # client.background       $base02
+            # # Property Name         Border  BG      Text    Indicator Child Border
+            # client.focused          $base02 $base02 $base06 $base0B   $base0D
+            # client.focused_inactive $base01 $base01 $base03 $base0D   $base02
+            # client.unfocused        $base01 $base00 $base03 $base00   $base01
+            # client.urgent           $base08 $base08 $base00 $base08   $base08
+            # # i3-only
+            # client.placeholder      $base05 $base05 $base07 $base00   $base05
+            # client.background       $base02
 
             # State             Border  BG      Text
             focused_workspace   $base02 $base02 $base07
@@ -246,11 +201,6 @@
         }
     }
 
-    ### Status Bar
-    #
-    # bar: `man 5 sway-bar` / `man i3bar`
-    # status: `man i3status`
-    #
     bar {
         position bottom
 
@@ -260,6 +210,8 @@
 
         workspace_buttons no
         binding_mode_indicator no
+
+        tray_output *
 
         colors {
             background $base00
@@ -274,59 +226,74 @@
 # Basics:
 #
     # start a terminal
-    bindsym $super+Return exec $urxvt
-    bindsym $super+Shift+Return exec $altterm
+    bindsym $mod+Return exec $term
+    bindsym $mod+shift+Return exec $altterm
 
     # kill focused window
-    bindsym $super+Shift+q kill
+    bindsym $mod+shift+q kill
 
     # start your launcher
-    bindsym $super+d exec $menu
+    bindsym $win+space exec $menu
 
-    # Drag floating windows by holding down $super and left mouse button.
-    # Resize them with right mouse button + $super.
+    # Drag floating windows by holding down $mod and left mouse button.
+    # Resize them with right mouse button + $mod.
     # Despite the name, also works for non-floating windows.
     #
     # Sway: `floating_modifier <binding> [normal|inverse]`
     #   normal:  L:resizing | R:dragging
     #   inverse: L:dragging | R:resizing
-    floating_modifier $super
+    floating_modifier $mod
 
     # reload the configuration file
-    bindsym $super+Shift+c reload
+    bindsym $mod+shift+c reload
 
     # exit i3/sway (logs you out of your X/Wayland session)
-    bindsym $super+Shift+e exec $exit_command
+    bindsym $mod+shift+e exec $nag_cmd -t warning -m 'You pressed the exit shortcut. Do you really want to exit $wm_name? This will end your Wayland session.' -B 'Yes, exit $wm_name' '$msg_cmd exit'
 
     # restart i3/sway inplace (preserves your layout/session, can be used to upgrade)
-    bindsym $super+Shift+r restart
+    bindsym $mod+shift+r restart
 
-    focus_follows_mouse yes
+    # screenshots
+    # bindsym $win+shift+3 exec shotgun ${XDG_PICTURES_DIR:-$HOME/pictures}/screenshot-desktop-$(date -Is).png
+    bindsym $win+shift+4 exec $screenshot_script > ${XDG_PICTURES_DIR:-$HOME/pictures}/screenshot-region-$(date -Is).png
+    bindsym $win+Ctrl+shift+4 exec $screenshot_script | $copy_cmd
 
 #
-# Moving around:
+# Windows / Containers
 #
     # Move your focus around
-    bindsym $super+$left focus left
-    bindsym $super+$down focus down
-    bindsym $super+$up focus up
-    bindsym $super+$right focus right
-    # or use $super+[up|down|left|right]
-    bindsym $super+Left focus left
-    bindsym $super+Down focus down
-    bindsym $super+Up focus up
-    bindsym $super+Right focus right
+    bindsym $mod+$left focus left
+    bindsym $mod+$down focus down
+    bindsym $mod+$up focus up
+    bindsym $mod+$right focus right
+    # or use $mod+[up|down|left|right]
+    bindsym $mod+Left focus left
+    bindsym $mod+Down focus down
+    bindsym $mod+Up focus up
+    bindsym $mod+Right focus right
 
-    # _move_ the focused window with the same, but add Shift
-    bindsym $super+Shift+$left move left
-    bindsym $super+Shift+$down move down
-    bindsym $super+Shift+$up move up
-    bindsym $super+Shift+$right move right
+    # _move_ the focused window with the same, but add shift
+    bindsym $mod+shift+$left move left
+    bindsym $mod+shift+$down move down
+    bindsym $mod+shift+$up move up
+    bindsym $mod+shift+$right move right
     # ditto, with arrow keys
-    bindsym $super+Shift+Left move left
-    bindsym $super+Shift+Down move down
-    bindsym $super+Shift+Up move up
-    bindsym $super+Shift+Right move right
+    bindsym $mod+shift+Left move left
+    bindsym $mod+shift+Down move down
+    bindsym $mod+shift+Up move up
+    bindsym $mod+shift+Right move right
+
+    bindsym --whole-window $mod+button4 workspace next_on_output
+    bindsym --whole-window $mod+button5 workspace prev_on_output
+
+#
+# Outputs:
+#
+    bindsym $mod+bracketright focus output left
+    bindsym $mod+bracketleft focus output right
+
+    bindsym $mod+shift+bracketleft move container to output left; focus output left
+    bindsym $mod+shift+bracketright move container to output right; focus output right
 
 #
 # Workspaces:
@@ -349,76 +316,78 @@
     workspace_auto_back_and_forth no
 
     # switch to workspace
-    bindsym $super+1 workspace $ws1
-    bindsym $super+2 workspace $ws2
-    bindsym $super+3 workspace $ws3
-    bindsym $super+4 workspace $ws4
-    bindsym $super+5 workspace $ws5
-    bindsym $super+6 workspace $ws6
-    bindsym $super+7 workspace $ws7
-    bindsym $super+8 workspace $ws8
-    bindsym $super+9 workspace $ws9
-    bindsym $super+0 workspace $ws10
-    bindsym $super+n workspace next
-    bindsym $super+p workspace prev
-    bindsym $super+Tab workspace back_and_forth
-
-    # move focused container to workspace
-    # bindsym $super+Shift+1 move container to workspace number $ws1
-    # bindsym $super+Shift+2 move container to workspace number $ws2
-    # bindsym $super+Shift+3 move container to workspace number $ws3
-    # bindsym $super+Shift+4 move container to workspace number $ws4
-    # bindsym $super+Shift+5 move container to workspace number $ws5
-    # bindsym $super+Shift+6 move container to workspace number $ws6
-    # bindsym $super+Shift+7 move container to workspace number $ws7
-    # bindsym $super+Shift+8 move container to workspace number $ws8
-    # bindsym $super+Shift+9 move container to workspace number $ws9
-    # bindsym $super+Shift+0 move container to workspace number $ws10
-    # bindsym $super+Shift+n move container to workspace next
-    # bindsym $super+Shift+p move container to workspace prev
-    # bindsym $super+Shift+Tab move container to workspace back_and_forth
+    bindsym $mod+1 workspace $ws1
+    bindsym $mod+2 workspace $ws2
+    bindsym $mod+3 workspace $ws3
+    bindsym $mod+4 workspace $ws4
+    bindsym $mod+5 workspace $ws5
+    bindsym $mod+6 workspace $ws6
+    bindsym $mod+7 workspace $ws7
+    bindsym $mod+8 workspace $ws8
+    bindsym $mod+9 workspace $ws9
+    bindsym $mod+0 workspace $ws10
+    bindsym $mod+n workspace next
+    bindsym $mod+p workspace prev
+    bindsym $mod+Tab workspace back_and_forth
 
     # move focused container to workspace and follow
-    bindsym $super+Shift+1 move container to workspace number $ws1 ; workspace number $ws1
-    bindsym $super+Shift+2 move container to workspace number $ws2 ; workspace number $ws2
-    bindsym $super+Shift+3 move container to workspace number $ws3 ; workspace number $ws3
-    bindsym $super+Shift+4 move container to workspace number $ws4 ; workspace number $ws4
-    bindsym $super+Shift+5 move container to workspace number $ws5 ; workspace number $ws5
-    bindsym $super+Shift+6 move container to workspace number $ws6 ; workspace number $ws6
-    bindsym $super+Shift+7 move container to workspace number $ws7 ; workspace number $ws7
-    bindsym $super+Shift+8 move container to workspace number $ws8 ; workspace number $ws8
-    bindsym $super+Shift+9 move container to workspace number $ws9 ; workspace number $ws9
-    bindsym $super+Shift+0 move container to workspace number $ws10 ; workspace number $ws10
-    bindsym $super+Shift+n move container to workspace next ; workspace next
-    bindsym $super+Shift+p move container to workspace prev ; workspace prev
-    bindsym $super+Shift+Tab move container to workspace back_and_forth ; workspace back_and_forth
+    bindsym $mod+shift+1 move container to workspace number $ws1 ; workspace number $ws1
+    bindsym $mod+shift+2 move container to workspace number $ws2 ; workspace number $ws2
+    bindsym $mod+shift+3 move container to workspace number $ws3 ; workspace number $ws3
+    bindsym $mod+shift+4 move container to workspace number $ws4 ; workspace number $ws4
+    bindsym $mod+shift+5 move container to workspace number $ws5 ; workspace number $ws5
+    bindsym $mod+shift+6 move container to workspace number $ws6 ; workspace number $ws6
+    bindsym $mod+shift+7 move container to workspace number $ws7 ; workspace number $ws7
+    bindsym $mod+shift+8 move container to workspace number $ws8 ; workspace number $ws8
+    bindsym $mod+shift+9 move container to workspace number $ws9 ; workspace number $ws9
+    bindsym $mod+shift+0 move container to workspace number $ws10 ; workspace number $ws10
+    bindsym $mod+shift+n move container to workspace next ; workspace next
+    bindsym $mod+shift+p move container to workspace prev ; workspace prev
+    bindsym $mod+shift+Tab move container to workspace back_and_forth ; workspace back_and_forth
+
+#
+# Move workspaces
+#
+    # Move workspace to a different output
+    bindsym $mod+Ctrl+shift+$left move workspace to output left
+    bindsym $mod+Ctrl+shift+$down move workspace to output down
+    bindsym $mod+Ctrl+shift+$up move workspace to output up
+    bindsym $mod+Ctrl+shift+$right move workspace to output right
+    # ditto, with arrow keys
+    bindsym $mod+Ctrl+shift+Left move workspace to output left
+    bindsym $mod+Ctrl+shift+Down move workspace to output down
+    bindsym $mod+Ctrl+shift+Up move workspace to output up
+    bindsym $mod+Ctrl+shift+Right move workspace to output right
 
 #
 # Layout stuff:
 #
     # "split" the current object of focus with
-    bindsym $super+v split horizontal
-    bindsym $super+s split vertical
+    bindsym $mod+v split horizontal
+    bindsym $mod+s split vertical
 
     # Switch the current container between different layout styles
-    bindsym $super+q layout stacking
-    bindsym $super+w layout tabbed
-    bindsym $super+e layout toggle split
+    bindsym $mod+q layout stacking
+    bindsym $mod+w layout tabbed
+    bindsym $mod+e layout toggle split
 
     # enter fullscreen mode for the focused container
-    bindsym $super+f fullscreen toggle
+    bindsym $mod+f fullscreen toggle
+
+    # Toggle sticky window
+    bindsym $mod+shift+s sticky toggle
 
     # Toggle the current focus between tiling and floating mode
-    bindsym $super+Shift+space floating toggle
+    bindsym $mod+shift+space floating toggle
 
     # Swap focus between the tiling area and the floating area
-    bindsym $super+space focus mode_toggle
+    bindsym $mod+space focus mode_toggle
 
     # move focus to the parent container
-    bindsym $super+a focus parent
+    bindsym $mod+a focus parent
 
     # focus the child container
-    #bindsym $super+d focus child
+    bindsym $mod+z focus child
 
 ### Scratchpad
 #
@@ -426,11 +395,11 @@
 # You can send windows there and get them back later.
 #
     # Move the currently focused window to the scratchpad
-    bindsym $super+Shift+minus move scratchpad
+    bindsym $mod+shift+minus move scratchpad
 
     # Show the next scratchpad window or hide the focused scratchpad window.
     # If there are multiple scratchpad windows, this command cycles through them.
-    bindsym $super+minus scratchpad show
+    bindsym $mod+minus scratchpad show
 
 #
 # Resizing containers:
@@ -439,10 +408,10 @@ mode "resize" {
     # These bindings trigger as soon as you enter the resize mode
 
     # change focus
-    bindsym $super+$left focus left
-    bindsym $super+$down focus down
-    bindsym $super+$up focus up
-    bindsym $super+$right focus right
+    bindsym $mod+$left focus left
+    bindsym $mod+$down focus down
+    bindsym $mod+$up focus up
+    bindsym $mod+$right focus right
 
     # move (with sticky display-edge)
     bindsym $left  resize grow left  2 px or 2 ppt ; resize shrink right 2 px or 2 ppt
@@ -457,17 +426,17 @@ mode "resize" {
     bindsym Ctrl+$right resize shrink right 2 px or 2 ppt
 
     # grow
-    bindsym Shift+$left  resize grow left  2 px or 2 ppt
-    bindsym Shift+$down  resize grow down  2 px or 2 ppt
-    bindsym Shift+$up    resize grow up    2 px or 2 ppt
-    bindsym Shift+$right resize grow right 2 px or 2 ppt
+    bindsym shift+$left  resize grow left  2 px or 2 ppt
+    bindsym shift+$down  resize grow down  2 px or 2 ppt
+    bindsym shift+$up    resize grow up    2 px or 2 ppt
+    bindsym shift+$right resize grow right 2 px or 2 ppt
 
-    # back to normal: Enter or Escape or $super+r
+    # back to normal: Enter or Escape or $mod+r
     bindsym Return mode "default"
     bindsym Escape mode "default"
-    bindsym $super+r mode "default"
+    bindsym $mod+r mode "default"
 }
-bindsym $super+r mode "resize"
+bindsym $mod+r mode "resize"
 
 ### Special buttons
 #
@@ -481,15 +450,5 @@ bindsym $super+r mode "resize"
 #
 # Backlight Buttons:
 #
-    bindsym XF86MonBrightnessUp   exec "brightnessctl s 5%+"
-    bindsym XF86MonBrightnessDown exec "brightnessctl s 5%-"
-
-### Startup programs
-#
-# Launch utils
-#
-    exec --no-startup-id "xrdb ~/.Xresources"
-    exec --no-startup-id "pidof -x $(basename udiskie) || udiskie"
-    exec --no-startup-id "pidof -x $(basename mako) || mako"
-    exec --no-startup-id "pidof -x $(basename urxvtd) || urxvtd -q -o -f"
-    # exec --no-startup-id "pidof -x $(basename lxqt-policykit-agent) || lxqt-policykit-agent"
+    bindsym XF86MonBrightnessUp   exec "light -A 5"
+    bindsym XF86MonBrightnessDown exec "light -U 5"

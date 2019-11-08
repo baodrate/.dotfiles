@@ -1,1 +1,1 @@
-../scripts/sh-update-link.sh
+../bin/sh-update-link.sh

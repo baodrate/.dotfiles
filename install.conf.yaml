@@ -24,7 +24,7 @@
 
     # globs
     # -----
-    ~/bin/: bin/*
+    ~/bin: bin
 
     # files
     # -----
@@ -61,6 +61,7 @@
     # -- misc
     ~/.vimperator: vimperator
     ~/.vimperatorrc: vimperatorrc
+    ~/.config/user-dirs.dirs: user-dirs.dirs
 
 - shell:
   -
@@ -206,8 +207,13 @@
     ~/.config/i3status: i3status
     ~/.config/i3status-rust: i3status-rust
     ~/.config/i3: i3
-    ~/.local/share/systemd: systemd
     ~/.local/share/barrier: barrier
+    ~/.config/udiskie: udiskie
+    ~/.config/dunst: dunst
+    ~/.config/pacman: pacman
+    ~/.config/ranger: ranger
+    ~/.config/systemd: systemd
+    ~/.config/mako: mako
 
     # files
     # -----
@@ -216,6 +222,9 @@
     ~/.xinitrc: xinitrc
     ~/.xprofile: xprofile
     ~/.config/compton.conf: compton.conf
+    ~/.config/mimeapps.list: mimeapps.list
+    # https://wiki.archlinux.org/index.php/XDG_MIME_Applications#mimeapps.list
+    ~/.local/share/mimeapps.list: mimeapps.list
 
 # =======
 # Scripts

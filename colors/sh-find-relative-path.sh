@@ -1,1 +1,1 @@
-../scripts/sh-find-relative-path.sh
+../bin/sh-find-relative-path.sh
