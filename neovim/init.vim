@@ -111,6 +111,7 @@ if dein#load_state(s:settings.dein_cache)
   call dein#add('tpope/vim-speeddating')          " increment for dates
 
   call dein#add('justinmk/vim-dirvish')           " netrw replacement
+  " call dein#add('kristijanhusak/vim-dirvish-git') " add git statuses to dirvish
 
   " depend on zsh to install fzf binary
   " call dein#add('junegunn/fzf', { 'build': './install --all', 'merged': 0 })

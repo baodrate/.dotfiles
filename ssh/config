@@ -3,12 +3,12 @@ Include config.d/*
 
 Host github.com
   User git
+  ControlMaster no
 
 # default parameters
 Host *
   ControlMaster auto
   IdentitiesOnly no
-  IdentityFile ~/.ssh/id_rsa
 
   CanonicalizeHostname yes
   CanonicalizeFallbackLocal yes
