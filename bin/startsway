@@ -5,7 +5,7 @@ export ECORE_EVAS_ENGINE=wayland_egl
 export ELM_ACCEL=gl
 export ELM_DISPLAY=wl
 export QT_QPA_PLATFORM=wayland
-export SDL_VIDEODRIVER=wayland
+# export SDL_VIDEODRIVER=wayland # fucks with steam
 export XDG_SESSION_TYPE=wayland
 export MOZ_ENABLE_WAYLAND=1
-exec dbus-run-session sway >"${XDG_CACHE_HOME:-$HOME/.cache}/sway.out.log" 2>"${XDG_CACHE_HOME:-$HOME/.cache}/sway.err.log"
+exec dbus-run-session -- sway >"${XDG_CACHE_HOME:-$HOME/.cache}/sway.out.log" 2>"${XDG_CACHE_HOME:-$HOME/.cache}/sway.err.log"

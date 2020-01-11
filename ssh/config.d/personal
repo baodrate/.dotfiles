@@ -5,8 +5,21 @@ Host tilde.club
   User qubidt
   IdentityFile ~/.ssh/gpg-qubidt.pub
 
+Host tilde.town
+  User qubidt
+  IdentityFile ~/.ssh/gpg-qubidt.pub
+
 Host *.poorboys.casa *.baodtrinh.com
   IdentityFile ~/.ssh/gpg-qubidt.pub
+
+Host wiccan.poorboys.casa
+  User root
+  IdentityFile ~/.ssh/gpg-qubidt.pub
+
+Host baot-imac
+  User baot
+  IdentityFile ~/.ssh/gpg-bao-gxg.pub
+  ProxyCommand ssh -q -W localhost:6969 wiccan.poorboys.casa
 
 Host gh-qubidt
   HostName github.com

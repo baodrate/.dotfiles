@@ -71,7 +71,7 @@ font:
   # https://github.com/jwilm/alacritty/issues/486
   # https://github.com/jwilm/alacritty/issues/957
   # https://github.com/jwilm/alacritty/issues/1212
-  use_thin_strokes: true
+  use_thin_strokes: false
 
 mouse:
   # Click settings

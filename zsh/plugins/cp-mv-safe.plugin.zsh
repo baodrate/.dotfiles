@@ -32,8 +32,8 @@ mv_safe() {
   cp_safe --remove-source-files "${sources[@]}" "${dest}" && \
     for source in "${sources[@]}"; do
       [[ -d $source ]] > /dev/null 2>&1 && \
-        echo "cd $source && cd .. && find $(basename $source) -type d -empty -delete" && \
-          (cd $source && cd .. && find $(basename $source) -type d -empty -delete)
+        echo "cd $source && cd .. && find "$(basename $source)" -type d -empty -delete" && \
+          (cd $source && cd .. && find "$(basename $source)" -type d -empty -delete)
     done
 }
 compdef _files mv_safe

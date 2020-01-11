@@ -65,10 +65,10 @@ device_config:
 # ---
 # /dev/disk/by-id/ata-ADATA_SP550_2G1820109753-part1
 - id_uuid: DC6CF7B16CF78514
-  ignore:  true
+  automount: false
 # /dev/disk/by-id/ata-ADATA_SP550_2G1820109753-part2
 - id_uuid: 521E0E7A1E0E577F
-  ignore:  true
+  automount: false
 
 notifications:
 

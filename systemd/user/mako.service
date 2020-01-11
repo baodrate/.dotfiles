@@ -1,11 +1,15 @@
 [Unit]
-Description=A lightweight Wayland notification daemon
+Description=mako wayland notification daemon
 Documentation=man:mako(1)
 PartOf=graphical-session.target
+AssertFileIsExecutable=/usr/bin/mako
+AssertFileIsExecutable=/usr/bin/makoctl
 
 [Service]
 Type=simple
 ExecStart=/usr/bin/mako
+ExecReload=/usr/bin/makoctl reload
+ExecStop=/usr/bin/makoctl dismiss -a
 
 [Install]
 WantedBy=sway-session.target

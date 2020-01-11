@@ -23,7 +23,7 @@ _UNAME_STR="$(uname)"
 if command -v exa >/dev/null ; then
   _LS_CMD="exa"
 
-  _LS_DEFAULT_FLAGS="$_LS_DEFAULT_FLAGS --git"        #    list files' git status
+# _LS_DEFAULT_FLAGS="$_LS_DEFAULT_FLAGS --git"        #    list files' git status
 # _LS_DEFAULT_FLAGS="$_LS_DEFAULT_FLAGS --extended"   # -@ show files’ extended attributes and sizes
   _LS_DEFAULT_FLAGS="$_LS_DEFAULT_FLAGS --group"      # -g show files’ group
 

@@ -91,12 +91,14 @@ alias less='less -SRc'
 if (( $+commands[nvim] )) ; then
   alias n='nvim'
   export VISUAL=nvim
+  export EDITOR=nvim
   export NVIM_TUI_ENABLE_TRUE_COLOR=1
 elif (( $+commands[vim] )) ; then
   alias v='vim'
   export VISUAL=vim
+  export EDITOR=vim
 else
-  echo 'could not find neovim or vim; not setting $VISUAL' >&2
+  echo 'could not find neovim or vim; not setting $VISUAL and $EDITOR' >&2
 fi
 
 if (( $+commands[bat] )); then

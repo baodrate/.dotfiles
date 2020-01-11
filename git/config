@@ -1,10 +1,10 @@
 [core]
 	pager = command -v diff-so-fancy 2>/dev/null >&2 && (diff-so-fancy | less --tabs=1,5 -RFX) || less
 
-[user]
-	name = Bao Trinh
-	email = baot@genebygene.com
-	signingKey = 6DD044E46EB7DB25
+[User]
+  name = Bao Trinh
+  email = github@baodtrinh.com
+  signingKey = A9B3110B4EA55E36
 
 [commit]
 	gpgSign = true
@@ -15,13 +15,13 @@
 
 [includeIf "gitdir:/usr/local/Homebrew/"]
 	path = ./config-personal
+[includeIf "gitdir:~/github/"]
+	path = ./config-personal
 [includeIf "gitdir:~/dev/"]
 	path = ./config-work
 [includeIf "gitdir:~/wdev/"]
 	path = ./config-work
 [includeIf "gitdir:~/pdev/"]
-	path = ./config-personal
-[includeIf "gitdir:~/github/"]
 	path = ./config-personal
 [includeIf "gitdir:~/.scripts/"]
 	path = ./config-personal
