@@ -1,0 +1,11 @@
+[Unit]
+Description=Automounter for removable media
+Documentation=man:udiskie(8)
+PartOf=graphical-session.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/udiskie
+
+[Install]
+WantedBy=sway-session.target

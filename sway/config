@@ -52,8 +52,12 @@
     set $screenshot_script $HOME/bin/screenshot_wayland
     set $copy_cmd wl-copy
 
-    # load other configs (including Base16 colors)
-    include $XDG_CONFIG_HOME/sway/config.d/*
+    # load other configs
+    # include $XDG_CONFIG_HOME/sway/config.d/bar.config
+    include $XDG_CONFIG_HOME/sway/config.d/base16-colors.config
+    # include $XDG_CONFIG_HOME/sway/config.d/idle.config
+    include $XDG_CONFIG_HOME/sway/config.d/input.config
+    include $XDG_CONFIG_HOME/sway/config.d/startup.config
 
     ### Keybindings
     #
@@ -131,8 +135,8 @@
     #
     default_border pixel 2
     default_floating_border pixel 2
-    gaps inner 32
-    gaps outer 16
+    gaps inner 16
+    gaps outer 8
     smart_borders on
 
     # Only enable gaps on a workspace when there is at least one container
@@ -160,66 +164,6 @@
 #
 #
     focus_follows_mouse no
-
-### Status Bar
-#
-# bar: `man 5 sway-bar` / `man i3bar`
-# status: `man i3status`
-#
-    bar {
-        position top
-
-        workspace_buttons yes
-        binding_mode_indicator yes
-
-        tray_output none
-
-        strip_workspace_numbers yes
-
-        status_command "i3status --config ~/.config/i3status/essentials.conf | sed --unbuffered -e 's/#FF0000/$base08/g' -e 's/#00FF00/$base0B/g'"
-
-        colors {
-            background $base00
-            separator  $base03
-            statusline $base04
-
-            # # Property Name         Border  BG      Text    Indicator Child Border
-            # client.focused          $base02 $base02 $base06 $base0B   $base0D
-            # client.focused_inactive $base01 $base01 $base03 $base0D   $base02
-            # client.unfocused        $base01 $base00 $base03 $base00   $base01
-            # client.urgent           $base08 $base08 $base00 $base08   $base08
-            # # i3-only
-            # client.placeholder      $base05 $base05 $base07 $base00   $base05
-            # client.background       $base02
-
-            # State             Border  BG      Text
-            focused_workspace   $base02 $base02 $base07
-            active_workspace    $base05 $base02 $base00
-            inactive_workspace  $base00 $base00 $base05
-            urgent_workspace    $base08 $base08 $base00
-            binding_mode        $base00 $base0A $base00
-        }
-    }
-
-    bar {
-        position bottom
-
-        # status_command while date +'%Y-%m-%d %l:%M:%S %p'; do sleep 1; done
-        # status_command i3status-rs ~/.config/i3status-rust/config.toml
-        status_command "i3status --config ~/.config/i3status/stats.conf | sed --unbuffered -e 's/#FF0000/$base08/g' -e 's/#00FF00/$base0B/g'"
-
-        workspace_buttons no
-        binding_mode_indicator no
-
-        tray_output *
-
-        colors {
-            background $base00
-            separator  $base03
-            statusline $base04
-        }
-    }
-
 
 ### Key bindings
 #
@@ -300,16 +244,16 @@
 #
     # Define names for default workspaces for which we configure key bindings later on.
     # We use variables to avoid repeating the names in multiple places.
-    set $ws1   "1:一"
-    set $ws2   "2:二"
-    set $ws3   "3:三"
-    set $ws4   "4:四"
-    set $ws5   "5:五"
-    set $ws6   "6:六"
-    set $ws7   "7:七"
-    set $ws8   "8:八"
-    set $ws9   "9:九"
-    set $ws10 "10:十"
+    set $ws1   "1:web"
+    set $ws2   "2:code"
+    set $ws3   "3:term"
+    set $ws4   "4:"
+    set $ws5   "5:"
+    set $ws6   "6:"
+    set $ws7   "7:"
+    set $ws8   "8:chat"
+    set $ws9   "9:music"
+    set $ws10  "10:pref"
 
     # automatic workspace back-and-forth when switching to the
     # workspace that is currently focused
@@ -328,7 +272,7 @@
     bindsym $mod+0 workspace $ws10
     bindsym $mod+n workspace next
     bindsym $mod+p workspace prev
-    bindsym $mod+Tab workspace back_and_forth
+    # bindsym $mod+Tab workspace back_and_forth
 
     # move focused container to workspace and follow
     bindsym $mod+shift+1 move container to workspace number $ws1 ; workspace number $ws1
@@ -343,7 +287,7 @@
     bindsym $mod+shift+0 move container to workspace number $ws10 ; workspace number $ws10
     bindsym $mod+shift+n move container to workspace next ; workspace next
     bindsym $mod+shift+p move container to workspace prev ; workspace prev
-    bindsym $mod+shift+Tab move container to workspace back_and_forth ; workspace back_and_forth
+    # bindsym $mod+shift+Tab move container to workspace back_and_forth ; workspace back_and_forth
 
 #
 # Move workspaces

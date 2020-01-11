@@ -21,6 +21,7 @@
     ~/.config/termite: termite
     ~/.config/firefox: firefox
     ~/.config/colors: colors
+    ~/.config/spicetify: spicetify
 
     # globs
     # -----
@@ -214,6 +215,8 @@
     ~/.config/ranger: ranger
     ~/.config/systemd: systemd
     ~/.config/mako: mako
+    ~/.config/waybar: waybar
+    ~/.config/yay: yay
 
     # files
     # -----

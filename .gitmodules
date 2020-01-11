@@ -55,3 +55,6 @@
 [submodule "ubersicht/bar"]
 	path = ubersicht/bar
 	url = https://github.com/callahanrts/bar.git
+[submodule "spicetify/community-spicetify-themes"]
+	path = spicetify/community-spicetify-themes
+	url = https://github.com/morpheusthewhite/spicetify-themes.git

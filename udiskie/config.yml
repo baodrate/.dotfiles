@@ -37,7 +37,7 @@ program_options:
     # [string|list] Set command to be executed on any device event.
     # This is specified like `password_prompt`.
 
-# device_config:
+device_config:
 
   # List of device option rules. Each item can match any combination of device
   # attributes. Additionally, it defines the resulting action (see below).
@@ -59,6 +59,16 @@ program_options:
 # - ignore:    True           # never mount/unmount or even show this in the GUI
 #   automount: False          # show but do not automount this device
 #   options: []               # additional options to be passed when mounting
+#   automount: false          # [action] do not automount this device
+
+# /dev/disk/by-id/ata-ADATA_SP550_2G1820109753
+# ---
+# /dev/disk/by-id/ata-ADATA_SP550_2G1820109753-part1
+- id_uuid: DC6CF7B16CF78514
+  ignore:  true
+# /dev/disk/by-id/ata-ADATA_SP550_2G1820109753-part2
+- id_uuid: 521E0E7A1E0E577F
+  ignore:  true
 
 notifications:
 

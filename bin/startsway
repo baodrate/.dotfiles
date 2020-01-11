@@ -1,0 +1,11 @@
+#!/bin/sh
+# https://www.reddit.com/r/swaywm/comments/do3g91/native_wayland_setup_for_arch/f5ka2nm/
+export CLUTTER_BACKEND=wayland
+export ECORE_EVAS_ENGINE=wayland_egl
+export ELM_ACCEL=gl
+export ELM_DISPLAY=wl
+export QT_QPA_PLATFORM=wayland
+export SDL_VIDEODRIVER=wayland
+export XDG_SESSION_TYPE=wayland
+export MOZ_ENABLE_WAYLAND=1
+exec dbus-run-session sway >"${XDG_CACHE_HOME:-$HOME/.cache}/sway.out.log" 2>"${XDG_CACHE_HOME:-$HOME/.cache}/sway.err.log"
