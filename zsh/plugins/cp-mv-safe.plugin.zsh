@@ -18,7 +18,17 @@ cp_safe() {
     sources+=("$source")
   done
 
-  rsync_cp=(rsync --archive --xattrs --verbose -hhh --inplace --backup-dir="backup_$(timestamp)" --progress)
+  rsync_cp=(
+    rsync
+    # -zz # --new-compress
+    --archive
+    --xattrs
+    # --verbose
+    # -hhh
+    --inplace
+    --backup-dir="backup_$(timestamp)"
+    --info=progress2
+  )
   printf '%q ' ${rsync_cp[@]} "${sources[@]}" "${dest}" && printf '\n' && \
     "${rsync_cp[@]}" "${sources[@]}" "${dest}"
 }
