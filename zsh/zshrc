@@ -120,72 +120,72 @@ function path(){
 # : plugins
 # =============================================================================
 
-# ------------------------
-# zplugin (plugin manager)
-# ------------------------
+# ----------------------
+# zinit (plugin manager)
+# ----------------------
 
-declare -A ZPLGM  # initial Zplugin's hash definition, if configuring before loading Zplugin, and then:
+declare -A ZINIT  # initial zinit's hash definition, if configuring before loading zinit, and then:
 
-ZPLGM[HOME_DIR]="${XDG_DATA_HOME:-$HOME/.local/share}/zplugin"
-ZPLGM[BIN_DIR]="${ZPLGM[HOME_DIR]}/bin"
-ZPLGM[ZCOMPDUMP_PATH]="${zrundir:?}/.zcompdump"
+ZINIT[HOME_DIR]="${XDG_DATA_HOME:-$HOME/.local/share}/zinit"
+ZINIT[BIN_DIR]="${ZINIT[HOME_DIR]}/bin"
+ZINIT[ZCOMPDUMP_PATH]="${zrundir:?}/.zcompdump"
 
-# ==> ZPFX (polaris) directory to store zplugin-compiled programs
+# ==> ZPFX (polaris) directory to store zinit-compiled programs
 ZPFX="${HOME}/.local"
 
 # ==> bootstrapper
-#     clone zplugin if needed
-if [[ ! -d "${ZPLGM[BIN_DIR]}" ]]; then
+#     clone zinit if needed
+if [[ ! -d "${ZINIT[BIN_DIR]}" ]]; then
   if (( $+commands[git] )); then
-    git clone https://github.com/zdharma/zplugin.git "${ZPLGM[BIN_DIR]}"
+    git clone https://github.com/zdharma/zinit.git "${ZINIT[BIN_DIR]}"
   else
     echo 'git not found' >&2
     return 0
   fi
 fi
 
-# ==> zplugin automatic compilation module
+# ==> zinit automatic compilation module
 #     lets you use source-study module to check load times
 #     (call with `zpmod source-study`)
 
-if [ -r ${ZPLGM[BIN_DIR]}/zmodules/Src/zdharma/zplugin.so ] ; then
+if [ -r ${ZINIT[BIN_DIR]}/zmodules/Src/zdharma/zinit.so ] ; then
   # enable debugging
   # typeset -g ZPLG_MOD_DEBUG=1
 
-  module_path+=( "${ZPLGM[BIN_DIR]}/zmodules/Src" )
+  module_path+=( "${ZINIT[BIN_DIR]}/zmodules/Src" )
   # run in subshell to avoid error outputs
-  #   `(zmodload zdharma/zplugin) > /dev/null 2>&1`
+  #   `(zmodload zdharma/zinit) > /dev/null 2>&1`
   #   (e.g. when it attempts to create .zwc files in system paths)
   #   this will compile zsh scripts but won't load the module in this shell
   #   so `zpmod source-study` won't work
-  zmodload zdharma/zplugin
+  zmodload zdharma/zinit
 fi
 
-# ==> load zplugin
-source "${ZPLGM[BIN_DIR]:?}/zplugin.zsh"
+# ==> load zinit
+source "${ZINIT[BIN_DIR]:?}/zinit.zsh"
 
 # --------------
 # custom plugins
 # --------------
 # ==> plugins
 # glob qualifiers: `.` for regular files; `N` for `null_glob`
-# zplugin ice lucid wait'!0'
-zplugin ice blockf
-zplugin snippet "$ZDOTDIR/plugins/keybindings.plugin.zsh"
-zplugin snippet "$ZDOTDIR/plugins/history.plugin.zsh"
-# zplugin snippet "$ZDOTDIR/plugins/ls-aliases.plugin.zsh"
-zplugin snippet "$ZDOTDIR/plugins/git.plugin.zsh"
-zplugin snippet "$ZDOTDIR/plugins/ssht.zsh"
-# zplugin snippet "$ZDOTDIR/plugins/pyenv.zsh"
+# zinit ice lucid wait'!0'
+zinit ice blockf
+zinit snippet "$ZDOTDIR/plugins/keybindings.plugin.zsh"
+zinit snippet "$ZDOTDIR/plugins/history.plugin.zsh"
+# zinit snippet "$ZDOTDIR/plugins/ls-aliases.plugin.zsh"
+zinit snippet "$ZDOTDIR/plugins/git.plugin.zsh"
+zinit snippet "$ZDOTDIR/plugins/ssht.zsh"
+# zinit snippet "$ZDOTDIR/plugins/pyenv.zsh"
 
-zplugin ice if"(( $+commands[rsync] ))"
-zplugin snippet "$ZDOTDIR/plugins/cp-mv-safe.plugin.zsh"
+zinit ice if"(( $+commands[rsync] ))"
+zinit snippet "$ZDOTDIR/plugins/cp-mv-safe.plugin.zsh"
 
 # super slow:
-# zplugin ice if"(( $+commands[pipenv] ))"; zplugin snippet "$ZDOTDIR/plugins/pipenv.plugin.zsh"
+# zinit ice if"(( $+commands[pipenv] ))"; zinit snippet "$ZDOTDIR/plugins/pipenv.plugin.zsh"
 
-zplugin ice if"(( $+commands[poetry] ))" as"completion"
-zplugin snippet "$ZDOTDIR/completions/_poetry"
+zinit ice if"(( $+commands[poetry] ))" as"completion"
+zinit snippet "$ZDOTDIR/completions/_poetry"
 
 # ------
 # Prompt
@@ -193,20 +193,20 @@ zplugin snippet "$ZDOTDIR/completions/_poetry"
 
 # ==> spaceship (not using because slow for now)
 #     wait for https://github.com/denysdovhan/spaceship-prompt/pull/499
-# zplugin ice src"spaceship.zsh"
-# zplugin light denysdovhan/spaceship-prompt
+# zinit ice src"spaceship.zsh"
+# zinit light denysdovhan/spaceship-prompt
 
 # ==> pure prompt
 export PURE_PROMPT_SYMBOL="λ"
 export PURE_PROMPT_VICMD_SYMBOL="ν"
 export PURE_CMD_MAX_EXEC_TIME=0
-zplugin ice pick"async.zsh" src"pure.zsh" compile"(pure|async).zsh"
-zplugin light sindresorhus/pure
+zinit ice pick"async.zsh" src"pure.zsh" compile"(pure|async).zsh"
+zinit light sindresorhus/pure
 
 # ==> powerlevel10k
 # To customize prompt, run `p10k configure` or edit ${ZDOTDIR}/.p10k.zsh.
-# zplugin ice depth=1 atload"[[ -f ${ZDOTDIR}/.p10k.zsh ]] && source ${ZDOTDIR}/.p10k.zsh"
-# zplugin light romkatv/powerlevel10k
+# zinit ice depth=1 atload"[[ -f ${ZDOTDIR}/.p10k.zsh ]] && source ${ZDOTDIR}/.p10k.zsh"
+# zinit light romkatv/powerlevel10k
 
 # ---------------------
 # prezto plugin options
@@ -219,76 +219,76 @@ zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 # scripts
 # -------
 # ==> prettyping
-zplugin ice lucid wait'' as"program" pick"prettyping" atload'alias ping=prettyping'
-# zplugin ice as"program" pick"prettyping"
-zplugin load "denilsonsa/prettyping"
+zinit ice lucid wait'' as"program" pick"prettyping" atload'alias ping=prettyping'
+# zinit ice as"program" pick"prettyping"
+zinit load "denilsonsa/prettyping"
 # alias ping=prettyping
 
 # ==> httpstat
-zplugin ice as"program" cp"httpstat.sh -> httpstat" pick"httpstat"
-zplugin load "b4b4r07/httpstat"
+zinit ice as"program" cp"httpstat.sh -> httpstat" pick"httpstat"
+zinit load "b4b4r07/httpstat"
 
 # ==> diff-so-fancy
-# zplugin ice as"program" pick"diff-so-fancy"
-# zplugin load "so-fancy/diff-so-fancy"
-zplugin ice as"program" pick"bin/git-dsf"
-zplugin light "zdharma/zsh-diff-so-fancy"
+# zinit ice as"program" pick"diff-so-fancy"
+# zinit load "so-fancy/diff-so-fancy"
+zinit ice as"program" pick"bin/git-dsf"
+zinit light "zdharma/zsh-diff-so-fancy"
 
 # -------------
 # basic plugins
 # -------------
 # ==> Sane options for zsh, in the spirit of vim-sensible
-zplugin load willghatch/zsh-saneopt
+zinit load willghatch/zsh-saneopt
 
 # ==> command-not-found
 #     suggests package name
 
 # https://github.com/sorin-ionescu/prezto/blob/master/modules/command-not-found/init.zsh
 # Load command-not-found on Debian-based distributions.
-zplugin ice blockf if"[[ -s '/etc/zsh_command_not_found' ]]"
-zplugin load  '/etc/zsh_command_not_found'
+zinit ice blockf if"[[ -s '/etc/zsh_command_not_found' ]]"
+zinit load  '/etc/zsh_command_not_found'
 # Load command-not-found on Arch Linux-based distributions.
-zplugin ice blockf if"[[ -s '/usr/share/doc/pkgfile/command-not-found.zsh' ]]"
-zplugin load '/usr/share/doc/pkgfile/command-not-found.zsh'
+zinit ice blockf if"[[ -s '/usr/share/doc/pkgfile/command-not-found.zsh' ]]"
+zinit load '/usr/share/doc/pkgfile/command-not-found.zsh'
 # Load command-not-found on macOS when homebrew tap is configured.
-zplugin ice blockf if"[[ -s '/usr/local/Homebrew/Library/Taps/homebrew/homebrew-command-not-found/handler.sh' ]]"
-zplugin load '/usr/local/Homebrew/Library/Taps/homebrew/homebrew-command-not-found/handler.sh'
+zinit ice blockf if"[[ -s '/usr/local/Homebrew/Library/Taps/homebrew/homebrew-command-not-found/handler.sh' ]]"
+zinit load '/usr/local/Homebrew/Library/Taps/homebrew/homebrew-command-not-found/handler.sh'
 
 # ------
 # python
 # ------
-zplugin ice lucid wait'' \
+zinit ice lucid wait'' \
     atload'eval "$(pyenv init - --no-rehash zsh)"' \
     as'command' pick'bin/pyenv' src'completions/pyenv.zsh'
-zplugin light pyenv/pyenv
+zinit light pyenv/pyenv
 
-zplugin ice lucid wait'' \
+zinit ice lucid wait'' \
     atload'eval "$(pyenv virtualenv-init - zsh)"' \
     as'command' pick'bin/*'
-zplugin light pyenv/pyenv-virtualenv
+zinit light pyenv/pyenv-virtualenv
 
 # -------------
 # misc. plugins
 # -------------
 
 # ==> colored manpages
-zplugin snippet OMZ::plugins/colored-man-pages/colored-man-pages.plugin.zsh
+zinit snippet OMZ::plugins/colored-man-pages/colored-man-pages.plugin.zsh
 
 # ==> suggests aliases
-zplugin ice if"(( $+commands[python] ))"
-zplugin load djui/alias-tips
+zinit ice if"(( $+commands[python] ))"
+zinit load djui/alias-tips
 
 # ==> translate-shell (trans)
 #     google translate CLI
-zplugin load soimort/translate-shell
+zinit load soimort/translate-shell
 
 # -------------------------------
 # autocomplete / search / history
 # -------------------------------
 
 # ==> fzf
-zplugin ice as"program" from"gh-r"
-zplugin load junegunn/fzf-bin
+zinit ice as"program" from"gh-r"
+zinit load junegunn/fzf-bin
 
 if (( $+commands[fd] )) ; then
   export FZF_DEFAULT_COMMAND='fd --color=always --type f --hidden --follow --exclude .git'
@@ -340,11 +340,11 @@ _gen_fzf_opts() {
 }
 export FZF_DEFAULT_OPTS="$(_gen_fzf_opts)"
 
-# zplugin ice lucid multisrc'shell/{completion,key-bindings}.zsh' as"completion" pick"/dev/null"
-zplugin ice lucid multisrc'shell/{completion,key-bindings}.zsh' pick"bin/fzf-tmux" as"program"
-# zplugin ice lucid pick'shell/{completion,key-bindings}.zsh' pick"bin/fzf-tmux" as"program"
-# zplugin ice lucid pick'shell/completion.zsh' as"completion" src'shell/key-bindings.zsh'
-zplugin load junegunn/fzf
+# zinit ice lucid multisrc'shell/{completion,key-bindings}.zsh' as"completion" pick"/dev/null"
+zinit ice lucid multisrc'shell/{completion,key-bindings}.zsh' pick"bin/fzf-tmux" as"program"
+# zinit ice lucid pick'shell/{completion,key-bindings}.zsh' pick"bin/fzf-tmux" as"program"
+# zinit ice lucid pick'shell/completion.zsh' as"completion" src'shell/key-bindings.zsh'
+zinit load junegunn/fzf
 
 # ==> History Search Multi-Word
 #     set reset-prompt-protect to be able to use zle reset-prompt in your e.g.
@@ -360,21 +360,21 @@ zstyle ":plugin:history-search-multi-word" synhl "yes"                 # Whether
 zstyle ":plugin:history-search-multi-word" active "bg=base03"           # Effect on active history entry. Try: standout, bold, bg=blue (default underline)
 zstyle ":plugin:history-search-multi-word" check-paths "yes"           # Whether to check paths for existence and mark with magenta (default true)
 zstyle ":plugin:history-search-multi-word" clear-on-cancel "yes"       # Whether pressing Ctrl-C or ESC should clear entered query
-zplugin load zdharma/history-search-multi-word
+zinit load zdharma/history-search-multi-word
 
 # ==> Additional completion definitions for Zsh
 #     blockf will block the traditional method of adding completions.
-#     Zplugin uses own method (based on symlinks instead of adding to $fpath).
-#     Zplugin will automatically install completions of newly downloaded plugin
-zplugin ice lucid blockf
-zplugin load "zsh-users/zsh-completions"
+#     zinit uses own method (based on symlinks instead of adding to $fpath).
+#     zinit will automatically install completions of newly downloaded plugin
+zinit ice lucid blockf
+zinit load "zsh-users/zsh-completions"
 
 # ==> emoji-cli
 #     depends on: fzf, jp
 #     uses my copy of abbec/emoji-cli (a fork of b4b4r07/emoji-cli)
 #       to print the emoji directly
-zplugin ice lucid blockf
-zplugin load qubidt/emoji-cli
+zinit ice lucid blockf
+zinit load qubidt/emoji-cli
 
 # ==> zsh-autosuggestions
 #     Autosuggestions uses precmd hook that is called right after processing
@@ -383,10 +383,10 @@ zplugin load qubidt/emoji-cli
 #     inactive at first prompt. But the given atload Ice-mod fixes this, it
 #     calls the same function precmd would, right after loading autosuggestions
 # not working yet, conflicts with history serach
-# see https://github.com/zdharma/zplugin/issues/69
+# see https://github.com/zdharma/zinit/issues/69
 #   bindkey '^\n' autosuggest-execute
-zplugin ice lucid atload'_zsh_autosuggest_start; bindkey "^ " autosuggest-execute' # nocd
-zplugin load zsh-users/zsh-autosuggestions
+zinit ice lucid atload'_zsh_autosuggest_start; bindkey "^ " autosuggest-execute' # nocd
+zinit load zsh-users/zsh-autosuggestions
 
 # ==> Syntax Highlighting
 #     If you load completions using wait'' mode then you can add
@@ -396,19 +396,19 @@ zplugin load zsh-users/zsh-autosuggestions
 #     zpcdreplay, so you can also do: atinit'zpcompinit; zpcdreplay', etc.
 #     Basically, it's the same as normal compinit call, but it is done in atinit
 #     or atload hook of last related plugin.
-#     # zplugin ice wait"0" lucid atinit"ZPLGM[COMPINIT_OPTS]-C; zpcompinit; zpcdreplay"
-#     ZPLGM[COMPINIT_OPTS]=-C skips compaudit (audit the fpath to assure that it
+#     # zinit ice wait"0" lucid atinit"ZINIT[COMPINIT_OPTS]-C; zpcompinit; zpcdreplay"
+#     ZINIT[COMPINIT_OPTS]=-C skips compaudit (audit the fpath to assure that it
 #     contains all the directories needed by the completion system, and that
 #     those directories are at least unlikely to contain dangerous files)
 
-zplugin ice lucid wait'' atinit"ZPLGM[COMPINIT_OPTS]=-C; zpcompinit; zpcdreplay"
-zplugin load "zdharma/fast-syntax-highlighting"
+zinit ice lucid wait'' atinit"ZINIT[COMPINIT_OPTS]=-C; zpcompinit; zpcdreplay"
+zinit load "zdharma/fast-syntax-highlighting"
 
 autoload -Uz compinit
 compinit
 
-zplugin cdreplay -q # -q is for quiet; actually run all the `compdef's saved before
+zinit cdreplay -q # -q is for quiet; actually run all the `compdef's saved before
                     #`compinit` call (`compinit' declares the `compdef' function, so
-                    # it cannot be used until `compinit` is ran; Zplugin solves this
+                    # it cannot be used until `compinit` is ran; zinit solves this
                     # via intercepting the `compdef'-calls and storing them for later
-                    # use with `zplugin cdreplay')
+                    # use with `zinit cdreplay')
