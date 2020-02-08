@@ -22,6 +22,7 @@
     ~/.config/firefox: firefox
     ~/.config/colors: colors
     ~/.config/spicetify: spicetify
+    ~/.mpd: mpd
 
     # globs
     # -----
@@ -63,6 +64,19 @@
     ~/.vimperator: vimperator
     ~/.vimperatorrc: vimperatorrc
     ~/.config/user-dirs.dirs: user-dirs.dirs
+
+# =======
+# Scripts
+# =======
+
+# - shell:
+#   -
+#     command: $XDG_CONFIG_HOME/colors/base16_profile_helper.sh
+#     stdin: true
+#     stdout: true
+#     stderr: true
+#     description: Applying colors
+#     quiet: false
 
 - shell:
   -
@@ -170,10 +184,11 @@
     # -----------
     ~/.config/iterm2: iterm2
     ~/.mpd: mpd
-    ~/Library/Application Support/Übersicht/widgets: ubersicht/widgets
+    ~/Library/Application Support/Übersicht: uebersicht
+    ~/Library/Application Support/tracesOf.Uebersicht: uebersicht.settings
     ~/.config/brewfile: brewfile
-    ~/.config/chunkwm: chunkwm
     ~/.config/yabai: yabai
+    ~/.config/skhd: skhd
 
     # globs
     # -----
@@ -181,10 +196,7 @@
 
     # files
     # -----
-    ~/Library/Preferences/com.googlecode.iterm2.plist: iterm2/com.googlecode.iterm2.plist
-    ~/.chunkwmrc: chunkwm/chunkwmrc.sh
-    ~/.config/yabai: yabai
-    ~/.config/skhd: skhd
+    ~/Library/Application Support/iTerm2/DynamicProfiles/dynamic_profiles.json: iterm2/dynamic_profiles.json
     ~/Library/Application Support/Übersicht/widgets: ubersicht/widgets
 
 # ================
@@ -228,15 +240,3 @@
     ~/.config/mimeapps.list: mimeapps.list
     # https://wiki.archlinux.org/index.php/XDG_MIME_Applications#mimeapps.list
     ~/.local/share/mimeapps.list: mimeapps.list
-
-# =======
-# Scripts
-# =======
-# - shell:
-#   -
-#     command: $XDG_CONFIG_HOME/colors/base16_profile_helper.sh
-#     stdin: true
-#     stdout: true
-#     stderr: true
-#     description: Applying colors
-#     quiet: false

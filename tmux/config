@@ -5,6 +5,13 @@ set -ga terminal-overrides ',alacritty*:Tc'
 set -ga terminal-overrides ',*256col*:Tc'
 
 set-window-option -g mouse on
+set-window-option -g aggressive-resize on
+
+# swap window to left or right
+bind-key -r < swap-window -t -1
+bind-key -r > swap-window -t +1
+#bind-key -r < { swap-window -t -1; previous-window }
+#bind-key -r > { swap-window -t +1; next-window }
 
 # ========
 # vim mode
