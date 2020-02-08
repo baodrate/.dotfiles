@@ -312,15 +312,15 @@ _gen_fzf_opts() {
   local -r _line_limit=500
 
   if (( ${+commands[bat]} )) ; then
-    local _cat_cmd="bat --color=always --plain --line-range :$_line_limit {}"
+    local _cat_cmd="bat --color=always --style=changes,snip --pager=never --line-range :$_line_limit {}"
   else
     local _cat_cmd="cat {} | head -$_line_limit"
   fi
 
   read -r -d '' _preview_cmd <<- EOM
-	case \$(file --mime {}) in
+	case \$(file --mime {}|cut -d';' -f1) in
 	  (*binary*) echo '{} is a binary file' ;;
-	  (*) $_cat_cmd 2> /dev/null ;;
+	  (*) $_cat_cmd 2>/dev/null ;;
 	esac
 	EOM
 

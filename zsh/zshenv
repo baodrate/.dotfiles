@@ -3,3 +3,5 @@
 # /etc/zprofile on macOS loads /usr/libexec/path_helper which overwrites PATH
 # disable it
 # setopt no_global_rcs
+
+MSSQL_CLI_TELEMETRY_OPTOUT=1

@@ -1,5 +1,48 @@
 # vim: set ft=sshconfig:
-Include config.d/*
+CanonicalDomains int.poorboys.casa int.ftdna.com unx.ftdna.com
+CanonicalizePermittedCNAMEs *.*.ftdna.com:*.*.ftdna.com
+
+Host tilde.club
+  User qubidt
+  IdentityFile ~/.ssh/gpg-qubidt.pub
+  ForwardAgent no
+
+Host wither
+  User dietpi
+  IdentityFile ~/.ssh/gpg-qubidt.pub
+  ProxyCommand ssh -q -W localhost:3030 wiccan.poorboys.casa
+
+Host cerebro
+  User bao
+  IdentityFile ~/.ssh/gpg-qubidt.pub
+  ProxyCommand ssh -q -W localhost:1337 wiccan.poorboys.casa
+
+Host *.ftdna.com
+  User baot
+  IdentityFile ~/.ssh/gpg-bao-gxg.pub
+  ForwardAgent yes
+
+Host wiccan.poorboys.casa
+  User root
+  IdentityFile ~/.ssh/gpg-qubidt.pub
+
+Host *.poorboys.casa *.baodtrinh.com
+  IdentityFile ~/.ssh/gpg-qubidt.pub
+
+Host gh-bao-gxg
+  HostName github.com
+  IdentityFile ~/.ssh/gpg-bao-gxg.pub
+  IdentityFile ~/.ssh/id_rsa.work
+
+Host github.com-bao-gxg
+  HostName github.com
+  IdentityFile ~/.ssh/gpg-bao-gxg.pub
+  IdentityFile ~/.ssh/id_rsa.work
+
+Host gh-qubidt
+  HostName github.com
+  IdentityFile ~/.ssh/gpg-qubidt.pub
+  IdentityFile ~/.ssh/id_rsa.personal
 
 Host github.com
   User git
@@ -11,7 +54,7 @@ Host *
   IdentitiesOnly no
 
   CanonicalizeHostname yes
-  CanonicalizeFallbackLocal yes
+  CanonicalizeFallbackLocal no
   CanonicalizeMaxDots 0
 
   #   %%    A literal `%'.

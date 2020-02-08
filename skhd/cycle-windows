@@ -6,7 +6,7 @@ else
   OTHER_FILTERS=" reverse "
 fi
 
-read -r -d '\n' jq_filter << EOM
+read -r -d '\n' jq_filter_old << EOM
 sort_by(.display, .space, .frame.x, .frame.y, .id)
 | map(select(.focused == 1))[0].app as \$focused_app
 | map(select(.app == \$focused_app))
@@ -15,11 +15,24 @@ sort_by(.display, .space, .frame.x, .frame.y, .id)
 | .id , .space
 EOM
 
-cycle_windows() {
-  local ids=( $(yabai -m query --windows | jq -cre "$jq_filter") )
+cycle_windows_old() {
+  local ids=( $(yabai -m query --windows | jq -cre "$jq_filter_old") )
 
   yabai -m space --focus "${ids[1]}"
   yabai -m window --focus "${ids[0]}"
 }
 
-cycle_windows >&2
+read -r -d '\n' jq_filter << EOM
+.
+| map(select(.focused == 1))[0] as \$focused
+| nth(index(map(select(.index == \$focused.index))) - 1)
+| .index
+EOM
+
+cycle_windows() {
+  yabai -m space --focus "$(yabai -m query --spaces | jq "$jq_filter")"
+}
+
+cycle_windows_old >/dev/null 2>&1
+
+

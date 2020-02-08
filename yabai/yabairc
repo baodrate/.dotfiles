@@ -41,10 +41,10 @@ yabai -m config mouse_action2                resize
 
 # general space settings
 yabai -m config layout                       bsp
-yabai -m config top_padding                  50
-yabai -m config bottom_padding               20
-yabai -m config left_padding                 20
-yabai -m config right_padding                20
+yabai -m config top_padding                  10
+yabai -m config bottom_padding               40
+yabai -m config left_padding                 10
+yabai -m config right_padding                10
 yabai -m config window_gap                   10
 
 add_float_rule() {
@@ -78,13 +78,15 @@ add_float_rule "generic_preferences" title='Preferences$'
 # fix firefox not resizing properly
 # https://github.com/koekeishiya/yabai/issues/109
 # yabai -m signal --add event=window_created action='sleep 0.1 && ${XDG_CONFIG_HOME:-"$HOME/.config"}/yabai/reset-firefox.sh'
+add_float_rule "firefox_windows" app="Firefox Developer Edition" title="^(Set Desktop Background)$"
+add_float_rule "firefox_windows" app="Firefox Developer Edition" title="^Picture-in-Picture$"
 
 # =========
 # Jetbrains
 # =========
 # fix jetbrains floating windows
 # https://github.com/koekeishiya/yabai/issues/194
-jetbrains_apps_re='^(DataGrip|PyCharm|CLion)$'
+jetbrains_apps_re='^(DataGrip|PyCharm|CLion)(-EAP)?$'
 
 add_float_rule "jetbrains_float_default" app="$jetbrains_apps_re"
 add_window_created_signal "jetbrains_unfloat_main" "${XDG_CONFIG_HOME:-"$HOME/.config"}/yabai/unfloat-main-jetbrains-windows.sh" app="$jetbrains_apps_re"

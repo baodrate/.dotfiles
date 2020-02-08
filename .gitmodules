@@ -4,9 +4,6 @@
 [submodule "colors/base16-i3"]
 	path = colors/base16-i3
 	url = https://github.com/khamer/base16-i3.git
-[submodule "ubersicht/chunkbar.widget"]
-	path = ubersicht/chunkbar.widget
-	url = https://github.com/qubidt/chunkbar.widget.git
 [submodule "colors/base16-rofi"]
 	path = colors/base16-rofi
 	url = https://github.com/0xdec/base16-rofi.git
@@ -52,9 +49,12 @@
 [submodule "colors/LS_COLORS"]
 	path = colors/LS_COLORS
 	url = https://github.com/trapd00r/LS_COLORS.git
-[submodule "ubersicht/bar"]
-	path = ubersicht/bar
+[submodule "uebersicht/bar"]
+	path = uebersicht/bar
 	url = https://github.com/callahanrts/bar.git
 [submodule "spicetify/community-spicetify-themes"]
 	path = spicetify/community-spicetify-themes
 	url = https://github.com/morpheusthewhite/spicetify-themes.git
+[submodule "thirdparty/tmux-xpanes"]
+	path = thirdparty/tmux-xpanes
+	url = https://github.com/greymd/tmux-xpanes.git

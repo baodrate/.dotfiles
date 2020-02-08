@@ -9,7 +9,6 @@
   - { key: H,         mods: Command,   action: Hide               }
   - { key: Q,         mods: Command,   action: Quit               }
   - { key: W,         mods: Command,   action: Quit               }
-  - { key: Q,         mods: Alt|Shift, action: Quit               }
 
   # workaround for https://github.com/jwilm/alacritty/issues/62
   # commented out because it interferes with skhd

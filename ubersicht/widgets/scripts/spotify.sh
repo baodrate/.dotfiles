@@ -1,1 +1,0 @@
-../chunkbar.widget/scripts/spotify.sh

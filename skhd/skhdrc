@@ -6,7 +6,7 @@ shift + alt - return : open -na /Applications/Alacritty.app
 ctrl  + alt - return : osascript -e 'tell application "iTerm2"' -e 'activate' -e 'create window with default profile' -e 'end tell'
 
 # disable hide-windows shortcut
-cmd - h : return 0
+# cmd - h : return 0
 
 # disable minimize-windows shortcut
 cmd - m : return 0
@@ -53,8 +53,8 @@ cmd - m : return 0
 # close window
 # shift + alt - q : sid="$(yabai -m query --spaces --space | jq '.index')" && osascript -e "tell application \"Finder\" to set p to item 1 of (get file of (processes whose frontmost = true)) as text" -e "tell application p to quit" && yabai -m space --focus "${sid}"
 shift + alt - q [
-    "alacritty" : sid=$(yabai -m query --windows --window | jq -r '.space') && skhd -k "cmd - q"       && yabai -m space --focus "${sid}"
-    *           : sid=$(yabai -m query --windows --window | jq -r '.space') && yabai -m window --close && yabai -m space --focus "${sid}"
+    "alacritty" : sid=$(yabai -m query --windows --window | jq -r '.space') && echo "focusing space: $sid" >&2 && skhd -k "cmd - q"       && yabai -m space --focus "${sid}"
+    *           : sid=$(yabai -m query --windows --window | jq -r '.space') && echo "focusing space: $sid" >&2 && yabai -m window --close && yabai -m space --focus "${sid}"
 ]
 
 # focus window
@@ -102,7 +102,7 @@ shift + alt - right  : yabai -m window --grid 1:2:1:0:1:1
 # cmd + alt - w : yabai -m space --destroy
 
 # reload config
-shift + alt - c : skhd --reload & ; ${XDG_CONFIG_HOME:-$HOME/.config}/yabai/yabairc > /usr/local/var/log/yabai/yabai.out.log 2> /usr/local/var/log/yabai/yabai.err.log
+shift + alt - c : echo "reloading configs" >&2 ; skhd --reload & ; ${XDG_CONFIG_HOME:-$HOME/.config}/yabai/yabairc >> /usr/local/var/log/yabai/yabai.out.log 2>> /usr/local/var/log/yabai/yabai.err.log
 
 # override default desktop switching
 ctrl - left : yabai -m space --focus prev
@@ -110,10 +110,10 @@ ctrl - right : yabai -m space --focus next
 
 # cycle all windows
 # cmd - ` / cmd - ~
-cmd - 0x32 : ${XDG_CONFIG_HOME:-$HOME/.config}/skhd/cycle-windows
+cmd - 0x32 : ~/.config/skhd/cycle-windows
 
-ctrl + alt - n : ${XDG_CONFIG_HOME:-$HOME/.config}/skhd/cycle-windows
-ctrl + alt - p : ${XDG_CONFIG_HOME:-$HOME/.config}/skhd/cycle-windows reverse
+ctrl + alt - n : ~/.config/skhd/cycle-windows
+ctrl + alt - p : ~/.config/skhd/cycle-windows reverse
 
 # fast focus desktop
 alt - p : yabai -m space --focus prev
@@ -145,14 +145,14 @@ shift + alt - 9 : yabai -m window "${wid:=$(yabai -m query --windows --window | 
 shift + alt - 0 : yabai -m window "${wid:=$(yabai -m query --windows --window | jq -cr '.id')}" --space 10     && yabai -m window --focus "${wid}"
 
 # focus monitor
-alt - 0x21 : yabai -m display --focus prev # alt - [
-alt - 0x1E : yabai -m display --focus next # alt - ]
+alt - 0x21 : yabai -m display --focus "$(~/.config/yabai/get-display.sh left)"  # alt - [
+alt - 0x1E : yabai -m display --focus "$(~/.config/yabai/get-display.sh right)" # alt - ]
 
 # send window to monitor and follow focus
 # shift + alt - [
-shift + alt - 0x21 : yabai -m window "${wid:=$(yabai -m query --windows --window | jq -cr '.id')}" --display prev && yabai -m window --focus "${wid}"
+shift + alt - 0x21 : yabai -m window "${wid:=$(yabai -m query --windows --window | jq -cr '.id')}" --display "$(~/.config/yabai/get-display.sh left)" && yabai -m window --focus "${wid}"
 # shift + alt - ]
-shift + alt - 0x1E : yabai -m window "${wid:=$(yabai -m query --windows --window | jq -cr '.id')}" --display next && yabai -m window --focus "${wid}"
+shift + alt - 0x1E : yabai -m window "${wid:=$(yabai -m query --windows --window | jq -cr '.id')}" --display "$(~/.config/yabai/get-display.sh right)" && yabai -m window --focus "${wid}"
 
 # move window
 shift + ctrl - a : yabai -m window --move rel:-20:0
@@ -198,9 +198,10 @@ shift + alt - space : yabai -m window --toggle float; \
                       yabai -m window --grid 4:4:1:1:2:2
 
 # toggle sticky, topmost and resize to picture-in-picture size
-shift + alt - s : yabai -m window --toggle sticky ; \
-                  yabai -m window --toggle topmost ; \
-                  yabai -m window --grid 10:10:7:7:3:3
+#             -
+shift + alt - 0x1B : yabai -m window --toggle sticky ; \
+                     yabai -m window --toggle topmost ; \
+                     yabai -m window --grid 10:10:7:7:3:3
 
 # change layout of desktop
 cmd + alt - a : yabai -m space --layout bsp

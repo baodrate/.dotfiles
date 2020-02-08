@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+if [ "$1" = "reverse" ] ; then
+  OTHER_FILTERS=" ."
+else
+  OTHER_FILTERS=" reverse "
+fi
+
+read -r -d '\n' jq_filter << EOM
+.
+| map(select(.focused == 1))[0] as \$focused
+| nth(index(map(select(.index == \$focused.index))) - 1)
+| .index
+EOM
+
+yabai -m query --spaces | jq "$jq_filter"
