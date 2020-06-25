@@ -1,0 +1,13 @@
+#!/bin/sh
+
+# usage: import-gsettings <gsettings key>:<settings.ini key> <gsettings key>:<settings.ini key> ...
+settings_ini="${XDG_CONFIG_HOME:-$HOME/.config}"/gtk-3.0/settings.ini
+
+for pair in "$@"; do
+    IFS=:; set -- "$pair"; 
+    set_name=$1
+    ini_name=$2
+    IFS=' '
+    gsettings set org.gnome.desktop.interface "$(sed "/^$ini_name=/!d ; s//$set_name /" "$settings_ini")"
+    printf '%s %s\n' "$set_name" "$(gsettings get org.gnome.desktop.interface "$set_name")"
+done

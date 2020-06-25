@@ -1,0 +1,28 @@
+PATH                  DEFAULT=@{HOME}/bin:${PATH}
+
+# XDG base directories
+# https://github.com/nicodebo/dotfiles/blob/master/pam/.pam_environment
+XDG_CACHE_HOME        DEFAULT=@{HOME}/.cache
+XDG_CONFIG_HOME       DEFAULT=@{HOME}/.config
+XDG_DATA_HOME         DEFAULT=@{HOME}/.local/share
+
+# default apps
+PAGER                 DEFAULT=less
+LESSKEY               DEFAULT=${XDG_DATA_HOME}/less/lesskey
+LESSHISTFILE          DEFAULT=${XDG_CACHE_HOME}/less/history
+PARALLEL_HOME         DEFAULT=${XDG_CONFIG_HOME}/parallel
+INPUTRC               DEFAULT=${XDG_CONFIG_HOME}/readline/inputrc
+
+# gpg
+# GNUPGHOME             DEFAULT=${XDG_CONFIG_HOME}/gnupg
+# SSH_AGENT_PID         DEFAULT=
+# SSH_AUTH_SOCK         DEFAULT=${XDG_RUNTIME_DIR}/gnupg/S.gpg-agent.ssh
+# workaround for https://github.com/cylgom/ly/issues/182
+SSH_AUTH_SOCK         DEFAULT=/run/user/1000/gnupg/S.gpg-agent.ssh
+
+# rust
+RUSTUP_HOME           DEFAULT=${XDG_DATA_HOME}/rustup
+CARGO_HOME            DEFAULT=${XDG_DATA_HOME}/cargo
+
+# weechat
+WEECHAT_HOME          DEFAULT=${XDG_CONFIG_HOME}/weechat

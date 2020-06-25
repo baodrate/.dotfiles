@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+# temp_file=$(mktemp -u) && mkfifo -m 600 $temp_file && {
+temp_file=$(mktemp) && {
+  # imv broken reading from stdin
+  # https://github.com/eXeC64/imv/pull/199
+  # grim - | imv - &
+
+  grim - | feh - &
+  orig_pid=$!
+
+  get_regions() {
+    swaymsg -t get_tree | jq -r '.. | select(.pid? and .visible?) | .rect | "\(.x),\(.y) \(.width)x\(.height)"'
+  }
+
+  select_area() {
+    slurp -f '-i %i -g %g' "$@"
+  }
+
+  screenshot_region() {
+    {
+      coords=$(get_regions | slurp) && grim -g "$coords" -
+    } | tee "$temp_file"
+    kill -- $orig_pid
+  }
+
+  screenshot_region && {
+    notify-send -i "$temp_file" -u low 'Captured region'
+    rm "$temp_file"
+  } &
+}

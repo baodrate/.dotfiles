@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+fifo="$(mktemp -u)"
+mkfifo -m 600 "$fifo"
+shotgun - | feh -x - &
+orig_pid=$!
+coords=$(slop -f '-i %i -g %g') &&
+  {
+    echo "$coords" >&2
+    { shotgun "$coords" - & } | tee "$fifo" &
+    notify-send -i "$fifo" -u low 'Captured region'
+    kill -- $!
+    echo "done with fifo: $fifo" >&2
+  } ;
+kill -- $orig_pid ;
+rm "$fifo"

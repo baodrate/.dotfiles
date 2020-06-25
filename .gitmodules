@@ -1,0 +1,15 @@
+[submodule ".config/ls/LS_COLORS"]
+	path = .config/ls/LS_COLORS
+	url = https://github.com/trapd00r/LS_COLORS.git
+[submodule ".local/share/nvim/site/pack/filetypes/start/vim-openscad"]
+	path = .local/share/nvim/site/pack/filetypes/start/vim-openscad
+	url = https://github.com/sirtaj/vim-openscad.git
+[submodule ".local/share/zsh/plugins/agkozak-zsh-prompt"]
+	path = .local/share/zsh/plugins/agkozak-zsh-prompt
+	url = https://github.com/agkozak/agkozak-zsh-prompt
+[submodule ".local/share/nvim/site/pack/utility/start/fern.vim"]
+	path = .local/share/nvim/site/pack/utility/opt/fern.vim
+	url = https://github.com/lambdalisue/fern.vim.git
+[submodule ".local/share/nvim/site/pack/utility/start/vim-vinegar"]
+	path = .local/share/nvim/site/pack/utility/start/vim-vinegar
+	url = https://github.com/tpope/vim-vinegar.git

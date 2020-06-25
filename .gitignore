@@ -1,0 +1,68 @@
+# this repo
+.dotfiles/
+
+# XDG base directories
+.cache/
+.local/share/
+
+# XDG user directories
+desktop/
+downloads/
+templates/
+public/
+documents/
+music/
+pictures/
+videos/
+
+# gpg
+.gnupg/gpg-agent.conf
+.gnupg/private-keys-v1.d/
+.gnupg/pubring.kbx
+.gnupg/pubring.kbx~
+.gnupg/sshcontrol
+.gnupg/trustdb.gpg
+
+# less
+.lesshst
+
+# ssh
+.ssh/known_hosts
+
+# zsh
+.config/zsh/.zcompdump
+
+# misc applications
+.ccache/
+.gnome/
+.gnupg/
+.icons/
+.java/
+.jira.d/
+.mozilla/
+.node-gyp/
+.nvm/
+.parallel/
+.password-store/
+.pkg-cache/
+.pki/
+.purple/
+.shiv/
+.terminfo/
+.vim/
+go/
+
+# misc directories
+3dprinting/
+dev/
+es121/
+github/
+imposter/
+mom/
+notes/
+pdev/
+sql/
+tmp/
+trash/
+wallpapers/
+work-curr/

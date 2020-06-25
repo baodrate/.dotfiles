@@ -1,0 +1,15 @@
+#!/bin/sh
+
+if [ -f "${XDG_CACHE_HOME:-$HOME/.cache}/sway.out.log" ] ; then
+  mv "${XDG_CACHE_HOME:-$HOME/.cache}/sway.out.log" "${XDG_CACHE_HOME:-$HOME/.cache}/sway.out.$(date -Is).log"
+fi
+if [ -f "${XDG_CACHE_HOME:-$HOME/.cache}/sway.err.log" ] ; then
+  mv "${XDG_CACHE_HOME:-$HOME/.cache}/sway.err.log" "${XDG_CACHE_HOME:-$HOME/.cache}/sway.err.$(date -Is).log"
+fi
+
+if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/sway/env" ] ; then
+  export $(grep -Ev '^#' "${XDG_CONFIG_HOME:-$HOME/.config}/sway/env" | xargs)
+fi
+
+# exec dbus-run-session -- sway >"${XDG_CACHE_HOME:-$HOME/.cache}/sway.out.log" 2>"${XDG_CACHE_HOME:-$HOME/.cache}/sway.err.log"
+exec sway # >"${XDG_CACHE_HOME:-$HOME/.cache}/sway.out.log" 2>"${XDG_CACHE_HOME:-$HOME/.cache}/sway.err.log"

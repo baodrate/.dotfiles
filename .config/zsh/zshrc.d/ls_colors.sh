@@ -1,0 +1,1 @@
+../../ls/ls_colors.sh

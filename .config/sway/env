@@ -1,0 +1,23 @@
+# https://www.reddit.com/r/swaywm/comments/do3g91/native_wayland_setup_for_arch/f5ka2nm/
+
+CLUTTER_BACKEND=wayland
+ECORE_EVAS_ENGINE=wayland_egl
+ELM_ACCEL=gl
+ELM_DISPLAY=wl
+
+# fucks with cura
+# QT_QPA_PLATFORM=wayland
+QT_QPA_PLATFORM=xcb
+
+# fucks with steam
+# SDL_VIDEODRIVER=wayland
+
+XDG_SESSION_TYPE=wayland
+MOZ_ENABLE_WAYLAND=1
+
+# Jetbrains
+_JAVA_AWT_WM_NONREPARENTING=1
+
+# Waybar
+# For a functional tray (+ libappindicator-*)
+XDG_CURRENT_DESKTOP=Unity

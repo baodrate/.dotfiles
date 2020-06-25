@@ -1,0 +1,96 @@
+#!/usr/bin/env bash
+
+# not original, but see:
+# https://github.com/roosta/scripts/blob/master/paswitch.sh
+
+SINKS_EXCLUDE=( 'module-combine-sink' 'Arctis Pro Wireless Analog Mono' )
+EXCLUDED_APPS=( 'Discord' )
+
+NOTIFY_ID_FILE=${XDG_RUNTIME_DIR}/paswitch-notify-id
+[ ! -e "$NOTIFY_ID_FILE" ] && touch "$NOTIFY_ID_FILE"
+[ "$(wc -l < "$NOTIFY_ID_FILE")" -eq 0 ] && echo 69 > "$NOTIFY_ID_FILE" # random id
+
+sinks=$( pacmd list-sinks | sed -n -e 's/[[:space:]]*\**[[:space:]]index:[[:space:]]//p ; s/[[:space:]]*driver: //p ; s/[[:space:]]*device.description = "\(.*\)"/\1/p' | paste -d'\t' - - - )
+sinks=$(echo "$sinks" | grep -E -v '\b('"$(printf '%s\n' "${SINKS_EXCLUDE[@]}" | paste -s -d'|' -)"')\b' )
+
+declare -i sinks_idx=( $(echo "$sinks" | cut -f1) )
+declare -i sinks_count=${#sinks_idx[*]}
+
+get_next_sink() {
+  declare -i active_sink_index=$(pacmd list-sinks | sed -n -e 's/\*[[:space:]]index:[[:space:]]\([[:digit:]]\)/\1/p')
+  declare -i next_sink_index=${sinks_idx[0]}
+
+  #find the next sink (not always the next index number)
+  declare -i ord=0
+  while [ $ord -lt "$sinks_count" ]; do
+    # echo ${sinks[$ord]}
+    if [ "${sinks_idx[$ord]}" -gt "$active_sink_index" ] ; then
+        next_sink_index=${sinks_idx[$ord]}
+        break
+    fi
+    (( ord++ ))
+  done
+
+  echo "${next_sink_index}"
+}
+
+get_input_sinks() {
+  firstline=1
+  pacmd list-sink-inputs \
+    | sed -n -e 's/[[:space:]]*index:[[:space:]]//p ; s/[[:space:]]*sink:[[:space:]]\([[:digit:]]*\)[[:space:]]*\(.*\)$/\1\t\2/p ; s/[[:space:]]*media.name[[:space:]]=[[:space:]]"\(.*\)"$/\1/p ; s/[[:space:]]*application.process.binary[[:space:]]=[[:space:]]"\(.*\)"$/\1/p' \
+    | while IFS= read line; do
+        case $line in
+            ''|*[!0-9]*)  printf '\t%s' "$line" ;;
+            *)            if [ ! -z "$firstline" ] ; then
+                            printf '%s' "$line"
+                          else
+                            printf '\n%s' "$line"
+                          fi
+            ;;
+        esac
+        firstline=
+      done
+      printf '\n'
+}
+
+change_sink() {
+  sink_index="${1:?}"
+
+  #change the default sink
+  pacmd "set-default-sink ${sink_index}"
+  pacmd list-sinks | grep -E 'index:|description'
+  echo
+
+  #move all inputs to the new sink
+  get_input_sinks | while IFS=$'\t' read -r input sinkno sinkdesc medianame processname ; do
+    IFS=@
+    case "@${EXCLUDED_APPS}@" in
+      (*"@$processname@"*)
+        printf '%s\n' \
+          "- $input : $medianame ($processname)" \
+          "      $sinkno ($sinkdesc)"
+        ;;
+      (*)
+        pacmd "move-sink-input $input $sink_index" \
+          | printf '%s\n' \
+            "$(grep -q 'Moved failed' && echo ✗ || echo ✓) $input : $medianame ($processname)" \
+            "      $sinkno ($sinkdesc)"
+        ;;
+    esac
+  done
+}
+
+notify() {
+  # display notification
+  msg="${1:?}"
+
+  local replace_id="$(<"$NOTIFY_ID_FILE")"
+
+  # notify-send -i notification-audio-volume-high --hint=string:x-canonical-private-synchronous:anything "Sound output switched to" "$line"
+  dunstify --printid --replace="$replace_id" "Changed audio output" "$msg" > "$NOTIFY_ID_FILE"
+}
+
+sink_index=$(get_next_sink)
+change_sink "$sink_index"
+
+notify "$( echo "$sinks" | grep "^${sink_index}" | cut -f3 )"

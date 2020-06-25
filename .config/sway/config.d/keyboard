@@ -1,0 +1,22 @@
+### Volume
+#
+
+bindsym XF86AudioMute exec "pactl set-sink-mute $(pacmd list-sinks |awk '/* index:/{print $3}') toggle"
+bindsym XF86AudioRaiseVolume exec "pactl set-sink-volume $(pacmd list-sinks |awk '/* index:/{print $3}') +5%"
+bindsym XF86AudioLowerVolume exec "pactl set-sink-volume $(pacmd list-sinks |awk '/* index:/{print $3}') -5%"
+bindsym XF86AudioMicMute exec "pactl set-source-mute $(pacmd list-sources |awk '/* index:/{print $3}') toggle"
+
+### Multimedia
+#
+
+bindsym XF86AudioPlay  exec playerctl play-pause
+bindsym XF86AudioPause exec playerctl pause
+bindsym XF86AudioStop exec playerctl stop
+bindsym XF86AudioNext  exec playerctl next
+bindsym XF86AudioPrev  exec playerctl previous
+
+### Backlight
+#
+
+bindsym XF86MonBrightnessUp   exec "light -A 5"
+bindsym XF86MonBrightnessDown exec "light -U 5"
