@@ -31,6 +31,13 @@ videos/
 
 # zsh
 .config/zsh/.zcompdump
+.config/JetBrains/
+.config/chromium/
+.config/Slack/
+.config/discord/
+.config/skypeforlinux/
+.config/spotify/
+.config/Bitwarden CLI/
 
 # misc applications
 .ccache/
