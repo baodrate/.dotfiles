@@ -13,6 +13,8 @@ LESSHISTFILE          DEFAULT=${XDG_CACHE_HOME}/less/history
 PARALLEL_HOME         DEFAULT=${XDG_CONFIG_HOME}/parallel
 INPUTRC               DEFAULT=${XDG_CONFIG_HOME}/readline/inputrc
 
+RIPGREP_CONFIG_PATH   DEFAULT=${XDG_CONFIG_HOME}/ripgrep/ripgreprc
+
 # gpg
 # GNUPGHOME             DEFAULT=${XDG_CONFIG_HOME}/gnupg
 # SSH_AGENT_PID         DEFAULT=
