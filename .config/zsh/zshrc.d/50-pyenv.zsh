@@ -1,8 +1,6 @@
 #!/bin/zsh
 
-eval "$(pyenv init -)"
-
-export PATH="/home/bao/.local/share/pyenv/shims:${PATH}"
+export PATH="${XDG_DATA_HOME:-$HOME/.local/share}/pyenv/shims:${PATH}"
 export PYENV_SHELL=nvim
 command pyenv rehash 2>/dev/null
 pyenv() {
@@ -19,4 +17,3 @@ pyenv() {
     command pyenv "$command" "$@";;
   esac
 }
-

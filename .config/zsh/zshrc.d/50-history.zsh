@@ -18,5 +18,5 @@ setopt HIST_BEEP                 # Beep when accessing non-existent history.
 #
 
 HISTFILE="${XDG_DATA_HOME:-$HOME/.local/share}"/zsh/history
-HISTSIZE=10000                   # The maximum number of events to save in the internal history.
+HISTSIZE=5000                    # The maximum number of events to save in the internal history.
 SAVEHIST=10000                   # The maximum number of events to save in the history file.
