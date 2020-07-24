@@ -1,5 +1,44 @@
 #!/bin/zsh
 
+autoload -Uz compinit
+
+# Load and initialize the completion system ignoring insecure directories with a
+# cache time of 20 hours, so it should almost always regenerate the first time a
+# shell is opened each day.
+_comp_files=("${XDG_CACHE_HOME:-$HOME/.cache}"/zsh/zcompcache(Nm-20))
+if (( $#_comp_files )); then
+    compinit -i -C -d "${XDG_CACHE_HOME:-$HOME/.cache}"/zsh/zcompcache
+else
+    compinit -i -d "${XDG_CACHE_HOME:-$HOME/.cache}"/zsh/zcompcache
+fi
+unset _comp_files
+
+# Some functions, like _apt and _dpkg, are very slow. We can use a cache in
+# order to speed things up
+if [[ ! -d "${XDG_CACHE_HOME:-$HOME/.cache}"/zsh ]]; then
+    command mkdir -p "${XDG_CACHE_HOME:-$HOME/.cache}"/zsh
+fi
+zstyle ':completion:*' use-cache yes
+zstyle ':completion:*:complete:*' cache-path "${XDG_CACHE_HOME:-$HOME/.cache}"/zsh
+
+setopt completealiases
+# Complete from both ends of a word.
+setopt complete_in_word
+# Move cursor to the end of a completed word.
+setopt always_to_end
+# Perform path search even on command names with slashes.
+setopt path_dirs
+# Show completion menu on a successive tab press.
+setopt auto_menu
+# Automatically list choices on ambiguous completion.
+setopt auto_list
+# If completed parameter is a directory, add a trailing slash.
+setopt auto_param_slash
+# Do not autoselect the first completion entry.
+unsetopt menu_complete
+# Disable start/stop characters in shell editor.
+unsetopt flow_control
+
 # zstyle ':completion:*' completer _expand _complete _ignored _match _correct _approximate
 # zstyle ':completion:*' file-sort modification reverse
 # zstyle ':completion:*' group-name ''
@@ -62,7 +101,7 @@ zstyle ':completion:*:matches'         group 'yes'
 zstyle ':completion:*'                 group-name ''
 
 # if there are more than 5 options allow selecting from a menu
-zstyle ':completion:*'               menu select=5
+zstyle ':completion:*'                 menu select=5
 # don't use any menus at all
 # setopt no_auto_menu
 
@@ -115,6 +154,7 @@ zstyle ':completion:*:sudo:*' command-path /usr/local/sbin \
 
 # provide .. as a completion
 zstyle ':completion:*' special-dirs ..
+zstyle -e ':completion:*' special-dirs '[[ $PREFIX = (../)#(|.|..) ]] && reply=(..)'
 
 # run rehash on completion so new installed program are found automatically:
 function _force_rehash () {
@@ -123,39 +163,22 @@ function _force_rehash () {
 }
 
 ## correction
-# some people don't like the automatic correction - so run 'NOCOR=1 zsh' to deactivate it
-if [[ "$NOCOR" -gt 0 ]] ; then
-    zstyle ':completion:*' completer _oldlist _expand _force_rehash _complete _files _ignored
-    setopt nocorrect
-else
-    # try to be smart about when to use what completer...
-    setopt correct
-    zstyle -e ':completion:*' completer '
-        if [[ $_last_try != "$HISTNO$BUFFER$CURSOR" ]] ; then
-            _last_try="$HISTNO$BUFFER$CURSOR"
-            reply=(_complete _match _ignored _prefix _files)
+# try to be smart about when to use what completer...
+setopt correct
+zstyle -e ':completion:*' completer '
+    if [[ $_last_try != "$HISTNO$BUFFER$CURSOR" ]] ; then
+        _last_try="$HISTNO$BUFFER$CURSOR"
+        reply=(_complete _match _ignored _prefix _files)
+    else
+        if [[ $words[1] == (rm|mv) ]] ; then
+            reply=(_complete _files)
         else
-            if [[ $words[1] == (rm|mv) ]] ; then
-                reply=(_complete _files)
-            else
-                reply=(_oldlist _expand _force_rehash _complete _ignored _correct _approximate _files)
-            fi
-        fi'
-fi
+            reply=(_oldlist _expand _force_rehash _complete _ignored _correct _approximate _files)
+        fi
+    fi'
 
 # command for process lists, the local web server details and host completion
 zstyle ':completion:*:urls' local 'www' '/var/www/' 'public_html'
-
-# Some functions, like _apt and _dpkg, are very slow. We can use a cache in
-# order to speed things up
-if [[ ${GRML_COMP_CACHING:-yes} == yes ]]; then
-    GRML_COMP_CACHE_DIR=${GRML_COMP_CACHE_DIR:-${ZDOTDIR:-$HOME}/.cache}
-    if [[ ! -d ${GRML_COMP_CACHE_DIR} ]]; then
-        command mkdir -p "${GRML_COMP_CACHE_DIR}"
-    fi
-    zstyle ':completion:*' use-cache  yes
-    zstyle ':completion:*:complete:*' cache-path "${GRML_COMP_CACHE_DIR}"
-fi
 
 # host completion
 [[ -r ~/.ssh/config ]] && _ssh_config_hosts=(${${(s: :)${(ps:\t:)${${(@M)${(f)"$(<$HOME/.ssh/config)"}:#Host *}#Host }}}:#*[*?]*}) || _ssh_config_hosts=()

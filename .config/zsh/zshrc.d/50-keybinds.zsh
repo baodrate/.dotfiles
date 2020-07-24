@@ -135,22 +135,17 @@ bind2maps             vicmd -- '?'      history-incremental-pattern-search-forwa
 bind2maps emacs viins vicmd -- -s '^R'  history-incremental-pattern-search-backward
 bind2maps emacs viins vicmd -- -s '^S'  history-incremental-pattern-search-forward
 # Do history expansion on space:
-bind2maps emacs viins       -- -s ' ' magic-space
+bind2maps emacs viins       -- -s ' '   magic-space
+
+bind2maps emacs viins       -- BackTab  reverse-menu-complete
 
 if zrcgotkeymap menuselect; then
-    #m# k Shift-tab Perform backwards menu completion
-    bind2maps menuselect -- BackTab reverse-menu-complete
-
-    #k# menu selection: pick item but stay in the menu
-    bind2maps menuselect -- -s '\e^M' accept-and-menu-complete
-    # also use + and INSERT since it's easier to press repeatedly
-    bind2maps menuselect -- -s '+' accept-and-menu-complete
-    bind2maps menuselect -- Insert accept-and-menu-complete
-
     # accept a completion and try to complete again by using menu
     # completion; very useful with completing directories
     # by using 'undo' one's got a simple file browser
-    bind2maps menuselect -- -s '^o' accept-and-infer-next-history
+    bind2maps menuselect    -- -s '^o' accept-and-infer-next-history
+    bind2maps menuselect    -- Insert   accept-and-menu-complete
+    bind2maps menuselect    -- -s '+'   accept-and-menu-complete
 fi
 
 # enable 'inner' vi-motions e.g. ci(

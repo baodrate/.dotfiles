@@ -5,7 +5,7 @@
 	path = .local/share/nvim/site/pack/filetypes/start/vim-openscad
 	url = https://github.com/sirtaj/vim-openscad.git
 [submodule ".local/share/zsh/plugins/agkozak-zsh-prompt"]
-	path = .local/share/zsh/plugins/agkozak-zsh-prompt
+	path = .config/zsh/plugins/agkozak-zsh-prompt
 	url = https://github.com/agkozak/agkozak-zsh-prompt
 [submodule ".local/share/nvim/site/pack/utility/start/fern.vim"]
 	path = .local/share/nvim/site/pack/utility/opt/fern.vim
@@ -13,3 +13,6 @@
 [submodule ".local/share/nvim/site/pack/utility/start/vim-vinegar"]
 	path = .local/share/nvim/site/pack/utility/start/vim-vinegar
 	url = https://github.com/tpope/vim-vinegar.git
+[submodule ".config/zsh/plugins/zsh-completions"]
+	path = .config/zsh/plugins/zsh-completions
+	url = https://github.com/zsh-users/zsh-completions.git

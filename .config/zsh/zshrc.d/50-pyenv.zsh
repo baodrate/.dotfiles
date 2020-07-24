@@ -1,7 +1,7 @@
 #!/bin/zsh
 
-export PATH="${XDG_DATA_HOME:-$HOME/.local/share}/pyenv/shims:${PATH}"
-export PYENV_SHELL=nvim
+PATH="${XDG_DATA_HOME:-$HOME/.local/share}/pyenv/shims:${PATH}"
+PYENV_SHELL=$SHELL
 command pyenv rehash 2>/dev/null
 pyenv() {
   local command

@@ -1,24 +1,25 @@
 #!/bin/zsh
 
-autoload -Uz compinit
-compinit
-
-setopt autocd
-setopt notify
-
-# bracketed-paste
-autoload -Uz bracketed-paste-magic
-zle -N bracketed-paste bracketed-paste-magic
-
-# Use smart URL pasting and escaping.
-autoload -Uz bracketed-paste-url-magic
-zle -N bracketed-paste bracketed-paste-url-magic
+ZPROFILE=
+if [ -n "$ZPROFILE" ] ; then
+  zmodload zsh/zprof
+  # http://zsh.sourceforge.net/Doc/Release/Prompt-Expansion.html
+  PS4=$'%D{%M%S%.} %N:%i> '
+  exec 3>&2 2>$HOME/startlog.$$
+  setopt xtrace prompt_subst
+fi
 
 GPG_TTY=$(tty)
 
 scripts=(${${(%):-%x}:h}/zshrc.d/*(Nn))
-plugins=("${XDG_DATA_HOME:-$HOME/.local/share}"/zsh/plugins/*/*.plugin.zsh(Nn))
+plugins=(${${(%):-%x}:h}/plugins/*/*.plugin.zsh(Nn))
 
 for script in ${scripts[@]} ${plugins[@]} ; do
   source "$script"
 done
+
+if [ -n "$ZPROFILE" ] ; then
+  unsetopt xtrace
+  exec 2>&3 3>&-
+  zprof > ~/zshprofile$(date +'%s')
+fi
