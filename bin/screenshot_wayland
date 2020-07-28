@@ -5,8 +5,8 @@ temp_file=$(mktemp) && {
   # https://github.com/eXeC64/imv/pull/199
   # grim - | imv - &
 
-  grim - | feh - &
-  orig_pid=$!
+  # grim - | feh - &
+  # orig_pid=$!
 
   get_regions() {
     swaymsg -t get_tree | jq -r '.. | select(.pid? and .visible?) | .rect | "\(.x),\(.y) \(.width)x\(.height)"'
@@ -20,7 +20,7 @@ temp_file=$(mktemp) && {
     {
       coords=$(get_regions | slurp) && grim -g "$coords" -
     } | tee "$temp_file"
-    kill -- $orig_pid
+    # kill -- $orig_pid
   }
 
   screenshot_region && {

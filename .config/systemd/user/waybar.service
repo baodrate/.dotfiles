@@ -1,0 +1,12 @@
+[Unit]
+Description=Highly customizable Wayland bar for Sway and Wlroots based compositors.
+Documentation=https://github.com/Alexays/Waybar/wiki/
+PartOf=graphical-session.target
+After=pulseaudio.service
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/waybar
+
+[Install]
+WantedBy=sway-session.target

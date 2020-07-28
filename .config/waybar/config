@@ -3,7 +3,7 @@
     "position": "top", // Waybar position (top|bottom|left|right)
     // "height": 30, // Waybar height (to be removed for auto height)
     // "width": 1280, // Waybar width
-    "modules-left": ["sway/workspaces", "custom/media", "sway/mode"],
+    "modules-left": ["sway/workspaces", "sway/mode", "custom/scratchpad-indicator"],
     "modules-center": ["sway/window"],
     "modules-right": ["tray", "pulseaudio", "network", "cpu", "memory", "temperature", "backlight#main", "battery", "battery#bat2", "clock", "idle_inhibitor"],
     "custom/pwrstat": {
@@ -12,7 +12,7 @@
       "interval": 5,
       "max-length": 10
     },
-    // Modules configuration
+
     "sway/workspaces": {
         "disable-scroll": false,
         "enable-bar-scroll": false,
@@ -20,25 +20,28 @@
         "format": "{index} {icon}",
         "format-icons": {
             // 一 二 三 四 五 六 七 八 九 十
-            "1":        "",
-            "2":        "",
-            "3":        "",
-            "4":        "",
-            "5:":       "五",
-            "6:":       "六",
-            "7:":       "七",
-            "8":        "八",
-            "9":        "九",
-            "9":        "",
-            "10":       "",
-            "urgent":   "",
-            "focused":  "",
-            "default":  ""
+            "1:":        "",
+            "2:":        "",
+            "3:":        "",
+            "4:":        "",
+            "5:":        "五",
+            "6:":        "六",
+            "7:":        "七",
+            "8:":        "八",
+            "9:":        "九",
+            "9:":        "",
+            "10:":       "",
+            "firefox":   "",
+            "urgent":    "",
+            "focused":   "",
+            "default":   ""
         }
     },
+
     "sway/mode": {
         "format": "<span style=\"italic\">{}</span>"
     },
+
     "backlight#main": {
         "device": "acpi_video0",
         "format": "{percent}% {icon}",
@@ -46,6 +49,7 @@
         "on-scroll-up": "light -A 5 -s sysfs/backlight/acpi_video0",
         "on-scroll-down": "light -U 5 -s sysfs/backlight/acpi_video0"
     },
+
     "backlight#dell": {
         "device": "ddcci6",
         "format": "{percent}% {icon}",
@@ -53,6 +57,7 @@
         "on-scroll-up": "",
         "on-scroll-down": ""
     },
+
     "mpd": {
         "format": "{stateIcon} {consumeIcon}{randomIcon}{repeatIcon}{singleIcon}{artist} - {album} - {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S}) ",
         "format-disconnected": "Disconnected ",
@@ -79,6 +84,7 @@
         "tooltip-format": "MPD (connected)",
         "tooltip-format-disconnected": "MPD (disconnected)"
     },
+
     "idle_inhibitor": {
         "format": "{icon}",
         "format-icons": {
@@ -86,22 +92,27 @@
             "deactivated": ""
         }
     },
+
     "tray": {
         "icon-size": 21,
         "spacing": 10
     },
+
     "clock": {
         "format": "{:%F %H:%M:%S}",
         "interval": 1,
         "tooltip-format": "{:%Y-%m-%d | %H:%M}"
     },
+
     "cpu": {
         "format": "{usage}% ",
         "tooltip": false
     },
+
     "memory": {
         "format": "{}% "
     },
+
     "temperature": {
         // "thermal-zone": 2,
         // "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
@@ -110,6 +121,7 @@
         "format": "{temperatureC}°C {icon}",
         "format-icons": ["", "", ""]
     },
+
     "battery": {
         "states": {
             // "good": 95,
@@ -124,9 +136,11 @@
         // "format-full": "",
         "format-icons": ["", "", "", "", ""]
     },
+
     "battery#bat2": {
         "bat": "BAT2"
     },
+
     "network": {
         // "interface": "wlp2*", // (Optional) To force the use of this interface
         "format-wifi": "{essid} ({signalStrength}%) ",
@@ -135,6 +149,7 @@
         "format-disconnected": "Disconnected ⚠",
         "format-alt": "{ifname}: {ipaddr}/{cidr}"
     },
+
     "pulseaudio": {
         "scroll-step": 5, // %, can be a float
         "format": "{volume}% {icon}{format_source}",
@@ -169,22 +184,13 @@
         "on-click-right": "mpc toggle",
         "on-click": "termite -e ncmpcpp"
     },
-    "custom/arrow1": {
-        "format": ""
-    },
-    "custom/arrow3": {
-        "format": ""
-    },
-    "custom/arrow4": {
-        "format": ""
-    },
-    "custom/arrow5": {
-        "format": ""
-    },
-    "custom/arrow6": {
-        "format": ""
-    },
-    "custom/arrow2": {
-        "format": ""
+
+    "custom/scratchpad-indicator": {
+        "interval": 3,
+        "return-type": "json",
+        "exec": "swaymsg -t get_tree | jq --unbuffered --compact-output '(select(.name == \"root\") | .nodes[] | select(.name == \"__i3\") | .nodes[] | select(.name == \"__i3_scratch\") | .focus) as $scratch_ids | [.. | (.nodes? + .floating_nodes?) // empty | .[] | select(.id|IN($scratch_ids[]))] as $scratch_nodes | { text: \"\\($scratch_nodes|length)\", tooltip: $scratch_nodes|map(.name)|join(\"\\n\") }'",
+        "format": "{} ",
+        "on-click": "swaymsg 'scratchpad show'",
+        "on-click-right": "swaymsg 'move scratchpad'"
     }
 }]

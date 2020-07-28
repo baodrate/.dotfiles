@@ -11,7 +11,7 @@ startsway() {
     export $(grep -Ev '^#' "${XDG_CONFIG_HOME:-$HOME/.config}/sway/env" | xargs)
   fi
 
-  exec systemd-cat --identifier=sway --priority=info --stderr-priority=warning sway
+  exec systemd-cat --identifier=sway --priority=info --stderr-priority=warning sway "$@"
 }
 
 alias cfg='git --git-dir="$HOME"/.dotfiles/ --work-tree="$HOME"'

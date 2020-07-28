@@ -7,7 +7,8 @@ for_window [class="feh"] floating enable
 for_window [app_id="mpv"] floating enable
 
 for_window [app_id="firefox(developeredition)?" instance="^Toolkit$"] floating enable
-for_window [app_id="firefox(developeredition)?" title="Picture-in-Picture"] floating enable , sticky enable
+for_window [app_id="firefox(developeredition)?" title="^Picture-in-Picture$"] floating enable, sticky enable
+for_window [app_id="firefox(developeredition)?" title="^Picture-in-Picture$"] floating enable, sticky enable
 for_window [app_id="firefox(developeredition)?" title="Firefox( Developer Edition)? - Sharing Indicator"] floating enable , sticky enable
 
 # float splash image for jetbrains IDEs

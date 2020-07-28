@@ -1,0 +1,11 @@
+[Unit]
+Description=LXQt graphical authentication agent
+Documentation=man:lxqt-policykit-agent(1)
+PartOf=graphical-session.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/lxqt-policykit-agent
+
+[Install]
+WantedBy=sway-session.target

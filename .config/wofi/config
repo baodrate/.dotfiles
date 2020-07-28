@@ -1,0 +1,12 @@
+# drun-print_command=false
+dmenu-parse_action=true
+
+run-always_parse_args=true
+run-show_all=false
+
+allow_images=true
+allow_markup=true
+
+insensitive=true
+
+term=alacritty
