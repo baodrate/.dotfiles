@@ -16,3 +16,6 @@
 [submodule ".config/zsh/plugins/zsh-completions"]
 	path = .config/zsh/plugins/zsh-completions
 	url = https://github.com/zsh-users/zsh-completions.git
+[submodule ".local/share/nvim/site/pack/linting/start/ale"]
+	path = .local/share/nvim/site/pack/linting/start/ale
+	url = https://github.com/dense-analysis/ale.git
